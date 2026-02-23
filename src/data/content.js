@@ -26,7 +26,7 @@ export const FESTIVALS = [
 ];
 
 export const LABELS = [
-  { name: "mau5trap", cover: "/covers/Mau5trap.png", covers: ["/covers/Mau5trap.png", "/covers/Screenshot 2026-02-22 at 11.41.36 PM.png"] },
+  { name: "mau5trap", cover: "/covers/Mau5trap.png", covers: ["/covers/Mau5trap.png", "/covers/mautrap2.png"] },
   { name: "Ophelia Records", cover: "/covers/Ophelia.png" },
   { name: "Monstercat", cover: "/covers/Monstercat.png" },
   { name: "Bitbird", cover: "/covers/Bitbird.png" },
