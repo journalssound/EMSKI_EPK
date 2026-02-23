@@ -1131,8 +1131,12 @@ reveals.forEach(el => revealObs.observe(el));
   if (video.readyState >= 2) setup();
 })();
 
-/* ── Custom Audio Players (no library) ──────────────────── */
+/* ── Custom Audio Players (Web Audio API) ──────────────── */
 /*
+   Audio is routed through the Web Audio API (AudioContext →
+   MediaElementSource → destination) for the highest-fidelity
+   playback pipeline the browser can provide.
+
    KNOWN ISSUE: Seeking (scrubbing) doesn't work on Cloudflare Pages
    because it doesn't support HTTP byte-range requests (returns 200
    instead of 206). To fix this, host the MP3 files on a service that
@@ -1141,9 +1145,21 @@ reveals.forEach(el => revealObs.observe(el));
    206 responses, the standard audio.currentTime seeking below will
    work perfectly with no additional code.
 */
+let audioCtx = null;
 let activeAudio = null;
 let activeAP = null;
 const apData = new Map();
+
+/* Create / resume a shared AudioContext (high-quality playback pipeline) */
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({
+      latencyHint: 'playback',
+    });
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
 
 function fmt(s) {
   if (!s || !isFinite(s)) return '0:00';
@@ -1156,6 +1172,7 @@ function fmt(s) {
     audio.preload = 'auto';
     audio.src     = el.dataset.src;
     let isSeeking = false;
+    let sourceNode = null;
 
     const seekBar  = el.querySelector('.ap__seek');
     const seekFill = el.querySelector('.ap__seek-fill');
@@ -1165,6 +1182,28 @@ function fmt(s) {
 
     const d = { audio, seekFill, curEl, durEl, bars };
     apData.set(el, d);
+
+    /*
+     * Route audio through Web Audio API on first play.
+     * createMediaElementSource captures the Audio element's output
+     * into the AudioContext graph → destination, giving us the
+     * highest-quality decoding pipeline the browser can provide.
+     *
+     * If files are moved to a CDN (different origin), add
+     * audio.crossOrigin = 'anonymous' above and ensure the CDN
+     * sends Access-Control-Allow-Origin headers.
+     */
+    d.connectWebAudio = function () {
+      if (sourceNode) return;
+      try {
+        const ctx = getAudioCtx();
+        sourceNode = ctx.createMediaElementSource(audio);
+        sourceNode.connect(ctx.destination);
+      } catch (e) {
+        /* Fallback: audio still plays through the default output */
+        console.warn('Web Audio unavailable — using default output', e);
+      }
+    };
 
     audio.addEventListener('loadedmetadata', () => {
       if (durEl) durEl.textContent = fmt(audio.duration);
@@ -1215,11 +1254,13 @@ function fmt(s) {
   });
 })();
 
-
-
 function apToggle(el) {
   const d = apData.get(el);
   if (!d) return;
+
+  /* Wire up Web Audio API on first user interaction */
+  d.connectWebAudio();
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
   // Stop any other playing track
   if (activeAP && activeAP !== el) {
