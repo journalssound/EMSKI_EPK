@@ -301,6 +301,26 @@ button {
   color: var(--c-white);
 }
 
+.nav__link--ninjatune {
+  color: var(--c-cyan);
+  border: 1px solid rgba(0, 239, 239, 0.25);
+  padding: 4px 12px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+
+.nav__link--ninjatune:hover {
+  color: var(--c-white);
+  border-color: var(--c-cyan);
+  background: rgba(0, 239, 239, 0.08);
+}
+
 /* ── Hero ─────────────────────────────────────────────── */
 .hero {
   height: 100vh;
@@ -769,6 +789,26 @@ button {
 
 .site-footer__text--dim {
   color: rgba(255, 255, 255, 0.08);
+}
+
+.site-footer__ninjatune {
+  font-family: var(--f-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+  text-decoration: none;
+  border: 1px solid rgba(0, 239, 239, 0.2);
+  padding: 4px 14px;
+  border-radius: 2px;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+
+.site-footer__ninjatune:hover {
+  color: var(--c-white);
+  border-color: var(--c-cyan);
+  background: rgba(0, 239, 239, 0.08);
 }
 
 /* ── Reveal animation ─────────────────────────────────── */

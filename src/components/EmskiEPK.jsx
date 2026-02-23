@@ -43,6 +43,9 @@ export default function EmskiEPK() {
               {s}
             </button>
           ))}
+          <a href="/ninjatune/" className="nav__link nav__link--ninjatune">
+            Ninja Tune
+          </a>
         </div>
       </nav>
 
@@ -271,6 +274,9 @@ export default function EmskiEPK() {
       {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <footer className="site-footer">
         <span className="site-footer__text">&copy; 2026 EMSKI MUSIC</span>
+        <a href="/ninjatune/" className="site-footer__ninjatune">
+          Ninja Tune Pitch →
+        </a>
         <span className="site-footer__text site-footer__text--dim">
           ARTIST PRESS KIT
         </span>
