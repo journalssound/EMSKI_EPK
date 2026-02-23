@@ -207,6 +207,25 @@ button {
   display: block;
 }
 
+.flip-card__back--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.flip-card__rotating-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.flip-card__rotating-img--active {
+  opacity: 1;
+}
+
 /* ── Artist / Festival inline list ────────────────────── */
 .artist-list {
   font-family: var(--f-heading);
@@ -669,6 +688,43 @@ button {
 
 .contact__email:hover {
   border-bottom-color: var(--c-cyan);
+}
+
+.contact__roles {
+  display: flex;
+  justify-content: center;
+  gap: clamp(32px, 6vw, 64px);
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.contact__role {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.contact__role-label {
+  font-family: var(--f-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.contact__role-email {
+  font-family: var(--f-body);
+  font-size: clamp(13px, 1.8vw, 16px);
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.04em;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.contact__role-email:hover {
+  color: var(--c-cyan);
 }
 
 .contact__socials {

@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useScrollY, useDelayedLoad } from "../hooks/useAnimations";
 import { useInView } from "../hooks/useAnimations";
 import Reveal from "./Reveal";
@@ -55,10 +56,6 @@ export default function EmskiEPK() {
             opacity: Math.max(1 - scrollY / 600, 0),
           }}
         >
-          <div
-            className={`hero__accent-line ${loaded ? "hero__accent-line--loaded" : ""}`}
-          />
-
           <div
             className={`hero__video-wrap ${loaded ? "hero__video-wrap--loaded" : ""}`}
           >
@@ -142,14 +139,18 @@ export default function EmskiEPK() {
                 className={l.cover ? "flip-card" : "cell cell--label"}
               >
                 {l.cover ? (
-                  <div className="flip-card__inner">
-                    <div className="flip-card__front cell cell--label">
-                      {l.name}
+                  l.covers && l.covers.length > 1 ? (
+                    <RotatingCoverCard label={l} />
+                  ) : (
+                    <div className="flip-card__inner">
+                      <div className="flip-card__front cell cell--label">
+                        {l.name}
+                      </div>
+                      <div className="flip-card__back">
+                        <img src={l.cover} alt={`${l.name} release`} loading="lazy" />
+                      </div>
                     </div>
-                    <div className="flip-card__back">
-                      <img src={l.cover} alt={`${l.name} release`} loading="lazy" />
-                    </div>
-                  </div>
+                  )
                 ) : (
                   l.name
                 )}
@@ -236,6 +237,20 @@ export default function EmskiEPK() {
             <a href="mailto:contact@emskimusic.com" className="contact__email">
               contact@emskimusic.com
             </a>
+            <div className="contact__roles">
+              <div className="contact__role">
+                <span className="contact__role-label">Management</span>
+                <a href="mailto:justinb@veridianmgmt.com" className="contact__role-email">
+                  justinb@veridianmgmt.com
+                </a>
+              </div>
+              <div className="contact__role">
+                <span className="contact__role-label">Agent</span>
+                <a href="mailto:maxx.lesnick@roamartists.com" className="contact__role-email">
+                  maxx.lesnick@roamartists.com
+                </a>
+              </div>
+            </div>
             <div className="contact__socials">
               {SOCIALS.map((s) => (
                 <a
@@ -261,6 +276,54 @@ export default function EmskiEPK() {
         </span>
       </footer>
     </>
+  );
+}
+
+/* ── Rotating cover card for labels with multiple covers ── */
+function RotatingCoverCard({ label }) {
+  const [hovered, setHovered] = useState(false);
+  const [coverIdx, setCoverIdx] = useState(0);
+  const intervalRef = useRef(null);
+
+  const startRotation = useCallback(() => {
+    setHovered(true);
+    setCoverIdx(0);
+    intervalRef.current = setInterval(() => {
+      setCoverIdx((prev) => (prev + 1) % label.covers.length);
+    }, 2000);
+  }, [label.covers.length]);
+
+  const stopRotation = useCallback(() => {
+    setHovered(false);
+    clearInterval(intervalRef.current);
+    setCoverIdx(0);
+  }, []);
+
+  useEffect(() => {
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
+  return (
+    <div
+      className="flip-card__inner"
+      onMouseEnter={startRotation}
+      onMouseLeave={stopRotation}
+    >
+      <div className="flip-card__front cell cell--label">
+        {label.name}
+      </div>
+      <div className={`flip-card__back ${hovered ? "flip-card__back--visible" : ""}`}>
+        {label.covers.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt={`${label.name} release ${i + 1}`}
+            loading="lazy"
+            className={`flip-card__rotating-img ${i === coverIdx ? "flip-card__rotating-img--active" : ""}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
