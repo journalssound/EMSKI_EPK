@@ -731,7 +731,7 @@ button {
   display: flex;
   justify-content: center;
   gap: clamp(16px, 3vw, 32px);
-  margin-top: 40px;
+  margin-top: 64px;
   flex-wrap: wrap;
 }
 

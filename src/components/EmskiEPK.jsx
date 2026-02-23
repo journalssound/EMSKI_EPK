@@ -270,7 +270,7 @@ export default function EmskiEPK() {
 
       {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <footer className="site-footer">
-        <span className="site-footer__text">&copy; 2025 EMSKI MUSIC</span>
+        <span className="site-footer__text">&copy; 2026 EMSKI MUSIC</span>
         <span className="site-footer__text site-footer__text--dim">
           ARTIST PRESS KIT
         </span>
@@ -290,7 +290,7 @@ function RotatingCoverCard({ label }) {
     setCoverIdx(0);
     intervalRef.current = setInterval(() => {
       setCoverIdx((prev) => (prev + 1) % label.covers.length);
-    }, 2000);
+    }, 1000);
   }, [label.covers.length]);
 
   const stopRotation = useCallback(() => {
