@@ -449,22 +449,50 @@ section { padding: 100px 0 60px; position: relative; }
 
 /* ━━ BUDGET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .budget-hero {
-  text-align: center; padding: 60px 0 40px;
+  text-align: center; padding: 48px 0 32px;
 }
 .budget-amount {
-  font-family: var(--f-heading); font-weight: 800;
-  font-size: clamp(48px, 10vw, 96px); letter-spacing: -2px;
-  background: linear-gradient(135deg, var(--c-ice), var(--c-cyan));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(28px, 5vw, 42px); letter-spacing: 2px;
+  color: var(--c-ice); opacity: .85;
 }
 .budget-subtitle {
-  font-family: var(--f-mono); font-size: 13px; letter-spacing: 4px;
-  color: var(--c-ice); text-transform: uppercase; margin-top: 8px;
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: 3px;
+  color: rgba(167,216,255,.5); text-transform: uppercase; margin-top: 6px;
+}
+
+.budget-fold {
+  text-align: center; margin: 24px 0 0;
+}
+.budget-fold__trigger {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(20px, 4vw, 28px); letter-spacing: 1px;
+  color: var(--c-ice); opacity: .8;
+}
+.budget-fold__trigger span {
+  font-family: var(--f-body); font-weight: 400;
+  font-size: 13px; color: rgba(167,216,255,.45); letter-spacing: 0;
+}
+.budget-fold__panel {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .6s cubic-bezier(.4,0,.2,1) .3s;
+}
+.budget-fold.is-open .budget-fold__panel {
+  grid-template-rows: 1fr;
+}
+.budget-fold__inner {
+  overflow: hidden;
+}
+.budget-per-track {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 3px;
+  color: rgba(167,216,255,.4); text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
 .budget-breakdown {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin: 20px 0 8px;
 }
 @media (max-width: 600px) { .budget-breakdown { grid-template-columns: 1fr; } }
 
@@ -654,7 +682,7 @@ section { padding: 100px 0 60px; position: relative; }
   .mini-eq { display: none; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .video-grid { grid-template-columns: 1fr 1fr; }
-  .budget-amount { font-size: clamp(40px, 12vw, 80px); }
+  .budget-amount { font-size: clamp(24px, 6vw, 36px); }
   .merch-showcase { grid-template-columns: 1fr; }
   .hero__unmute { width: 38px; height: 38px; bottom: 16px; right: 16px; }
 }
@@ -877,16 +905,24 @@ section { padding: 100px 0 60px; position: relative; }
       <div class="budget-amount">$10,000</div>
       <div class="budget-subtitle">Total Marketing Budget</div>
     </div>
-    <div class="budget-per-track reveal reveal-d2">Per Track × 5</div>
-    <div class="budget-track-amount reveal reveal-d2">$2,000 <span>per song</span></div>
-    <div class="budget-breakdown">
-      <div class="budget-item reveal reveal-d3">
-        <span class="budget-item__label">Paid Social Ads</span>
-        <span class="budget-item__val">$1,500</span>
+    <div class="budget-fold reveal reveal-d2" id="budgetFold">
+      <div class="budget-fold__trigger">
+        $2,000 <span>per song</span>
       </div>
-      <div class="budget-item reveal reveal-d4">
-        <span class="budget-item__label">Playlist Pitching & PR</span>
-        <span class="budget-item__val">$500</span>
+      <div class="budget-fold__panel">
+        <div class="budget-fold__inner">
+          <div class="budget-per-track">Per Track × 5</div>
+          <div class="budget-breakdown">
+            <div class="budget-item">
+              <span class="budget-item__label">Paid Social Ads</span>
+              <span class="budget-item__val">$1,500</span>
+            </div>
+            <div class="budget-item">
+              <span class="budget-item__label">Playlist Pitching & PR</span>
+              <span class="budget-item__val">$500</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -909,22 +945,22 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="td__venue">MHOW</div>
       </div>
       <div class="tour-date-row">
-        <div class="td__date">3 / 20</div>
+        <div class="td__date">TBA</div>
         <div class="td__city">Dallas, TX</div>
         <div class="td__venue">TBA</div>
       </div>
       <div class="tour-date-row">
         <div class="td__date">3 / 29</div>
         <div class="td__city">Terlingua, TX</div>
-        <div class="td__venue">Big Bend</div>
+        <div class="td__venue">Big Bond</div>
       </div>
       <div class="tour-date-row">
-        <div class="td__date">4 / 03</div>
+        <div class="td__date">TBA</div>
         <div class="td__city">San Antonio, TX</div>
         <div class="td__venue">Paper Tiger</div>
       </div>
       <div class="tour-date-row">
-        <div class="td__date">4 / 10</div>
+        <div class="td__date">TBA</div>
         <div class="td__city">Houston, TX</div>
         <div class="td__venue">TBA</div>
       </div>
@@ -1008,6 +1044,18 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
 }, { threshold: 0.12 });
 reveals.forEach(el => revealObs.observe(el));
+
+/* ── Budget fold-out on scroll ──────────────────────────── */
+const budgetFold = document.getElementById('budgetFold');
+const budgetObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => budgetFold.classList.add('is-open'), 400);
+      budgetObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+budgetObs.observe(budgetFold);
 
 
 
