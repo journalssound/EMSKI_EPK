@@ -899,9 +899,12 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="pillar-card__num">01</div>
         <div class="pillar-card__title">High-Quality Production</div>
         <div class="pillar-card__desc">Cinematic lyric videos, visualizers, and full music videos shot and edited with professional production value. Every visual matches the sonic identity.</div>
-        <div class="pillar-card__video-slot" data-pillar="production">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
-          <span>Video Coming Soon</span>
+        <div class="pillar-card__video-slot" data-pillar="production" style="padding:0;border:none;background:transparent;position:relative">
+          <video id="productionVid" src="assets/hq-production.mp4" loop muted playsinline preload="metadata" style="width:100%;border-radius:4px;display:block"></video>
+          <button class="pillar-unmute" onclick="togglePillarMute(this)" aria-label="Unmute">
+            <svg class="icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="icon-unmuted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
         </div>
       </div>
       <div class="pillar-card reveal reveal-d1">
