@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/src/assets/EMSKI-logo-white-rgb.png" />
   <link rel="stylesheet" href="https://use.typekit.net/sag3htb.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -12,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <title>EMSKI × Ninja Tune — e/MOTION EP</title>
-  <meta name="description" content="Pitch deck for EMSKI e/MOTION EP — presented exclusively for Ninja Tune." />
-  <meta property="og:title" content="EMSKI × Ninja Tune — e/MOTION EP" />
+  <title>EMSKI × Ninja Tune — e/Motion EP</title>
+  <meta name="description" content="Pitch deck for EMSKI e/Motion EP — presented exclusively for Ninja Tune." />
+  <meta property="og:title" content="EMSKI × Ninja Tune — e/Motion EP" />
   <meta property="og:image" content="assets/og-image.jpg" />
   <style>
 /* ━━ RESET & TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -451,50 +449,22 @@ section { padding: 100px 0 60px; position: relative; }
 
 /* ━━ BUDGET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .budget-hero {
-  text-align: center; padding: 48px 0 32px;
+  text-align: center; padding: 60px 0 40px;
 }
 .budget-amount {
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(28px, 5vw, 42px); letter-spacing: 2px;
-  color: var(--c-ice); opacity: .85;
+  font-family: var(--f-heading); font-weight: 800;
+  font-size: clamp(48px, 10vw, 96px); letter-spacing: -2px;
+  background: linear-gradient(135deg, var(--c-ice), var(--c-cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .budget-subtitle {
-  font-family: var(--f-mono); font-size: 12px; letter-spacing: 3px;
-  color: rgba(167,216,255,.5); text-transform: uppercase; margin-top: 6px;
-}
-
-.budget-fold {
-  text-align: center; margin: 24px 0 0;
-}
-.budget-fold__trigger {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(20px, 4vw, 28px); letter-spacing: 1px;
-  color: var(--c-ice); opacity: .8;
-}
-.budget-fold__trigger span {
-  font-family: var(--f-body); font-weight: 400;
-  font-size: 13px; color: rgba(167,216,255,.45); letter-spacing: 0;
-}
-.budget-fold__panel {
-  display: grid; grid-template-rows: 0fr;
-  transition: grid-template-rows .6s cubic-bezier(.4,0,.2,1) .3s;
-}
-.budget-fold.is-open .budget-fold__panel {
-  grid-template-rows: 1fr;
-}
-.budget-fold__inner {
-  overflow: hidden;
-}
-.budget-per-track {
-  font-family: var(--f-mono); font-size: 11px; letter-spacing: 3px;
-  color: rgba(167,216,255,.4); text-transform: uppercase;
-  margin-bottom: 6px;
+  font-family: var(--f-mono); font-size: 13px; letter-spacing: 4px;
+  color: var(--c-ice); text-transform: uppercase; margin-top: 8px;
 }
 
 .budget-breakdown {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-  margin: 20px 0 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0;
 }
 @media (max-width: 600px) { .budget-breakdown { grid-template-columns: 1fr; } }
 
@@ -684,7 +654,7 @@ section { padding: 100px 0 60px; position: relative; }
   .mini-eq { display: none; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .video-grid { grid-template-columns: 1fr 1fr; }
-  .budget-amount { font-size: clamp(24px, 6vw, 36px); }
+  .budget-amount { font-size: clamp(40px, 12vw, 80px); }
   .merch-showcase { grid-template-columns: 1fr; }
   .hero__unmute { width: 38px; height: 38px; bottom: 16px; right: 16px; }
 }
@@ -703,17 +673,17 @@ section { padding: 100px 0 60px; position: relative; }
 
 <!-- ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <header class="hero" id="hero">
-  <video class="hero__bg-video" id="heroBgVideo" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto"></video>
+  <video class="hero__bg-video" id="heroBgVideo" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="none"></video>
   <div class="hero__bg-overlay" id="heroOverlay"></div>
   <div class="hero__content">
     <div class="hero__e-wrap">
       <video id="eVideo" src="assets/E_video_loop.mp4" loop muted playsinline preload="auto" style="display:none"></video>
       <canvas id="eCanvas"></canvas>
     </div>
-    <h1 class="hero__title">e/MOTION EP</h1>
+    <h1 class="hero__title">e/Motion EP</h1>
     <div class="hero__definition">
-      <p class="pos" style="color:rgba(167,216,255,.6)"><span style="font-style:italic;letter-spacing:0;margin-right:6px">/ɪˈmoʊ.ʃən/</span> verb</p>
-      <p class="meaning" style="color:rgba(244,247,255,.8)">to move through <em>emotion</em> with <em>motion</em></p>
+      <p class="pos"><span style="font-style:italic;letter-spacing:0;margin-right:6px">/ɪˈmoʊ.ʃən/</span> noun</p>
+      <p class="meaning">evolving through <em>emotion</em> in <em>motion</em></p>
     </div>
     <div class="hero__badge">Presented for Ninja Tune</div>
   </div>
@@ -734,7 +704,7 @@ section { padding: 100px 0 60px; position: relative; }
 <section>
   <div class="wrap">
     <div class="section-label reveal">The Music</div>
-    <h2 class="section-heading reveal reveal-d1">e/MOTION EP — 5 Tracks</h2>
+    <h2 class="section-heading reveal reveal-d1">e/Motion EP — 5 Tracks</h2>
     <div class="songs-list" id="songsList">
       <div class="ap reveal" data-src="songs/hold-me-up.mp3">
         <video class="ap__video" src="videos/lyric-holdmeup.mp4" loop muted playsinline preload="metadata"></video>
@@ -799,7 +769,7 @@ section { padding: 100px 0 60px; position: relative; }
           <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
         </div>
       </div>
-      <div class="ap reveal reveal-d3" data-src="songs/EMSKI - Calm Down 2.23 (mp3 export).mp3">
+      <div class="ap reveal reveal-d3" data-src="songs/calm-down.mp3">
         <video class="ap__video" src="videos/lyric-calmdown.mp4" loop muted playsinline preload="metadata"></video>
         <div class="ap__controls">
           <div class="ap__top">
@@ -854,7 +824,7 @@ section { padding: 100px 0 60px; position: relative; }
     <h2 class="section-heading reveal reveal-d1">Content Strategy</h2>
     <h3 class="reveal reveal-d1" style="font-family:var(--f-heading);font-weight:600;font-size:20px;letter-spacing:1.5px;color:var(--c-ice);margin-top:8px;margin-bottom:32px">Four Pillar Approach</h3>
     <p class="reveal reveal-d2" style="color:rgba(244,247,255,.55);font-size:14px;line-height:1.7;margin-bottom:48px;max-width:640px">
-      Every track on the e/MOTION EP is accompanied by a suite of visual content designed for multi-platform rollout across Spotify Canvas, Instagram Reels, TikTok, and YouTube Shorts. The content is organized around four strategic pillars:
+      Every track on the e/Motion EP is accompanied by a suite of visual content designed for multi-platform rollout across Spotify Canvas, Instagram Reels, TikTok, and YouTube Shorts. The content is organized around four strategic pillars:
     </p>
     <div class="pillars-grid">
       <div class="pillar-card reveal">
@@ -868,24 +838,6 @@ section { padding: 100px 0 60px; position: relative; }
       </div>
       <div class="pillar-card reveal reveal-d1">
         <div class="pillar-card__num">02</div>
-        <div class="pillar-card__title">Live Performance</div>
-        <div class="pillar-card__desc">High-energy show clips, crowd footage, festival moments, and live edits that showcase stage presence and audience engagement.</div>
-        <div class="pillar-card__video-slot" data-pillar="live">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
-          <span>Video Coming Soon</span>
-        </div>
-      </div>
-      <div class="pillar-card reveal reveal-d2">
-        <div class="pillar-card__num">03</div>
-        <div class="pillar-card__title">Casual Content</div>
-        <div class="pillar-card__desc">Lo-fi, spontaneous moments — studio sessions, daily life, tour clips, and candid content that feels real and relatable. Text-on-screen storytelling paired with trend awareness and cultural consciousness. Volume over polish.</div>
-        <div class="pillar-card__video-slot" data-pillar="casual">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
-          <span>Video Coming Soon</span>
-        </div>
-      </div>
-      <div class="pillar-card reveal reveal-d3">
-        <div class="pillar-card__num">04</div>
         <div class="pillar-card__title">Talking Head</div>
         <div class="pillar-card__desc">Authentic, unfiltered direct-to-camera content — behind-the-scenes process, production breakdowns, and personal storytelling that builds parasocial connection.</div>
         <div class="pillar-card__video-slot" data-pillar="talking-head">
@@ -893,88 +845,23 @@ section { padding: 100px 0 60px; position: relative; }
           <span>Video Coming Soon</span>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ━━ MARKETING BUDGET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<section>
-  <div class="wrap">
-    <div class="section-label reveal">Investment</div>
-    <div class="budget-hero reveal reveal-d1">
-      <div class="budget-amount">$10,000</div>
-      <div class="budget-subtitle">Total Marketing Budget</div>
-    </div>
-    <div class="budget-fold reveal reveal-d2" id="budgetFold">
-      <div class="budget-fold__trigger">
-        $2,000 <span>per song</span>
-      </div>
-      <div class="budget-fold__panel">
-        <div class="budget-fold__inner">
-          <div class="budget-per-track">Per Track × 5</div>
-          <div class="budget-breakdown">
-            <div class="budget-item">
-              <span class="budget-item__label">Paid Social Ads</span>
-              <span class="budget-item__val">$1,500</span>
-            </div>
-            <div class="budget-item">
-              <span class="budget-item__label">Playlist Pitching & PR</span>
-              <span class="budget-item__val">$500</span>
-            </div>
-          </div>
+      <div class="pillar-card reveal reveal-d2">
+        <div class="pillar-card__num">03</div>
+        <div class="pillar-card__title">Casual Content</div>
+        <div class="pillar-card__desc">Lo-fi, spontaneous moments — studio sessions, daily life, tour clips, and candid content that feels real and relatable. Volume over polish.</div>
+        <div class="pillar-card__video-slot" data-pillar="casual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
+          <span>Video Coming Soon</span>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ━━ TOUR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<section>
-  <div class="wrap">
-    <div class="section-label reveal">On The Road</div>
-    <h2 class="section-heading reveal reveal-d1">Tour</h2>
-    <div class="tour-map-container reveal reveal-d2">
-      <div id="tourMap"></div>
-    </div>
-    <div class="tour-dates reveal reveal-d3">
-      <div class="tour-date-row">
-        <div class="td__date">3 / 13</div>
-        <div class="td__city">Brooklyn, NY</div>
-        <div class="td__venue">MHOW</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Dallas, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">3 / 29</div>
-        <div class="td__city">Terlingua, TX</div>
-        <div class="td__venue">Big Bond</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">TBA</div>
-        <div class="td__city">San Antonio, TX</div>
-        <div class="td__venue">Paper Tiger</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Houston, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">4 / 17</div>
-        <div class="td__city">Denver, CO</div>
-        <div class="td__venue">Larimer Lounge</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Austin, TX</div>
-        <div class="td__venue">TBA</div>
+      <div class="pillar-card reveal reveal-d3">
+        <div class="pillar-card__num">04</div>
+        <div class="pillar-card__title">Live Performance</div>
+        <div class="pillar-card__desc">High-energy show clips, crowd footage, festival moments, and live edits that showcase stage presence and audience engagement.</div>
+        <div class="pillar-card__video-slot" data-pillar="live">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
+          <span>Video Coming Soon</span>
+        </div>
       </div>
     </div>
   </div>
@@ -988,7 +875,7 @@ section { padding: 100px 0 60px; position: relative; }
     <div class="section-label reveal">Physical Product</div>
     <h2 class="section-heading reveal reveal-d1">Merch Design</h2>
     <p class="reveal reveal-d2" style="color:rgba(244,247,255,.55);font-size:14px;line-height:1.7;margin-bottom:32px;max-width:640px">
-      Custom merchandise designed to extend the e/MOTION brand into physical product — premium quality apparel that resonates with the audience and creates additional touchpoints.
+      Custom merchandise designed to extend the e/Motion brand into physical product — premium quality apparel that resonates with the audience and creates additional touchpoints.
     </p>
     <div class="merch-showcase">
       <div class="merch-item reveal reveal-d2">
@@ -1011,20 +898,93 @@ section { padding: 100px 0 60px; position: relative; }
 
 <div class="divider"></div>
 
+<!-- ━━ MARKETING BUDGET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">Investment</div>
+    <div class="budget-hero reveal reveal-d1">
+      <div class="budget-amount" id="budgetAmount">$10,000</div>
+      <div class="budget-subtitle">Marketing Budget — EP Campaign</div>
+    </div>
+    <div class="budget-breakdown">
+      <div class="budget-item reveal">
+        <span class="budget-item__label">Paid Social Ads (Meta / TikTok)</span>
+        <span class="budget-item__val">$3,500</span>
+      </div>
+      <div class="budget-item reveal reveal-d1">
+        <span class="budget-item__label">Playlist Pitching & PR</span>
+        <span class="budget-item__val">$2,000</span>
+      </div>
+      <div class="budget-item reveal reveal-d2">
+        <span class="budget-item__label">Content Production</span>
+        <span class="budget-item__val">$2,500</span>
+      </div>
+      <div class="budget-item reveal reveal-d3">
+        <span class="budget-item__label">Tour Support & Live Events</span>
+        <span class="budget-item__val">$2,000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ TOUR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">On The Road</div>
+    <h2 class="section-heading reveal reveal-d1">Tour</h2>
+    <div class="tour-map-container reveal reveal-d2">
+      <div id="tourMap"></div>
+    </div>
+    <div class="tour-dates reveal reveal-d3">
+      <div class="tour-date-row">
+        <div class="td__date">3/13</div>
+        <div class="td__city">Brooklyn, NY</div>
+        <div class="td__venue">MHOW</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">3/20</div>
+        <div class="td__city">Dallas, TX</div>
+        <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">3/29</div>
+        <div class="td__city">Terlingua, TX</div>
+        <div class="td__venue">Big Bend</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">4/03</div>
+        <div class="td__city">San Antonio, TX</div>
+        <div class="td__venue">Paper Tiger</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">4/10</div>
+        <div class="td__city">Houston, TX</div>
+        <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">4/17</div>
+        <div class="td__city">Denver, CO</div>
+        <div class="td__venue">Larimer Lounge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ━━ CLOSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section class="closing">
+  <img class="closing__logo reveal" src="assets/EMSKI-logo-white-rgb.png" alt="EMSKI" />
   <h2 class="closing__title reveal reveal-d1">Thank You</h2>
   <p class="closing__sub reveal reveal-d2">
-    Thank you for your time and consideration. We're excited about the possibility of building the e/MOTION EP with Ninja Tune.
+    Thank you for your time and consideration. We're excited about the possibility of building the e/Motion EP with Ninja Tune.
   </p>
   <div class="closing__contact reveal reveal-d3">
     <a href="mailto:contact@emskimusic.com">contact@emskimusic.com</a>
   </div>
 </section>
-
-<div style="text-align:center;padding:24px 0 40px;">
-  <img src="assets/EMSKI-logo-white-rgb.png" alt="EMSKI" style="height:13px;opacity:.2;display:inline-block;" />
-</div>
 
 <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <!-- SCRIPTS -->
@@ -1046,18 +1006,6 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
 }, { threshold: 0.12 });
 reveals.forEach(el => revealObs.observe(el));
-
-/* ── Budget fold-out on scroll ──────────────────────────── */
-const budgetFold = document.getElementById('budgetFold');
-const budgetObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      setTimeout(() => budgetFold.classList.add('is-open'), 400);
-      budgetObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.3 });
-budgetObs.observe(budgetFold);
 
 
 
@@ -1183,12 +1131,8 @@ budgetObs.observe(budgetFold);
   if (video.readyState >= 2) setup();
 })();
 
-/* ── Custom Audio Players (Web Audio API) ──────────────── */
+/* ── Custom Audio Players (no library) ──────────────────── */
 /*
-   Audio is routed through the Web Audio API (AudioContext →
-   MediaElementSource → destination) for the highest-fidelity
-   playback pipeline the browser can provide.
-
    KNOWN ISSUE: Seeking (scrubbing) doesn't work on Cloudflare Pages
    because it doesn't support HTTP byte-range requests (returns 200
    instead of 206). To fix this, host the MP3 files on a service that
@@ -1197,16 +1141,17 @@ budgetObs.observe(budgetFold);
    206 responses, the standard audio.currentTime seeking below will
    work perfectly with no additional code.
 */
-let audioCtx = null;
 let activeAudio = null;
 let activeAP = null;
 const apData = new Map();
 
-/* Create / resume a shared AudioContext (high-quality playback pipeline) */
+/* Web Audio API for high-quality playback */
+let audioCtx = null;
 function getAudioCtx() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-      latencyHint: 'playback',
+      sampleRate: 44100,
+      latencyHint: 'playback'
     });
   }
   if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -1222,9 +1167,9 @@ function fmt(s) {
   document.querySelectorAll('.ap[data-src]').forEach(el => {
     const audio  = new Audio();
     audio.preload = 'auto';
+    audio.crossOrigin = 'anonymous';
     audio.src     = el.dataset.src;
     let isSeeking = false;
-    let sourceNode = null;
 
     const seekBar  = el.querySelector('.ap__seek');
     const seekFill = el.querySelector('.ap__seek-fill');
@@ -1232,30 +1177,23 @@ function fmt(s) {
     const durEl    = el.querySelector('.ap__dur');
     const bars     = el.querySelectorAll('.mini-eq__bar');
 
-    const d = { audio, seekFill, curEl, durEl, bars };
-    apData.set(el, d);
-
-    /*
-     * Route audio through Web Audio API on first play.
-     * createMediaElementSource captures the Audio element's output
-     * into the AudioContext graph → destination, giving us the
-     * highest-quality decoding pipeline the browser can provide.
-     *
-     * If files are moved to a CDN (different origin), add
-     * audio.crossOrigin = 'anonymous' above and ensure the CDN
-     * sends Access-Control-Allow-Origin headers.
-     */
-    d.connectWebAudio = function () {
-      if (sourceNode) return;
+    /* Connect to Web Audio API on first play for higher quality */
+    let webAudioConnected = false;
+    function connectWebAudio() {
+      if (webAudioConnected) return;
       try {
         const ctx = getAudioCtx();
-        sourceNode = ctx.createMediaElementSource(audio);
-        sourceNode.connect(ctx.destination);
-      } catch (e) {
-        /* Fallback: audio still plays through the default output */
-        console.warn('Web Audio unavailable — using default output', e);
-      }
-    };
+        const source = ctx.createMediaElementSource(audio);
+        const gain = ctx.createGain();
+        gain.gain.value = 1.0;
+        source.connect(gain);
+        gain.connect(ctx.destination);
+        webAudioConnected = true;
+      } catch(e) { /* fallback to default output */ }
+    }
+
+    const d = { audio, seekFill, curEl, durEl, bars, connectWebAudio };
+    apData.set(el, d);
 
     audio.addEventListener('loadedmetadata', () => {
       if (durEl) durEl.textContent = fmt(audio.duration);
@@ -1306,13 +1244,11 @@ function fmt(s) {
   });
 })();
 
+
+
 function apToggle(el) {
   const d = apData.get(el);
   if (!d) return;
-
-  /* Wire up Web Audio API on first user interaction */
-  d.connectWebAudio();
-  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
   // Stop any other playing track
   if (activeAP && activeAP !== el) {
@@ -1328,6 +1264,7 @@ function apToggle(el) {
   }
 
   if (d.audio.paused) {
+    d.connectWebAudio();
     d.audio.play();
     el.classList.add('playing');
     el.querySelector('.ap__play svg').innerHTML = '<rect x="7" y="5" width="3" height="14" /><rect x="14" y="5" width="3" height="14" />';
@@ -1345,7 +1282,7 @@ function apToggle(el) {
   activeAudio = d.audio;
 }
 
-/* ── Hero scroll-driven video reveal ───────────────────── */
+/* ── Hero scroll-driven video reveal ─────────────────────── */
 (function initHeroReveal() {
   const hero = document.getElementById('hero');
   const video = document.getElementById('heroBgVideo');
@@ -1357,6 +1294,7 @@ function apToggle(el) {
 
   function onScroll() {
     const rect = hero.getBoundingClientRect();
+    // How far through the hero have we scrolled (0 = top of hero, 1 = bottom)
     const progress = -rect.top / (rect.height - window.innerHeight);
     const pastHalf = progress > 0.35;
 
@@ -1497,11 +1435,10 @@ function apToggle(el) {
     { name: 'San Antonio', sub: 'TX', lat: 29.42, lng: -98.49, labelDir: 'bottom' },
     { name: 'Houston', sub: 'TX', lat: 29.76, lng: -95.37, labelDir: 'right' },
     { name: 'New York', sub: 'NY', lat: 40.71, lng: -74.01, labelDir: 'right' },
-    { name: 'Terlingua', sub: 'TX', lat: 29.33, lng: -103.59, labelDir: 'left' },
   ];
 
   const routes = [
-    [0, 2], [2, 1], [1, 3], [1, 4], [0, 5], [3, 6],
+    [0, 2], [2, 1], [1, 3], [1, 4], [0, 5],
   ];
 
   // Add route lines
@@ -1566,25 +1503,33 @@ function apToggle(el) {
   map.on('drag', () => map.panTo(map.getCenter()));
 })();
 
-/* ── Hero video loading ────────────────────────────────── */
+/* ── Progressive hero video loading ────────────────────── */
 (function loadHeroVideo() {
   const video = document.getElementById('heroBgVideo');
   if (!video) return;
 
-  video.src = 'videos/warehouse-show-hd.mp4';
-  video.preload = 'auto';
+  // Phase 1: tiny 480p muted preview for instant playback
+  video.src = 'videos/hero-preview.mp4';
   video.load();
 
-  // Force full buffer so the loop doesn't restart at the buffer edge
-  function ensureBuffered() {
-    if (video.buffered.length > 0) {
-      const end = video.buffered.end(video.buffered.length - 1);
-      if (end >= video.duration - 0.5) return; // fully buffered
-    }
-    // Keep nudging the browser to buffer more
-    setTimeout(ensureBuffered, 2000);
-  }
-  video.addEventListener('loadedmetadata', ensureBuffered);
+  // Phase 2: swap to 1280p HD once it's buffered
+  const hdSrc = 'videos/warehouse-show-hd.mp4';
+  const preload = document.createElement('video');
+  preload.preload = 'auto';
+  preload.muted = true;
+  preload.src = hdSrc;
+
+  preload.addEventListener('canplaythrough', () => {
+    const currentTime = video.currentTime;
+    video.src = hdSrc;
+    video.currentTime = currentTime;
+    video.load();
+    video.play().catch(() => {});
+    preload.remove();
+  }, { once: true });
+
+  // Start preloading HD after a brief delay
+  setTimeout(() => { preload.load(); }, 1500);
 })();
 </script>
 
