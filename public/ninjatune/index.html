@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <title>EMSKI × Ninja Tune — e/Motion EP</title>
-  <meta name="description" content="Pitch deck for EMSKI e/Motion EP — presented exclusively for Ninja Tune." />
-  <meta property="og:title" content="EMSKI × Ninja Tune — e/Motion EP" />
+  <title>EMSKI × Ninja Tune — E/MOTION EP</title>
+  <meta name="description" content="Pitch deck for EMSKI E/MOTION EP — presented exclusively for Ninja Tune." />
+  <meta property="og:title" content="EMSKI × Ninja Tune — E/MOTION EP" />
   <meta property="og:image" content="assets/og-image.jpg" />
   <style>
 /* ━━ RESET & TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -450,30 +450,44 @@ section { padding: 100px 0 60px; position: relative; }
 }
 
 /* ━━ BUDGET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.budget-hero {
-  text-align: center; padding: 60px 0 40px;
+.budget-accordion {
+  max-width: 600px;
 }
-.budget-amount {
-  font-family: var(--f-heading); font-weight: 800;
-  font-size: clamp(48px, 10vw, 96px); letter-spacing: -2px;
-  background: linear-gradient(135deg, var(--c-ice), var(--c-cyan));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+.budget-acc-item {
+  border: 1px solid rgba(167,216,255,.08);
+  border-radius: 4px;
+  margin-bottom: 12px;
+  overflow: hidden;
 }
-.budget-subtitle {
-  font-family: var(--f-mono); font-size: 13px; letter-spacing: 4px;
-  color: var(--c-ice); text-transform: uppercase; margin-top: 8px;
+.budget-acc-header {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; padding: 18px 24px;
+  background: rgba(14,17,22,.6);
+  border: none; cursor: pointer;
+  font-family: var(--f-heading); font-weight: 600; font-size: 14px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--c-ice);
+  transition: background .2s;
 }
-
-.budget-breakdown {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0;
+.budget-acc-header:hover { background: rgba(14,17,22,.8); }
+.budget-acc-arrow {
+  transition: transform .3s ease;
 }
-@media (max-width: 600px) { .budget-breakdown { grid-template-columns: 1fr; } }
-
+.budget-acc-item.open .budget-acc-arrow {
+  transform: rotate(180deg);
+}
+.budget-acc-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease;
+  background: rgba(6,6,9,.4);
+}
+.budget-acc-item.open .budget-acc-body {
+  max-height: 200px;
+}
 .budget-item {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 16px 20px; background: rgba(14,17,22,.6);
-  border: 1px solid rgba(167,216,255,.06); border-radius: 2px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(167,216,255,.04);
 }
 .budget-item__label {
   font-family: var(--f-body); font-size: 13px; color: rgba(244,247,255,.65);
@@ -580,8 +594,7 @@ section { padding: 100px 0 60px; position: relative; }
   border-bottom: 1px solid rgba(167,216,255,.06);
 }
 .tour-date-row--tba {
-  filter: blur(5px); user-select: none; pointer-events: none;
-  opacity: .35;
+  opacity: .45;
 }
 .td__date {
   font-family: var(--f-mono); font-size: 14px; letter-spacing: 1px;
@@ -657,6 +670,8 @@ section { padding: 100px 0 60px; position: relative; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .video-grid { grid-template-columns: 1fr 1fr; }
   .budget-amount { font-size: clamp(40px, 12vw, 80px); }
+  .budget-acc-header { padding: 14px 18px; font-size: 12px; }
+  .budget-item { padding: 12px 18px; }
   .merch-showcase { grid-template-columns: 1fr; }
   .hero__unmute { width: 38px; height: 38px; bottom: 16px; right: 16px; }
 }
@@ -682,10 +697,10 @@ section { padding: 100px 0 60px; position: relative; }
       <video id="eVideo" src="assets/E_video_loop.mp4" loop muted playsinline preload="auto" style="display:none"></video>
       <canvas id="eCanvas"></canvas>
     </div>
-    <h1 class="hero__title">e/Motion EP</h1>
+    <h1 class="hero__title">E/MOTION EP</h1>
     <div class="hero__definition">
-      <p class="pos"><span style="font-style:italic;letter-spacing:0;margin-right:6px">/ɪˈmoʊ.ʃən/</span> noun</p>
-      <p class="meaning">evolving through <em>emotion</em> in <em>motion</em></p>
+      <p class="pos" style="font-size:clamp(16px, 2.5vw, 22px);letter-spacing:2px;margin-bottom:8px"><span style="font-style:italic;letter-spacing:0;margin-right:6px">/ɪˈmoʊ.ʃən/</span> verb</p>
+      <p class="meaning" style="font-size:clamp(14px, 2vw, 18px);letter-spacing:1px">to evolve through <em>emotion</em> in <em>motion</em></p>
     </div>
     <div class="hero__badge">Presented for Ninja Tune</div>
   </div>
@@ -706,7 +721,7 @@ section { padding: 100px 0 60px; position: relative; }
 <section>
   <div class="wrap">
     <div class="section-label reveal">The Music</div>
-    <h2 class="section-heading reveal reveal-d1">e/Motion EP — 5 Tracks</h2>
+    <h2 class="section-heading reveal reveal-d1">E/MOTION EP — 5 Tracks</h2>
     <div class="songs-list" id="songsList">
       <div class="ap reveal" data-src="songs/hold-me-up.mp3">
         <video class="ap__video" src="videos/lyric-holdmeup.mp4" loop muted playsinline preload="metadata"></video>
@@ -826,7 +841,7 @@ section { padding: 100px 0 60px; position: relative; }
     <h2 class="section-heading reveal reveal-d1">Content Strategy</h2>
     <h3 class="reveal reveal-d1" style="font-family:var(--f-heading);font-weight:600;font-size:20px;letter-spacing:1.5px;color:var(--c-ice);margin-top:8px;margin-bottom:32px">Four Pillar Approach</h3>
     <p class="reveal reveal-d2" style="color:rgba(244,247,255,.55);font-size:14px;line-height:1.7;margin-bottom:48px;max-width:640px">
-      Every track on the e/Motion EP is accompanied by a suite of visual content designed for multi-platform rollout across Spotify Canvas, Instagram Reels, TikTok, and YouTube Shorts. The content is organized around four strategic pillars:
+      Every track on the E/MOTION EP is accompanied by a suite of visual content designed for multi-platform rollout across Spotify Canvas, Instagram Reels, TikTok, and YouTube Shorts. The content is organized around four strategic pillars:
     </p>
     <div class="pillars-grid">
       <div class="pillar-card reveal">
@@ -840,9 +855,9 @@ section { padding: 100px 0 60px; position: relative; }
       </div>
       <div class="pillar-card reveal reveal-d1">
         <div class="pillar-card__num">02</div>
-        <div class="pillar-card__title">Talking Head</div>
-        <div class="pillar-card__desc">Authentic, unfiltered direct-to-camera content — behind-the-scenes process, production breakdowns, and personal storytelling that builds parasocial connection.</div>
-        <div class="pillar-card__video-slot" data-pillar="talking-head">
+        <div class="pillar-card__title">Live Performance</div>
+        <div class="pillar-card__desc">High-energy show clips, crowd footage, festival moments, and live edits that showcase stage presence and audience engagement.</div>
+        <div class="pillar-card__video-slot" data-pillar="live">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
           <span>Video Coming Soon</span>
         </div>
@@ -858,40 +873,11 @@ section { padding: 100px 0 60px; position: relative; }
       </div>
       <div class="pillar-card reveal reveal-d3">
         <div class="pillar-card__num">04</div>
-        <div class="pillar-card__title">Live Performance</div>
-        <div class="pillar-card__desc">High-energy show clips, crowd footage, festival moments, and live edits that showcase stage presence and audience engagement.</div>
-        <div class="pillar-card__video-slot" data-pillar="live">
+        <div class="pillar-card__title">Talking Head</div>
+        <div class="pillar-card__desc">Authentic, unfiltered direct-to-camera content — behind-the-scenes process, production breakdowns, and personal storytelling that builds parasocial connection.</div>
+        <div class="pillar-card__video-slot" data-pillar="talking-head">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
           <span>Video Coming Soon</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ━━ MERCH / PHYSICAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<section>
-  <div class="wrap">
-    <div class="section-label reveal">Physical Product</div>
-    <h2 class="section-heading reveal reveal-d1">Merch Design</h2>
-    <p class="reveal reveal-d2" style="color:rgba(244,247,255,.55);font-size:14px;line-height:1.7;margin-bottom:32px;max-width:640px">
-      Custom merchandise designed to extend the e/Motion brand into physical product — premium quality apparel that resonates with the audience and creates additional touchpoints.
-    </p>
-    <div class="merch-showcase">
-      <div class="merch-item reveal reveal-d2">
-        <img src="assets/main-photo-web.png" alt="EMSKI merch — key visual design" loading="lazy" />
-        <div class="merch-item__label">
-          <div class="merch-item__title">Key Visual</div>
-          <div class="merch-item__sub">Brand Artwork</div>
-        </div>
-      </div>
-      <div class="merch-item reveal reveal-d3">
-        <img src="assets/merch-tshirt.png" alt="EMSKI merch — t-shirt design" loading="lazy" />
-        <div class="merch-item__label">
-          <div class="merch-item__title">T-Shirt Design</div>
-          <div class="merch-item__sub">Apparel</div>
         </div>
       </div>
     </div>
@@ -904,26 +890,36 @@ section { padding: 100px 0 60px; position: relative; }
 <section>
   <div class="wrap">
     <div class="section-label reveal">Investment</div>
-    <div class="budget-hero reveal reveal-d1">
-      <div class="budget-amount" id="budgetAmount">$10,000</div>
-      <div class="budget-subtitle">Marketing Budget — EP Campaign</div>
-    </div>
-    <div class="budget-breakdown">
-      <div class="budget-item reveal">
-        <span class="budget-item__label">Paid Social Ads (Meta / TikTok)</span>
-        <span class="budget-item__val">$3,500</span>
+    <h2 class="section-heading reveal reveal-d1" style="font-size:clamp(18px,3vw,28px);margin-bottom:8px">Marketing Budget</h2>
+    <p class="reveal reveal-d2" style="color:rgba(244,247,255,.45);font-family:var(--f-mono);font-size:13px;letter-spacing:2px;margin-bottom:40px">$2,000 per track — 5 tracks</p>
+    <div class="budget-accordion reveal reveal-d3" id="budgetAccordion">
+      <div class="budget-acc-item">
+        <button class="budget-acc-header" onclick="toggleBudgetAcc(this)">
+          <span>Per-Track Breakdown</span>
+          <svg class="budget-acc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="budget-acc-body">
+          <div class="budget-item">
+            <span class="budget-item__label">Paid Social Ads (Meta / TikTok)</span>
+            <span class="budget-item__val">$1,500</span>
+          </div>
+          <div class="budget-item">
+            <span class="budget-item__label">Playlist Placement &amp; PR</span>
+            <span class="budget-item__val">$500</span>
+          </div>
+        </div>
       </div>
-      <div class="budget-item reveal reveal-d1">
-        <span class="budget-item__label">Playlist Pitching & PR</span>
-        <span class="budget-item__val">$2,000</span>
-      </div>
-      <div class="budget-item reveal reveal-d2">
-        <span class="budget-item__label">Content Production</span>
-        <span class="budget-item__val">$2,500</span>
-      </div>
-      <div class="budget-item reveal reveal-d3">
-        <span class="budget-item__label">Tour Support & Live Events</span>
-        <span class="budget-item__val">$2,000</span>
+      <div class="budget-acc-item">
+        <button class="budget-acc-header" onclick="toggleBudgetAcc(this)">
+          <span>Total EP Campaign</span>
+          <svg class="budget-acc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="budget-acc-body">
+          <div class="budget-item">
+            <span class="budget-item__label">5 Tracks × $2,000</span>
+            <span class="budget-item__val">$10,000</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -946,8 +942,13 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="td__venue">MHOW</div>
       </div>
       <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">3/20</div>
+        <div class="td__date">TBA</div>
         <div class="td__city">Dallas, TX</div>
+        <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">Houston, TX</div>
         <div class="td__venue">TBA</div>
       </div>
       <div class="tour-date-row">
@@ -960,15 +961,15 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="td__city">San Antonio, TX</div>
         <div class="td__venue">Paper Tiger</div>
       </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">4/10</div>
-        <div class="td__city">Houston, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
       <div class="tour-date-row">
         <div class="td__date">4/17</div>
         <div class="td__city">Denver, CO</div>
         <div class="td__venue">Larimer Lounge</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">Austin, TX</div>
+        <div class="td__venue">TBA</div>
       </div>
     </div>
   </div>
@@ -976,16 +977,44 @@ section { padding: 100px 0 60px; position: relative; }
 
 <div class="divider"></div>
 
-<!-- ━━ CLOSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ━━ MERCH / PHYSICAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">Physical Product</div>
+    <h2 class="section-heading reveal reveal-d1">Merch Design</h2>
+    <p class="reveal reveal-d2" style="color:rgba(244,247,255,.55);font-size:14px;line-height:1.7;margin-bottom:32px;max-width:640px">
+      Custom merchandise designed to extend the E/MOTION brand into physical product — premium quality apparel that resonates with the audience and creates additional touchpoints.
+    </p>
+    <div class="merch-showcase">
+      <div class="merch-item reveal reveal-d2">
+        <img src="assets/main-photo-web.png" alt="EMSKI merch — key visual design" loading="lazy" />
+        <div class="merch-item__label">
+          <div class="merch-item__title">Key Visual</div>
+          <div class="merch-item__sub">Brand Artwork</div>
+        </div>
+      </div>
+      <div class="merch-item reveal reveal-d3">
+        <img src="assets/merch-tshirt.png" alt="EMSKI merch — t-shirt design" loading="lazy" />
+        <div class="merch-item__label">
+          <div class="merch-item__title">T-Shirt Design</div>
+          <div class="merch-item__sub">Apparel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="closing">
-  <img class="closing__logo reveal" src="assets/EMSKI-logo-white-rgb.png" alt="EMSKI" />
-  <h2 class="closing__title reveal reveal-d1">Thank You</h2>
-  <p class="closing__sub reveal reveal-d2">
-    Thank you for your time and consideration. We're excited about the possibility of building the e/Motion EP with Ninja Tune.
+  <h2 class="closing__title reveal">Thank You</h2>
+  <p class="closing__sub reveal reveal-d1">
+    Thank you for your time and consideration. We're excited about the possibility of building the E/MOTION EP with Ninja Tune.
   </p>
-  <div class="closing__contact reveal reveal-d3">
+  <div class="closing__contact reveal reveal-d2">
     <a href="mailto:contact@emskimusic.com">contact@emskimusic.com</a>
   </div>
+  <img class="closing__logo reveal reveal-d3" src="assets/EMSKI-logo-white-rgb.png" alt="EMSKI" style="margin-top:40px;margin-bottom:0" />
 </section>
 
 <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
@@ -1008,6 +1037,33 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
 }, { threshold: 0.12 });
 reveals.forEach(el => revealObs.observe(el));
+
+/* ── Budget accordion toggle ────────────────────────────── */
+function toggleBudgetAcc(btn) {
+  const item = btn.closest('.budget-acc-item');
+  item.classList.toggle('open');
+}
+/* Auto-open first accordion on scroll into view */
+const budgetAcc = document.getElementById('budgetAccordion');
+if (budgetAcc) {
+  const accObs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) {
+      budgetAcc.querySelector('.budget-acc-item')?.classList.add('open');
+      accObs.unobserve(budgetAcc);
+    }
+  }, { threshold: 0.3 });
+  accObs.observe(budgetAcc);
+}
+
+/* ── Auto-play lyric videos on scroll ───────────────────── */
+document.querySelectorAll('.ap__video').forEach(vid => {
+  vid.loop = true; vid.muted = true; vid.playsInline = true;
+  const vidObs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { vid.play().catch(() => {}); }
+    else { vid.pause(); }
+  }, { threshold: 0.15 });
+  vidObs.observe(vid);
+});
 
 
 
