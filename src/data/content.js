@@ -44,10 +44,10 @@ export const STATS = [
 ];
 
 export const SOCIALS = [
-  { name: "Spotify", url: "https://open.spotify.com/artist/EMSKI" },
+  { name: "Spotify", url: "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK?si=mIf5D4rVSuu15HD6MvMpfQ" },
   { name: "Instagram", url: "https://instagram.com/emskimusic" },
   { name: "TikTok", url: "https://tiktok.com/@emskimusic" },
-  { name: "YouTube", url: "https://youtube.com/@emskimusic" },
+  { name: "YouTube", url: "https://www.youtube.com/@emskimusic333" },
 ];
 
 export const NAV_LINKS = ["music", "stats", "photos", "contact"];
