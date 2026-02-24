@@ -1276,19 +1276,6 @@ let activeAudio = null;
 let activeAP = null;
 const apData = new Map();
 
-/* Web Audio API for high-quality playback */
-let audioCtx = null;
-function getAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-      sampleRate: 44100,
-      latencyHint: 'playback'
-    });
-  }
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
-
 function fmt(s) {
   if (!s || !isFinite(s)) return '0:00';
   return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
@@ -1297,8 +1284,7 @@ function fmt(s) {
 (function initPlayers() {
   document.querySelectorAll('.ap[data-src]').forEach(el => {
     const audio  = new Audio();
-    audio.preload = 'auto';
-    audio.crossOrigin = 'anonymous';
+    audio.preload = 'metadata';
     audio.src     = el.dataset.src;
     let isSeeking = false;
 
@@ -1308,22 +1294,7 @@ function fmt(s) {
     const durEl    = el.querySelector('.ap__dur');
     const bars     = el.querySelectorAll('.mini-eq__bar');
 
-    /* Connect to Web Audio API on first play for higher quality */
-    let webAudioConnected = false;
-    function connectWebAudio() {
-      if (webAudioConnected) return;
-      try {
-        const ctx = getAudioCtx();
-        const source = ctx.createMediaElementSource(audio);
-        const gain = ctx.createGain();
-        gain.gain.value = 1.0;
-        source.connect(gain);
-        gain.connect(ctx.destination);
-        webAudioConnected = true;
-      } catch(e) { /* fallback to default output */ }
-    }
-
-    const d = { audio, seekFill, curEl, durEl, bars, connectWebAudio };
+    const d = { audio, seekFill, curEl, durEl, bars };
     apData.set(el, d);
 
     audio.addEventListener('loadedmetadata', () => {
@@ -1395,8 +1366,7 @@ function apToggle(el) {
   }
 
   if (d.audio.paused) {
-    d.connectWebAudio();
-    d.audio.play();
+    d.audio.play().catch(() => {});
     el.classList.add('playing');
     el.querySelector('.ap__play svg').innerHTML = '<rect x="7" y="5" width="3" height="14" /><rect x="14" y="5" width="3" height="14" />';
     const vid = el.querySelector('.ap__video');
