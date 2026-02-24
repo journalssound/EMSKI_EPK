@@ -411,34 +411,35 @@ section { padding: 100px 0 60px; position: relative; }
 
 /* ━━ CONTENT PILLARS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .pillars-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 28px auto;
+  max-width: 720px;
 }
-@media (max-width: 600px) { .pillars-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .pillars-grid { grid-template-columns: 1fr; max-width: 340px; } }
 
 .pillar-card {
-  padding: 28px 24px; background: rgba(14,17,22,.6);
+  padding: 20px 18px; background: rgba(14,17,22,.6);
   border: 1px solid rgba(167,216,255,.06); border-radius: 4px;
   transition: border-color .4s, transform .4s;
 }
 .pillar-card:hover { border-color: rgba(114,114,254,.15); transform: translateY(-2px); }
 .pillar-card__num {
-  font-family: var(--f-mono); font-size: 10px; letter-spacing: 3px;
-  color: var(--c-neon-blue); margin-bottom: 10px;
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 3px;
+  color: var(--c-neon-blue); margin-bottom: 8px;
 }
 .pillar-card__title {
-  font-family: var(--f-heading); font-weight: 700; font-size: 16px;
-  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+  font-family: var(--f-heading); font-weight: 700; font-size: 14px;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
 }
 .pillar-card__desc {
-  font-size: 13px; line-height: 1.7; color: rgba(244,247,255,.55);
-  font-weight: 300; margin-bottom: 16px;
+  font-size: 12px; line-height: 1.65; color: rgba(244,247,255,.55);
+  font-weight: 300; margin-bottom: 12px;
 }
 /* Video placeholder inside pillar card */
 .pillar-card__video-slot {
-  width: 100%; aspect-ratio: 16/9; border-radius: 3px;
+  width: 100%; aspect-ratio: 9/16; border-radius: 3px;
   background: rgba(6,6,9,.6); border: 1px dashed rgba(167,216,255,.1);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; transition: border-color .4s;
+  gap: 8px; transition: border-color .4s; overflow: hidden;
 }
 .pillar-card:hover .pillar-card__video-slot { border-color: rgba(114,114,254,.2); }
 .pillar-card__video-slot svg {
@@ -935,9 +936,12 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="pillar-card__num">04</div>
         <div class="pillar-card__title">Talking Head</div>
         <div class="pillar-card__desc">Authentic, unfiltered direct-to-camera content — behind-the-scenes process, production breakdowns, and personal storytelling that builds parasocial connection.</div>
-        <div class="pillar-card__video-slot" data-pillar="talking-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
-          <span>Video Coming Soon</span>
+        <div class="pillar-card__video-slot" data-pillar="talking-head" style="padding:0;border:none;background:transparent;position:relative">
+          <video id="talkingVid" src="assets/talking-head.mp4" loop muted playsinline preload="metadata" style="width:100%;border-radius:4px;display:block"></video>
+          <button class="pillar-unmute" onclick="togglePillarMute(this)" aria-label="Unmute">
+            <svg class="icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="icon-unmuted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
         </div>
       </div>
     </div>
