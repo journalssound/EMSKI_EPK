@@ -450,6 +450,18 @@ section { padding: 100px 0 60px; position: relative; }
 }
 
 /* ━━ BUDGET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.pillar-unmute {
+  position: absolute; bottom: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(6,6,9,.6); border: 1px solid rgba(167,216,255,.2);
+  color: var(--c-ice); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: background .2s;
+  z-index: 2;
+}
+.pillar-unmute:hover { background: rgba(6,6,9,.8); }
+
 .budget-hero {
   text-align: center; padding: 48px 0 12px;
 }
@@ -859,17 +871,24 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="pillar-card__num">02</div>
         <div class="pillar-card__title">Live Performance</div>
         <div class="pillar-card__desc">High-energy show clips, crowd footage, festival moments, and live edits that showcase stage presence and audience engagement.</div>
-        <div class="pillar-card__video-slot" data-pillar="live" style="padding:0;border:none;background:transparent">
-          <video src="assets/4.mp4" loop muted playsinline preload="metadata" style="width:100%;border-radius:4px;display:block"></video>
+        <div class="pillar-card__video-slot" data-pillar="live" style="padding:0;border:none;background:transparent;position:relative">
+          <video id="liveVid" src="assets/4.mp4" loop muted playsinline preload="metadata" style="width:100%;border-radius:4px;display:block"></video>
+          <button class="pillar-unmute" onclick="togglePillarMute(this)" aria-label="Unmute">
+            <svg class="icon-muted" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="icon-unmuted" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
         </div>
       </div>
       <div class="pillar-card reveal reveal-d2">
         <div class="pillar-card__num">03</div>
         <div class="pillar-card__title">Casual Content</div>
         <div class="pillar-card__desc">Lo-fi, spontaneous moments — studio sessions, daily life, tour clips, and candid content that feels real and relatable. Volume over polish.</div>
-        <div class="pillar-card__video-slot" data-pillar="casual">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
-          <span>Video Coming Soon</span>
+        <div class="pillar-card__video-slot" data-pillar="casual" style="padding:0;border:none;background:transparent;position:relative">
+          <video id="casualVid" src="assets/casual.mp4" loop muted playsinline preload="metadata" style="width:100%;border-radius:4px;display:block"></video>
+          <button class="pillar-unmute" onclick="togglePillarMute(this)" aria-label="Unmute">
+            <svg class="icon-muted" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="icon-unmuted" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
         </div>
       </div>
       <div class="pillar-card reveal reveal-d3">
@@ -1040,6 +1059,15 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
 }, { threshold: 0.12 });
 reveals.forEach(el => revealObs.observe(el));
+
+/* ── Pillar video mute toggle ───────────────────────────── */
+function togglePillarMute(btn) {
+  const vid = btn.closest('.pillar-card__video-slot').querySelector('video');
+  if (!vid) return;
+  vid.muted = !vid.muted;
+  btn.querySelector('.icon-muted').style.display = vid.muted ? '' : 'none';
+  btn.querySelector('.icon-unmuted').style.display = vid.muted ? 'none' : '';
+}
 
 /* ── Budget cascade on scroll ───────────────────────────── */
 const budgetCascade = document.getElementById('budgetCascade');
