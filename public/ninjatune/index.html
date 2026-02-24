@@ -859,9 +859,8 @@ section { padding: 100px 0 60px; position: relative; }
         <div class="pillar-card__num">02</div>
         <div class="pillar-card__title">Live Performance</div>
         <div class="pillar-card__desc">High-energy show clips, crowd footage, festival moments, and live edits that showcase stage presence and audience engagement.</div>
-        <div class="pillar-card__video-slot" data-pillar="live">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
-          <span>Video Coming Soon</span>
+        <div class="pillar-card__video-slot" data-pillar="live" style="padding:0;border:none;background:transparent">
+          <video src="assets/4.mp4" loop muted playsinline preload="metadata" style="width:100%;border-radius:4px;display:block"></video>
         </div>
       </div>
       <div class="pillar-card reveal reveal-d2">
@@ -1058,7 +1057,7 @@ if (budgetCascade) {
 }
 
 /* ── Auto-play lyric videos on scroll ───────────────────── */
-document.querySelectorAll('.ap__video').forEach(vid => {
+document.querySelectorAll('.ap__video, .pillar-card__video-slot video').forEach(vid => {
   vid.loop = true; vid.muted = true; vid.playsInline = true;
   const vidObs = new IntersectionObserver(([e]) => {
     if (e.isIntersecting) { vid.play().catch(() => {}); }
