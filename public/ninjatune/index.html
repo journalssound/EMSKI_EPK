@@ -701,7 +701,7 @@ section { padding: 100px 0 60px; position: relative; }
 
 <!-- ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <header class="hero" id="hero">
-  <video class="hero__bg-video" id="heroBgVideo" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="none"></video>
+  <video class="hero__bg-video" id="heroBgVideo" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto"></video>
   <div class="hero__bg-overlay" id="heroOverlay"></div>
   <div class="hero__content">
     <div class="hero__e-wrap">
@@ -1570,7 +1570,19 @@ function apToggle(el) {
   if (!video) return;
 
   video.src = 'videos/warehouse-show-hd.mp4';
+  video.preload = 'auto';
   video.load();
+
+  // Force full buffer so the loop doesn't restart at the buffer edge
+  function ensureBuffered() {
+    if (video.buffered.length > 0) {
+      const end = video.buffered.end(video.buffered.length - 1);
+      if (end >= video.duration - 0.5) return; // fully buffered
+    }
+    // Keep nudging the browser to buffer more
+    setTimeout(ensureBuffered, 2000);
+  }
+  video.addEventListener('loadedmetadata', ensureBuffered);
 })();
 </script>
 
