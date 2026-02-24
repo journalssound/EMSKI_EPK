@@ -1514,8 +1514,8 @@ function apToggle(el) {
   video.src = 'videos/hero-preview.mp4';
   video.load();
 
-  // Phase 2: swap to 1280p HD once it's buffered
-  const hdSrc = 'videos/warehouse-show-hd.mp4';
+  // Phase 2: swap to full R2-hosted video once it's buffered
+  const hdSrc = 'https://pub-9a90af40c4df4a8aa36505acb79e02b3.r2.dev/EP-warehouseshow.mp4';
   const preload = document.createElement('video');
   preload.preload = 'auto';
   preload.muted = true;
