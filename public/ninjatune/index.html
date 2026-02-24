@@ -873,17 +873,22 @@ section { padding: 100px 0 60px; position: relative; }
 <section>
   <div class="wrap">
     <div class="section-label reveal">Investment</div>
+    <div class="budget-hero reveal reveal-d1">
+      <div class="budget-amount">$10,000</div>
+      <div class="budget-subtitle">Total Marketing Budget</div>
+    </div>
+    <div class="budget-per-track reveal reveal-d2">Per Track × 5</div>
+    <div class="budget-track-amount reveal reveal-d2">$2,000 <span>per song</span></div>
     <div class="budget-breakdown">
-      <div class="budget-item reveal">
-        <span class="budget-item__label">Paid Social Ads — per track (×5)</span>
+      <div class="budget-item reveal reveal-d3">
+        <span class="budget-item__label">Paid Social Ads</span>
         <span class="budget-item__val">$1,500</span>
       </div>
-      <div class="budget-item reveal reveal-d1">
+      <div class="budget-item reveal reveal-d4">
         <span class="budget-item__label">Playlist Pitching & PR</span>
         <span class="budget-item__val">$500</span>
       </div>
     </div>
-    <p class="reveal reveal-d2" style="font-family:var(--f-mono);font-size:12px;letter-spacing:2px;color:rgba(167,216,255,.35);text-transform:uppercase;text-align:center;margin-top:24px">Total: $8,000</p>
   </div>
 </section>
 
@@ -898,35 +903,35 @@ section { padding: 100px 0 60px; position: relative; }
       <div id="tourMap"></div>
     </div>
     <div class="tour-dates reveal reveal-d3">
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
+      <div class="tour-date-row">
+        <div class="td__date">3 / 13</div>
         <div class="td__city">Brooklyn, NY</div>
-        <div class="td__venue">TBA</div>
+        <div class="td__venue">MHOW</div>
       </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
+      <div class="tour-date-row">
+        <div class="td__date">3 / 20</div>
         <div class="td__city">Dallas, TX</div>
         <div class="td__venue">TBA</div>
       </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
+      <div class="tour-date-row">
+        <div class="td__date">3 / 29</div>
         <div class="td__city">Terlingua, TX</div>
-        <div class="td__venue">TBA</div>
+        <div class="td__venue">Big Bend</div>
       </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
+      <div class="tour-date-row">
+        <div class="td__date">4 / 03</div>
         <div class="td__city">San Antonio, TX</div>
-        <div class="td__venue">TBA</div>
+        <div class="td__venue">Paper Tiger</div>
       </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
+      <div class="tour-date-row">
+        <div class="td__date">4 / 10</div>
         <div class="td__city">Houston, TX</div>
         <div class="td__venue">TBA</div>
       </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
+      <div class="tour-date-row">
+        <div class="td__date">4 / 17</div>
         <div class="td__city">Denver, CO</div>
-        <div class="td__venue">TBA</div>
+        <div class="td__venue">Larimer Lounge</div>
       </div>
       <div class="tour-date-row">
         <div class="td__date">TBA</div>
@@ -1442,10 +1447,11 @@ function apToggle(el) {
     { name: 'San Antonio', sub: 'TX', lat: 29.42, lng: -98.49, labelDir: 'bottom' },
     { name: 'Houston', sub: 'TX', lat: 29.76, lng: -95.37, labelDir: 'right' },
     { name: 'New York', sub: 'NY', lat: 40.71, lng: -74.01, labelDir: 'right' },
+    { name: 'Terlingua', sub: 'TX', lat: 29.33, lng: -103.59, labelDir: 'left' },
   ];
 
   const routes = [
-    [0, 2], [2, 1], [1, 3], [1, 4], [0, 5],
+    [0, 2], [2, 1], [1, 3], [1, 4], [0, 5], [3, 6],
   ];
 
   // Add route lines
