@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.wrangler/
+warehouse-show-hd.mp4
+warehouse-show-hd-web.mp4
