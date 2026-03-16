@@ -15,9 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 
   <style>
 /* ━━ TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -162,11 +160,11 @@ section { padding: 100px 0; }
 .hero__bg-overlay {
   position: sticky; top: 0; margin-top: -100vh;
   width: 100%; height: 100vh;
-  background: radial-gradient(ellipse at center, rgba(6,6,9,.3) 0%, rgba(6,6,9,.85) 70%, var(--c-bg) 100%);
+  background: radial-gradient(ellipse at center, rgba(6,6,9,.55) 0%, rgba(6,6,9,.9) 65%, var(--c-bg) 100%);
   transition: opacity 1.2s ease;
 }
-.video-alive .hero__bg-video { opacity: 1; }
-.video-alive .hero__bg-overlay { opacity: .55; }
+.video-alive .hero__bg-video { opacity: .7; filter: brightness(.55) saturate(.85); }
+.video-alive .hero__bg-overlay { opacity: .7; }
 
 .hero__content {
   position: sticky; top: 0; height: 100vh;
@@ -718,16 +716,13 @@ section { padding: 100px 0; }
     <div class="section-label reveal">The Shift</div>
     <h2 class="section-heading reveal reveal-d1">A New Model</h2>
     <p class="narrative reveal reveal-d2">
-      The music industry is broken in the artist's favor — if you know how to build outside the old system. Major labels still operate on a model designed for physical distribution: <em>sign away your masters, take an advance, hope for a hit</em>. But the fastest-growing artists in electronic music are proving there's another way.
-    </p>
-    <p class="narrative reveal reveal-d2">
-      The global music streaming market hit <strong>$54 billion in 2025</strong> and is projected to reach <strong>$108 billion by 2030</strong> — a 14.9% compound annual growth rate. Electronic music sits at the center of this explosion: no band to split with, no session costs, infinite scalability from a single producer's laptop to a festival stage.
+      The old model is dead. <em>Sign away your masters, take an advance, hope for a hit</em> — the fastest-growing artists in electronic music are proving there's another way.
     </p>
     <div class="pull-quote reveal reveal-d3">
-      "The artists who own their masters, build their brand, and control their narrative don't just survive — they become the labels themselves."
+      "The artists who own everything don't just survive — they become the labels themselves."
     </div>
     <p class="narrative reveal reveal-d3">
-      John Summit went from bedroom producer to selling out Madison Square Garden in under four years — then launched his own label. Fred Again.. went from ghost-writing credits to headlining Coachella with zero label backing. <em>The playbook exists.</em> It requires capital, timing, and the right artist at the right inflection point.
+      John Summit: bedroom producer to <em>selling out MSG</em> in four years. Fred Again..: zero label backing to <em>headlining Coachella</em>. The playbook exists. It requires capital, timing, and the right artist.
     </p>
     <div class="market-grid">
       <div class="market-card reveal">
@@ -754,10 +749,7 @@ section { padding: 100px 0; }
     <div class="section-label reveal">The Artist</div>
     <h2 class="section-heading reveal reveal-d1">EMSKI</h2>
     <p class="narrative reveal reveal-d2">
-      EMSKI is not a one-dimensional producer waiting for a feature to carry a track. He's a <em>producer, vocalist, drummer, filmmaker, and designer</em> — a vertically integrated creative operation. He has been performing since age 8, spent years touring with <strong>Zella Day</strong>, and has shared stages with <strong>deadmau5, Golden Features, LP Giobbi, Brutalismus 3000</strong>, and more.
-    </p>
-    <p class="narrative reveal reveal-d2">
-      What makes EMSKI rare is the full-stack capability. Every visual, every piece of content, every merch design, every lyric video — it all comes from the same source. This isn't an artist who needs a team of ten to ship a campaign. This is the team.
+      <em>Producer. Vocalist. Drummer. Filmmaker. Designer.</em> Performing since age 8, toured with <strong>Zella Day</strong>, shared stages with <strong>deadmau5, Golden Features, LP Giobbi, Brutalismus 3000</strong>. Every visual, every track, every campaign — she is the operation.
     </p>
     <div class="capability-grid">
       <div class="cap-card reveal">
@@ -791,7 +783,6 @@ section { padding: 100px 0; }
         <div class="cap-card__sub">DJ + live drums + vocals = unforgettable sets</div>
       </div>
     </div>
-    <img class="artist-photo reveal" src="../photos/main-press.jpg" alt="EMSKI press photo" loading="lazy" />
   </div>
 </section>
 
@@ -803,7 +794,7 @@ section { padding: 100px 0; }
     <div class="section-label reveal">The Proof</div>
     <h2 class="section-heading reveal reveal-d1">Traction</h2>
     <p class="narrative reveal reveal-d2">
-      This isn't a pitch about potential — the numbers are already moving. Since releasing his first track in 2023, EMSKI has accumulated over <em>3.15 million streams</em>, built a playlist reach of <em>7.7 million listeners</em>, and earned cosigns from some of the most respected labels in electronic music — all without a label deal or major funding.
+      Since 2023 — <em>no label deal, no major funding</em>. All organic.
     </p>
     <div class="stats-grid" id="statsGrid">
       <div class="stat-cell reveal">
@@ -833,9 +824,6 @@ section { padding: 100px 0; }
     </div>
 
     <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">Label Cosigns</h3>
-    <p class="narrative reveal reveal-d1" style="margin-bottom:24px">
-      Releases and features across six of electronic music's most influential labels — earned through quality, not connections.
-    </p>
     <div class="label-grid">
       <div class="label-card reveal">
         <img class="label-card__img" src="../covers/Mau5trap.png" alt="mau5trap" />
@@ -880,11 +868,6 @@ section { padding: 100px 0; }
         </div>
       </div>
     </div>
-
-    <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">Global Reach</h3>
-    <div class="tour-map-container reveal reveal-d1">
-      <div id="reachMap"></div>
-    </div>
   </div>
 </section>
 
@@ -896,7 +879,7 @@ section { padding: 100px 0; }
     <div class="section-label reveal">The Momentum</div>
     <h2 class="section-heading reveal reveal-d1">What's Happening Now</h2>
     <p class="narrative reveal reveal-d2">
-      The <em>E/MOTION EP</em> — a 5-track body of work — is the current flagship release, supported by a full suite of lyric videos, visualizers, and a multi-platform content strategy. EMSKI is actively touring with booked shows across Texas, Colorado, and the East Coast.
+      <em>E/MOTION EP</em> — 5 tracks, full visual suite, actively touring TX / CO / East Coast.
     </p>
 
     <h3 class="reveal reveal-d2" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">E/MOTION EP — 5 Tracks</h3>
@@ -1049,7 +1032,7 @@ section { padding: 100px 0; }
     </div>
 
     <p class="narrative reveal" style="margin-top:40px">
-      Previous festivals include <em>ILLfest 2024</em>, <em>Freaky Deaky 2024</em>, <em>Seismic 7.0 2024</em>, and <em>Big Bond 2024</em>. EMSKI also held a residency at <strong>Chainsmokers' venue</strong> in NYC, performing multiple nights to packed rooms.
+      <em>ILLfest</em> · <em>Freaky Deaky</em> · <em>Seismic 7.0</em> · <em>Big Bond</em> (all 2024) + <strong>Chainsmokers residency</strong> NYC.
     </p>
   </div>
 </section>
@@ -1060,45 +1043,34 @@ section { padding: 100px 0; }
 <section>
   <div class="wrap">
     <div class="section-label reveal">The Vision</div>
-    <h2 class="section-heading reveal reveal-d1">Three-Phase Roadmap</h2>
+    <h2 class="section-heading reveal reveal-d1">Where This Goes</h2>
     <p class="narrative reveal reveal-d2">
-      This isn't about a single EP cycle. The long-term vision is to build <em>The Effect</em> into a multi-vertical brand — from artist project to label to live events. Each phase funds and validates the next.
+      The primary mission: make EMSKI a <em>major player in electronic music</em>. The infrastructure being built also opens doors beyond the artist project.
     </p>
     <div class="roadmap">
       <div class="roadmap__phase reveal">
         <div class="roadmap__dot"></div>
-        <div class="roadmap__tag">Phase 01 — Now</div>
-        <div class="roadmap__title">The Artist</div>
-        <div class="roadmap__desc">Establish EMSKI as a top-tier independent electronic artist. Ship the E/MOTION EP, execute a targeted marketing campaign, grow the live show circuit, and build a fanbase that converts.</div>
+        <div class="roadmap__tag">Primary Focus</div>
+        <div class="roadmap__title">Establish EMSKI</div>
+        <div class="roadmap__desc">Grow from independent rising artist to headlining acts and major festival bookings.</div>
         <ul class="roadmap__bullets">
-          <li>E/MOTION EP release + marketing ($10K campaign budget)</li>
-          <li>Touring: 10+ shows across TX, CO, NYC</li>
-          <li>Content machine: 4-pillar visual strategy across all platforms</li>
-          <li>Merch line launch — premium apparel and physical product</li>
+          <li>E/MOTION EP campaign — paid ads, playlist placement, PR</li>
+          <li>Touring expansion: 15+ shows/yr across TX, CO, NYC, LA</li>
+          <li>4-pillar content strategy across all platforms</li>
+          <li>Merch line and physical product launch</li>
+          <li>Strategic collaborations with established artists</li>
+          <li>Major festival submissions (EDC, Lollapalooza, Bonnaroo)</li>
         </ul>
       </div>
       <div class="roadmap__phase roadmap__phase--future reveal reveal-d1">
         <div class="roadmap__dot"></div>
-        <div class="roadmap__tag">Phase 02 — 12-18 Months</div>
-        <div class="roadmap__title">The Label</div>
-        <div class="roadmap__desc">Launch <em>"The Effect"</em> as an independent label — signing emerging artists, releasing collaborative projects, and building a roster around the same creative ethos.</div>
+        <div class="roadmap__tag">Future Possibility</div>
+        <div class="roadmap__title">The Effect — Label &amp; Events</div>
+        <div class="roadmap__desc">As EMSKI's platform grows, <em>The Effect</em> can expand into a label imprint and curated live event series — the highest-margin verticals in electronic music.</div>
         <ul class="roadmap__bullets">
-          <li>Sign 2-3 emerging electronic artists</li>
-          <li>Cross-release collaborations to share audiences</li>
-          <li>Label showcase events in key markets (Austin, Denver, NYC)</li>
-          <li>Revenue diversification: master ownership across multiple artists</li>
-        </ul>
-      </div>
-      <div class="roadmap__phase roadmap__phase--future reveal reveal-d2">
-        <div class="roadmap__dot"></div>
-        <div class="roadmap__tag">Phase 03 — 24-36 Months</div>
-        <div class="roadmap__title">The Event Brand</div>
-        <div class="roadmap__desc">Expand <em>The Effect</em> into a live event series and eventually a festival brand — the highest-margin vertical in electronic music.</div>
-        <ul class="roadmap__bullets">
-          <li>Curated event series: "The Effect" nights in 5+ cities</li>
-          <li>Festival stage partnerships and branded activations</li>
-          <li>Multi-artist touring packages under The Effect umbrella</li>
-          <li>Long-term: standalone festival (EDC Vegas generates $350M+ local impact)</li>
+          <li>Sign emerging artists under The Effect umbrella</li>
+          <li>Curated event nights in key markets</li>
+          <li>Revenue diversification across multiple artists and verticals</li>
         </ul>
       </div>
     </div>
@@ -1113,45 +1085,49 @@ section { padding: 100px 0; }
     <div class="section-label reveal">Partnership</div>
     <h2 class="section-heading reveal reveal-d1">Investment Tiers</h2>
     <p class="narrative reveal reveal-d2">
-      This is structured as <em>support-first with upside</em>. You're backing an artist and a vision at the ground floor — with real returns as the project scales. Every tier includes equity participation, revenue sharing, and direct access.
+      <em>Support-first with upside.</em> Backing an artist at the ground floor — with real, structured returns as the project scales.
     </p>
     <div class="tiers-grid">
       <div class="tier-card reveal">
         <div class="tier-card__name">Spark</div>
         <div class="tier-card__amount">$25K</div>
         <ul class="tier-card__items">
-          <li>Revenue share on E/MOTION EP streaming royalties</li>
-          <li>Credit as early supporter on all releases</li>
-          <li>Quarterly progress reports &amp; financials</li>
-          <li>Exclusive merch &amp; guest list access</li>
-          <li>Direct line to the artist</li>
+          <li><strong>5% net revenue share</strong> on all E/MOTION EP streaming royalties for 3 years</li>
+          <li><strong>2% net share</strong> on merch sales tied to E/MOTION campaign</li>
+          <li>Quarterly financial reports (streams, revenue, spend breakdown)</li>
+          <li>Credit as founding supporter on all EP-related releases</li>
+          <li>Lifetime guest list + exclusive merch drops</li>
+          <li>Direct access — monthly update calls with the artist</li>
         </ul>
+        <div class="tier-card__note">Projected 3-yr return: 1.2–2× based on streaming growth targets</div>
       </div>
       <div class="tier-card tier-card--featured reveal reveal-d1">
         <div class="tier-card__name">Catalyst</div>
         <div class="tier-card__amount">$75K</div>
         <ul class="tier-card__items">
-          <li>Everything in Spark</li>
-          <li>Equity stake in The Effect (label entity)</li>
-          <li>Revenue share across all releases &amp; merch</li>
-          <li>Advisory role — input on creative &amp; business decisions</li>
-          <li>VIP access to all shows &amp; private events</li>
-          <li>Name/brand featured in launch campaign</li>
+          <li><strong>Everything in Spark, plus:</strong></li>
+          <li><strong>3% equity stake</strong> in The Effect LLC (label/brand entity)</li>
+          <li><strong>8% net revenue share</strong> across <em>all</em> future releases for 5 years</li>
+          <li><strong>5% net share</strong> on all merch &amp; physical product revenue</li>
+          <li>Advisory input on business &amp; creative direction</li>
+          <li>VIP access to all shows, private events, and studio sessions</li>
+          <li>Name/brand featured in launch campaign &amp; liner credits</li>
         </ul>
-        <div class="tier-card__note">Most Popular</div>
+        <div class="tier-card__note">Projected 5-yr return: 2–4× based on catalog + touring growth</div>
       </div>
       <div class="tier-card reveal reveal-d2">
         <div class="tier-card__name">Architect</div>
         <div class="tier-card__amount">$150K+</div>
         <ul class="tier-card__items">
-          <li>Everything in Catalyst</li>
-          <li>Significant equity position in The Effect</li>
-          <li>Board-level advisory seat</li>
-          <li>Revenue share across all verticals (music, merch, events, label)</li>
+          <li><strong>Everything in Catalyst, plus:</strong></li>
+          <li><strong>7% equity stake</strong> in The Effect LLC</li>
+          <li><strong>12% net revenue share</strong> across all verticals (music, merch, events, sync, brand deals)</li>
+          <li><strong>Board-level advisory seat</strong> — voting input on major business decisions</li>
           <li>Co-presented credit on The Effect event series</li>
-          <li>First-look on all future investment rounds</li>
+          <li>Pro-rata rights on all future funding rounds</li>
+          <li>Annual in-person strategy session + full financial audit access</li>
         </ul>
-        <div class="tier-card__note">Enterprise</div>
+        <div class="tier-card__note">Projected 5-yr return: 3–6× based on full-vertical growth model</div>
       </div>
     </div>
   </div>
@@ -1555,106 +1531,6 @@ function apToggle(el) {
     video.muted = isMuted;
     toggleIcons(isMuted);
   });
-})();
-
-/* ── Global Reach Map (Leaflet) ─────────────────────────── */
-(function initReachMap() {
-  var container = document.getElementById('reachMap');
-  if (!container) return;
-
-  var map = L.map('reachMap', {
-    center: [30, -10],
-    zoom: 2,
-    zoomControl: false,
-    attributionControl: false,
-    dragging: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    touchZoom: false,
-    boxZoom: false,
-    keyboard: false,
-  });
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 19,
-  }).addTo(map);
-
-  // Cities where EMSKI has listeners / reach
-  var reachCities = [
-    { name: 'Austin', sub: 'Home Base', lat: 30.27, lng: -97.74 },
-    { name: 'New York', sub: 'US', lat: 40.71, lng: -74.01 },
-    { name: 'Los Angeles', sub: 'US', lat: 34.05, lng: -118.24 },
-    { name: 'London', sub: 'UK', lat: 51.51, lng: -0.13 },
-    { name: 'Berlin', sub: 'DE', lat: 52.52, lng: 13.41 },
-    { name: 'Sydney', sub: 'AU', lat: -33.87, lng: 151.21 },
-    { name: 'Toronto', sub: 'CA', lat: 43.65, lng: -79.38 },
-    { name: 'Mexico City', sub: 'MX', lat: 19.43, lng: -99.13 },
-    { name: 'São Paulo', sub: 'BR', lat: -23.55, lng: -46.63 },
-    { name: 'Amsterdam', sub: 'NL', lat: 52.37, lng: 4.90 },
-    { name: 'Tokyo', sub: 'JP', lat: 35.68, lng: 139.69 },
-    { name: 'Denver', sub: 'US', lat: 39.74, lng: -105.00 },
-  ];
-
-  // City light texture dots for atmosphere
-  var cityLights = [
-    {lat:34.05,lng:-118.24,sz:'lg'},{lat:41.88,lng:-87.63,sz:'lg'},
-    {lat:25.76,lng:-80.19,sz:'lg'},{lat:47.61,lng:-122.33,sz:'lg'},
-    {lat:38.91,lng:-77.04,sz:'lg'},{lat:42.36,lng:-71.06,sz:'lg'},
-    {lat:51.51,lng:-0.13,sz:'lg'},{lat:48.86,lng:2.35,sz:'lg'},
-    {lat:52.52,lng:13.41,sz:'lg'},{lat:35.68,lng:139.69,sz:'lg'},
-    {lat:-33.87,lng:151.21,sz:'lg'},{lat:55.76,lng:37.62,sz:'lg'},
-    {lat:19.43,lng:-99.13,sz:'lg'},{lat:-23.55,lng:-46.63,sz:'lg'},
-    {lat:28.61,lng:77.21,sz:'lg'},{lat:31.23,lng:121.47,sz:'lg'},
-    {lat:37.57,lng:126.98,sz:''},{lat:1.35,lng:103.82,sz:''},
-    {lat:22.32,lng:114.17,sz:''},{lat:39.90,lng:116.41,sz:'lg'},
-    {lat:-34.60,lng:-58.38,sz:''},{lat:6.52,lng:3.38,sz:''},
-    {lat:30.04,lng:31.24,sz:''},{lat:41.01,lng:28.98,sz:''},
-    {lat:59.33,lng:18.07,sz:''},{lat:60.17,lng:24.94,sz:''},
-    {lat:50.07,lng:14.42,sz:''},{lat:45.46,lng:9.19,sz:''},
-    {lat:40.42,lng:-3.70,sz:''},{lat:38.72,lng:-9.14,sz:''},
-    {lat:53.35,lng:-6.26,sz:'sm'},{lat:55.95,lng:-3.19,sz:'sm'},
-    {lat:45.50,lng:-73.57,sz:''},{lat:49.28,lng:-123.12,sz:''},
-    {lat:33.75,lng:-84.39,sz:''},{lat:29.76,lng:-95.37,sz:''},
-    {lat:32.78,lng:-96.80,sz:''},{lat:36.16,lng:-86.78,sz:''},
-    {lat:39.74,lng:-105.00,sz:''},{lat:44.98,lng:-93.27,sz:''},
-    {lat:36.17,lng:-115.14,sz:''},{lat:45.52,lng:-122.68,sz:''},
-    {lat:37.77,lng:-122.42,sz:'lg'},{lat:40.76,lng:-73.98,sz:'lg'},
-  ];
-
-  cityLights.forEach(function(c) {
-    var cls = 'city-light' + (c.sz ? ' city-light--' + c.sz : '');
-    var icon = L.divIcon({
-      html: '<div class="' + cls + '"></div>',
-      className: '',
-      iconSize: [0, 0],
-      iconAnchor: [0, 0],
-    });
-    L.marker([c.lat, c.lng], { icon: icon, interactive: false }).addTo(map);
-  });
-
-  // Add reach markers
-  reachCities.forEach(function(c) {
-    var html = '<div class="reach-marker">' +
-      '<div class="reach-marker__pulse"></div>' +
-      '<div class="reach-marker__dot"></div>' +
-      '<div class="reach-marker__label">' +
-        '<div class="reach-marker__name">' + c.name + '</div>' +
-        '<div class="reach-marker__sub">' + c.sub + '</div>' +
-      '</div></div>';
-
-    var icon = L.divIcon({
-      html: html,
-      className: '',
-      iconSize: [0, 0],
-      iconAnchor: [0, 0],
-    });
-
-    L.marker([c.lat, c.lng], { icon: icon, interactive: false }).addTo(map);
-  });
-
-  map.fitBounds([[-40, -130], [60, 160]], { padding: [20, 20] });
-  map.on('drag', function() { map.panTo(map.getCenter()); });
 })();
 
 /* ── Progressive hero video loading ────────────────────── */
