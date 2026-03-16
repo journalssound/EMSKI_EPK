@@ -1003,29 +1003,9 @@ section { padding: 100px 0 60px; position: relative; }
     </div>
     <div class="tour-dates reveal reveal-d3">
       <div class="tour-date-row">
-        <div class="td__date">3/13</div>
-        <div class="td__city">Brooklyn, NY</div>
-        <div class="td__venue">MHOW</div>
-      </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Dallas, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Houston, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
-      <div class="tour-date-row">
         <div class="td__date">3/29</div>
         <div class="td__city">Terlingua, TX</div>
         <div class="td__venue">Big Bend</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">4/03</div>
-        <div class="td__city">San Antonio, TX</div>
-        <div class="td__venue">Paper Tiger</div>
       </div>
       <div class="tour-date-row">
         <div class="td__date">4/17</div>
@@ -1034,8 +1014,28 @@ section { padding: 100px 0 60px; position: relative; }
       </div>
       <div class="tour-date-row tour-date-row--tba">
         <div class="td__date">TBA</div>
-        <div class="td__city">Austin, TX</div>
+        <div class="td__city">Houston, TX</div>
         <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">5/16</div>
+        <div class="td__city">San Antonio, TX</div>
+        <div class="td__venue">In support of KREAM</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">Dallas, TX</div>
+        <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">6/11</div>
+        <div class="td__city">Austin, TX</div>
+        <div class="td__venue">ACL310</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">NYC</div>
+        <div class="td__venue">In support of OKAYVAL</div>
       </div>
     </div>
   </div>
@@ -1530,16 +1530,17 @@ function apToggle(el) {
 
   // Tour cities with label offset directions to prevent overlap
   const tourCities = [
+    { name: 'Terlingua', sub: 'TX', lat: 29.32, lng: -103.61, labelDir: 'bottom' },
     { name: 'Denver', sub: 'CO', lat: 39.74, lng: -104.99, labelDir: 'left' },
-    { name: 'Austin', sub: 'TX', lat: 30.27, lng: -97.74, labelDir: 'left' },
-    { name: 'Dallas', sub: 'TX', lat: 32.78, lng: -96.80, labelDir: 'right' },
-    { name: 'San Antonio', sub: 'TX', lat: 29.42, lng: -98.49, labelDir: 'bottom' },
     { name: 'Houston', sub: 'TX', lat: 29.76, lng: -95.37, labelDir: 'right' },
+    { name: 'San Antonio', sub: 'TX', lat: 29.42, lng: -98.49, labelDir: 'bottom' },
+    { name: 'Dallas', sub: 'TX', lat: 32.78, lng: -96.80, labelDir: 'right' },
+    { name: 'Austin', sub: 'TX', lat: 30.27, lng: -97.74, labelDir: 'left' },
     { name: 'New York', sub: 'NY', lat: 40.71, lng: -74.01, labelDir: 'right' },
   ];
 
   const routes = [
-    [0, 2], [2, 1], [1, 3], [1, 4], [0, 5],
+    [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6],
   ];
 
   // Add route lines
