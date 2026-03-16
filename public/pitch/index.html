@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EMSKI — The Effect: An Invitation</title>
+  <title>EMSKI — The Effect</title>
   <meta name="robots" content="noindex, nofollow" />
-  <meta property="og:title" content="EMSKI — The Effect: An Invitation" />
-  <meta property="og:description" content="Confidential investment overview" />
+  <meta property="og:title" content="EMSKI — The Effect" />
+  <meta property="og:description" content="Confidential" />
   <meta property="og:image" content="/og-image.jpg" />
 
   <!-- Typekit (aktiv-grotesk-extended) -->
@@ -29,7 +29,7 @@
   --f-heading: "aktiv-grotesk-extended", sans-serif;
   --f-body: "Jura", sans-serif;
   --f-mono: "Space Mono", monospace;
-  --max-w: 1080px;
+  --max-w: 760px;
 }
 
 /* ━━ RESET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -62,31 +62,6 @@ body::after {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
   background: linear-gradient(90deg, var(--c-neon-blue), var(--c-cyan));
   z-index: 9999; transition: width .15s linear;
-}
-
-/* ━━ NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 32px;
-  transition: background .4s, backdrop-filter .4s, padding .3s;
-}
-.nav--scrolled {
-  background: rgba(6,6,9,.72);
-  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-  padding: 12px 32px;
-  border-bottom: 1px solid rgba(167,216,255,.06);
-}
-.nav__logo { height: 18px; opacity: .85; }
-.nav__badge {
-  font-family: var(--f-mono);
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--c-cyan);
-  border: 1px solid rgba(0,239,239,.25);
-  padding: 4px 12px;
-  border-radius: 2px;
 }
 
 /* ━━ PASSWORD GATE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -134,448 +109,221 @@ body::after {
 
 /* ━━ LAYOUT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
-section { padding: 100px 0; }
-
-.section-label {
-  font-family: var(--f-mono); font-size: 10px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--c-cyan); margin-bottom: 12px;
-}
-.section-heading {
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(28px, 5vw, 44px);
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--c-white); margin-bottom: 40px;
-}
+section { padding: 80px 0; }
 
 /* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .hero {
-  position: relative; height: 200vh;
-}
-.hero__bg-video {
-  position: sticky; top: 0;
-  width: 100%; height: 100vh; object-fit: cover;
-  opacity: 0; transition: opacity 1.2s ease;
-}
-.hero__bg-overlay {
-  position: sticky; top: 0; margin-top: -100vh;
-  width: 100%; height: 100vh;
-  background: radial-gradient(ellipse at center, rgba(6,6,9,.55) 0%, rgba(6,6,9,.9) 65%, var(--c-bg) 100%);
-  transition: opacity 1.2s ease;
-}
-.video-alive .hero__bg-video { opacity: .7; filter: brightness(.55) saturate(.85); }
-.video-alive .hero__bg-overlay { opacity: .7; }
-
-.hero__content {
-  position: sticky; top: 0; height: 100vh;
-  margin-top: -100vh;
+  min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; z-index: 2;
+  text-align: center; padding: 80px 28px;
+  position: relative;
 }
 .hero__e-wrap {
-  width: clamp(200px, 50vw, 420px);
-  aspect-ratio: 1; margin-bottom: 24px;
+  width: clamp(180px, 40vw, 340px);
+  aspect-ratio: 1; margin-bottom: 32px;
   display: flex; align-items: center; justify-content: center;
 }
 #eCanvas { display: block; }
-.hero__title {
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(22px, 4.5vw, 38px);
-  letter-spacing: 4px; text-transform: uppercase;
-  color: var(--c-white); margin-bottom: 12px;
-}
-.hero__subtitle {
-  font-family: var(--f-body); font-size: 14px;
-  letter-spacing: .12em; color: rgba(244,247,255,.5);
-  margin-bottom: 24px;
-}
 .hero__badge {
   font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2.5px; text-transform: uppercase;
   color: var(--c-cyan); border: 1px solid rgba(0,239,239,.2);
-  padding: 6px 18px; border-radius: 2px;
+  padding: 5px 16px; border-radius: 2px; margin-bottom: 32px;
+}
+.hero__title {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(26px, 5vw, 42px);
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--c-white); margin-bottom: 16px;
+}
+.hero__sub {
+  font-family: var(--f-body); font-size: 15px;
+  letter-spacing: .06em; color: rgba(244,247,255,.4);
+  max-width: 420px; line-height: 1.7;
 }
 .hero__scroll {
-  position: fixed; bottom: 32px; left: 50%;
-  transform: translateX(-50%); z-index: 3;
+  position: absolute; bottom: 32px; left: 50%;
+  transform: translateX(-50%);
   font-family: var(--f-mono); font-size: 10px;
-  letter-spacing: 2px; color: rgba(244,247,255,.25);
+  letter-spacing: 2px; color: rgba(244,247,255,.2);
   animation: float 2.5s ease-in-out infinite;
 }
 @keyframes float {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(-6px); }
 }
-.hero__unmute {
-  position: fixed; bottom: 24px; right: 24px; z-index: 10;
-  width: 42px; height: 42px; border-radius: 50%;
-  border: 1px solid rgba(167,216,255,.15);
-  background: rgba(6,6,9,.65); backdrop-filter: blur(16px);
-  color: var(--c-ice); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .3s;
-}
-.video-alive ~ .hero__unmute,
-.video-alive .hero__unmute { opacity: 1; }
-
 /* ━━ DIVIDER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .divider {
   width: 100%; height: 1px; margin: 0;
   background: linear-gradient(90deg, transparent, rgba(167,216,255,.08) 50%, transparent);
 }
 
-/* ━━ NARRATIVE TEXT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.narrative {
-  color: rgba(244,247,255,.6); font-size: 15px;
-  line-height: 1.8; max-width: 680px; margin-bottom: 32px;
+/* ━━ SECTION LABEL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-label {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--c-cyan); margin-bottom: 20px;
 }
-.narrative em { color: var(--c-ice); font-style: normal; }
-.narrative strong { color: var(--c-white); font-weight: 600; }
 
+/* ━━ SECTION HEADING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sh {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(22px, 4vw, 32px);
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--c-white); margin-bottom: 28px;
+}
+
+/* ━━ BODY TEXT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.body-text {
+  color: rgba(244,247,255,.55); font-size: 15px;
+  line-height: 1.85; margin-bottom: 24px;
+}
+.body-text em { color: var(--c-ice); font-style: normal; }
+.body-text strong { color: var(--c-white); font-weight: 600; }
+.body-text:last-child { margin-bottom: 0; }
+
+/* ━━ PULL QUOTE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .pull-quote {
   font-family: var(--f-heading); font-weight: 600;
-  font-size: clamp(20px, 3.5vw, 30px);
-  letter-spacing: 1px; color: var(--c-ice);
-  line-height: 1.5; max-width: 720px;
-  margin: 48px 0; padding-left: 24px;
-  border-left: 2px solid rgba(0,239,239,.3);
+  font-size: clamp(18px, 3vw, 24px);
+  letter-spacing: .5px; color: var(--c-ice);
+  line-height: 1.6; padding-left: 20px; margin: 40px 0;
+  border-left: 2px solid rgba(0,239,239,.25);
 }
 
-/* ━━ MARKET DATA CARDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.market-grid {
+/* ━━ STAT ROW ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.stat-row {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 16px; margin-top: 40px;
-}
-.market-card {
-  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border: 1px solid rgba(167,216,255,.08);
-  border-radius: 6px; padding: 28px 24px; text-align: center;
-}
-.market-card__val {
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(28px, 4vw, 40px);
-  color: var(--c-cyan); letter-spacing: 1px;
-}
-.market-card__label {
-  font-family: var(--f-mono); font-size: 9px;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(244,247,255,.4); margin-top: 8px;
-}
-
-/* ━━ THE ARTIST — CAPABILITY GRID ━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.capability-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 12px; margin-bottom: 48px;
-}
-.cap-card {
-  background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(255,255,255,.008));
-  border: 1px solid rgba(167,216,255,.06);
-  border-radius: 6px; padding: 24px 20px; text-align: center;
-  transition: border-color .3s;
-}
-.cap-card:hover { border-color: rgba(0,239,239,.2); }
-.cap-card__icon {
-  font-size: 24px; margin-bottom: 10px; display: block;
-  color: var(--c-ice); opacity: .7;
-}
-.cap-card__title {
-  font-family: var(--f-heading); font-weight: 600;
-  font-size: 12px; letter-spacing: 1.5px;
-  text-transform: uppercase; color: var(--c-white);
-  margin-bottom: 6px;
-}
-.cap-card__sub {
-  font-size: 11px; color: rgba(244,247,255,.4);
-  line-height: 1.5;
-}
-
-.artist-photo {
-  width: 100%; max-width: 680px; border-radius: 6px;
-  margin-top: 20px;
-  border: 1px solid rgba(167,216,255,.06);
-}
-
-/* ━━ STATS GRID ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.stats-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 24px; margin-bottom: 56px;
+  gap: 20px; margin: 36px 0;
 }
 .stat-cell { text-align: center; }
 .stat-cell__val {
   font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(32px, 6vw, 52px);
-  letter-spacing: 1px; color: var(--c-white);
+  font-size: clamp(28px, 5vw, 42px); color: var(--c-white);
+  letter-spacing: 1px;
 }
 .stat-cell__label {
-  font-family: var(--f-mono); font-size: 9px;
-  letter-spacing: 2.5px; text-transform: uppercase;
-  color: rgba(244,247,255,.4); margin-top: 6px;
+  font-family: var(--f-mono); font-size: 8px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(244,247,255,.35); margin-top: 6px;
 }
 
-/* ━━ LABEL COSIGNS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.label-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 16px; margin-top: 40px; margin-bottom: 56px;
+/* ━━ BUDGET TABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.budget-table {
+  width: 100%; border-collapse: collapse; margin: 32px 0;
 }
-.label-card {
-  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border: 1px solid rgba(167,216,255,.06);
-  border-radius: 6px; padding: 20px;
-  display: flex; align-items: center; gap: 14px;
-  transition: border-color .3s;
+.budget-table th {
+  font-family: var(--f-mono); font-size: 8px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(244,247,255,.3); text-align: left;
+  padding: 0 0 12px; border-bottom: 1px solid rgba(255,255,255,.06);
 }
-.label-card:hover { border-color: rgba(0,239,239,.15); }
-.label-card__img {
-  width: 44px; height: 44px; border-radius: 4px;
-  object-fit: cover; flex-shrink: 0;
+.budget-table th:last-child { text-align: right; }
+.budget-table td {
+  font-size: 14px; color: rgba(244,247,255,.55);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
 }
-.label-card__name {
-  font-family: var(--f-heading); font-weight: 600;
-  font-size: 12px; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--c-white);
+.budget-table td:last-child {
+  text-align: right; font-family: var(--f-mono);
+  font-size: 13px; color: var(--c-ice); letter-spacing: .5px;
 }
-.label-card__sub {
-  font-size: 10px; color: rgba(244,247,255,.35); margin-top: 2px;
-}
-
-/* ━━ TOUR MAP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.tour-map-container {
-  width: 100%; aspect-ratio: 16/8; border-radius: 8px;
-  overflow: hidden; margin-bottom: 40px;
-  border: 1px solid rgba(167,216,255,.06);
-}
-#reachMap {
-  width: 100%; height: 100%;
-  background: var(--c-charcoal);
-}
-.leaflet-container { background: var(--c-charcoal) !important; }
-.leaflet-tile-pane { filter: brightness(.45) saturate(.2) sepia(.8) hue-rotate(190deg); }
-.city-light {
-  width: 3px; height: 3px; border-radius: 50%;
-  background: rgba(167,216,255,.18);
-  box-shadow: 0 0 4px rgba(167,216,255,.1);
-}
-.city-light--lg { width: 5px; height: 5px; background: rgba(167,216,255,.28); box-shadow: 0 0 8px rgba(167,216,255,.15); }
-.city-light--sm { width: 2px; height: 2px; background: rgba(167,216,255,.1); }
-.reach-marker {
-  position: relative; width: 0; height: 0;
-}
-.reach-marker__dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--c-cyan);
-  box-shadow: 0 0 12px rgba(0,239,239,.5);
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
-.reach-marker__pulse {
-  width: 24px; height: 24px; border-radius: 50%;
-  border: 1px solid rgba(0,239,239,.3);
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulse-ring 2.5s ease-out infinite;
-}
-@keyframes pulse-ring {
-  0% { transform: translate(-50%,-50%) scale(.5); opacity: 1; }
-  100% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; }
-}
-.reach-marker__label {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(12px, -50%);
-  white-space: nowrap;
-}
-.reach-marker__name {
-  font-family: var(--f-heading); font-size: 10px;
-  letter-spacing: 1.5px; text-transform: uppercase;
+.budget-table tr:last-child td { border-bottom: none; }
+.budget-table .total td {
+  border-top: 1px solid rgba(0,239,239,.15);
+  border-bottom: none;
   color: var(--c-white); font-weight: 600;
+  padding-top: 16px;
 }
-.reach-marker__sub {
-  font-family: var(--f-mono); font-size: 8px;
-  letter-spacing: 1px; color: rgba(244,247,255,.35);
-}
+.budget-table .total td:last-child { color: var(--c-cyan); font-size: 15px; }
 
-/* ━━ AUDIO PLAYER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.songs-list {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+/* ━━ TIMELINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.timeline {
+  position: relative; padding-left: 28px; margin: 32px 0;
 }
-.ap {
-  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border: 1px solid rgba(167,216,255,.06);
-  border-radius: 6px; overflow: hidden;
-  transition: border-color .3s;
+.timeline::before {
+  content: ""; position: absolute; top: 4px; bottom: 4px; left: 5px;
+  width: 1px; background: linear-gradient(180deg, var(--c-cyan), rgba(114,114,254,.2));
 }
-.ap:hover, .ap.playing { border-color: rgba(0,239,239,.2); }
-.ap__video {
-  width: 100%; aspect-ratio: 1; object-fit: cover;
-  display: block; background: var(--c-charcoal);
+.tl-item { position: relative; padding: 0 0 32px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -28px; top: 6px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--c-cyan); transform: translateX(1px);
+  box-shadow: 0 0 10px rgba(0,239,239,.35);
 }
-.ap__controls { padding: 12px 14px 10px; }
-.ap__top { display: flex; align-items: center; gap: 10px; }
-.ap__play {
-  width: 32px; height: 32px; border-radius: 50%;
-  border: 1px solid rgba(167,216,255,.15);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; flex-shrink: 0; transition: border-color .2s;
-}
-.ap__play:hover { border-color: var(--c-cyan); }
-.ap__play svg { width: 12px; height: 12px; fill: var(--c-ice); }
-.ap__info { flex: 1; min-width: 0; }
-.ap__title {
-  font-family: var(--f-heading); font-weight: 600;
-  font-size: 11px; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--c-white);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.ap__feat {
-  font-family: var(--f-mono); font-size: 8px;
-  letter-spacing: 1px; color: rgba(244,247,255,.35); margin-top: 1px;
-}
-.ap__time {
-  display: flex; align-items: center; gap: 3px;
-  font-family: var(--f-mono); font-size: 9px;
-  color: rgba(244,247,255,.35);
-}
-.ap__time span { min-width: 28px; text-align: center; }
-.t-slash { opacity: .3; }
-.ap__seek { margin-top: 8px; padding: 4px 0; cursor: pointer; }
-.ap__seek-track {
-  height: 2px; background: rgba(255,255,255,.08);
-  border-radius: 1px; overflow: hidden;
-}
-.ap__seek-fill {
-  height: 100%; width: 0;
-  background: linear-gradient(90deg, var(--c-neon-blue), var(--c-cyan));
-  transition: width .1s linear;
-}
-.mini-eq {
-  display: flex; align-items: flex-end; gap: 2px;
-  height: 12px; margin-right: 6px;
-}
-.mini-eq__bar {
-  width: 2px; background: var(--c-cyan);
-  border-radius: 1px; height: 4px;
-  animation: none;
-}
-.ap.playing .mini-eq__bar { animation: eq .6s ease-in-out infinite alternate; }
-.ap.playing .mini-eq__bar:nth-child(1) { animation-duration: .45s; }
-.ap.playing .mini-eq__bar:nth-child(2) { animation-duration: .55s; animation-delay: .1s; }
-.ap.playing .mini-eq__bar:nth-child(3) { animation-duration: .4s; animation-delay: .15s; }
-.ap.playing .mini-eq__bar:nth-child(4) { animation-duration: .5s; animation-delay: .05s; }
-.ap.playing .mini-eq__bar:nth-child(5) { animation-duration: .35s; animation-delay: .2s; }
-@keyframes eq { to { height: 12px; } }
-
-/* ━━ ROADMAP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.roadmap {
-  display: flex; flex-direction: column; gap: 0;
-  position: relative; padding-left: 32px;
-}
-.roadmap::before {
-  content: ""; position: absolute; top: 0; bottom: 0; left: 11px;
-  width: 1px; background: linear-gradient(180deg, var(--c-cyan), rgba(114,114,254,.3), transparent);
-}
-.roadmap__phase {
-  position: relative; padding: 32px 0 48px;
-}
-.roadmap__dot {
-  position: absolute; left: -32px; top: 38px;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--c-cyan);
-  box-shadow: 0 0 12px rgba(0,239,239,.4);
-  transform: translateX(6px);
-}
-.roadmap__phase--future .roadmap__dot {
-  background: transparent; border: 1px solid rgba(0,239,239,.4);
+.tl-item--future .tl-dot {
+  background: transparent; border: 1px solid rgba(0,239,239,.35);
   box-shadow: none;
 }
-.roadmap__tag {
+.tl-tag {
   font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2px; text-transform: uppercase;
-  color: var(--c-cyan); margin-bottom: 8px;
+  color: var(--c-cyan); margin-bottom: 6px;
 }
-.roadmap__title {
+.tl-title {
   font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(20px, 3vw, 28px);
-  letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--c-white); margin-bottom: 12px;
+  font-size: 18px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--c-white); margin-bottom: 6px;
 }
-.roadmap__desc {
-  color: rgba(244,247,255,.5); font-size: 14px;
-  line-height: 1.7; max-width: 600px;
-}
-.roadmap__bullets {
-  list-style: none; margin-top: 16px;
-}
-.roadmap__bullets li {
-  font-size: 13px; color: rgba(244,247,255,.5);
-  padding: 6px 0; padding-left: 16px; position: relative;
-}
-.roadmap__bullets li::before {
-  content: "→"; position: absolute; left: 0;
-  color: var(--c-cyan); font-size: 12px;
+.tl-desc {
+  font-size: 13px; color: rgba(244,247,255,.45); line-height: 1.7;
 }
 
 /* ━━ TIERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.tiers-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.tier-card {
-  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.008));
+.tier {
+  background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(255,255,255,.008));
   border: 1px solid rgba(167,216,255,.08);
-  border-radius: 8px; padding: 36px 28px;
-  display: flex; flex-direction: column;
-  transition: border-color .3s, transform .3s;
-}
-.tier-card:hover { border-color: rgba(0,239,239,.2); transform: translateY(-2px); }
-.tier-card--featured {
-  border-color: rgba(0,239,239,.2);
-  background: linear-gradient(135deg, rgba(0,239,239,.04), rgba(114,114,254,.03));
-}
-.tier-card__name {
-  font-family: var(--f-mono); font-size: 10px;
-  letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--c-cyan); margin-bottom: 16px;
-}
-.tier-card__amount {
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(32px, 5vw, 44px);
-  letter-spacing: 1px; color: var(--c-white);
+  border-radius: 8px; padding: 36px 32px;
   margin-bottom: 20px;
+  transition: border-color .3s;
 }
-.tier-card__items {
-  list-style: none; flex: 1;
+.tier:hover { border-color: rgba(0,239,239,.15); }
+.tier--featured {
+  border-color: rgba(0,239,239,.18);
+  background: linear-gradient(135deg, rgba(0,239,239,.03), rgba(114,114,254,.02));
 }
-.tier-card__items li {
-  font-size: 13px; color: rgba(244,247,255,.55);
-  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
-  padding-left: 18px; position: relative; line-height: 1.5;
+.tier__header {
+  display: flex; align-items: baseline;
+  justify-content: space-between; margin-bottom: 20px;
 }
-.tier-card__items li::before {
-  content: "✦"; position: absolute; left: 0;
-  color: var(--c-cyan); font-size: 8px; top: 10px;
+.tier__name {
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--c-cyan);
 }
-.tier-card__items li:last-child { border-bottom: none; }
-.tier-card__note {
-  font-family: var(--f-mono); font-size: 9px;
-  letter-spacing: 1px; color: rgba(244,247,255,.3);
-  margin-top: 20px; text-align: center;
+.tier__amount {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(28px, 5vw, 38px); color: var(--c-white);
+  letter-spacing: 1px;
 }
+.tier__items { list-style: none; }
+.tier__items li {
+  font-size: 14px; color: rgba(244,247,255,.55);
+  padding: 10px 0; padding-left: 18px; position: relative;
+  border-bottom: 1px solid rgba(255,255,255,.03); line-height: 1.6;
+}
+.tier__items li::before {
+  content: "→"; position: absolute; left: 0;
+  color: var(--c-cyan); font-size: 12px;
+}
+.tier__items li:last-child { border-bottom: none; }
+.tier__items li strong { color: var(--c-white); }
 
 /* ━━ CLOSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .closing {
-  text-align: center; padding: 120px 28px;
+  text-align: center; padding: 100px 28px 60px;
 }
 .closing__title {
   font-family: var(--f-heading); font-weight: 700;
-  font-size: clamp(28px, 5vw, 44px);
-  letter-spacing: 3px; text-transform: uppercase;
-  margin-bottom: 20px;
+  font-size: clamp(24px, 4vw, 36px);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 16px;
 }
 .closing__sub {
-  font-family: var(--f-body); font-size: 15px;
-  color: rgba(244,247,255,.5); line-height: 1.8;
-  max-width: 560px; margin: 0 auto 32px;
+  font-size: 15px; color: rgba(244,247,255,.45);
+  line-height: 1.8; max-width: 480px; margin: 0 auto 28px;
 }
 .closing__contact a {
   font-family: var(--f-mono); font-size: 13px;
@@ -583,78 +331,34 @@ section { padding: 100px 0; }
   text-decoration: none; transition: opacity .2s;
 }
 .closing__contact a:hover { opacity: .7; }
-.closing__logo { height: 22px; opacity: .5; }
+.closing__logo { height: 20px; opacity: .4; }
 
 /* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .footer {
-  text-align: center; padding: 40px 28px 48px;
-  border-top: 1px solid rgba(167,216,255,.06);
+  text-align: center; padding: 32px 28px 40px;
+  border-top: 1px solid rgba(167,216,255,.05);
 }
 .footer__text {
   font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(244,247,255,.2);
+  color: rgba(244,247,255,.15);
 }
-
-/* ━━ TOUR DATES (momentum section) ━━━━━━━━━━━━━━━━━━━━━━━━ */
-.tour-dates { margin-top: 24px; }
-.tour-date-row {
-  display: flex; align-items: center; gap: 16px;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,.04);
-  font-size: 13px;
-}
-.td__date {
-  font-family: var(--f-mono); font-size: 11px;
-  letter-spacing: 1px; color: var(--c-cyan);
-  min-width: 52px;
-}
-.td__city {
-  font-family: var(--f-heading); font-weight: 600;
-  font-size: 13px; letter-spacing: .5px;
-  color: var(--c-white); min-width: 140px;
-}
-.td__venue {
-  color: rgba(244,247,255,.35); font-size: 12px; flex: 1;
-}
-.tour-date-row--tba { opacity: .45; }
 
 /* ━━ REVEAL ANIMATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .reveal {
-  opacity: 0; transform: translateY(28px);
+  opacity: 0; transform: translateY(24px);
   transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
 }
 .reveal.visible { opacity: 1; transform: none; }
 .reveal-d1 { transition-delay: .1s; }
 .reveal-d2 { transition-delay: .2s; }
 .reveal-d3 { transition-delay: .3s; }
-.reveal-d4 { transition-delay: .4s; }
 
 /* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-@media (max-width: 768px) {
-  .market-grid { grid-template-columns: 1fr; }
-  .capability-grid { grid-template-columns: repeat(2, 1fr); }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .label-grid { grid-template-columns: repeat(2, 1fr); }
-  .tiers-grid { grid-template-columns: 1fr; }
-  .songs-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-}
 @media (max-width: 600px) {
-  .market-grid { grid-template-columns: 1fr; }
-  .capability-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .label-grid { grid-template-columns: 1fr; }
-  .songs-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .ap__controls { padding: 10px 10px 8px; }
-  .ap__play { width: 28px; height: 28px; }
-  .ap__play svg { width: 11px; height: 11px; }
-  .ap__title { font-size: 10px; letter-spacing: .5px; }
-  .ap__feat { font-size: 7px; }
-  .ap__time { font-size: 8px; }
-  .ap__time span { min-width: 24px; }
-  .mini-eq { display: none; }
-  .hero__unmute { width: 38px; height: 38px; bottom: 16px; right: 16px; }
-  .pull-quote { font-size: 18px; }
+  .stat-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .tier { padding: 28px 22px; }
+  .pull-quote { font-size: 17px; }
 }
   </style>
 </head>
@@ -668,7 +372,7 @@ section { padding: 100px 0; }
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   </div>
-  <p class="pw-gate__label">THIS DOCUMENT IS CONFIDENTIAL</p>
+  <p class="pw-gate__label">CONFIDENTIAL</p>
   <form class="pw-gate__form" id="pwForm">
     <input type="text" class="pw-gate__input" id="pwInput" placeholder="Enter password" autocomplete="off" spellcheck="false" />
     <button type="submit" class="pw-gate__btn">UNLOCK</button>
@@ -678,361 +382,95 @@ section { padding: 100px 0; }
 <!-- Progress bar -->
 <div class="progress-bar" id="progressBar"></div>
 
-<!-- Nav -->
-<nav class="nav" id="nav">
-  <img class="nav__logo" src="../ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" />
-  <span class="nav__badge">Confidential</span>
-</nav>
-
 <!-- ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<header class="hero" id="hero">
-  <video class="hero__bg-video" id="heroBgVideo" poster="../ninjatune/assets/hero-poster.jpg" autoplay loop muted playsinline preload="none"></video>
-  <div class="hero__bg-overlay" id="heroOverlay"></div>
-  <div class="hero__content">
-    <div class="hero__e-wrap">
-      <video id="eVideo" src="/E_video_loop.mp4" loop muted playsinline preload="auto" style="display:none"></video>
-      <canvas id="eCanvas"></canvas>
-    </div>
-    <h1 class="hero__title">The Effect: An Invitation</h1>
-    <p class="hero__subtitle">Building the future of independent electronic music</p>
-    <div class="hero__badge">Confidential Investment Overview</div>
+<div class="hero">
+  <div class="hero__e-wrap">
+    <video id="eVideo" src="/E_video_loop.mp4" loop muted playsinline preload="auto" style="display:none"></video>
+    <canvas id="eCanvas"></canvas>
   </div>
-  <div class="hero__scroll">Scroll ↓</div>
-  <button class="hero__unmute" id="heroUnmute" aria-label="Unmute">
-    <svg class="unmute-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-    </svg>
-    <svg class="muted-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none">
-      <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-    </svg>
-  </button>
-</header>
+  <div class="hero__badge reveal">Confidential</div>
+  <h1 class="hero__title reveal reveal-d1">The Effect</h1>
+  <p class="hero__sub reveal reveal-d2">An invitation to build something together.</p>
+  <div class="hero__scroll">↓</div>
+</div>
 
 <div class="divider"></div>
 
-<!-- ━━ THE SHIFT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ━━ THE OPPORTUNITY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section>
   <div class="wrap">
-    <div class="section-label reveal">The Shift</div>
-    <h2 class="section-heading reveal reveal-d1">A New Model</h2>
-    <p class="narrative reveal reveal-d2">
-      The old model is dead. <em>Sign away your masters, take an advance, hope for a hit</em> — the fastest-growing artists in electronic music are proving there's another way.
+    <div class="section-label reveal">The Opportunity</div>
+    <p class="body-text reveal reveal-d1">
+      You already know what I do. You've seen the shows, heard the music, watched the whole thing get built from nothing. So I'm not going to pitch you on who I am — you know that part.
     </p>
-    <div class="pull-quote reveal reveal-d3">
-      "The artists who own everything don't just survive — they become the labels themselves."
-    </div>
-    <p class="narrative reveal reveal-d3">
-      John Summit: bedroom producer to <em>selling out MSG</em> in four years. Fred Again..: zero label backing to <em>headlining Coachella</em>. The playbook exists. It requires capital, timing, and the right artist.
+    <p class="body-text reveal reveal-d1">
+      What I want to show you is <em>where this is going</em> and exactly what an investment looks like at this stage.
     </p>
-    <div class="market-grid">
-      <div class="market-card reveal">
-        <div class="market-card__val" data-count="54" data-suffix="B">$0</div>
-        <div class="market-card__label">Streaming Market 2025</div>
-      </div>
-      <div class="market-card reveal reveal-d1">
-        <div class="market-card__val" data-count="108" data-suffix="B">$0</div>
-        <div class="market-card__label">Projected 2030</div>
-      </div>
-      <div class="market-card reveal reveal-d2">
-        <div class="market-card__val" data-count="14.9" data-suffix="%" data-prefix="">0</div>
-        <div class="market-card__label">Annual Growth Rate</div>
-      </div>
-    </div>
+    <p class="body-text reveal reveal-d2">
+      I'm at an inflection point. The music is resonating, the live show is getting real opportunities, and the brand is starting to connect. What I don't have is the capital to push through to the next level — and the window is now.
+    </p>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ━━ THE ARTIST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ━━ WHERE THINGS STAND ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section>
   <div class="wrap">
-    <div class="section-label reveal">The Artist</div>
-    <h2 class="section-heading reveal reveal-d1">EMSKI</h2>
-    <p class="narrative reveal reveal-d2">
-      <em>Producer. Vocalist. Drummer. Filmmaker. Designer.</em> Performing since age 8, toured with <strong>Zella Day</strong>, shared stages with <strong>deadmau5, Golden Features, LP Giobbi, Brutalismus 3000</strong>. Every visual, every track, every campaign — she is the operation.
+    <div class="section-label reveal">Where Things Stand</div>
+    <p class="body-text reveal reveal-d1">
+      Since releasing my first track in 2023 — with no label, no manager, no outside money — here's what's happened:
     </p>
-    <div class="capability-grid">
-      <div class="cap-card reveal">
-        <span class="cap-card__icon">◈</span>
-        <div class="cap-card__title">Production</div>
-        <div class="cap-card__sub">Writes, produces, mixes every track</div>
-      </div>
-      <div class="cap-card reveal reveal-d1">
-        <span class="cap-card__icon">◈</span>
-        <div class="cap-card__title">Vocals</div>
-        <div class="cap-card__sub">Sings, writes lyrics, no features needed</div>
-      </div>
-      <div class="cap-card reveal reveal-d2">
-        <span class="cap-card__icon">◈</span>
-        <div class="cap-card__title">Live Drums</div>
-        <div class="cap-card__sub">Performing since age 8, live show differentiator</div>
-      </div>
-      <div class="cap-card reveal reveal-d3">
-        <span class="cap-card__icon">◈</span>
-        <div class="cap-card__title">Film &amp; Video</div>
-        <div class="cap-card__sub">Shoots, directs, edits all visual content</div>
-      </div>
-      <div class="cap-card reveal reveal-d4">
-        <span class="cap-card__icon">◈</span>
-        <div class="cap-card__title">Design</div>
-        <div class="cap-card__sub">Brand identity, merch, web — all in-house</div>
-      </div>
-      <div class="cap-card reveal reveal-d4">
-        <span class="cap-card__icon">◈</span>
-        <div class="cap-card__title">Live Show</div>
-        <div class="cap-card__sub">DJ + live drums + vocals = unforgettable sets</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ━━ THE PROOF ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<section id="proofSection">
-  <div class="wrap">
-    <div class="section-label reveal">The Proof</div>
-    <h2 class="section-heading reveal reveal-d1">Traction</h2>
-    <p class="narrative reveal reveal-d2">
-      Since 2023 — <em>no label deal, no major funding</em>. All organic.
-    </p>
-    <div class="stats-grid" id="statsGrid">
-      <div class="stat-cell reveal">
-        <div class="stat-cell__val" data-count="3.15" data-suffix="M">0</div>
+    <div class="stat-row reveal reveal-d2">
+      <div class="stat-cell">
+        <div class="stat-cell__val" data-count="3.15" data-suffix="M" data-prefix="">0</div>
         <div class="stat-cell__label">Streams</div>
       </div>
-      <div class="stat-cell reveal reveal-d1">
-        <div class="stat-cell__val" data-count="42.3" data-suffix="K">0</div>
+      <div class="stat-cell">
+        <div class="stat-cell__val" data-count="42.3" data-suffix="K" data-prefix="">0</div>
         <div class="stat-cell__label">Followers</div>
       </div>
-      <div class="stat-cell reveal reveal-d2">
-        <div class="stat-cell__val" data-count="7.7" data-suffix="M">0</div>
+      <div class="stat-cell">
+        <div class="stat-cell__val" data-count="7.7" data-suffix="M" data-prefix="">0</div>
         <div class="stat-cell__label">Playlist Reach</div>
       </div>
-      <div class="stat-cell reveal reveal-d3">
-        <div class="stat-cell__val" data-count="332" data-suffix="">0</div>
-        <div class="stat-cell__label">Playlists</div>
-      </div>
-      <div class="stat-cell reveal reveal-d4">
-        <div class="stat-cell__val" data-count="1120" data-suffix="">0</div>
-        <div class="stat-cell__label">Radio Plays</div>
-      </div>
-      <div class="stat-cell reveal reveal-d4">
-        <div class="stat-cell__val" data-count="96" data-suffix="">0</div>
-        <div class="stat-cell__label">DJ Supports</div>
-      </div>
     </div>
-
-    <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">Label Cosigns</h3>
-    <div class="label-grid">
-      <div class="label-card reveal">
-        <img class="label-card__img" src="../covers/Mau5trap.png" alt="mau5trap" />
-        <div>
-          <div class="label-card__name">mau5trap</div>
-          <div class="label-card__sub">deadmau5's imprint</div>
-        </div>
-      </div>
-      <div class="label-card reveal reveal-d1">
-        <img class="label-card__img" src="../covers/Ophelia.png" alt="Ophelia Records" />
-        <div>
-          <div class="label-card__name">Ophelia Records</div>
-          <div class="label-card__sub">Seven Lions' label</div>
-        </div>
-      </div>
-      <div class="label-card reveal reveal-d2">
-        <img class="label-card__img" src="../covers/Monstercat.png" alt="Monstercat" />
-        <div>
-          <div class="label-card__name">Monstercat</div>
-          <div class="label-card__sub">Indie electronic powerhouse</div>
-        </div>
-      </div>
-      <div class="label-card reveal reveal-d3">
-        <img class="label-card__img" src="../covers/Bitbird.png" alt="Bitbird" />
-        <div>
-          <div class="label-card__name">Bitbird</div>
-          <div class="label-card__sub">San Holo's label</div>
-        </div>
-      </div>
-      <div class="label-card reveal reveal-d4">
-        <img class="label-card__img" src="../covers/Hexagon.png" alt="Hexagon" />
-        <div>
-          <div class="label-card__name">Hexagon</div>
-          <div class="label-card__sub">Don Diablo's imprint</div>
-        </div>
-      </div>
-      <div class="label-card reveal reveal-d4">
-        <img class="label-card__img" src="../covers/SableValley.png" alt="Sable Valley" />
-        <div>
-          <div class="label-card__name">Sable Valley</div>
-          <div class="label-card__sub">RL Grime's label</div>
-        </div>
-      </div>
-    </div>
+    <p class="body-text reveal reveal-d2">
+      Releases on <strong>mau5trap</strong>, <strong>Ophelia</strong>, <strong>Monstercat</strong>, <strong>Bitbird</strong>, <strong>Hexagon</strong>, <strong>Sable Valley</strong>. Shared stages with <strong>deadmau5</strong>, <strong>Golden Features</strong>, <strong>LP Giobbi</strong>. Toured with <strong>Zella Day</strong>. Festivals: ILLfest, Freaky Deaky, Seismic, Big Bond. Residency at The Chainsmokers' venue in NYC.
+    </p>
+    <p class="body-text reveal reveal-d2">
+      All of that was self-funded. I produce, sing, play drums, shoot the videos, design the merch, build the websites. That efficiency is the whole point — <em>every dollar invested goes directly into growth, not overhead.</em>
+    </p>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ━━ THE MOMENTUM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ━━ THE PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section>
   <div class="wrap">
-    <div class="section-label reveal">The Momentum</div>
-    <h2 class="section-heading reveal reveal-d1">What's Happening Now</h2>
-    <p class="narrative reveal reveal-d2">
-      <em>E/MOTION EP</em> — 5 tracks, full visual suite, actively touring TX / CO / East Coast.
+    <div class="section-label reveal">The Plan</div>
+    <h2 class="sh reveal reveal-d1">Where the money goes</h2>
+    <p class="body-text reveal reveal-d1">
+      The <em>E/MOTION EP</em> is the vehicle. Five tracks, full visual suite, ready to campaign. Here's the breakdown:
     </p>
-
-    <h3 class="reveal reveal-d2" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">E/MOTION EP — 5 Tracks</h3>
-
-    <div class="songs-list" id="songsList">
-      <div class="ap reveal" data-src="../ninjatune/songs/hold-me-up.mp3">
-        <video class="ap__video" src="../ninjatune/videos/lyric-holdmeup.mp4" loop muted playsinline preload="metadata"></video>
-        <div class="ap__controls">
-          <div class="ap__top">
-            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
-              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
-            </div>
-            <div class="ap__info">
-              <div class="ap__title">Hold Me Up</div>
-              <div class="ap__feat">EMSKI</div>
-            </div>
-            <div class="ap__time">
-              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
-              <span class="ap__cur">0:00</span>
-              <span class="t-slash">/</span>
-              <span class="ap__dur">3:53</span>
-            </div>
-          </div>
-          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
-        </div>
-      </div>
-      <div class="ap reveal reveal-d1" data-src="../ninjatune/songs/for-u.mp3">
-        <video class="ap__video" src="../ninjatune/videos/lyric-foru.mp4" loop muted playsinline preload="metadata"></video>
-        <div class="ap__controls">
-          <div class="ap__top">
-            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
-              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
-            </div>
-            <div class="ap__info">
-              <div class="ap__title">For U</div>
-              <div class="ap__feat">EMSKI</div>
-            </div>
-            <div class="ap__time">
-              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
-              <span class="ap__cur">0:00</span>
-              <span class="t-slash">/</span>
-              <span class="ap__dur">3:46</span>
-            </div>
-          </div>
-          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
-        </div>
-      </div>
-      <div class="ap reveal reveal-d2" data-src="../ninjatune/songs/wait-for-me.mp3">
-        <video class="ap__video" src="../ninjatune/videos/lyric-waitforme.mp4" loop muted playsinline preload="metadata"></video>
-        <div class="ap__controls">
-          <div class="ap__top">
-            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
-              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
-            </div>
-            <div class="ap__info">
-              <div class="ap__title">Wait For Me</div>
-              <div class="ap__feat">EMSKI</div>
-            </div>
-            <div class="ap__time">
-              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
-              <span class="ap__cur">0:00</span>
-              <span class="t-slash">/</span>
-              <span class="ap__dur">3:15</span>
-            </div>
-          </div>
-          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
-        </div>
-      </div>
-      <div class="ap reveal reveal-d3" data-src="../ninjatune/songs/calm-down.mp3">
-        <video class="ap__video" src="../ninjatune/videos/lyric-calmdown.mp4" loop muted playsinline preload="metadata"></video>
-        <div class="ap__controls">
-          <div class="ap__top">
-            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
-              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
-            </div>
-            <div class="ap__info">
-              <div class="ap__title">Calm Down</div>
-              <div class="ap__feat">EMSKI</div>
-            </div>
-            <div class="ap__time">
-              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
-              <span class="ap__cur">0:00</span>
-              <span class="t-slash">/</span>
-              <span class="ap__dur">2:54</span>
-            </div>
-          </div>
-          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
-        </div>
-      </div>
-      <div class="ap reveal reveal-d4" data-src="../ninjatune/songs/never-let-go.mp3">
-        <video class="ap__video" src="../ninjatune/videos/lyric-nlg.mp4" loop muted playsinline preload="metadata"></video>
-        <div class="ap__controls">
-          <div class="ap__top">
-            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
-              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
-            </div>
-            <div class="ap__info">
-              <div class="ap__title">Never Let Go</div>
-              <div class="ap__feat">EMSKI</div>
-            </div>
-            <div class="ap__time">
-              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
-              <span class="ap__cur">0:00</span>
-              <span class="t-slash">/</span>
-              <span class="ap__dur">3:36</span>
-            </div>
-          </div>
-          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-top:56px;margin-bottom:24px;text-transform:uppercase">Upcoming Shows</h3>
-    <div class="tour-dates reveal reveal-d1">
-      <div class="tour-date-row">
-        <div class="td__date">3/29</div>
-        <div class="td__city">Terlingua, TX</div>
-        <div class="td__venue">Big Bend</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">4/17</div>
-        <div class="td__city">Denver, CO</div>
-        <div class="td__venue">Larimer Lounge</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">5/16</div>
-        <div class="td__city">San Antonio, TX</div>
-        <div class="td__venue">In support of KREAM</div>
-      </div>
-      <div class="tour-date-row">
-        <div class="td__date">6/11</div>
-        <div class="td__city">Austin, TX</div>
-        <div class="td__venue">ACL310</div>
-      </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Houston, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
-        <div class="td__city">Dallas, TX</div>
-        <div class="td__venue">TBA</div>
-      </div>
-      <div class="tour-date-row tour-date-row--tba">
-        <div class="td__date">TBA</div>
-        <div class="td__city">NYC</div>
-        <div class="td__venue">In support of OKAYVAL</div>
-      </div>
-    </div>
-
-    <p class="narrative reveal" style="margin-top:40px">
-      <em>ILLfest</em> · <em>Freaky Deaky</em> · <em>Seismic 7.0</em> · <em>Big Bond</em> (all 2024) + <strong>Chainsmokers residency</strong> NYC.
+    <table class="budget-table reveal reveal-d2">
+      <thead>
+        <tr><th>Line Item</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Paid social ads — Meta, TikTok, YouTube (5 tracks)</td><td>$7,500</td></tr>
+        <tr><td>Playlist pitching &amp; PR campaign</td><td>$2,500</td></tr>
+        <tr><td>Music video production (1–2 hero visuals)</td><td>$3,000</td></tr>
+        <tr><td>Tour support — travel, accommodation, production</td><td>$5,000</td></tr>
+        <tr><td>Merch production — initial run</td><td>$2,000</td></tr>
+        <tr><td>Content creation — photo, video, social</td><td>$2,000</td></tr>
+        <tr><td>Working capital &amp; contingency</td><td>$3,000</td></tr>
+        <tr class="total"><td>Total ask (Spark tier)</td><td>$25,000</td></tr>
+      </tbody>
+    </table>
+    <p class="body-text reveal reveal-d2">
+      At the Catalyst ($75K) and Architect ($150K+) levels, the additional capital accelerates everything: bigger ad spend, more cities on the tour, professional management onboarding, and seeding <em>The Effect</em> as a label entity.
     </p>
   </div>
 </section>
@@ -1043,35 +481,27 @@ section { padding: 100px 0; }
 <section>
   <div class="wrap">
     <div class="section-label reveal">The Vision</div>
-    <h2 class="section-heading reveal reveal-d1">Where This Goes</h2>
-    <p class="narrative reveal reveal-d2">
-      The primary mission: make EMSKI a <em>major player in electronic music</em>. The infrastructure being built also opens doors beyond the artist project.
+    <p class="body-text reveal reveal-d1">
+      The immediate goal is straightforward: <em>make EMSKI a major name in electronic music.</em> But the infrastructure I'm building has a longer arc.
     </p>
-    <div class="roadmap">
-      <div class="roadmap__phase reveal">
-        <div class="roadmap__dot"></div>
-        <div class="roadmap__tag">Primary Focus</div>
-        <div class="roadmap__title">Establish EMSKI</div>
-        <div class="roadmap__desc">Grow from independent rising artist to headlining acts and major festival bookings.</div>
-        <ul class="roadmap__bullets">
-          <li>E/MOTION EP campaign — paid ads, playlist placement, PR</li>
-          <li>Touring expansion: 15+ shows/yr across TX, CO, NYC, LA</li>
-          <li>4-pillar content strategy across all platforms</li>
-          <li>Merch line and physical product launch</li>
-          <li>Strategic collaborations with established artists</li>
-          <li>Major festival submissions (EDC, Lollapalooza, Bonnaroo)</li>
-        </ul>
+    <div class="timeline reveal reveal-d2">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-tag">Now</div>
+        <div class="tl-title">Establish the Artist</div>
+        <div class="tl-desc">EP campaign, touring expansion (15+ shows), content machine, festival submissions, strategic collaborations. Turn traction into real momentum.</div>
       </div>
-      <div class="roadmap__phase roadmap__phase--future reveal reveal-d1">
-        <div class="roadmap__dot"></div>
-        <div class="roadmap__tag">Future Possibility</div>
-        <div class="roadmap__title">The Effect — Label &amp; Events</div>
-        <div class="roadmap__desc">As EMSKI's platform grows, <em>The Effect</em> can expand into a label imprint and curated live event series — the highest-margin verticals in electronic music.</div>
-        <ul class="roadmap__bullets">
-          <li>Sign emerging artists under The Effect umbrella</li>
-          <li>Curated event nights in key markets</li>
-          <li>Revenue diversification across multiple artists and verticals</li>
-        </ul>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-tag">12 Months</div>
+        <div class="tl-title">Scale</div>
+        <div class="tl-desc">Bigger rooms. Major festival bookings. Management infrastructure. Revenue streams compounding across streaming, touring, merch, and sync licensing.</div>
+      </div>
+      <div class="tl-item tl-item--future">
+        <div class="tl-dot"></div>
+        <div class="tl-tag">Long-term possibility</div>
+        <div class="tl-title">The Effect — Label &amp; Events</div>
+        <div class="tl-desc">The brand expands beyond the artist. Sign emerging talent, curate event nights, build the highest-margin verticals in electronic music.</div>
       </div>
     </div>
   </div>
@@ -1079,72 +509,80 @@ section { padding: 100px 0; }
 
 <div class="divider"></div>
 
-<!-- ━━ PARTNERSHIP TIERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ━━ PARTNERSHIP STRUCTURE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section>
   <div class="wrap">
     <div class="section-label reveal">Partnership</div>
-    <h2 class="section-heading reveal reveal-d1">Investment Tiers</h2>
-    <p class="narrative reveal reveal-d2">
-      <em>Support-first with upside.</em> Backing an artist at the ground floor — with real, structured returns as the project scales.
+    <h2 class="sh reveal reveal-d1">How it works</h2>
+    <p class="body-text reveal reveal-d1">
+      This is structured as <em>support with real upside</em>. You're not donating to a GoFundMe — you're getting a structured position with revenue sharing and, at higher tiers, equity in the entity I'm building.
     </p>
-    <div class="tiers-grid">
-      <div class="tier-card reveal">
-        <div class="tier-card__name">Spark</div>
-        <div class="tier-card__amount">$25K</div>
-        <ul class="tier-card__items">
-          <li><strong>5% net revenue share</strong> on all E/MOTION EP streaming royalties for 3 years</li>
-          <li><strong>2% net share</strong> on merch sales tied to E/MOTION campaign</li>
-          <li>Quarterly financial reports (streams, revenue, spend breakdown)</li>
-          <li>Credit as founding supporter on all EP-related releases</li>
-          <li>Lifetime guest list + exclusive merch drops</li>
-          <li>Direct access — monthly update calls with the artist</li>
-        </ul>
-        <div class="tier-card__note">Projected 3-yr return: 1.2–2× based on streaming growth targets</div>
+
+    <div class="tier reveal reveal-d2">
+      <div class="tier__header">
+        <span class="tier__name">Spark</span>
+        <span class="tier__amount">$25K</span>
       </div>
-      <div class="tier-card tier-card--featured reveal reveal-d1">
-        <div class="tier-card__name">Catalyst</div>
-        <div class="tier-card__amount">$75K</div>
-        <ul class="tier-card__items">
-          <li><strong>Everything in Spark, plus:</strong></li>
-          <li><strong>3% equity stake</strong> in The Effect LLC (label/brand entity)</li>
-          <li><strong>8% net revenue share</strong> across <em>all</em> future releases for 5 years</li>
-          <li><strong>5% net share</strong> on all merch &amp; physical product revenue</li>
-          <li>Advisory input on business &amp; creative direction</li>
-          <li>VIP access to all shows, private events, and studio sessions</li>
-          <li>Name/brand featured in launch campaign &amp; liner credits</li>
-        </ul>
-        <div class="tier-card__note">Projected 5-yr return: 2–4× based on catalog + touring growth</div>
-      </div>
-      <div class="tier-card reveal reveal-d2">
-        <div class="tier-card__name">Architect</div>
-        <div class="tier-card__amount">$150K+</div>
-        <ul class="tier-card__items">
-          <li><strong>Everything in Catalyst, plus:</strong></li>
-          <li><strong>7% equity stake</strong> in The Effect LLC</li>
-          <li><strong>12% net revenue share</strong> across all verticals (music, merch, events, sync, brand deals)</li>
-          <li><strong>Board-level advisory seat</strong> — voting input on major business decisions</li>
-          <li>Co-presented credit on The Effect event series</li>
-          <li>Pro-rata rights on all future funding rounds</li>
-          <li>Annual in-person strategy session + full financial audit access</li>
-        </ul>
-        <div class="tier-card__note">Projected 5-yr return: 3–6× based on full-vertical growth model</div>
-      </div>
+      <ul class="tier__items">
+        <li><strong>5% net revenue share</strong> on all E/MOTION EP streaming royalties — 3 year term</li>
+        <li><strong>2% net share</strong> on merch revenue tied to the EP campaign</li>
+        <li>Quarterly financial reports — streams, revenue, spend</li>
+        <li>Founding supporter credit on all EP-related releases</li>
+        <li>Lifetime guest list access + exclusive merch</li>
+        <li>Monthly update calls — direct access, no filter</li>
+      </ul>
     </div>
+
+    <div class="tier tier--featured reveal reveal-d2">
+      <div class="tier__header">
+        <span class="tier__name">Catalyst</span>
+        <span class="tier__amount">$75K</span>
+      </div>
+      <ul class="tier__items">
+        <li><strong>Everything in Spark</strong>, plus:</li>
+        <li><strong>3% equity stake</strong> in The Effect LLC (label/brand entity)</li>
+        <li><strong>8% net revenue share</strong> across all future releases — 5 year term</li>
+        <li><strong>5% net share</strong> on all merch &amp; physical product</li>
+        <li>Advisory input on business direction &amp; strategy</li>
+        <li>VIP access to all shows, private events, studio sessions</li>
+        <li>Name featured in launch campaign &amp; liner credits</li>
+      </ul>
+    </div>
+
+    <div class="tier reveal reveal-d3">
+      <div class="tier__header">
+        <span class="tier__name">Architect</span>
+        <span class="tier__amount">$150K+</span>
+      </div>
+      <ul class="tier__items">
+        <li><strong>Everything in Catalyst</strong>, plus:</li>
+        <li><strong>7% equity stake</strong> in The Effect LLC</li>
+        <li><strong>12% net revenue share</strong> across all verticals — music, merch, events, sync, brand deals</li>
+        <li><strong>Board-level advisory seat</strong> — voting input on major decisions</li>
+        <li>Co-presented credit on The Effect event series</li>
+        <li>Pro-rata rights on any future funding rounds</li>
+        <li>Annual in-person strategy session + full financial audit access</li>
+      </ul>
+    </div>
+
+    <p class="body-text reveal reveal-d3" style="margin-top:28px;font-size:13px;color:rgba(244,247,255,.35)">
+      All terms are negotiable and will be formalized in a proper agreement. This is the starting point for a conversation, not a take-it-or-leave-it.
+    </p>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ━━ THE ASK ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ━━ CLOSE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section class="closing">
-  <h2 class="closing__title reveal">Be Part of<br/>Something Special</h2>
+  <h2 class="closing__title reveal">Let's talk.</h2>
   <p class="closing__sub reveal reveal-d1">
-    This is an invitation to build alongside an artist at the inflection point — before the rooms get bigger and the cap table closes. If this resonates, let's talk.
+    I wouldn't send this to you if I didn't think you'd see what I see. I'm building something real — and I'd love for you to be part of it.
   </p>
   <div class="closing__contact reveal reveal-d2">
     <a href="mailto:contact@emskimusic.com">contact@emskimusic.com</a>
   </div>
-  <img class="closing__logo reveal reveal-d3" src="../ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" style="margin-top:40px;margin-bottom:0" />
+  <img class="closing__logo reveal reveal-d3" src="../ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" style="margin-top:36px;margin-bottom:0" />
 </section>
 
 <!-- Footer -->
@@ -1157,13 +595,11 @@ section { padding: 100px 0; }
 <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <script>
 /* ── Password Gate ──────────────────────────────────────── */
-(function initPasswordGate() {
-  const gate = document.getElementById('pwGate');
-  const form = document.getElementById('pwForm');
-  const input = document.getElementById('pwInput');
-  const CORRECT = 'effect';
+(function() {
+  var gate = document.getElementById('pwGate');
+  var form = document.getElementById('pwForm');
+  var input = document.getElementById('pwInput');
 
-  // Check if already unlocked
   if (sessionStorage.getItem('pitch-unlocked') === '1') {
     gate.classList.add('hidden');
     document.body.style.overflow = '';
@@ -1175,7 +611,7 @@ section { padding: 100px 0; }
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    if (input.value.trim().toLowerCase() === CORRECT) {
+    if (input.value.trim().toLowerCase() === 'effect') {
       sessionStorage.setItem('pitch-unlocked', '1');
       gate.classList.add('hidden');
       document.body.style.overflow = '';
@@ -1188,78 +624,57 @@ section { padding: 100px 0; }
   });
 })();
 
-/* ── Scroll progress & nav ──────────────────────────────── */
-const progressBar = document.getElementById('progressBar');
-const nav = document.getElementById('nav');
-
+/* ── Scroll progress ────────────────────────────────────── */
+var progressBar = document.getElementById('progressBar');
 window.addEventListener('scroll', function() {
-  const h = document.documentElement.scrollHeight - window.innerHeight;
+  var h = document.documentElement.scrollHeight - window.innerHeight;
   progressBar.style.width = (window.scrollY / h * 100) + '%';
-  nav.classList.toggle('nav--scrolled', window.scrollY > 60);
 }, { passive: true });
 
 /* ── Reveal on scroll ───────────────────────────────────── */
-const reveals = document.querySelectorAll('.reveal');
-const revealObs = new IntersectionObserver(function(entries) {
+var reveals = document.querySelectorAll('.reveal');
+var revealObs = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) {
     if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 reveals.forEach(function(el) { revealObs.observe(el); });
 
-/* ── Animated number counters ───────────────────────────── */
+/* ── Animated counters ──────────────────────────────────── */
 function animateCounter(el) {
-  const target = parseFloat(el.dataset.count);
-  const suffix = el.dataset.suffix || '';
-  const prefix = el.dataset.prefix !== undefined ? el.dataset.prefix : '$';
-  const duration = 2200;
-  const start = performance.now();
-  const isInt = target === Math.floor(target) && target > 10;
+  var target = parseFloat(el.dataset.count);
+  var suffix = el.dataset.suffix || '';
+  var prefix = el.dataset.prefix || '';
+  var duration = 2000;
+  var start = performance.now();
+  var isInt = target === Math.floor(target) && target > 10;
 
-  function ease(t) { return 1 - Math.pow(1 - t, 4); } // ease-out quartic
+  function ease(t) { return 1 - Math.pow(1 - t, 4); }
 
   function tick(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const val = target * ease(progress);
-
+    var p = Math.min((now - start) / duration, 1);
+    var val = target * ease(p);
     if (isInt) {
       el.textContent = prefix + Math.round(val).toLocaleString() + suffix;
     } else {
-      const decimals = target < 100 ? (target.toString().split('.')[1] || '').length || 1 : 0;
-      el.textContent = prefix + val.toFixed(decimals) + suffix;
+      var dec = (target.toString().split('.')[1] || '').length || 1;
+      el.textContent = prefix + val.toFixed(dec) + suffix;
     }
-
-    if (progress < 1) requestAnimationFrame(tick);
+    if (p < 1) requestAnimationFrame(tick);
   }
-
   requestAnimationFrame(tick);
 }
 
 document.querySelectorAll('[data-count]').forEach(function(el) {
-  var counted = false;
+  var done = false;
   var obs = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting && !counted) {
-      counted = true;
-      animateCounter(el);
-      obs.unobserve(el);
-    }
+    if (entries[0].isIntersecting && !done) { done = true; animateCounter(el); obs.unobserve(el); }
   }, { threshold: 0.3 });
   obs.observe(el);
 });
 
-/* ── Auto-play lyric videos on scroll ───────────────────── */
-document.querySelectorAll('.ap__video').forEach(function(vid) {
-  vid.loop = true; vid.muted = true; vid.playsInline = true;
-  var vidObs = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting) { vid.play().catch(function(){}); }
-    else { vid.pause(); }
-  }, { threshold: 0.15 });
-  vidObs.observe(vid);
-});
-
-/* ── E Video Canvas (transparent dark pixels + mouse) ──── */
-(function initECanvas() {
+/* ── E Video Canvas ─────────────────────────────────────── */
+(function() {
   var video = document.getElementById('eVideo');
   var canvas = document.getElementById('eCanvas');
   if (!video || !canvas) return;
@@ -1267,35 +682,24 @@ document.querySelectorAll('.ap__video').forEach(function(vid) {
   var ctx = canvas.getContext('2d');
   var off = document.createElement('canvas');
   var octx = off.getContext('2d', { willReadFrequently: true });
-
   var MOUSE_R = 80, PUSH = 30, BG_T = 35;
   var mouse = { x: -9999, y: -9999 };
   var cw, ch, dpr, ready = false;
 
   function setup() {
-    if (ready) return;
-    ready = true;
+    if (ready) return; ready = true;
     dpr = window.devicePixelRatio || 1;
-    var size = Math.min(420, window.innerWidth * 0.8);
-    var vw = video.videoWidth || 1;
-    var vh = video.videoHeight || 1;
+    var size = Math.min(340, window.innerWidth * 0.7);
+    var vw = video.videoWidth || 1, vh = video.videoHeight || 1;
     var scale = size / Math.max(vw, vh);
-    cw = Math.round(vw * scale);
-    ch = Math.round(vh * scale);
-
-    canvas.width = cw * dpr;
-    canvas.height = ch * dpr;
-    canvas.style.width = cw + 'px';
-    canvas.style.height = ch + 'px';
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
-    off.width = cw;
-    off.height = ch;
-
+    cw = Math.round(vw * scale); ch = Math.round(vh * scale);
+    canvas.width = cw * dpr; canvas.height = ch * dpr;
+    canvas.style.width = cw + 'px'; canvas.style.height = ch + 'px';
+    ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr, dpr);
+    off.width = cw; off.height = ch;
     var p = video.play();
     if (p && p.catch) p.catch(function() {
-      var resume = function() { video.play().catch(function(){}); document.removeEventListener('click', resume); };
-      document.addEventListener('click', resume, { once: true });
+      document.addEventListener('click', function r() { video.play().catch(function(){}); document.removeEventListener('click', r); }, { once: true });
     });
     loop();
   }
@@ -1303,54 +707,33 @@ document.querySelectorAll('.ap__video').forEach(function(vid) {
   function loop() {
     if (!video.paused && !video.ended && video.readyState >= 2) {
       octx.drawImage(video, 0, 0, cw, ch);
-      var img = octx.getImageData(0, 0, cw, ch);
-      var d = img.data;
-      for (var i = 0; i < d.length; i += 4) {
-        if ((d[i] + d[i+1] + d[i+2]) / 3 < BG_T) d[i+3] = 0;
-      }
-
-      var mx = mouse.x, my = mouse.y;
-      var active = mx > -1000;
-
+      var img = octx.getImageData(0, 0, cw, ch), d = img.data;
+      for (var i = 0; i < d.length; i += 4) { if ((d[i]+d[i+1]+d[i+2])/3 < BG_T) d[i+3] = 0; }
+      var mx = mouse.x, my = mouse.y, active = mx > -1000;
       if (!active) {
-        ctx.clearRect(0, 0, cw, ch);
-        octx.putImageData(img, 0, 0);
-        ctx.drawImage(off, 0, 0);
+        ctx.clearRect(0,0,cw,ch); octx.putImageData(img,0,0); ctx.drawImage(off,0,0);
       } else {
-        octx.putImageData(img, 0, 0);
-        ctx.clearRect(0, 0, cw, ch);
-        ctx.drawImage(off, 0, 0);
-
-        var pad = MOUSE_R + PUSH + 2;
-        var rx = Math.max(0, Math.floor(mx - pad));
-        var ry = Math.max(0, Math.floor(my - pad));
-        var rw = Math.min(cw, Math.ceil(mx + pad)) - rx;
-        var rh = Math.min(ch, Math.ceil(my + pad)) - ry;
-
+        octx.putImageData(img,0,0); ctx.clearRect(0,0,cw,ch); ctx.drawImage(off,0,0);
+        var pad = MOUSE_R+PUSH+2;
+        var rx = Math.max(0,Math.floor(mx-pad)), ry = Math.max(0,Math.floor(my-pad));
+        var rw = Math.min(cw,Math.ceil(mx+pad))-rx, rh = Math.min(ch,Math.ceil(my+pad))-ry;
         if (rw > 0 && rh > 0) {
-          ctx.clearRect(rx, ry, rw, rh);
-          var rd = octx.getImageData(rx, ry, rw, rh).data;
-          for (var y = 0; y < rh; y++) {
-            for (var x = 0; x < rw; x++) {
-              var idx = (y * rw + x) * 4;
-              if (rd[idx+3] === 0) continue;
-              var px = rx + x, py = ry + y;
-              var ddx = px - mx, ddy = py - my;
-              var dist = Math.sqrt(ddx*ddx + ddy*ddy);
-              if (dist < MOUSE_R && dist > 0) {
-                var f = (MOUSE_R - dist) / MOUSE_R;
-                var fx = px + (ddx/dist) * f * PUSH;
-                var fy = py + (ddy/dist) * f * PUSH;
-                ctx.globalAlpha = rd[idx+3] / 255;
-                ctx.fillStyle = 'rgb(' + rd[idx] + ',' + rd[idx+1] + ',' + rd[idx+2] + ')';
-                ctx.fillRect(Math.round(fx), Math.round(fy), 1, 1);
-              } else {
-                ctx.globalAlpha = rd[idx+3] / 255;
-                ctx.fillStyle = 'rgb(' + rd[idx] + ',' + rd[idx+1] + ',' + rd[idx+2] + ')';
-                ctx.fillRect(px, py, 1, 1);
-              }
+          ctx.clearRect(rx,ry,rw,rh);
+          var rd = octx.getImageData(rx,ry,rw,rh).data;
+          for (var y = 0; y < rh; y++) { for (var x = 0; x < rw; x++) {
+            var idx = (y*rw+x)*4; if (rd[idx+3]===0) continue;
+            var px=rx+x, py=ry+y, ddx=px-mx, ddy=py-my, dist=Math.sqrt(ddx*ddx+ddy*ddy);
+            if (dist < MOUSE_R && dist > 0) {
+              var f=(MOUSE_R-dist)/MOUSE_R;
+              ctx.globalAlpha=rd[idx+3]/255;
+              ctx.fillStyle='rgb('+rd[idx]+','+rd[idx+1]+','+rd[idx+2]+')';
+              ctx.fillRect(Math.round(px+(ddx/dist)*f*PUSH), Math.round(py+(ddy/dist)*f*PUSH),1,1);
+            } else {
+              ctx.globalAlpha=rd[idx+3]/255;
+              ctx.fillStyle='rgb('+rd[idx]+','+rd[idx+1]+','+rd[idx+2]+')';
+              ctx.fillRect(px,py,1,1);
             }
-          }
+          }}
           ctx.globalAlpha = 1;
         }
       }
@@ -1360,186 +743,20 @@ document.querySelectorAll('.ap__video').forEach(function(vid) {
 
   canvas.addEventListener('mousemove', function(e) {
     var r = canvas.getBoundingClientRect();
-    mouse.x = (e.clientX - r.left) * (cw / r.width);
-    mouse.y = (e.clientY - r.top) * (ch / r.height);
+    mouse.x = (e.clientX-r.left)*(cw/r.width); mouse.y = (e.clientY-r.top)*(ch/r.height);
   });
-  canvas.addEventListener('mouseleave', function() { mouse.x = -9999; mouse.y = -9999; });
+  canvas.addEventListener('mouseleave', function() { mouse.x=-9999; mouse.y=-9999; });
   canvas.addEventListener('touchmove', function(e) {
-    if (e.touches.length) {
-      var t = e.touches[0], r = canvas.getBoundingClientRect();
-      mouse.x = (t.clientX - r.left) * (cw / r.width);
-      mouse.y = (t.clientY - r.top) * (ch / r.height);
-    }
+    if (e.touches.length) { var t=e.touches[0], r=canvas.getBoundingClientRect();
+      mouse.x=(t.clientX-r.left)*(cw/r.width); mouse.y=(t.clientY-r.top)*(ch/r.height); }
   });
-  canvas.addEventListener('touchend', function() { mouse.x = -9999; mouse.y = -9999; });
+  canvas.addEventListener('touchend', function() { mouse.x=-9999; mouse.y=-9999; });
   canvas.style.cursor = 'crosshair';
 
   video.addEventListener('canplaythrough', setup);
   video.addEventListener('loadeddata', setup);
   video.addEventListener('loadedmetadata', function() { setTimeout(setup, 100); });
   if (video.readyState >= 2) setup();
-})();
-
-/* ── Custom Audio Players ───────────────────────────────── */
-var activeAudio = null;
-var activeAP = null;
-var apData = new Map();
-
-function fmt(s) {
-  if (!s || !isFinite(s)) return '0:00';
-  return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
-}
-
-(function initPlayers() {
-  document.querySelectorAll('.ap[data-src]').forEach(function(el) {
-    var audio = new Audio();
-    audio.preload = 'metadata';
-    audio.src = el.dataset.src;
-    var isSeeking = false;
-
-    var seekBar  = el.querySelector('.ap__seek');
-    var seekFill = el.querySelector('.ap__seek-fill');
-    var curEl    = el.querySelector('.ap__cur');
-    var durEl    = el.querySelector('.ap__dur');
-    var bars     = el.querySelectorAll('.mini-eq__bar');
-
-    var d = { audio: audio, seekFill: seekFill, curEl: curEl, durEl: durEl, bars: bars };
-    apData.set(el, d);
-
-    audio.addEventListener('loadedmetadata', function() {
-      if (durEl) durEl.textContent = fmt(audio.duration);
-    });
-
-    audio.addEventListener('timeupdate', function() {
-      if (isSeeking) return;
-      if (curEl) curEl.textContent = fmt(audio.currentTime);
-      if (seekFill && audio.duration) {
-        seekFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-      }
-    });
-
-    audio.addEventListener('ended', function() {
-      el.classList.remove('playing');
-      el.querySelector('.ap__play svg').innerHTML = '<polygon points="8,5 19,12 8,19" />';
-      var vid = el.querySelector('.ap__video');
-      if (vid) { vid.pause(); vid.currentTime = 0; }
-    });
-
-    if (seekBar) {
-      function doSeek(clientX) {
-        var rect = seekBar.getBoundingClientRect();
-        var pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        if (seekFill) seekFill.style.width = (pct * 100) + '%';
-        if (audio.duration && isFinite(audio.duration)) {
-          audio.currentTime = pct * audio.duration;
-          if (curEl) curEl.textContent = fmt(audio.currentTime);
-        }
-      }
-      var dragging = false;
-      seekBar.addEventListener('mousedown', function(e) {
-        dragging = true; isSeeking = true;
-        doSeek(e.clientX);
-        e.preventDefault(); e.stopPropagation();
-      });
-      document.addEventListener('mousemove', function(e) { if (dragging) doSeek(e.clientX); });
-      document.addEventListener('mouseup', function() {
-        if (dragging) { dragging = false; setTimeout(function() { isSeeking = false; }, 250); }
-      });
-      seekBar.addEventListener('touchstart', function(e) {
-        isSeeking = true; doSeek(e.touches[0].clientX);
-        e.preventDefault(); e.stopPropagation();
-      }, { passive: false });
-      seekBar.addEventListener('touchmove', function(e) { doSeek(e.touches[0].clientX); }, { passive: true });
-      seekBar.addEventListener('touchend', function() { setTimeout(function() { isSeeking = false; }, 250); });
-    }
-  });
-})();
-
-function apToggle(el) {
-  var d = apData.get(el);
-  if (!d) return;
-
-  if (activeAP && activeAP !== el) {
-    var prev = apData.get(activeAP);
-    if (prev) {
-      prev.audio.pause();
-      prev.audio.currentTime = 0;
-      activeAP.classList.remove('playing');
-      activeAP.querySelector('.ap__play svg').innerHTML = '<polygon points="8,5 19,12 8,19" />';
-      var prevVid = activeAP.querySelector('.ap__video');
-      if (prevVid) { prevVid.pause(); prevVid.currentTime = 0; }
-    }
-  }
-
-  if (d.audio.paused) {
-    d.audio.play().catch(function(){});
-    el.classList.add('playing');
-    el.querySelector('.ap__play svg').innerHTML = '<rect x="7" y="5" width="3" height="14" /><rect x="14" y="5" width="3" height="14" />';
-    var vid = el.querySelector('.ap__video');
-    if (vid) vid.play();
-  } else {
-    d.audio.pause();
-    el.classList.remove('playing');
-    el.querySelector('.ap__play svg').innerHTML = '<polygon points="8,5 19,12 8,19" />';
-    var vid2 = el.querySelector('.ap__video');
-    if (vid2) vid2.pause();
-  }
-
-  activeAP = el;
-  activeAudio = d.audio;
-}
-
-/* ── Hero scroll-driven video reveal ─────────────────────── */
-(function initHeroReveal() {
-  var hero = document.getElementById('hero');
-  var video = document.getElementById('heroBgVideo');
-  var unmuteBtn = document.getElementById('heroUnmute');
-  if (!hero || !video) return;
-
-  var isMuted = true;
-  var alive = false;
-
-  function onScroll() {
-    var rect = hero.getBoundingClientRect();
-    var progress = -rect.top / (rect.height - window.innerHeight);
-    var pastHalf = progress > 0.35;
-
-    if (pastHalf && !alive) {
-      alive = true;
-      hero.classList.add('video-alive');
-    } else if (!pastHalf && alive) {
-      alive = false;
-      hero.classList.remove('video-alive');
-      if (!isMuted) {
-        video.muted = true; isMuted = true;
-        toggleIcons(true);
-      }
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  function toggleIcons(showUnmute) {
-    var u = unmuteBtn.querySelector('.unmute-icon');
-    var m = unmuteBtn.querySelector('.muted-icon');
-    u.style.display = showUnmute ? '' : 'none';
-    m.style.display = showUnmute ? 'none' : '';
-  }
-
-  unmuteBtn.addEventListener('click', function() {
-    isMuted = !isMuted;
-    video.muted = isMuted;
-    toggleIcons(isMuted);
-  });
-})();
-
-/* ── Progressive hero video loading ────────────────────── */
-(function loadHeroVideo() {
-  var video = document.getElementById('heroBgVideo');
-  if (!video) return;
-  video.src = 'https://pub-9a90af40c4df4a8aa36505acb79e02b3.r2.dev/warehouse-show-hd.mp4';
-  video.load();
-  video.play().catch(function(){});
 })();
 </script>
 
