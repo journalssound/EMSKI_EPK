@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMSKI — The Effect: An Invitation</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta property="og:title" content="EMSKI — The Effect: An Invitation" />
+  <meta property="og:description" content="Confidential investment overview" />
+  <meta property="og:image" content="/og-image.jpg" />
+
+  <!-- Typekit (aktiv-grotesk-extended) -->
+  <link rel="stylesheet" href="https://use.typekit.net/sag3htb.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+/* ━━ TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --c-bg: #060609;
+  --c-charcoal: #0E1116;
+  --c-white: #F4F7FF;
+  --c-ice: #A7D8FF;
+  --c-neon-blue: #7272FE;
+  --c-cyan: #00EFEF;
+  --f-heading: "aktiv-grotesk-extended", sans-serif;
+  --f-body: "Jura", sans-serif;
+  --f-mono: "Space Mono", monospace;
+  --max-w: 1080px;
+}
+
+/* ━━ RESET ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--c-bg); }
+body {
+  font-family: var(--f-body);
+  color: var(--c-white);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ━━ FILM GRAIN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: .045;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px;
+  animation: grain .4s steps(2) infinite;
+}
+@keyframes grain { 50% { background-position: 50px 50px; } }
+
+/* ━━ PROGRESS BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--c-neon-blue), var(--c-cyan));
+  z-index: 9999; transition: width .15s linear;
+}
+
+/* ━━ NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 32px;
+  transition: background .4s, backdrop-filter .4s, padding .3s;
+}
+.nav--scrolled {
+  background: rgba(6,6,9,.72);
+  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+  padding: 12px 32px;
+  border-bottom: 1px solid rgba(167,216,255,.06);
+}
+.nav__logo { height: 18px; opacity: .85; }
+.nav__badge {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+  border: 1px solid rgba(0,239,239,.25);
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+
+/* ━━ PASSWORD GATE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.pw-gate {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--c-bg);
+  gap: 24px;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+.pw-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.pw-gate__lock { color: var(--c-cyan); opacity: .6; }
+.pw-gate__icon { width: 36px; height: 36px; }
+.pw-gate__label {
+  font-family: var(--f-body); font-size: 11px;
+  letter-spacing: .2em; color: rgba(255,255,255,.45); text-align: center;
+}
+.pw-gate__form { display: flex; gap: 8px; align-items: center; }
+.pw-gate__input {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12); border-radius: 4px;
+  padding: 10px 16px; color: var(--c-white);
+  font-family: var(--f-body); font-size: 14px;
+  letter-spacing: .08em; outline: none; width: 200px;
+  transition: border-color .2s;
+}
+.pw-gate__input::placeholder { color: rgba(255,255,255,.25); }
+.pw-gate__input:focus { border-color: var(--c-cyan); }
+.pw-gate__input--shake { animation: pw-shake .4s ease; border-color: #ff4444; }
+@keyframes pw-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+.pw-gate__btn {
+  background: transparent; border: 1px solid var(--c-cyan);
+  color: var(--c-cyan); font-family: var(--f-body);
+  font-size: 11px; letter-spacing: .15em;
+  padding: 11px 20px; border-radius: 4px;
+  cursor: pointer; transition: background .2s, color .2s;
+}
+.pw-gate__btn:hover { background: var(--c-cyan); color: var(--c-bg); }
+
+/* ━━ LAYOUT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+section { padding: 100px 0; }
+
+.section-label {
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--c-cyan); margin-bottom: 12px;
+}
+.section-heading {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(28px, 5vw, 44px);
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--c-white); margin-bottom: 40px;
+}
+
+/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero {
+  position: relative; height: 200vh;
+}
+.hero__bg-video {
+  position: sticky; top: 0;
+  width: 100%; height: 100vh; object-fit: cover;
+  opacity: 0; transition: opacity 1.2s ease;
+}
+.hero__bg-overlay {
+  position: sticky; top: 0; margin-top: -100vh;
+  width: 100%; height: 100vh;
+  background: radial-gradient(ellipse at center, rgba(6,6,9,.3) 0%, rgba(6,6,9,.85) 70%, var(--c-bg) 100%);
+  transition: opacity 1.2s ease;
+}
+.video-alive .hero__bg-video { opacity: 1; }
+.video-alive .hero__bg-overlay { opacity: .55; }
+
+.hero__content {
+  position: sticky; top: 0; height: 100vh;
+  margin-top: -100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; z-index: 2;
+}
+.hero__e-wrap {
+  width: clamp(200px, 50vw, 420px);
+  aspect-ratio: 1; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+#eCanvas { display: block; }
+.hero__title {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(22px, 4.5vw, 38px);
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--c-white); margin-bottom: 12px;
+}
+.hero__subtitle {
+  font-family: var(--f-body); font-size: 14px;
+  letter-spacing: .12em; color: rgba(244,247,255,.5);
+  margin-bottom: 24px;
+}
+.hero__badge {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--c-cyan); border: 1px solid rgba(0,239,239,.2);
+  padding: 6px 18px; border-radius: 2px;
+}
+.hero__scroll {
+  position: fixed; bottom: 32px; left: 50%;
+  transform: translateX(-50%); z-index: 3;
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2px; color: rgba(244,247,255,.25);
+  animation: float 2.5s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+}
+.hero__unmute {
+  position: fixed; bottom: 24px; right: 24px; z-index: 10;
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid rgba(167,216,255,.15);
+  background: rgba(6,6,9,.65); backdrop-filter: blur(16px);
+  color: var(--c-ice); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s;
+}
+.video-alive ~ .hero__unmute,
+.video-alive .hero__unmute { opacity: 1; }
+
+/* ━━ DIVIDER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.divider {
+  width: 100%; height: 1px; margin: 0;
+  background: linear-gradient(90deg, transparent, rgba(167,216,255,.08) 50%, transparent);
+}
+
+/* ━━ NARRATIVE TEXT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.narrative {
+  color: rgba(244,247,255,.6); font-size: 15px;
+  line-height: 1.8; max-width: 680px; margin-bottom: 32px;
+}
+.narrative em { color: var(--c-ice); font-style: normal; }
+.narrative strong { color: var(--c-white); font-weight: 600; }
+
+.pull-quote {
+  font-family: var(--f-heading); font-weight: 600;
+  font-size: clamp(20px, 3.5vw, 30px);
+  letter-spacing: 1px; color: var(--c-ice);
+  line-height: 1.5; max-width: 720px;
+  margin: 48px 0; padding-left: 24px;
+  border-left: 2px solid rgba(0,239,239,.3);
+}
+
+/* ━━ MARKET DATA CARDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.market-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-top: 40px;
+}
+.market-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(167,216,255,.08);
+  border-radius: 6px; padding: 28px 24px; text-align: center;
+}
+.market-card__val {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--c-cyan); letter-spacing: 1px;
+}
+.market-card__label {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(244,247,255,.4); margin-top: 8px;
+}
+
+/* ━━ THE ARTIST — CAPABILITY GRID ━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.capability-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; margin-bottom: 48px;
+}
+.cap-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(255,255,255,.008));
+  border: 1px solid rgba(167,216,255,.06);
+  border-radius: 6px; padding: 24px 20px; text-align: center;
+  transition: border-color .3s;
+}
+.cap-card:hover { border-color: rgba(0,239,239,.2); }
+.cap-card__icon {
+  font-size: 24px; margin-bottom: 10px; display: block;
+  color: var(--c-ice); opacity: .7;
+}
+.cap-card__title {
+  font-family: var(--f-heading); font-weight: 600;
+  font-size: 12px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--c-white);
+  margin-bottom: 6px;
+}
+.cap-card__sub {
+  font-size: 11px; color: rgba(244,247,255,.4);
+  line-height: 1.5;
+}
+
+.artist-photo {
+  width: 100%; max-width: 680px; border-radius: 6px;
+  margin-top: 20px;
+  border: 1px solid rgba(167,216,255,.06);
+}
+
+/* ━━ STATS GRID ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-bottom: 56px;
+}
+.stat-cell { text-align: center; }
+.stat-cell__val {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(32px, 6vw, 52px);
+  letter-spacing: 1px; color: var(--c-white);
+}
+.stat-cell__label {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(244,247,255,.4); margin-top: 6px;
+}
+
+/* ━━ LABEL COSIGNS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.label-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-top: 40px; margin-bottom: 56px;
+}
+.label-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(167,216,255,.06);
+  border-radius: 6px; padding: 20px;
+  display: flex; align-items: center; gap: 14px;
+  transition: border-color .3s;
+}
+.label-card:hover { border-color: rgba(0,239,239,.15); }
+.label-card__img {
+  width: 44px; height: 44px; border-radius: 4px;
+  object-fit: cover; flex-shrink: 0;
+}
+.label-card__name {
+  font-family: var(--f-heading); font-weight: 600;
+  font-size: 12px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--c-white);
+}
+.label-card__sub {
+  font-size: 10px; color: rgba(244,247,255,.35); margin-top: 2px;
+}
+
+/* ━━ TOUR MAP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tour-map-container {
+  width: 100%; aspect-ratio: 16/8; border-radius: 8px;
+  overflow: hidden; margin-bottom: 40px;
+  border: 1px solid rgba(167,216,255,.06);
+}
+#reachMap {
+  width: 100%; height: 100%;
+  background: var(--c-charcoal);
+}
+.leaflet-container { background: var(--c-charcoal) !important; }
+.leaflet-tile-pane { filter: brightness(.45) saturate(.2) sepia(.8) hue-rotate(190deg); }
+.city-light {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: rgba(167,216,255,.18);
+  box-shadow: 0 0 4px rgba(167,216,255,.1);
+}
+.city-light--lg { width: 5px; height: 5px; background: rgba(167,216,255,.28); box-shadow: 0 0 8px rgba(167,216,255,.15); }
+.city-light--sm { width: 2px; height: 2px; background: rgba(167,216,255,.1); }
+.reach-marker {
+  position: relative; width: 0; height: 0;
+}
+.reach-marker__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--c-cyan);
+  box-shadow: 0 0 12px rgba(0,239,239,.5);
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.reach-marker__pulse {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid rgba(0,239,239,.3);
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-ring 2.5s ease-out infinite;
+}
+@keyframes pulse-ring {
+  0% { transform: translate(-50%,-50%) scale(.5); opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; }
+}
+.reach-marker__label {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(12px, -50%);
+  white-space: nowrap;
+}
+.reach-marker__name {
+  font-family: var(--f-heading); font-size: 10px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--c-white); font-weight: 600;
+}
+.reach-marker__sub {
+  font-family: var(--f-mono); font-size: 8px;
+  letter-spacing: 1px; color: rgba(244,247,255,.35);
+}
+
+/* ━━ AUDIO PLAYER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.songs-list {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.ap {
+  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(167,216,255,.06);
+  border-radius: 6px; overflow: hidden;
+  transition: border-color .3s;
+}
+.ap:hover, .ap.playing { border-color: rgba(0,239,239,.2); }
+.ap__video {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  display: block; background: var(--c-charcoal);
+}
+.ap__controls { padding: 12px 14px 10px; }
+.ap__top { display: flex; align-items: center; gap: 10px; }
+.ap__play {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(167,216,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: border-color .2s;
+}
+.ap__play:hover { border-color: var(--c-cyan); }
+.ap__play svg { width: 12px; height: 12px; fill: var(--c-ice); }
+.ap__info { flex: 1; min-width: 0; }
+.ap__title {
+  font-family: var(--f-heading); font-weight: 600;
+  font-size: 11px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--c-white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ap__feat {
+  font-family: var(--f-mono); font-size: 8px;
+  letter-spacing: 1px; color: rgba(244,247,255,.35); margin-top: 1px;
+}
+.ap__time {
+  display: flex; align-items: center; gap: 3px;
+  font-family: var(--f-mono); font-size: 9px;
+  color: rgba(244,247,255,.35);
+}
+.ap__time span { min-width: 28px; text-align: center; }
+.t-slash { opacity: .3; }
+.ap__seek { margin-top: 8px; padding: 4px 0; cursor: pointer; }
+.ap__seek-track {
+  height: 2px; background: rgba(255,255,255,.08);
+  border-radius: 1px; overflow: hidden;
+}
+.ap__seek-fill {
+  height: 100%; width: 0;
+  background: linear-gradient(90deg, var(--c-neon-blue), var(--c-cyan));
+  transition: width .1s linear;
+}
+.mini-eq {
+  display: flex; align-items: flex-end; gap: 2px;
+  height: 12px; margin-right: 6px;
+}
+.mini-eq__bar {
+  width: 2px; background: var(--c-cyan);
+  border-radius: 1px; height: 4px;
+  animation: none;
+}
+.ap.playing .mini-eq__bar { animation: eq .6s ease-in-out infinite alternate; }
+.ap.playing .mini-eq__bar:nth-child(1) { animation-duration: .45s; }
+.ap.playing .mini-eq__bar:nth-child(2) { animation-duration: .55s; animation-delay: .1s; }
+.ap.playing .mini-eq__bar:nth-child(3) { animation-duration: .4s; animation-delay: .15s; }
+.ap.playing .mini-eq__bar:nth-child(4) { animation-duration: .5s; animation-delay: .05s; }
+.ap.playing .mini-eq__bar:nth-child(5) { animation-duration: .35s; animation-delay: .2s; }
+@keyframes eq { to { height: 12px; } }
+
+/* ━━ ROADMAP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.roadmap {
+  display: flex; flex-direction: column; gap: 0;
+  position: relative; padding-left: 32px;
+}
+.roadmap::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 11px;
+  width: 1px; background: linear-gradient(180deg, var(--c-cyan), rgba(114,114,254,.3), transparent);
+}
+.roadmap__phase {
+  position: relative; padding: 32px 0 48px;
+}
+.roadmap__dot {
+  position: absolute; left: -32px; top: 38px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--c-cyan);
+  box-shadow: 0 0 12px rgba(0,239,239,.4);
+  transform: translateX(6px);
+}
+.roadmap__phase--future .roadmap__dot {
+  background: transparent; border: 1px solid rgba(0,239,239,.4);
+  box-shadow: none;
+}
+.roadmap__tag {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--c-cyan); margin-bottom: 8px;
+}
+.roadmap__title {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(20px, 3vw, 28px);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--c-white); margin-bottom: 12px;
+}
+.roadmap__desc {
+  color: rgba(244,247,255,.5); font-size: 14px;
+  line-height: 1.7; max-width: 600px;
+}
+.roadmap__bullets {
+  list-style: none; margin-top: 16px;
+}
+.roadmap__bullets li {
+  font-size: 13px; color: rgba(244,247,255,.5);
+  padding: 6px 0; padding-left: 16px; position: relative;
+}
+.roadmap__bullets li::before {
+  content: "→"; position: absolute; left: 0;
+  color: var(--c-cyan); font-size: 12px;
+}
+
+/* ━━ TIERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tiers-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.tier-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.008));
+  border: 1px solid rgba(167,216,255,.08);
+  border-radius: 8px; padding: 36px 28px;
+  display: flex; flex-direction: column;
+  transition: border-color .3s, transform .3s;
+}
+.tier-card:hover { border-color: rgba(0,239,239,.2); transform: translateY(-2px); }
+.tier-card--featured {
+  border-color: rgba(0,239,239,.2);
+  background: linear-gradient(135deg, rgba(0,239,239,.04), rgba(114,114,254,.03));
+}
+.tier-card__name {
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--c-cyan); margin-bottom: 16px;
+}
+.tier-card__amount {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(32px, 5vw, 44px);
+  letter-spacing: 1px; color: var(--c-white);
+  margin-bottom: 20px;
+}
+.tier-card__items {
+  list-style: none; flex: 1;
+}
+.tier-card__items li {
+  font-size: 13px; color: rgba(244,247,255,.55);
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  padding-left: 18px; position: relative; line-height: 1.5;
+}
+.tier-card__items li::before {
+  content: "✦"; position: absolute; left: 0;
+  color: var(--c-cyan); font-size: 8px; top: 10px;
+}
+.tier-card__items li:last-child { border-bottom: none; }
+.tier-card__note {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 1px; color: rgba(244,247,255,.3);
+  margin-top: 20px; text-align: center;
+}
+
+/* ━━ CLOSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.closing {
+  text-align: center; padding: 120px 28px;
+}
+.closing__title {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: clamp(28px, 5vw, 44px);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.closing__sub {
+  font-family: var(--f-body); font-size: 15px;
+  color: rgba(244,247,255,.5); line-height: 1.8;
+  max-width: 560px; margin: 0 auto 32px;
+}
+.closing__contact a {
+  font-family: var(--f-mono); font-size: 13px;
+  letter-spacing: 1px; color: var(--c-cyan);
+  text-decoration: none; transition: opacity .2s;
+}
+.closing__contact a:hover { opacity: .7; }
+.closing__logo { height: 22px; opacity: .5; }
+
+/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.footer {
+  text-align: center; padding: 40px 28px 48px;
+  border-top: 1px solid rgba(167,216,255,.06);
+}
+.footer__text {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(244,247,255,.2);
+}
+
+/* ━━ TOUR DATES (momentum section) ━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tour-dates { margin-top: 24px; }
+.tour-date-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: 13px;
+}
+.td__date {
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 1px; color: var(--c-cyan);
+  min-width: 52px;
+}
+.td__city {
+  font-family: var(--f-heading); font-weight: 600;
+  font-size: 13px; letter-spacing: .5px;
+  color: var(--c-white); min-width: 140px;
+}
+.td__venue {
+  color: rgba(244,247,255,.35); font-size: 12px; flex: 1;
+}
+.tour-date-row--tba { opacity: .45; }
+
+/* ━━ REVEAL ANIMATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+.reveal-d4 { transition-delay: .4s; }
+
+/* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 768px) {
+  .market-grid { grid-template-columns: 1fr; }
+  .capability-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .label-grid { grid-template-columns: repeat(2, 1fr); }
+  .tiers-grid { grid-template-columns: 1fr; }
+  .songs-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+@media (max-width: 600px) {
+  .market-grid { grid-template-columns: 1fr; }
+  .capability-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .label-grid { grid-template-columns: 1fr; }
+  .songs-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ap__controls { padding: 10px 10px 8px; }
+  .ap__play { width: 28px; height: 28px; }
+  .ap__play svg { width: 11px; height: 11px; }
+  .ap__title { font-size: 10px; letter-spacing: .5px; }
+  .ap__feat { font-size: 7px; }
+  .ap__time { font-size: 8px; }
+  .ap__time span { min-width: 24px; }
+  .mini-eq { display: none; }
+  .hero__unmute { width: 38px; height: 38px; bottom: 16px; right: 16px; }
+  .pull-quote { font-size: 18px; }
+}
+  </style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div class="pw-gate" id="pwGate">
+  <div class="pw-gate__lock">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="pw-gate__icon">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  </div>
+  <p class="pw-gate__label">THIS DOCUMENT IS CONFIDENTIAL</p>
+  <form class="pw-gate__form" id="pwForm">
+    <input type="text" class="pw-gate__input" id="pwInput" placeholder="Enter password" autocomplete="off" spellcheck="false" />
+    <button type="submit" class="pw-gate__btn">UNLOCK</button>
+  </form>
+</div>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <img class="nav__logo" src="../ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" />
+  <span class="nav__badge">Confidential</span>
+</nav>
+
+<!-- ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<header class="hero" id="hero">
+  <video class="hero__bg-video" id="heroBgVideo" poster="../ninjatune/assets/hero-poster.jpg" autoplay loop muted playsinline preload="none"></video>
+  <div class="hero__bg-overlay" id="heroOverlay"></div>
+  <div class="hero__content">
+    <div class="hero__e-wrap">
+      <video id="eVideo" src="/E_video_loop.mp4" loop muted playsinline preload="auto" style="display:none"></video>
+      <canvas id="eCanvas"></canvas>
+    </div>
+    <h1 class="hero__title">The Effect: An Invitation</h1>
+    <p class="hero__subtitle">Building the future of independent electronic music</p>
+    <div class="hero__badge">Confidential Investment Overview</div>
+  </div>
+  <div class="hero__scroll">Scroll ↓</div>
+  <button class="hero__unmute" id="heroUnmute" aria-label="Unmute">
+    <svg class="unmute-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>
+    <svg class="muted-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    </svg>
+  </button>
+</header>
+
+<div class="divider"></div>
+
+<!-- ━━ THE SHIFT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">The Shift</div>
+    <h2 class="section-heading reveal reveal-d1">A New Model</h2>
+    <p class="narrative reveal reveal-d2">
+      The music industry is broken in the artist's favor — if you know how to build outside the old system. Major labels still operate on a model designed for physical distribution: <em>sign away your masters, take an advance, hope for a hit</em>. But the fastest-growing artists in electronic music are proving there's another way.
+    </p>
+    <p class="narrative reveal reveal-d2">
+      The global music streaming market hit <strong>$54 billion in 2025</strong> and is projected to reach <strong>$108 billion by 2030</strong> — a 14.9% compound annual growth rate. Electronic music sits at the center of this explosion: no band to split with, no session costs, infinite scalability from a single producer's laptop to a festival stage.
+    </p>
+    <div class="pull-quote reveal reveal-d3">
+      "The artists who own their masters, build their brand, and control their narrative don't just survive — they become the labels themselves."
+    </div>
+    <p class="narrative reveal reveal-d3">
+      John Summit went from bedroom producer to selling out Madison Square Garden in under four years — then launched his own label. Fred Again.. went from ghost-writing credits to headlining Coachella with zero label backing. <em>The playbook exists.</em> It requires capital, timing, and the right artist at the right inflection point.
+    </p>
+    <div class="market-grid">
+      <div class="market-card reveal">
+        <div class="market-card__val" data-count="54" data-suffix="B">$0</div>
+        <div class="market-card__label">Streaming Market 2025</div>
+      </div>
+      <div class="market-card reveal reveal-d1">
+        <div class="market-card__val" data-count="108" data-suffix="B">$0</div>
+        <div class="market-card__label">Projected 2030</div>
+      </div>
+      <div class="market-card reveal reveal-d2">
+        <div class="market-card__val" data-count="14.9" data-suffix="%" data-prefix="">0</div>
+        <div class="market-card__label">Annual Growth Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ THE ARTIST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">The Artist</div>
+    <h2 class="section-heading reveal reveal-d1">EMSKI</h2>
+    <p class="narrative reveal reveal-d2">
+      EMSKI is not a one-dimensional producer waiting for a feature to carry a track. He's a <em>producer, vocalist, drummer, filmmaker, and designer</em> — a vertically integrated creative operation. He has been performing since age 8, spent years touring with <strong>Zella Day</strong>, and has shared stages with <strong>deadmau5, Golden Features, LP Giobbi, Brutalismus 3000</strong>, and more.
+    </p>
+    <p class="narrative reveal reveal-d2">
+      What makes EMSKI rare is the full-stack capability. Every visual, every piece of content, every merch design, every lyric video — it all comes from the same source. This isn't an artist who needs a team of ten to ship a campaign. This is the team.
+    </p>
+    <div class="capability-grid">
+      <div class="cap-card reveal">
+        <span class="cap-card__icon">◈</span>
+        <div class="cap-card__title">Production</div>
+        <div class="cap-card__sub">Writes, produces, mixes every track</div>
+      </div>
+      <div class="cap-card reveal reveal-d1">
+        <span class="cap-card__icon">◈</span>
+        <div class="cap-card__title">Vocals</div>
+        <div class="cap-card__sub">Sings, writes lyrics, no features needed</div>
+      </div>
+      <div class="cap-card reveal reveal-d2">
+        <span class="cap-card__icon">◈</span>
+        <div class="cap-card__title">Live Drums</div>
+        <div class="cap-card__sub">Performing since age 8, live show differentiator</div>
+      </div>
+      <div class="cap-card reveal reveal-d3">
+        <span class="cap-card__icon">◈</span>
+        <div class="cap-card__title">Film &amp; Video</div>
+        <div class="cap-card__sub">Shoots, directs, edits all visual content</div>
+      </div>
+      <div class="cap-card reveal reveal-d4">
+        <span class="cap-card__icon">◈</span>
+        <div class="cap-card__title">Design</div>
+        <div class="cap-card__sub">Brand identity, merch, web — all in-house</div>
+      </div>
+      <div class="cap-card reveal reveal-d4">
+        <span class="cap-card__icon">◈</span>
+        <div class="cap-card__title">Live Show</div>
+        <div class="cap-card__sub">DJ + live drums + vocals = unforgettable sets</div>
+      </div>
+    </div>
+    <img class="artist-photo reveal" src="../photos/main-press.jpg" alt="EMSKI press photo" loading="lazy" />
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ THE PROOF ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section id="proofSection">
+  <div class="wrap">
+    <div class="section-label reveal">The Proof</div>
+    <h2 class="section-heading reveal reveal-d1">Traction</h2>
+    <p class="narrative reveal reveal-d2">
+      This isn't a pitch about potential — the numbers are already moving. Since releasing his first track in 2023, EMSKI has accumulated over <em>3.15 million streams</em>, built a playlist reach of <em>7.7 million listeners</em>, and earned cosigns from some of the most respected labels in electronic music — all without a label deal or major funding.
+    </p>
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-cell reveal">
+        <div class="stat-cell__val" data-count="3.15" data-suffix="M">0</div>
+        <div class="stat-cell__label">Streams</div>
+      </div>
+      <div class="stat-cell reveal reveal-d1">
+        <div class="stat-cell__val" data-count="42.3" data-suffix="K">0</div>
+        <div class="stat-cell__label">Followers</div>
+      </div>
+      <div class="stat-cell reveal reveal-d2">
+        <div class="stat-cell__val" data-count="7.7" data-suffix="M">0</div>
+        <div class="stat-cell__label">Playlist Reach</div>
+      </div>
+      <div class="stat-cell reveal reveal-d3">
+        <div class="stat-cell__val" data-count="332" data-suffix="">0</div>
+        <div class="stat-cell__label">Playlists</div>
+      </div>
+      <div class="stat-cell reveal reveal-d4">
+        <div class="stat-cell__val" data-count="1120" data-suffix="">0</div>
+        <div class="stat-cell__label">Radio Plays</div>
+      </div>
+      <div class="stat-cell reveal reveal-d4">
+        <div class="stat-cell__val" data-count="96" data-suffix="">0</div>
+        <div class="stat-cell__label">DJ Supports</div>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">Label Cosigns</h3>
+    <p class="narrative reveal reveal-d1" style="margin-bottom:24px">
+      Releases and features across six of electronic music's most influential labels — earned through quality, not connections.
+    </p>
+    <div class="label-grid">
+      <div class="label-card reveal">
+        <img class="label-card__img" src="../covers/Mau5trap.png" alt="mau5trap" />
+        <div>
+          <div class="label-card__name">mau5trap</div>
+          <div class="label-card__sub">deadmau5's imprint</div>
+        </div>
+      </div>
+      <div class="label-card reveal reveal-d1">
+        <img class="label-card__img" src="../covers/Ophelia.png" alt="Ophelia Records" />
+        <div>
+          <div class="label-card__name">Ophelia Records</div>
+          <div class="label-card__sub">Seven Lions' label</div>
+        </div>
+      </div>
+      <div class="label-card reveal reveal-d2">
+        <img class="label-card__img" src="../covers/Monstercat.png" alt="Monstercat" />
+        <div>
+          <div class="label-card__name">Monstercat</div>
+          <div class="label-card__sub">Indie electronic powerhouse</div>
+        </div>
+      </div>
+      <div class="label-card reveal reveal-d3">
+        <img class="label-card__img" src="../covers/Bitbird.png" alt="Bitbird" />
+        <div>
+          <div class="label-card__name">Bitbird</div>
+          <div class="label-card__sub">San Holo's label</div>
+        </div>
+      </div>
+      <div class="label-card reveal reveal-d4">
+        <img class="label-card__img" src="../covers/Hexagon.png" alt="Hexagon" />
+        <div>
+          <div class="label-card__name">Hexagon</div>
+          <div class="label-card__sub">Don Diablo's imprint</div>
+        </div>
+      </div>
+      <div class="label-card reveal reveal-d4">
+        <img class="label-card__img" src="../covers/SableValley.png" alt="Sable Valley" />
+        <div>
+          <div class="label-card__name">Sable Valley</div>
+          <div class="label-card__sub">RL Grime's label</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">Global Reach</h3>
+    <div class="tour-map-container reveal reveal-d1">
+      <div id="reachMap"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ THE MOMENTUM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">The Momentum</div>
+    <h2 class="section-heading reveal reveal-d1">What's Happening Now</h2>
+    <p class="narrative reveal reveal-d2">
+      The <em>E/MOTION EP</em> — a 5-track body of work — is the current flagship release, supported by a full suite of lyric videos, visualizers, and a multi-platform content strategy. EMSKI is actively touring with booked shows across Texas, Colorado, and the East Coast.
+    </p>
+
+    <h3 class="reveal reveal-d2" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-bottom:24px;text-transform:uppercase">E/MOTION EP — 5 Tracks</h3>
+
+    <div class="songs-list" id="songsList">
+      <div class="ap reveal" data-src="../ninjatune/songs/hold-me-up.mp3">
+        <video class="ap__video" src="../ninjatune/videos/lyric-holdmeup.mp4" loop muted playsinline preload="metadata"></video>
+        <div class="ap__controls">
+          <div class="ap__top">
+            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
+              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
+            </div>
+            <div class="ap__info">
+              <div class="ap__title">Hold Me Up</div>
+              <div class="ap__feat">EMSKI</div>
+            </div>
+            <div class="ap__time">
+              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
+              <span class="ap__cur">0:00</span>
+              <span class="t-slash">/</span>
+              <span class="ap__dur">3:53</span>
+            </div>
+          </div>
+          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
+        </div>
+      </div>
+      <div class="ap reveal reveal-d1" data-src="../ninjatune/songs/for-u.mp3">
+        <video class="ap__video" src="../ninjatune/videos/lyric-foru.mp4" loop muted playsinline preload="metadata"></video>
+        <div class="ap__controls">
+          <div class="ap__top">
+            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
+              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
+            </div>
+            <div class="ap__info">
+              <div class="ap__title">For U</div>
+              <div class="ap__feat">EMSKI</div>
+            </div>
+            <div class="ap__time">
+              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
+              <span class="ap__cur">0:00</span>
+              <span class="t-slash">/</span>
+              <span class="ap__dur">3:46</span>
+            </div>
+          </div>
+          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
+        </div>
+      </div>
+      <div class="ap reveal reveal-d2" data-src="../ninjatune/songs/wait-for-me.mp3">
+        <video class="ap__video" src="../ninjatune/videos/lyric-waitforme.mp4" loop muted playsinline preload="metadata"></video>
+        <div class="ap__controls">
+          <div class="ap__top">
+            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
+              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
+            </div>
+            <div class="ap__info">
+              <div class="ap__title">Wait For Me</div>
+              <div class="ap__feat">EMSKI</div>
+            </div>
+            <div class="ap__time">
+              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
+              <span class="ap__cur">0:00</span>
+              <span class="t-slash">/</span>
+              <span class="ap__dur">3:15</span>
+            </div>
+          </div>
+          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
+        </div>
+      </div>
+      <div class="ap reveal reveal-d3" data-src="../ninjatune/songs/calm-down.mp3">
+        <video class="ap__video" src="../ninjatune/videos/lyric-calmdown.mp4" loop muted playsinline preload="metadata"></video>
+        <div class="ap__controls">
+          <div class="ap__top">
+            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
+              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
+            </div>
+            <div class="ap__info">
+              <div class="ap__title">Calm Down</div>
+              <div class="ap__feat">EMSKI</div>
+            </div>
+            <div class="ap__time">
+              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
+              <span class="ap__cur">0:00</span>
+              <span class="t-slash">/</span>
+              <span class="ap__dur">2:54</span>
+            </div>
+          </div>
+          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
+        </div>
+      </div>
+      <div class="ap reveal reveal-d4" data-src="../ninjatune/songs/never-let-go.mp3">
+        <video class="ap__video" src="../ninjatune/videos/lyric-nlg.mp4" loop muted playsinline preload="metadata"></video>
+        <div class="ap__controls">
+          <div class="ap__top">
+            <div class="ap__play" onclick="apToggle(this.closest('.ap'))">
+              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
+            </div>
+            <div class="ap__info">
+              <div class="ap__title">Never Let Go</div>
+              <div class="ap__feat">EMSKI</div>
+            </div>
+            <div class="ap__time">
+              <div class="mini-eq"><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div><div class="mini-eq__bar"></div></div>
+              <span class="ap__cur">0:00</span>
+              <span class="t-slash">/</span>
+              <span class="ap__dur">3:36</span>
+            </div>
+          </div>
+          <div class="ap__seek"><div class="ap__seek-track"><div class="ap__seek-fill"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="font-family:var(--f-heading);font-weight:600;font-size:18px;letter-spacing:1.5px;color:var(--c-ice);margin-top:56px;margin-bottom:24px;text-transform:uppercase">Upcoming Shows</h3>
+    <div class="tour-dates reveal reveal-d1">
+      <div class="tour-date-row">
+        <div class="td__date">3/29</div>
+        <div class="td__city">Terlingua, TX</div>
+        <div class="td__venue">Big Bend</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">4/17</div>
+        <div class="td__city">Denver, CO</div>
+        <div class="td__venue">Larimer Lounge</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">5/16</div>
+        <div class="td__city">San Antonio, TX</div>
+        <div class="td__venue">In support of KREAM</div>
+      </div>
+      <div class="tour-date-row">
+        <div class="td__date">6/11</div>
+        <div class="td__city">Austin, TX</div>
+        <div class="td__venue">ACL310</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">Houston, TX</div>
+        <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">Dallas, TX</div>
+        <div class="td__venue">TBA</div>
+      </div>
+      <div class="tour-date-row tour-date-row--tba">
+        <div class="td__date">TBA</div>
+        <div class="td__city">NYC</div>
+        <div class="td__venue">In support of OKAYVAL</div>
+      </div>
+    </div>
+
+    <p class="narrative reveal" style="margin-top:40px">
+      Previous festivals include <em>ILLfest 2024</em>, <em>Freaky Deaky 2024</em>, <em>Seismic 7.0 2024</em>, and <em>Big Bond 2024</em>. EMSKI also held a residency at <strong>Chainsmokers' venue</strong> in NYC, performing multiple nights to packed rooms.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ THE VISION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">The Vision</div>
+    <h2 class="section-heading reveal reveal-d1">Three-Phase Roadmap</h2>
+    <p class="narrative reveal reveal-d2">
+      This isn't about a single EP cycle. The long-term vision is to build <em>The Effect</em> into a multi-vertical brand — from artist project to label to live events. Each phase funds and validates the next.
+    </p>
+    <div class="roadmap">
+      <div class="roadmap__phase reveal">
+        <div class="roadmap__dot"></div>
+        <div class="roadmap__tag">Phase 01 — Now</div>
+        <div class="roadmap__title">The Artist</div>
+        <div class="roadmap__desc">Establish EMSKI as a top-tier independent electronic artist. Ship the E/MOTION EP, execute a targeted marketing campaign, grow the live show circuit, and build a fanbase that converts.</div>
+        <ul class="roadmap__bullets">
+          <li>E/MOTION EP release + marketing ($10K campaign budget)</li>
+          <li>Touring: 10+ shows across TX, CO, NYC</li>
+          <li>Content machine: 4-pillar visual strategy across all platforms</li>
+          <li>Merch line launch — premium apparel and physical product</li>
+        </ul>
+      </div>
+      <div class="roadmap__phase roadmap__phase--future reveal reveal-d1">
+        <div class="roadmap__dot"></div>
+        <div class="roadmap__tag">Phase 02 — 12-18 Months</div>
+        <div class="roadmap__title">The Label</div>
+        <div class="roadmap__desc">Launch <em>"The Effect"</em> as an independent label — signing emerging artists, releasing collaborative projects, and building a roster around the same creative ethos.</div>
+        <ul class="roadmap__bullets">
+          <li>Sign 2-3 emerging electronic artists</li>
+          <li>Cross-release collaborations to share audiences</li>
+          <li>Label showcase events in key markets (Austin, Denver, NYC)</li>
+          <li>Revenue diversification: master ownership across multiple artists</li>
+        </ul>
+      </div>
+      <div class="roadmap__phase roadmap__phase--future reveal reveal-d2">
+        <div class="roadmap__dot"></div>
+        <div class="roadmap__tag">Phase 03 — 24-36 Months</div>
+        <div class="roadmap__title">The Event Brand</div>
+        <div class="roadmap__desc">Expand <em>The Effect</em> into a live event series and eventually a festival brand — the highest-margin vertical in electronic music.</div>
+        <ul class="roadmap__bullets">
+          <li>Curated event series: "The Effect" nights in 5+ cities</li>
+          <li>Festival stage partnerships and branded activations</li>
+          <li>Multi-artist touring packages under The Effect umbrella</li>
+          <li>Long-term: standalone festival (EDC Vegas generates $350M+ local impact)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ PARTNERSHIP TIERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section>
+  <div class="wrap">
+    <div class="section-label reveal">Partnership</div>
+    <h2 class="section-heading reveal reveal-d1">Investment Tiers</h2>
+    <p class="narrative reveal reveal-d2">
+      This is structured as <em>support-first with upside</em>. You're backing an artist and a vision at the ground floor — with real returns as the project scales. Every tier includes equity participation, revenue sharing, and direct access.
+    </p>
+    <div class="tiers-grid">
+      <div class="tier-card reveal">
+        <div class="tier-card__name">Spark</div>
+        <div class="tier-card__amount">$25K</div>
+        <ul class="tier-card__items">
+          <li>Revenue share on E/MOTION EP streaming royalties</li>
+          <li>Credit as early supporter on all releases</li>
+          <li>Quarterly progress reports &amp; financials</li>
+          <li>Exclusive merch &amp; guest list access</li>
+          <li>Direct line to the artist</li>
+        </ul>
+      </div>
+      <div class="tier-card tier-card--featured reveal reveal-d1">
+        <div class="tier-card__name">Catalyst</div>
+        <div class="tier-card__amount">$75K</div>
+        <ul class="tier-card__items">
+          <li>Everything in Spark</li>
+          <li>Equity stake in The Effect (label entity)</li>
+          <li>Revenue share across all releases &amp; merch</li>
+          <li>Advisory role — input on creative &amp; business decisions</li>
+          <li>VIP access to all shows &amp; private events</li>
+          <li>Name/brand featured in launch campaign</li>
+        </ul>
+        <div class="tier-card__note">Most Popular</div>
+      </div>
+      <div class="tier-card reveal reveal-d2">
+        <div class="tier-card__name">Architect</div>
+        <div class="tier-card__amount">$150K+</div>
+        <ul class="tier-card__items">
+          <li>Everything in Catalyst</li>
+          <li>Significant equity position in The Effect</li>
+          <li>Board-level advisory seat</li>
+          <li>Revenue share across all verticals (music, merch, events, label)</li>
+          <li>Co-presented credit on The Effect event series</li>
+          <li>First-look on all future investment rounds</li>
+        </ul>
+        <div class="tier-card__note">Enterprise</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ━━ THE ASK ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<section class="closing">
+  <h2 class="closing__title reveal">Be Part of<br/>Something Special</h2>
+  <p class="closing__sub reveal reveal-d1">
+    This is an invitation to build alongside an artist at the inflection point — before the rooms get bigger and the cap table closes. If this resonates, let's talk.
+  </p>
+  <div class="closing__contact reveal reveal-d2">
+    <a href="mailto:contact@emskimusic.com">contact@emskimusic.com</a>
+  </div>
+  <img class="closing__logo reveal reveal-d3" src="../ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" style="margin-top:40px;margin-bottom:0" />
+</section>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer__text">© 2026 EMSKI Music — Confidential</div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- SCRIPTS -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<script>
+/* ── Password Gate ──────────────────────────────────────── */
+(function initPasswordGate() {
+  const gate = document.getElementById('pwGate');
+  const form = document.getElementById('pwForm');
+  const input = document.getElementById('pwInput');
+  const CORRECT = 'effect';
+
+  // Check if already unlocked
+  if (sessionStorage.getItem('pitch-unlocked') === '1') {
+    gate.classList.add('hidden');
+    document.body.style.overflow = '';
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+  input.focus();
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (input.value.trim().toLowerCase() === CORRECT) {
+      sessionStorage.setItem('pitch-unlocked', '1');
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+    } else {
+      input.classList.add('pw-gate__input--shake');
+      input.value = '';
+      setTimeout(function() { input.classList.remove('pw-gate__input--shake'); }, 500);
+      input.focus();
+    }
+  });
+})();
+
+/* ── Scroll progress & nav ──────────────────────────────── */
+const progressBar = document.getElementById('progressBar');
+const nav = document.getElementById('nav');
+
+window.addEventListener('scroll', function() {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (window.scrollY / h * 100) + '%';
+  nav.classList.toggle('nav--scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ── Reveal on scroll ───────────────────────────────────── */
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(function(el) { revealObs.observe(el); });
+
+/* ── Animated number counters ───────────────────────────── */
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const prefix = el.dataset.prefix !== undefined ? el.dataset.prefix : '$';
+  const duration = 2200;
+  const start = performance.now();
+  const isInt = target === Math.floor(target) && target > 10;
+
+  function ease(t) { return 1 - Math.pow(1 - t, 4); } // ease-out quartic
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const val = target * ease(progress);
+
+    if (isInt) {
+      el.textContent = prefix + Math.round(val).toLocaleString() + suffix;
+    } else {
+      const decimals = target < 100 ? (target.toString().split('.')[1] || '').length || 1 : 0;
+      el.textContent = prefix + val.toFixed(decimals) + suffix;
+    }
+
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+document.querySelectorAll('[data-count]').forEach(function(el) {
+  var counted = false;
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !counted) {
+      counted = true;
+      animateCounter(el);
+      obs.unobserve(el);
+    }
+  }, { threshold: 0.3 });
+  obs.observe(el);
+});
+
+/* ── Auto-play lyric videos on scroll ───────────────────── */
+document.querySelectorAll('.ap__video').forEach(function(vid) {
+  vid.loop = true; vid.muted = true; vid.playsInline = true;
+  var vidObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { vid.play().catch(function(){}); }
+    else { vid.pause(); }
+  }, { threshold: 0.15 });
+  vidObs.observe(vid);
+});
+
+/* ── E Video Canvas (transparent dark pixels + mouse) ──── */
+(function initECanvas() {
+  var video = document.getElementById('eVideo');
+  var canvas = document.getElementById('eCanvas');
+  if (!video || !canvas) return;
+
+  var ctx = canvas.getContext('2d');
+  var off = document.createElement('canvas');
+  var octx = off.getContext('2d', { willReadFrequently: true });
+
+  var MOUSE_R = 80, PUSH = 30, BG_T = 35;
+  var mouse = { x: -9999, y: -9999 };
+  var cw, ch, dpr, ready = false;
+
+  function setup() {
+    if (ready) return;
+    ready = true;
+    dpr = window.devicePixelRatio || 1;
+    var size = Math.min(420, window.innerWidth * 0.8);
+    var vw = video.videoWidth || 1;
+    var vh = video.videoHeight || 1;
+    var scale = size / Math.max(vw, vh);
+    cw = Math.round(vw * scale);
+    ch = Math.round(vh * scale);
+
+    canvas.width = cw * dpr;
+    canvas.height = ch * dpr;
+    canvas.style.width = cw + 'px';
+    canvas.style.height = ch + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    off.width = cw;
+    off.height = ch;
+
+    var p = video.play();
+    if (p && p.catch) p.catch(function() {
+      var resume = function() { video.play().catch(function(){}); document.removeEventListener('click', resume); };
+      document.addEventListener('click', resume, { once: true });
+    });
+    loop();
+  }
+
+  function loop() {
+    if (!video.paused && !video.ended && video.readyState >= 2) {
+      octx.drawImage(video, 0, 0, cw, ch);
+      var img = octx.getImageData(0, 0, cw, ch);
+      var d = img.data;
+      for (var i = 0; i < d.length; i += 4) {
+        if ((d[i] + d[i+1] + d[i+2]) / 3 < BG_T) d[i+3] = 0;
+      }
+
+      var mx = mouse.x, my = mouse.y;
+      var active = mx > -1000;
+
+      if (!active) {
+        ctx.clearRect(0, 0, cw, ch);
+        octx.putImageData(img, 0, 0);
+        ctx.drawImage(off, 0, 0);
+      } else {
+        octx.putImageData(img, 0, 0);
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.drawImage(off, 0, 0);
+
+        var pad = MOUSE_R + PUSH + 2;
+        var rx = Math.max(0, Math.floor(mx - pad));
+        var ry = Math.max(0, Math.floor(my - pad));
+        var rw = Math.min(cw, Math.ceil(mx + pad)) - rx;
+        var rh = Math.min(ch, Math.ceil(my + pad)) - ry;
+
+        if (rw > 0 && rh > 0) {
+          ctx.clearRect(rx, ry, rw, rh);
+          var rd = octx.getImageData(rx, ry, rw, rh).data;
+          for (var y = 0; y < rh; y++) {
+            for (var x = 0; x < rw; x++) {
+              var idx = (y * rw + x) * 4;
+              if (rd[idx+3] === 0) continue;
+              var px = rx + x, py = ry + y;
+              var ddx = px - mx, ddy = py - my;
+              var dist = Math.sqrt(ddx*ddx + ddy*ddy);
+              if (dist < MOUSE_R && dist > 0) {
+                var f = (MOUSE_R - dist) / MOUSE_R;
+                var fx = px + (ddx/dist) * f * PUSH;
+                var fy = py + (ddy/dist) * f * PUSH;
+                ctx.globalAlpha = rd[idx+3] / 255;
+                ctx.fillStyle = 'rgb(' + rd[idx] + ',' + rd[idx+1] + ',' + rd[idx+2] + ')';
+                ctx.fillRect(Math.round(fx), Math.round(fy), 1, 1);
+              } else {
+                ctx.globalAlpha = rd[idx+3] / 255;
+                ctx.fillStyle = 'rgb(' + rd[idx] + ',' + rd[idx+1] + ',' + rd[idx+2] + ')';
+                ctx.fillRect(px, py, 1, 1);
+              }
+            }
+          }
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+
+  canvas.addEventListener('mousemove', function(e) {
+    var r = canvas.getBoundingClientRect();
+    mouse.x = (e.clientX - r.left) * (cw / r.width);
+    mouse.y = (e.clientY - r.top) * (ch / r.height);
+  });
+  canvas.addEventListener('mouseleave', function() { mouse.x = -9999; mouse.y = -9999; });
+  canvas.addEventListener('touchmove', function(e) {
+    if (e.touches.length) {
+      var t = e.touches[0], r = canvas.getBoundingClientRect();
+      mouse.x = (t.clientX - r.left) * (cw / r.width);
+      mouse.y = (t.clientY - r.top) * (ch / r.height);
+    }
+  });
+  canvas.addEventListener('touchend', function() { mouse.x = -9999; mouse.y = -9999; });
+  canvas.style.cursor = 'crosshair';
+
+  video.addEventListener('canplaythrough', setup);
+  video.addEventListener('loadeddata', setup);
+  video.addEventListener('loadedmetadata', function() { setTimeout(setup, 100); });
+  if (video.readyState >= 2) setup();
+})();
+
+/* ── Custom Audio Players ───────────────────────────────── */
+var activeAudio = null;
+var activeAP = null;
+var apData = new Map();
+
+function fmt(s) {
+  if (!s || !isFinite(s)) return '0:00';
+  return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+}
+
+(function initPlayers() {
+  document.querySelectorAll('.ap[data-src]').forEach(function(el) {
+    var audio = new Audio();
+    audio.preload = 'metadata';
+    audio.src = el.dataset.src;
+    var isSeeking = false;
+
+    var seekBar  = el.querySelector('.ap__seek');
+    var seekFill = el.querySelector('.ap__seek-fill');
+    var curEl    = el.querySelector('.ap__cur');
+    var durEl    = el.querySelector('.ap__dur');
+    var bars     = el.querySelectorAll('.mini-eq__bar');
+
+    var d = { audio: audio, seekFill: seekFill, curEl: curEl, durEl: durEl, bars: bars };
+    apData.set(el, d);
+
+    audio.addEventListener('loadedmetadata', function() {
+      if (durEl) durEl.textContent = fmt(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', function() {
+      if (isSeeking) return;
+      if (curEl) curEl.textContent = fmt(audio.currentTime);
+      if (seekFill && audio.duration) {
+        seekFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+    });
+
+    audio.addEventListener('ended', function() {
+      el.classList.remove('playing');
+      el.querySelector('.ap__play svg').innerHTML = '<polygon points="8,5 19,12 8,19" />';
+      var vid = el.querySelector('.ap__video');
+      if (vid) { vid.pause(); vid.currentTime = 0; }
+    });
+
+    if (seekBar) {
+      function doSeek(clientX) {
+        var rect = seekBar.getBoundingClientRect();
+        var pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        if (seekFill) seekFill.style.width = (pct * 100) + '%';
+        if (audio.duration && isFinite(audio.duration)) {
+          audio.currentTime = pct * audio.duration;
+          if (curEl) curEl.textContent = fmt(audio.currentTime);
+        }
+      }
+      var dragging = false;
+      seekBar.addEventListener('mousedown', function(e) {
+        dragging = true; isSeeking = true;
+        doSeek(e.clientX);
+        e.preventDefault(); e.stopPropagation();
+      });
+      document.addEventListener('mousemove', function(e) { if (dragging) doSeek(e.clientX); });
+      document.addEventListener('mouseup', function() {
+        if (dragging) { dragging = false; setTimeout(function() { isSeeking = false; }, 250); }
+      });
+      seekBar.addEventListener('touchstart', function(e) {
+        isSeeking = true; doSeek(e.touches[0].clientX);
+        e.preventDefault(); e.stopPropagation();
+      }, { passive: false });
+      seekBar.addEventListener('touchmove', function(e) { doSeek(e.touches[0].clientX); }, { passive: true });
+      seekBar.addEventListener('touchend', function() { setTimeout(function() { isSeeking = false; }, 250); });
+    }
+  });
+})();
+
+function apToggle(el) {
+  var d = apData.get(el);
+  if (!d) return;
+
+  if (activeAP && activeAP !== el) {
+    var prev = apData.get(activeAP);
+    if (prev) {
+      prev.audio.pause();
+      prev.audio.currentTime = 0;
+      activeAP.classList.remove('playing');
+      activeAP.querySelector('.ap__play svg').innerHTML = '<polygon points="8,5 19,12 8,19" />';
+      var prevVid = activeAP.querySelector('.ap__video');
+      if (prevVid) { prevVid.pause(); prevVid.currentTime = 0; }
+    }
+  }
+
+  if (d.audio.paused) {
+    d.audio.play().catch(function(){});
+    el.classList.add('playing');
+    el.querySelector('.ap__play svg').innerHTML = '<rect x="7" y="5" width="3" height="14" /><rect x="14" y="5" width="3" height="14" />';
+    var vid = el.querySelector('.ap__video');
+    if (vid) vid.play();
+  } else {
+    d.audio.pause();
+    el.classList.remove('playing');
+    el.querySelector('.ap__play svg').innerHTML = '<polygon points="8,5 19,12 8,19" />';
+    var vid2 = el.querySelector('.ap__video');
+    if (vid2) vid2.pause();
+  }
+
+  activeAP = el;
+  activeAudio = d.audio;
+}
+
+/* ── Hero scroll-driven video reveal ─────────────────────── */
+(function initHeroReveal() {
+  var hero = document.getElementById('hero');
+  var video = document.getElementById('heroBgVideo');
+  var unmuteBtn = document.getElementById('heroUnmute');
+  if (!hero || !video) return;
+
+  var isMuted = true;
+  var alive = false;
+
+  function onScroll() {
+    var rect = hero.getBoundingClientRect();
+    var progress = -rect.top / (rect.height - window.innerHeight);
+    var pastHalf = progress > 0.35;
+
+    if (pastHalf && !alive) {
+      alive = true;
+      hero.classList.add('video-alive');
+    } else if (!pastHalf && alive) {
+      alive = false;
+      hero.classList.remove('video-alive');
+      if (!isMuted) {
+        video.muted = true; isMuted = true;
+        toggleIcons(true);
+      }
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  function toggleIcons(showUnmute) {
+    var u = unmuteBtn.querySelector('.unmute-icon');
+    var m = unmuteBtn.querySelector('.muted-icon');
+    u.style.display = showUnmute ? '' : 'none';
+    m.style.display = showUnmute ? 'none' : '';
+  }
+
+  unmuteBtn.addEventListener('click', function() {
+    isMuted = !isMuted;
+    video.muted = isMuted;
+    toggleIcons(isMuted);
+  });
+})();
+
+/* ── Global Reach Map (Leaflet) ─────────────────────────── */
+(function initReachMap() {
+  var container = document.getElementById('reachMap');
+  if (!container) return;
+
+  var map = L.map('reachMap', {
+    center: [30, -10],
+    zoom: 2,
+    zoomControl: false,
+    attributionControl: false,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    touchZoom: false,
+    boxZoom: false,
+    keyboard: false,
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
+    maxZoom: 19,
+  }).addTo(map);
+
+  // Cities where EMSKI has listeners / reach
+  var reachCities = [
+    { name: 'Austin', sub: 'Home Base', lat: 30.27, lng: -97.74 },
+    { name: 'New York', sub: 'US', lat: 40.71, lng: -74.01 },
+    { name: 'Los Angeles', sub: 'US', lat: 34.05, lng: -118.24 },
+    { name: 'London', sub: 'UK', lat: 51.51, lng: -0.13 },
+    { name: 'Berlin', sub: 'DE', lat: 52.52, lng: 13.41 },
+    { name: 'Sydney', sub: 'AU', lat: -33.87, lng: 151.21 },
+    { name: 'Toronto', sub: 'CA', lat: 43.65, lng: -79.38 },
+    { name: 'Mexico City', sub: 'MX', lat: 19.43, lng: -99.13 },
+    { name: 'São Paulo', sub: 'BR', lat: -23.55, lng: -46.63 },
+    { name: 'Amsterdam', sub: 'NL', lat: 52.37, lng: 4.90 },
+    { name: 'Tokyo', sub: 'JP', lat: 35.68, lng: 139.69 },
+    { name: 'Denver', sub: 'US', lat: 39.74, lng: -105.00 },
+  ];
+
+  // City light texture dots for atmosphere
+  var cityLights = [
+    {lat:34.05,lng:-118.24,sz:'lg'},{lat:41.88,lng:-87.63,sz:'lg'},
+    {lat:25.76,lng:-80.19,sz:'lg'},{lat:47.61,lng:-122.33,sz:'lg'},
+    {lat:38.91,lng:-77.04,sz:'lg'},{lat:42.36,lng:-71.06,sz:'lg'},
+    {lat:51.51,lng:-0.13,sz:'lg'},{lat:48.86,lng:2.35,sz:'lg'},
+    {lat:52.52,lng:13.41,sz:'lg'},{lat:35.68,lng:139.69,sz:'lg'},
+    {lat:-33.87,lng:151.21,sz:'lg'},{lat:55.76,lng:37.62,sz:'lg'},
+    {lat:19.43,lng:-99.13,sz:'lg'},{lat:-23.55,lng:-46.63,sz:'lg'},
+    {lat:28.61,lng:77.21,sz:'lg'},{lat:31.23,lng:121.47,sz:'lg'},
+    {lat:37.57,lng:126.98,sz:''},{lat:1.35,lng:103.82,sz:''},
+    {lat:22.32,lng:114.17,sz:''},{lat:39.90,lng:116.41,sz:'lg'},
+    {lat:-34.60,lng:-58.38,sz:''},{lat:6.52,lng:3.38,sz:''},
+    {lat:30.04,lng:31.24,sz:''},{lat:41.01,lng:28.98,sz:''},
+    {lat:59.33,lng:18.07,sz:''},{lat:60.17,lng:24.94,sz:''},
+    {lat:50.07,lng:14.42,sz:''},{lat:45.46,lng:9.19,sz:''},
+    {lat:40.42,lng:-3.70,sz:''},{lat:38.72,lng:-9.14,sz:''},
+    {lat:53.35,lng:-6.26,sz:'sm'},{lat:55.95,lng:-3.19,sz:'sm'},
+    {lat:45.50,lng:-73.57,sz:''},{lat:49.28,lng:-123.12,sz:''},
+    {lat:33.75,lng:-84.39,sz:''},{lat:29.76,lng:-95.37,sz:''},
+    {lat:32.78,lng:-96.80,sz:''},{lat:36.16,lng:-86.78,sz:''},
+    {lat:39.74,lng:-105.00,sz:''},{lat:44.98,lng:-93.27,sz:''},
+    {lat:36.17,lng:-115.14,sz:''},{lat:45.52,lng:-122.68,sz:''},
+    {lat:37.77,lng:-122.42,sz:'lg'},{lat:40.76,lng:-73.98,sz:'lg'},
+  ];
+
+  cityLights.forEach(function(c) {
+    var cls = 'city-light' + (c.sz ? ' city-light--' + c.sz : '');
+    var icon = L.divIcon({
+      html: '<div class="' + cls + '"></div>',
+      className: '',
+      iconSize: [0, 0],
+      iconAnchor: [0, 0],
+    });
+    L.marker([c.lat, c.lng], { icon: icon, interactive: false }).addTo(map);
+  });
+
+  // Add reach markers
+  reachCities.forEach(function(c) {
+    var html = '<div class="reach-marker">' +
+      '<div class="reach-marker__pulse"></div>' +
+      '<div class="reach-marker__dot"></div>' +
+      '<div class="reach-marker__label">' +
+        '<div class="reach-marker__name">' + c.name + '</div>' +
+        '<div class="reach-marker__sub">' + c.sub + '</div>' +
+      '</div></div>';
+
+    var icon = L.divIcon({
+      html: html,
+      className: '',
+      iconSize: [0, 0],
+      iconAnchor: [0, 0],
+    });
+
+    L.marker([c.lat, c.lng], { icon: icon, interactive: false }).addTo(map);
+  });
+
+  map.fitBounds([[-40, -130], [60, 160]], { padding: [20, 20] });
+  map.on('drag', function() { map.panTo(map.getCenter()); });
+})();
+
+/* ── Progressive hero video loading ────────────────────── */
+(function loadHeroVideo() {
+  var video = document.getElementById('heroBgVideo');
+  if (!video) return;
+  video.src = 'https://pub-9a90af40c4df4a8aa36505acb79e02b3.r2.dev/warehouse-show-hd.mp4';
+  video.load();
+  video.play().catch(function(){});
+})();
+</script>
+
+</body>
+</html>
