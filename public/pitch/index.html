@@ -381,9 +381,43 @@ section { padding: 100px 0; }
 .visible .tl-dot { animation: dot-pulse 3s ease-in-out infinite; }
 .visible .tl-item--future .tl-dot { animation: none; }
 
+/* ━━ CREDENTIALS BLOCK ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.cred-block {
+  margin: 48px 0; padding: 36px 0;
+  border-top: 1px solid rgba(167,216,255,.06);
+  border-bottom: 1px solid rgba(167,216,255,.06);
+}
+.cred-section { margin-bottom: 28px; }
+.cred-section:last-child { margin-bottom: 0; }
+.cred-label {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--c-cyan); margin-bottom: 14px; display: block;
+}
+.cred-list {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.cred-badge {
+  background: rgba(0,239,239,.06);
+  border: 1px solid rgba(0,239,239,.12);
+  color: rgba(244,247,255,.7);
+  font-family: var(--f-body); font-size: 13px;
+  padding: 8px 14px; border-radius: 4px;
+  transition: all .3s ease;
+  white-space: nowrap;
+}
+.cred-badge:hover {
+  background: rgba(0,239,239,.12);
+  border-color: rgba(0,239,239,.25);
+  color: var(--c-cyan);
+  transform: translateY(-1px);
+}
+
 /* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @media (max-width: 600px) {
   section { padding: 72px 0; }
+  .cred-list { gap: 8px; }
+  .cred-badge { font-size: 12px; padding: 7px 12px; }
   .stat-row { grid-template-columns: 1fr 1fr; gap: 16px; }
   .tier { padding: 28px 22px; }
   .pull-quote { font-size: 17px; }
@@ -461,13 +495,42 @@ section { padding: 100px 0; }
         <div class="stat-cell__label">Playlist Reach</div>
       </div>
     </div>
-    <p class="body-text reveal reveal-d3">
-      Releases on <strong>mau5trap</strong>, <strong>Ophelia</strong>, <strong>Monstercat</strong>, <strong>Bitbird</strong>, <strong>Hexagon</strong>, <strong>Sable Valley</strong>. Shared stages with <strong>deadmau5</strong>, <strong>Golden Features</strong>, <strong>LP Giobbi</strong>. Toured with <strong>Zella Day</strong>. Festivals: ILLfest, Freaky Deaky, Seismic, Big Bond. Residency at The Chainsmokers' venue in NYC.
-    </p>
-    <p class="body-text reveal reveal-d3">
+    <div class="cred-block reveal reveal-d3">
+      <div class="cred-section">
+        <div class="cred-label">Label Partners</div>
+        <div class="cred-list">
+          <span class="cred-badge">mau5trap</span>
+          <span class="cred-badge">Ophelia</span>
+          <span class="cred-badge">Monstercat</span>
+          <span class="cred-badge">Bitbird</span>
+          <span class="cred-badge">Hexagon</span>
+          <span class="cred-badge">Sable Valley</span>
+        </div>
+      </div>
+      <div class="cred-section">
+        <div class="cred-label">Artists & Collaborators</div>
+        <div class="cred-list">
+          <span class="cred-badge">deadmau5</span>
+          <span class="cred-badge">Golden Features</span>
+          <span class="cred-badge">LP Giobbi</span>
+          <span class="cred-badge">Zella Day</span>
+        </div>
+      </div>
+      <div class="cred-section">
+        <div class="cred-label">Festivals</div>
+        <div class="cred-list">
+          <span class="cred-badge">ILLfest</span>
+          <span class="cred-badge">Freaky Deaky</span>
+          <span class="cred-badge">Seismic</span>
+          <span class="cred-badge">Big Bond</span>
+          <span class="cred-badge">The Chainsmokers NYC</span>
+        </div>
+      </div>
+    </div>
+    <p class="body-text reveal reveal-d4">
       Emma is multidisciplinary in a way that's rare — she drums, sings, writes, produces, films, edits, and programs full audiovisual sets. She's a visual and audio artist in the truest sense. But she's also built a team of proven professionals around her and manages them well. The operation isn't one person doing everything alone — it's <em>one person with the vision, driving a team that executes.</em>
     </p>
-    <p class="body-text reveal reveal-d4">
+    <p class="body-text reveal reveal-d5">
       All of that has been self-funded to this point. That's the efficiency — <em>every dollar invested goes directly into growth, not overhead.</em>
     </p>
   </div>
@@ -553,11 +616,9 @@ section { padding: 100px 0; }
         <span class="tier__amount">$25K</span>
       </div>
       <ul class="tier__items">
-        <li><strong>5% net revenue share</strong> on all E/MOTION EP streaming royalties — 3 year term</li>
-        <li><strong>2% net share</strong> on merch revenue tied to the EP campaign</li>
+        <li><strong>5% net revenue share</strong> on E/MOTION EP — master &amp; publishing streaming royalties, 3 year term</li>
         <li>Quarterly financial reports — streams, revenue, spend</li>
         <li>Founding supporter credit on all EP-related releases</li>
-        <li>Lifetime guest list access + exclusive merch</li>
         <li>Monthly update calls — direct access, no filter</li>
       </ul>
     </div>
@@ -570,10 +631,8 @@ section { padding: 100px 0; }
       <ul class="tier__items">
         <li><strong>Everything in Spark</strong>, plus:</li>
         <li><strong>3% equity stake</strong> in The Effect LLC (label/brand entity)</li>
-        <li><strong>8% net revenue share</strong> across all future releases — 5 year term</li>
-        <li><strong>5% net share</strong> on all merch &amp; physical product</li>
+        <li><strong>8% net revenue share</strong> across all future releases — master &amp; publishing streaming, 5 year term</li>
         <li>Advisory input on business direction &amp; strategy</li>
-        <li>VIP access to all shows, private events, studio sessions</li>
         <li>Name featured in launch campaign &amp; liner credits</li>
       </ul>
     </div>
@@ -586,8 +645,7 @@ section { padding: 100px 0; }
       <ul class="tier__items">
         <li><strong>Everything in Catalyst</strong>, plus:</li>
         <li><strong>7% equity stake</strong> in The Effect LLC</li>
-        <li><strong>12% net revenue share</strong> across all verticals — music, merch, events, sync, brand deals</li>
-        <li>Co-presented credit on The Effect event series</li>
+        <li><strong>12% net revenue share</strong> across all releases — master &amp; publishing streaming, sync, brand partnerships, 7 year term</li>
         <li>Pro-rata rights on any future funding rounds</li>
         <li>Annual in-person strategy session + full financial audit access</li>
       </ul>
