@@ -363,7 +363,6 @@ section { padding: 100px 0; }
 .reveal-d1 { transition-delay: .12s; }
 .reveal-d2 { transition-delay: .24s; }
 .reveal-d3 { transition-delay: .38s; }
-.reveal-d3b { transition-delay: .48s; }
 .reveal-d4 { transition-delay: .52s; }
 .reveal-d5 { transition-delay: .66s; }
 
@@ -381,91 +380,6 @@ section { padding: 100px 0; }
 }
 .visible .tl-dot { animation: dot-pulse 3s ease-in-out infinite; }
 .visible .tl-item--future .tl-dot { animation: none; }
-
-/* ━━ TEAM DIAGRAM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.team-diagram {
-  position: relative; width: 100%; height: 320px;
-  display: flex; align-items: center; justify-content: center;
-  margin: 52px 0;
-}
-.team-center { position: absolute; }
-.team-node {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; gap: 8px; transition: all .3s ease;
-}
-.team-node--center {
-  width: auto; height: auto;
-}
-.team-figure {
-  width: 56px; height: 72px; display: block;
-  transition: all .3s ease;
-}
-.team-node--center:hover .team-figure {
-  transform: scale(1.12);
-  filter: drop-shadow(0 0 12px rgba(0,239,239,.4));
-}
-.team-node--center .team-node__label {
-  font-family: var(--f-heading); font-weight: 600; font-size: 14px;
-  letter-spacing: 1px; color: var(--c-white); text-transform: uppercase;
-  margin-top: 8px;
-}
-.team-node--center .team-node__role {
-  font-family: var(--f-mono); font-size: 8px;
-  letter-spacing: 1.5px; color: rgba(244,247,255,.35); text-transform: uppercase;
-}
-.team-node__label {
-  font-family: var(--f-heading); font-weight: 500; font-size: 12px;
-  letter-spacing: 0.5px; color: rgba(244,247,255,.75); text-transform: uppercase;
-}
-.team-node__role {
-  font-family: var(--f-mono); font-size: 7px;
-  letter-spacing: 1px; color: rgba(244,247,255,.4); text-transform: uppercase;
-}
-.team-orbit {
-  position: absolute; width: 100%; height: 100%;
-}
-.team-node--orbit {
-  position: absolute; left: 50%; top: 50%;
-  width: auto; height: auto;
-  opacity: 0; transform: translate(-50%, -50%) scale(0.7);
-  z-index: 1;
-  transition: all .5s cubic-bezier(.16,1,.3,1);
-}
-.team-node--orbit:hover .team-figure {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 8px rgba(167,216,255,.3));
-}
-.reveal.visible .team-node--orbit { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-.team-node--orbit:nth-child(1) {
-  transition-delay: .1s;
-  left: calc(50% + 160px) !important;
-  top: 50% !important;
-  margin-left: -160px !important;
-}
-.team-node--orbit:nth-child(2) {
-  transition-delay: .2s;
-  left: 50% !important;
-  top: calc(50% + 160px) !important;
-  margin-top: -160px !important;
-}
-.team-node--orbit:nth-child(3) {
-  transition-delay: .3s;
-  left: calc(50% - 160px) !important;
-  top: 50% !important;
-  margin-left: 160px !important;
-}
-.team-node--orbit:nth-child(4) {
-  transition-delay: .4s;
-  left: 50% !important;
-  top: calc(50% - 160px) !important;
-  margin-top: 160px !important;
-}
-@media (max-width: 600px) {
-  .team-diagram { height: 280px; }
-  .team-figure { width: 48px; height: 62px; }
-  .team-node--center .team-node__label { font-size: 12px; }
-  .team-node__label { font-size: 10px; }
-}
 
 /* ━━ DISCIPLINE GRID ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .discipline-grid {
@@ -714,115 +628,8 @@ section { padding: 100px 0; }
         </div>
       </div>
     </div>
-    <div class="team-diagram reveal reveal-d4">
-      <div class="team-center">
-        <div class="team-node team-node--center">
-          <svg viewBox="0 0 60 80" class="team-figure">
-            <!-- Curly hair -->
-            <circle cx="30" cy="12" r="3" fill="var(--c-cyan)" opacity="0.8"/>
-            <circle cx="24" cy="10" r="2.5" fill="var(--c-cyan)" opacity="0.7"/>
-            <circle cx="36" cy="10" r="2.5" fill="var(--c-cyan)" opacity="0.7"/>
-            <circle cx="20" cy="14" r="2" fill="var(--c-cyan)" opacity="0.6"/>
-            <circle cx="40" cy="14" r="2" fill="var(--c-cyan)" opacity="0.6"/>
-            <!-- Head -->
-            <circle cx="30" cy="18" r="8" fill="none" stroke="var(--c-cyan)" stroke-width="1.2"/>
-            <!-- Body -->
-            <line x1="30" y1="26" x2="30" y2="44" stroke="var(--c-cyan)" stroke-width="1.2"/>
-            <!-- Arms -->
-            <line x1="30" y1="32" x2="18" y2="26" stroke="var(--c-cyan)" stroke-width="1.2"/>
-            <line x1="30" y1="32" x2="42" y2="26" stroke="var(--c-cyan)" stroke-width="1.2"/>
-            <!-- Legs -->
-            <line x1="30" y1="44" x2="22" y2="60" stroke="var(--c-cyan)" stroke-width="1.2"/>
-            <line x1="30" y1="44" x2="38" y2="60" stroke="var(--c-cyan)" stroke-width="1.2"/>
-          </svg>
-          <div class="team-node__label">Emma</div>
-          <div class="team-node__role">Artist</div>
-        </div>
-      </div>
-      <div class="team-orbit">
-        <div class="team-node team-node--orbit" style="--orbit-angle: 0deg">
-          <svg viewBox="0 0 60 80" class="team-figure">
-            <!-- Head -->
-            <circle cx="30" cy="18" r="8" fill="none" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Body -->
-            <line x1="30" y1="26" x2="30" y2="44" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Arms -->
-            <line x1="30" y1="32" x2="18" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="32" x2="42" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Legs -->
-            <line x1="30" y1="44" x2="22" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="44" x2="38" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Badge -->
-            <circle cx="30" cy="68" r="4" fill="rgba(167,216,255,.2)" stroke="rgba(167,216,255,.4)" stroke-width="0.8"/>
-            <text x="30" y="70" text-anchor="middle" font-size="4" fill="var(--c-ice)" font-family="var(--f-mono)">→</text>
-          </svg>
-          <div class="team-node__label">Manager</div>
-          <div class="team-node__role">Strategy</div>
-        </div>
-        <div class="team-node team-node--orbit" style="--orbit-angle: 90deg">
-          <svg viewBox="0 0 60 80" class="team-figure">
-            <!-- Head -->
-            <circle cx="30" cy="18" r="8" fill="none" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Body -->
-            <line x1="30" y1="26" x2="30" y2="44" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Arms -->
-            <line x1="30" y1="32" x2="18" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="32" x2="42" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Legs -->
-            <line x1="30" y1="44" x2="22" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="44" x2="38" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Badge -->
-            <circle cx="30" cy="68" r="4" fill="rgba(167,216,255,.2)" stroke="rgba(167,216,255,.4)" stroke-width="0.8"/>
-            <text x="30" y="70" text-anchor="middle" font-size="5" fill="var(--c-ice)" font-family="var(--f-mono)" font-weight="bold">⚙</text>
-          </svg>
-          <div class="team-node__label">Engineer</div>
-          <div class="team-node__role">Production</div>
-        </div>
-        <div class="team-node team-node--orbit" style="--orbit-angle: 180deg">
-          <svg viewBox="0 0 60 80" class="team-figure">
-            <!-- Head -->
-            <circle cx="30" cy="18" r="8" fill="none" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Body -->
-            <line x1="30" y1="26" x2="30" y2="44" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Arms -->
-            <line x1="30" y1="32" x2="18" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="32" x2="42" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Legs -->
-            <line x1="30" y1="44" x2="22" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="44" x2="38" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Badge -->
-            <circle cx="30" cy="68" r="4" fill="rgba(167,216,255,.2)" stroke="rgba(167,216,255,.4)" stroke-width="0.8"/>
-            <text x="30" y="71" text-anchor="middle" font-size="5" fill="var(--c-ice)" font-family="var(--f-mono)" font-weight="bold">🎬</text>
-          </svg>
-          <div class="team-node__label">Visual Director</div>
-          <div class="team-node__role">Design</div>
-        </div>
-        <div class="team-node team-node--orbit" style="--orbit-angle: 270deg">
-          <svg viewBox="0 0 60 80" class="team-figure">
-            <!-- Head -->
-            <circle cx="30" cy="18" r="8" fill="none" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Body -->
-            <line x1="30" y1="26" x2="30" y2="44" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Arms -->
-            <line x1="30" y1="32" x2="18" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="32" x2="42" y2="26" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Legs -->
-            <line x1="30" y1="44" x2="22" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <line x1="30" y1="44" x2="38" y2="60" stroke="rgba(244,247,255,.5)" stroke-width="1"/>
-            <!-- Badge -->
-            <circle cx="30" cy="68" r="4" fill="rgba(167,216,255,.2)" stroke="rgba(167,216,255,.4)" stroke-width="0.8"/>
-            <text x="30" y="70" text-anchor="middle" font-size="5" fill="var(--c-ice)" font-family="var(--f-mono)" font-weight="bold">🎧</text>
-          </svg>
-          <div class="team-node__label">Booking</div>
-          <div class="team-node__role">Live</div>
-        </div>
-      </div>
-    </div>
-    <p class="body-text reveal reveal-d5">
-      But she's also built a team of proven professionals around her and manages them well. The operation isn't one person doing everything alone — it's <em>one person with the vision, driving a team that executes.</em>
-    </p>
-    <p class="body-text reveal reveal-d5">
-      All of that has been self-funded to this point. That's the efficiency — <em>every dollar invested goes directly into growth, not overhead.</em>
+    <p class="body-text reveal reveal-d4">
+      She doesn't do this alone. Her team includes a manager handling strategy &amp; growth, a mixing engineer, a visual director for audiovisual work, and a booking agent for live. That's what makes this efficient — <em>one person with the vision, a team that executes.</em> All of it self-funded to this point.
     </p>
   </div>
 </section>
