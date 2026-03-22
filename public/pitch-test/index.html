@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EMSKI — Capital Unlock (Test Deck)</title>
+  <title>EMSKI — Investment Memo</title>
   <meta name="robots" content="noindex, nofollow" />
-  <meta name="description" content="Confidential investment memo for EMSKI — test concept page." />
+  <meta name="description" content="Confidential investment memo for EMSKI." />
   <link rel="stylesheet" href="https://use.typekit.net/sag3htb.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,8 +15,8 @@
   --bg: #05070B;
   --bg-soft: #0D121A;
   --panel: rgba(255,255,255,.03);
-  --line: rgba(167,216,255,.16);
-  --line-soft: rgba(167,216,255,.08);
+  --line: rgba(167,216,255,.14);
+  --line-soft: rgba(167,216,255,.07);
   --white: #F4F7FF;
   --ice: #A7D8FF;
   --cyan: #00EFEF;
@@ -24,817 +24,427 @@
   --body: "Jura", sans-serif;
   --mono: "Space Mono", monospace;
   --heading: "aktiv-grotesk-extended", sans-serif;
-  --max: 1020px;
+  --max: 1060px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--bg); color: var(--white); font-family: var(--body); scroll-behavior: smooth; }
-img, video { display: block; max-width: 100%; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--white);font-family:var(--body);scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: .04;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain .35s steps(2) infinite;
-}
-@keyframes grain { 50% { background-position: 48px 48px; } }
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.04;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .35s steps(2) infinite}
+@keyframes grain{50%{background-position:48px 48px}}
 
-.progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 0;
-  z-index: 9999;
-  background: linear-gradient(90deg, var(--neon), var(--cyan));
-  transition: width .1s linear;
-}
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:9999;background:linear-gradient(90deg,var(--neon),var(--cyan));transition:width .1s linear}
 
-.gate {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  transition: opacity .55s ease, visibility .55s ease;
-}
-.gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.gate p {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(167,216,255,.6);
-}
-.gate form { display: flex; gap: 8px; }
-.gate input {
-  width: 210px;
-  border: 1px solid rgba(167,216,255,.3);
-  background: rgba(255,255,255,.04);
-  color: var(--white);
-  padding: 11px 13px;
-  font-family: var(--body);
-}
-.gate button {
-  border: 1px solid var(--cyan);
-  background: transparent;
-  color: var(--cyan);
-  padding: 11px 16px;
-  cursor: pointer;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1px;
-}
+.gate{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;transition:opacity .6s ease,visibility .6s ease,filter .6s ease}
+.gate.hidden{opacity:0;visibility:hidden;pointer-events:none;filter:blur(6px)}
+.gate p{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(167,216,255,.5)}
+.gate form{display:flex;gap:8px}
+.gate input{width:210px;border:1px solid rgba(167,216,255,.25);background:rgba(255,255,255,.04);color:var(--white);padding:11px 13px;font-family:var(--body);outline:none;transition:border-color .2s}
+.gate input:focus{border-color:var(--cyan)}
+.gate input.shake{animation:shake .4s ease}
+.gate button{border:1px solid var(--cyan);background:transparent;color:var(--cyan);padding:11px 16px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:1px;transition:background .2s,color .2s}
+.gate button:hover{background:var(--cyan);color:var(--bg)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 30px; }
-section { padding: 100px 0; }
-.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(167,216,255,.13), transparent); }
+.wrap{max-width:var(--max);margin:0 auto;padding:0 30px}
+section{padding:100px 0}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(167,216,255,.12),transparent)}
 
-.kicker {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 2.4px;
-  text-transform: uppercase;
-  color: var(--cyan);
-  margin-bottom: 18px;
-}
-.h2 {
-  font-family: var(--heading);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-size: clamp(24px, 4vw, 38px);
-  margin-bottom: 20px;
-}
-.body {
-  color: rgba(244,247,255,.72);
-  font-size: 16px;
-  line-height: 1.85;
-}
-.body + .body { margin-top: 16px; }
-.body em { color: var(--ice); font-style: normal; }
+.kicker{font-family:var(--mono);font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.h2{font-family:var(--heading);text-transform:uppercase;letter-spacing:1.5px;font-size:clamp(24px,4vw,38px);margin-bottom:20px;line-height:1.2}
+.body{color:rgba(244,247,255,.7);font-size:16px;line-height:1.85}
+.body+.body{margin-top:16px}
+.body em{color:var(--ice);font-style:normal}
+.body strong{color:var(--white);font-weight:600}
 
-.hero {
-  min-height: 96vh;
-  position: relative;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  opacity: .33;
-  filter: saturate(1.04) contrast(1.08) brightness(.7);
-}
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(5,7,11,.34), rgba(5,7,11,.84));
-}
-.hero__e {
-  position: absolute;
-  top: 12%;
-  right: 9%;
-  font-family: var(--heading);
-  font-size: clamp(64px, 16vw, 220px);
-  letter-spacing: 6px;
-  color: rgba(0,239,239,.14);
-  text-shadow: 0 0 42px rgba(0,239,239,.1);
-  animation: eFloat 8s ease-in-out infinite;
-}
-.hero__content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 780px;
-  text-align: left;
-}
-.hero__tag {
-  display: inline-block;
-  border: 1px solid rgba(167,216,255,.3);
-  background: rgba(5,7,11,.55);
-  color: var(--ice);
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 6px 11px;
-  margin-bottom: 18px;
-}
-.hero h1 {
-  font-family: var(--heading);
-  font-size: clamp(30px, 6vw, 58px);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 1.12;
-  margin-bottom: 18px;
-}
-.hero p {
-  max-width: 700px;
-  color: rgba(244,247,255,.78);
-  line-height: 1.9;
-  font-size: 17px;
-}
-.hero__thesis {
-  margin-top: 24px;
-  border-left: 2px solid rgba(0,239,239,.35);
-  padding-left: 14px;
-  color: var(--ice);
-  font-family: var(--heading);
-  letter-spacing: .8px;
-  font-size: clamp(16px, 2.3vw, 24px);
-}
-@keyframes eFloat {
-  0%,100% { transform: translateY(0); opacity: .2; }
-  50% { transform: translateY(-10px); opacity: .34; }
-}
+.hero{min-height:96vh;position:relative;display:grid;place-items:center;overflow:hidden}
+.hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;opacity:.3;filter:saturate(1.04) contrast(1.08) brightness(.68)}
+.hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,11,.3),rgba(5,7,11,.88))}
+.hero__e{position:absolute;top:12%;right:9%;font-family:var(--heading);font-size:clamp(64px,16vw,220px);letter-spacing:6px;color:rgba(0,239,239,.12);text-shadow:0 0 42px rgba(0,239,239,.08);animation:eFloat 8s ease-in-out infinite}
+@keyframes eFloat{0%,100%{transform:translateY(0);opacity:.18}50%{transform:translateY(-10px);opacity:.32}}
+.hero__content{position:relative;z-index:2;width:100%;max-width:780px;text-align:left}
+.hero__tag{display:inline-block;border:1px solid rgba(167,216,255,.25);background:rgba(5,7,11,.55);color:var(--ice);font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:6px 11px;margin-bottom:18px}
+.hero h1{font-family:var(--heading);font-size:clamp(30px,6vw,56px);text-transform:uppercase;letter-spacing:2px;line-height:1.12;margin-bottom:18px}
+.hero__body{max-width:700px;color:rgba(244,247,255,.75);line-height:1.9;font-size:17px}
+.hero__thesis{margin-top:24px;border-left:2px solid rgba(0,239,239,.35);padding-left:14px;color:var(--ice);font-family:var(--heading);letter-spacing:.8px;font-size:clamp(16px,2.3vw,24px)}
 
-.summary {
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 24px;
-}
-.card {
-  border: 1px solid var(--line);
-  background: linear-gradient(140deg, rgba(255,255,255,.03), rgba(0,239,239,.02));
-  border-radius: 10px;
-  padding: 24px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.22);
-}
-.card h3 {
-  font-family: var(--heading);
-  text-transform: uppercase;
-  letter-spacing: .9px;
-  margin-bottom: 12px;
-  font-size: 18px;
-}
-.bullets {
-  display: grid;
-  gap: 12px;
-  margin-top: 12px;
-}
-.bullets li {
-  list-style: none;
-  color: rgba(244,247,255,.74);
-  font-size: 15px;
-  line-height: 1.7;
-  padding-left: 16px;
-  position: relative;
-}
-.bullets li::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 10px rgba(0,239,239,.45);
-  position: absolute;
-  left: 0;
-  top: 10px;
-}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:42px 0 0}
+.stat{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:22px 16px;text-align:center}
+.stat__val{font-family:var(--heading);font-size:clamp(30px,4.7vw,46px);color:var(--white);text-shadow:0 0 24px rgba(167,216,255,.15)}
+.stat__label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(244,247,255,.4);margin-top:6px}
 
-.stats {
-  margin-top: 42px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-.stat {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  border-radius: 8px;
-  padding: 20px 16px;
-  text-align: center;
-}
-.stat__val {
-  font-family: var(--heading);
-  font-size: clamp(30px, 4.7vw, 46px);
-  color: var(--white);
-  text-shadow: 0 0 24px rgba(167,216,255,.2);
-}
-.stat__label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(244,247,255,.48);
-  margin-top: 6px;
-}
+.showcase{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:32px}
+.showcase--hero{height:clamp(280px,50vw,460px)}
+.showcase video{width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:saturate(1.08) contrast(1.06) brightness(.82)}
+.showcase__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,11,.12) 0%,rgba(5,7,11,.55) 55%,rgba(5,7,11,.9) 100%);pointer-events:none}
+.showcase__copy{position:absolute;left:24px;right:24px;bottom:28px;z-index:2}
+.showcase__title{font-family:var(--heading);font-size:clamp(22px,3.6vw,34px);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;text-shadow:0 6px 24px rgba(0,0,0,.5)}
+.showcase__desc{font-size:14px;color:rgba(244,247,255,.82);line-height:1.7;max-width:620px;text-shadow:0 4px 16px rgba(0,0,0,.4)}
 
-.highlights {
-  margin-top: 40px;
-  display: grid;
-  gap: 16px;
-}
-.live-stage {
-  position: relative;
-  min-height: 320px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.live-stage video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
-  opacity: .82;
-  filter: saturate(1.1) contrast(1.07) brightness(.84);
-}
-.live-stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(5,7,11,.18), rgba(5,7,11,.75));
-}
-.live-stage__copy {
-  position: absolute;
-  left: 22px;
-  right: 22px;
-  bottom: 30px;
-  z-index: 2;
-}
-.live-stage__title {
-  font-family: var(--heading);
-  font-size: clamp(20px, 3.2vw, 34px);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.live-stage__desc {
-  color: rgba(244,247,255,.84);
-  line-height: 1.75;
-  font-size: 14px;
-  max-width: 710px;
-}
+.video-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.video-cell{position:relative;border:1px solid var(--line-soft);border-radius:10px;overflow:hidden;aspect-ratio:9/16}
+.video-cell video{width:100%;height:100%;object-fit:cover}
+.video-cell__label{position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(180deg,transparent,rgba(5,7,11,.85));z-index:2;font-size:13px;color:rgba(244,247,255,.85);font-family:var(--heading);letter-spacing:.5px;text-transform:uppercase}
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr .8fr;
-  gap: 16px;
-}
-.panel {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: linear-gradient(150deg, rgba(255,255,255,.03), rgba(0,239,239,.018));
-  padding: 16px;
-}
-.panel h4 {
-  font-family: var(--heading);
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-.panel p {
-  color: rgba(244,247,255,.66);
-  font-size: 13px;
-  line-height: 1.7;
-  margin-bottom: 10px;
-}
-.strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.strip video,
-.split video {
-  width: 100%;
-  aspect-ratio: 9/16;
-  object-fit: cover;
-  border: 1px solid var(--line-soft);
-  border-radius: 6px;
-}
-.split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
+.video-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.video-grid-3 .video-cell{aspect-ratio:9/16}
 
-.team {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 28px;
-}
-.team-item {
-  border: 1px solid var(--line-soft);
-  border-radius: 8px;
-  padding: 14px;
-  background: rgba(255,255,255,.015);
-}
-.team-item .role {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ice);
-  margin-bottom: 6px;
-}
-.team-item .txt {
-  color: rgba(244,247,255,.64);
-  font-size: 14px;
-  line-height: 1.65;
-}
+.cred-wrap{margin:32px 0;padding:24px 0;border-top:1px solid rgba(167,216,255,.06);border-bottom:1px solid rgba(167,216,255,.06)}
+.cred-label{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.cred-list{display:flex;flex-wrap:wrap;gap:10px}
+.cred-badge{background:rgba(0,239,239,.06);border:1px solid rgba(0,239,239,.12);color:rgba(244,247,255,.7);font-size:13px;padding:8px 14px;border-radius:4px;white-space:nowrap;transition:all .3s ease}
+.cred-badge:hover{background:rgba(0,239,239,.12);border-color:rgba(0,239,239,.25);color:var(--cyan);transform:translateY(-1px)}
 
-.cred-list {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.badge {
-  border: 1px solid rgba(0,239,239,.2);
-  background: rgba(0,239,239,.06);
-  color: rgba(244,247,255,.78);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px}
+.team-member{border:1px solid var(--line);border-radius:10px;background:linear-gradient(150deg,rgba(255,255,255,.03),rgba(0,239,239,.015));padding:20px;display:flex;gap:16px;align-items:flex-start;transition:border-color .3s ease,transform .3s ease}
+.team-member:hover{border-color:rgba(0,239,239,.2);transform:translateY(-1px)}
+.team-member__photo{width:64px;height:64px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--line-soft);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.team-member__photo img{width:100%;height:100%;object-fit:cover}
+.team-member__photo svg{width:28px;height:28px;opacity:.3}
+.team-member__info{flex:1;min-width:0}
+.team-member__name{font-family:var(--heading);font-size:15px;letter-spacing:.5px;text-transform:uppercase;color:var(--white);margin-bottom:3px}
+.team-member__role{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.team-member__credits{color:rgba(244,247,255,.6);font-size:13px;line-height:1.6}
 
-.capital {
-  display: grid;
-  grid-template-columns: 1.05fr .95fr;
-  gap: 18px;
-}
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-}
-.table th,
-.table td {
-  text-align: left;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  padding: 12px 0;
-  color: rgba(244,247,255,.72);
-  font-size: 14px;
-}
-.table th {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(244,247,255,.45);
-}
-.table td:last-child,
-.table th:last-child { text-align: right; }
-.table .total td {
-  color: var(--white);
-  border-top: 1px solid rgba(0,239,239,.3);
-  border-bottom: none;
-  font-weight: 600;
-}
-.table .total td:last-child { color: var(--cyan); }
+.budget-table{width:100%;border-collapse:collapse;margin:28px 0}
+.budget-table th{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(244,247,255,.35);text-align:left;padding:0 0 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.budget-table th:last-child{text-align:right}
+.budget-table td{font-size:14px;color:rgba(244,247,255,.6);padding:13px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.budget-table td:last-child{text-align:right;font-family:var(--mono);font-size:13px;color:var(--ice);letter-spacing:.5px}
+.budget-table tr:last-child td{border-bottom:none}
+.budget-table .total td{border-top:1px solid rgba(0,239,239,.2);border-bottom:none;color:var(--white);font-weight:600;padding-top:16px}
+.budget-table .total td:last-child{color:var(--cyan);font-size:15px;text-shadow:0 0 12px rgba(0,239,239,.15)}
 
-.modes {
-  display: grid;
-  gap: 10px;
-  margin-top: 12px;
-}
-.mode {
-  border: 1px solid var(--line-soft);
-  border-radius: 8px;
-  padding: 14px;
-  background: rgba(255,255,255,.015);
-}
-.mode .name {
-  font-family: var(--heading);
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  margin-bottom: 6px;
-}
-.mode .desc {
-  color: rgba(244,247,255,.66);
-  font-size: 13px;
-  line-height: 1.65;
-}
+.terms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.term-card{border:1px solid var(--line);border-radius:10px;background:linear-gradient(150deg,rgba(255,255,255,.03),rgba(0,239,239,.015));padding:22px;text-align:center}
+.term-card__value{font-family:var(--heading);font-size:clamp(28px,4vw,42px);color:var(--white);margin-bottom:4px}
+.term-card__label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.term-card__detail{color:rgba(244,247,255,.6);font-size:13px;line-height:1.6}
 
-.tiers {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.tier {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 16px;
-  background: linear-gradient(155deg, rgba(255,255,255,.025), rgba(0,239,239,.015));
-}
-.tier h5 {
-  font-family: var(--heading);
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  margin-bottom: 6px;
-}
-.tier .amt {
-  font-family: var(--mono);
-  color: var(--cyan);
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-.tier ul { display: grid; gap: 8px; }
-.tier li {
-  list-style: none;
-  color: rgba(244,247,255,.68);
-  font-size: 13px;
-  line-height: 1.6;
-}
+.close{text-align:center;padding:100px 24px 70px}
+.close h3{font-family:var(--heading);text-transform:uppercase;letter-spacing:1.5px;font-size:clamp(24px,4vw,40px);margin-bottom:14px;line-height:1.2}
+.close p{max-width:680px;margin:0 auto 20px;color:rgba(244,247,255,.72);line-height:1.85;font-size:16px}
+.close a{color:var(--cyan);font-family:var(--mono);text-decoration:none;letter-spacing:1px;font-size:14px}
+.close a:hover{opacity:.7}
+.logo{height:20px;opacity:.5;margin:30px auto 0}
 
-.close {
-  text-align: center;
-  padding: 90px 24px 70px;
-}
-.close h3 {
-  font-family: var(--heading);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: clamp(24px, 4vw, 40px);
-  margin-bottom: 14px;
-}
-.close p {
-  max-width: 740px;
-  margin: 0 auto 20px;
-  color: rgba(244,247,255,.72);
-  line-height: 1.82;
-}
-.close a {
-  color: var(--cyan);
-  font-family: var(--mono);
-  text-decoration: none;
-  letter-spacing: 1px;
-}
-.logo { height: 20px; opacity: .5; margin: 30px auto 0; }
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.32s}.d4{transition-delay:.45s}.d5{transition-delay:.58s}
 
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+@media(max-width:900px){
+  section{padding:80px 0}
+  .video-grid-2,.terms-grid,.team-grid{grid-template-columns:1fr}
+  .video-grid-3{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
 }
-.reveal.visible { opacity: 1; transform: none; }
-.d1 { transition-delay: .1s; }
-.d2 { transition-delay: .2s; }
-.d3 { transition-delay: .32s; }
-.d4 { transition-delay: .45s; }
-
-@media (max-width: 980px) {
-  section { padding: 84px 0; }
-  .summary,
-  .capital,
-  .grid-3,
-  .team,
-  .tiers { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 620px) {
-  .wrap { padding: 0 18px; }
-  .hero p { font-size: 15px; }
-  .body { font-size: 15px; }
-  .stats { grid-template-columns: 1fr; }
-  .live-stage { min-height: 260px; }
-  .live-stage__copy { left: 14px; right: 14px; bottom: 24px; }
+@media(max-width:620px){
+  .wrap{padding:0 18px}
+  .hero__body{font-size:15px}
+  .body{font-size:15px}
+  .video-grid-3{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .showcase--hero{height:clamp(220px,60vw,320px)}
+  .showcase__copy{left:16px;right:16px;bottom:18px}
+  .showcase__title{font-size:18px}
+  .team-member{flex-direction:column;gap:12px}
+  .close{padding:80px 18px 60px}
 }
   </style>
 </head>
 <body>
-  <div class="gate" id="gate">
-    <p>Confidential Test Deck</p>
-    <form id="gateForm">
-      <input id="gateInput" placeholder="Password" autocomplete="off" spellcheck="false" />
-      <button type="submit">UNLOCK</button>
-    </form>
+
+<div class="gate" id="gate">
+  <p>Confidential</p>
+  <form id="gateForm">
+    <input id="gateInput" placeholder="Password" autocomplete="off" spellcheck="false" />
+    <button type="submit">UNLOCK</button>
+  </form>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<header class="hero">
+  <video class="hero__bg js-autoplay" src="/ninjatune/assets/E_video_loop.mp4" muted playsinline loop preload="metadata"></video>
+  <div class="hero__overlay"></div>
+  <div class="hero__e">E</div>
+  <div class="wrap hero__content">
+    <div class="hero__tag reveal">Confidential Investment Memo</div>
+    <h1 class="reveal d1">EMSKI Is Already Working. Capital Removes the Bottleneck.</h1>
+    <p class="hero__body reveal d2">EMSKI is an electronic music project built and operated by Emma — a producer, vocalist, drummer, and visual director. Since launching in 2023 with no label, no outside capital, and no safety net, the project has generated 3.15M streams, 42.3K followers, 7.7M playlist reach, major label releases, festival appearances, and a national tour support slot. All self-funded from film production income.</p>
+    <div class="hero__thesis reveal d3">This is not a bet on potential. It is a proven system constrained by capital.</div>
   </div>
+</header>
 
-  <div class="progress" id="progress"></div>
+<div class="divider"></div>
 
-  <header class="hero">
-    <video class="hero__bg" src="/ninjatune/assets/E_video_loop.mp4" muted playsinline loop preload="metadata"></video>
-    <div class="hero__overlay"></div>
-    <div class="hero__e">E</div>
-    <div class="wrap hero__content">
-      <div class="hero__tag reveal">Confidential • Test Concept</div>
-      <h1 class="reveal d1">EMSKI: Proven Creative Engine, Capital-Limited Growth</h1>
-      <p class="reveal d2">This memo is built for one decision: whether to fund runway for an artist who has already demonstrated product-market traction, premium creative capability, and live audience conversion — without institutional support.</p>
-      <div class="hero__thesis reveal d3">Thesis: the operation works now. Capital removes the bottleneck.</div>
-    </div>
-  </header>
+<section>
+  <div class="wrap">
+    <div class="kicker reveal">What's Been Proven</div>
+    <h2 class="h2 reveal d1">Already Resonating — Not at Scale</h2>
+    <p class="body reveal d2">EMSKI has signed and released records on some of the biggest labels in electronic music — mau5trap, Ophelia, Monstercat, Bitbird, Hexagon, Sable Valley. She didn't release every track under her own name, but the music has been placed on rosters that most artists spend years trying to reach. That's not a starting point — that's validation.</p>
+    <p class="body reveal d3">Alongside the releases: warehouse headliners, festival slots at ILLfest, Freaky Deaky, Seismic, and Big Bond, plus a 20+ date support run on the Zella Day national tour. The audience connection isn't theoretical. It's real, measurable, and happening — it's just not happening at scale because there's no capital behind it.</p>
 
-  <div class="divider"></div>
-
-  <section>
-    <div class="wrap">
-      <div class="kicker reveal">Executive Context</div>
-      <div class="summary">
-        <article class="card reveal d1">
-          <h3>What has already been proven</h3>
-          <p class="body">Since launching in 2023, Emma has built EMSKI with no label, no outside capital, and no safety net. She has been funding output from film-production income and reinvesting continuously into music, content, and live execution.</p>
-          <ul class="bullets">
-            <li>Creative system is self-contained: writing, production, drums, vocals, visual direction, and edit stack.</li>
-            <li>Live system is validated: warehouse environments, festival stages, and support slots on the Zella Day tour.</li>
-            <li>Business system is already in motion: team support in strategy, engineering, visual direction, and booking.</li>
-          </ul>
-        </article>
-        <article class="card reveal d2">
-          <h3>What capital changes</h3>
-          <p class="body">The ask is not to “start” a project — it is to accelerate one that is already operational. Capital converts part-time execution into a full-time compounding system.</p>
-          <ul class="bullets">
-            <li>Higher release velocity with consistent campaign cadence.</li>
-            <li>More frequent live conversion in larger rooms and new cities.</li>
-            <li>More controlled growth because production and content are in-house.</li>
-          </ul>
-        </article>
+    <div class="stats reveal d3">
+      <div class="stat">
+        <div class="stat__val" data-count="3.15" data-suffix="M">0</div>
+        <div class="stat__label">Streams</div>
       </div>
+      <div class="stat">
+        <div class="stat__val" data-count="42.3" data-suffix="K">0</div>
+        <div class="stat__label">Followers</div>
+      </div>
+      <div class="stat">
+        <div class="stat__val" data-count="7.7" data-suffix="M">0</div>
+        <div class="stat__label">Playlist Reach</div>
+      </div>
+    </div>
 
-      <div class="stats">
-        <div class="stat reveal d2">
-          <div class="stat__val" data-count="3.15" data-suffix="M">0</div>
-          <div class="stat__label">Streams</div>
+    <div class="cred-wrap reveal d4">
+      <div class="cred-label">Label Releases &amp; Festival Credits</div>
+      <div class="cred-list">
+        <span class="cred-badge">mau5trap</span>
+        <span class="cred-badge">Ophelia</span>
+        <span class="cred-badge">Monstercat</span>
+        <span class="cred-badge">Bitbird</span>
+        <span class="cred-badge">Hexagon</span>
+        <span class="cred-badge">Sable Valley</span>
+        <span class="cred-badge">ILLfest</span>
+        <span class="cred-badge">Freaky Deaky</span>
+        <span class="cred-badge">Seismic</span>
+        <span class="cred-badge">Big Bond</span>
+        <span class="cred-badge">Zella Day Tour</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="wrap">
+    <div class="kicker reveal">The Talent</div>
+    <h2 class="h2 reveal d1">One Artist. Every Discipline.</h2>
+    <p class="body reveal d2">What makes EMSKI rare isn't one thing — it's that Emma does all of it. She writes the records, produces them, plays drums live on stage, sings the vocals, directs the visual content, and edits the social campaigns. That vertical integration means the operation doesn't depend on expensive outside creative teams. Everything compound-grows from the same person.</p>
+
+    <div class="showcase showcase--hero reveal d3">
+      <video class="js-autoplay" src="https://pub-9a90af40c4df4a8aa36505acb79e02b3.r2.dev/warehouse-show-hd.mp4" muted playsinline loop preload="metadata"></video>
+      <div class="showcase__overlay"></div>
+      <div class="showcase__copy">
+        <div class="showcase__title">DJ + Live Drummer. Warehouse Energy.</div>
+        <div class="showcase__desc">EMSKI performs as both DJ and live drummer — a hybrid format that creates a show you can feel, not just hear. This is from a headlining warehouse set.</div>
+      </div>
+    </div>
+
+    <div class="video-grid-3 reveal d4">
+      <div class="video-cell">
+        <video class="js-autoplay" src="/ninjatune/videos/lyric-holdmeup.mp4" muted playsinline loop preload="metadata"></video>
+        <div class="video-cell__label">Social Edit — Hold Me Up</div>
+      </div>
+      <div class="video-cell">
+        <video class="js-autoplay" src="/ninjatune/videos/lyric-foru.mp4" muted playsinline loop preload="metadata"></video>
+        <div class="video-cell__label">Social Edit — For U</div>
+      </div>
+      <div class="video-cell">
+        <video class="js-autoplay" src="/ninjatune/videos/lyric-waitforme.mp4" muted playsinline loop preload="metadata"></video>
+        <div class="video-cell__label">Social Edit — Wait for Me</div>
+      </div>
+    </div>
+
+    <div class="video-grid-2 reveal d5">
+      <div class="video-cell">
+        <video class="js-autoplay" src="/ninjatune/assets/hq-production.mp4" muted playsinline loop preload="metadata"></video>
+        <div class="video-cell__label">In the Studio</div>
+      </div>
+      <div class="video-cell">
+        <video class="js-autoplay" src="/ninjatune/assets/talking-head.mp4" muted playsinline loop preload="metadata"></video>
+        <div class="video-cell__label">Behind the Creative</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="wrap">
+    <div class="kicker reveal">The Team</div>
+    <h2 class="h2 reveal d1">This Is Not a Solo Operation</h2>
+    <p class="body reveal d2">Emma is the creative center, but the project runs on a team that's already in place and executing. These aren't hypothetical hires — they are working on EMSKI now. Investment funds their continued involvement at the pace this project requires.</p>
+
+    <div class="team-grid">
+      <div class="team-member reveal d2">
+        <div class="team-member__photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
         </div>
-        <div class="stat reveal d3">
-          <div class="stat__val" data-count="42.3" data-suffix="K">0</div>
-          <div class="stat__label">Followers</div>
-        </div>
-        <div class="stat reveal d4">
-          <div class="stat__val" data-count="7.7" data-suffix="M">0</div>
-          <div class="stat__label">Playlist Reach</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section>
-    <div class="wrap">
-      <div class="kicker reveal">Where Things Stand</div>
-      <h2 class="h2 reveal d1">Live, Editing, and Artist Capability in One System</h2>
-      <p class="body reveal d2">The strongest signal is not one metric. It is the integration: Emma can move from track creation to social packaging to stage performance without creative dilution or heavy external dependency.</p>
-
-      <div class="highlights">
-        <article class="live-stage reveal d2">
-          <video class="js-autoplay" src="/ninjatune/assets/4.mp4" muted playsinline loop preload="metadata"></video>
-          <div class="live-stage__copy">
-            <div class="live-stage__title">Warehouse Energy, Festival Readiness</div>
-            <div class="live-stage__desc">Live footage demonstrates both performance command and audience response. Support slots on the Zella Day tour reinforce that this translates in real rooms, not just online feeds.</div>
-          </div>
-        </article>
-
-        <div class="grid-3">
-          <article class="panel reveal d2">
-            <h4>Social Editing Stack</h4>
-            <p>Short-form performance, lyric, and narrative edits built for platform-native distribution (Reels, TikTok, Shorts). This is in-house capability, not outsourced dependency.</p>
-            <div class="strip">
-              <video class="js-autoplay" src="/ninjatune/videos/lyric-holdmeup.mp4" muted playsinline loop preload="metadata"></video>
-              <video class="js-autoplay" src="/ninjatune/videos/lyric-foru.mp4" muted playsinline loop preload="metadata"></video>
-              <video class="js-autoplay" src="/ninjatune/videos/lyric-waitforme.mp4" muted playsinline loop preload="metadata"></video>
-            </div>
-          </article>
-
-          <article class="panel reveal d3">
-            <h4>Performance Signature</h4>
-            <p>EMSKI performs as both DJ and live drummer. That hybrid format is a differentiator that increases memorability and improves live conversion against standard DJ sets.</p>
-            <div class="split">
-              <video class="js-autoplay" src="/ninjatune/assets/hq-production.mp4" muted playsinline loop preload="metadata"></video>
-              <video class="js-autoplay" src="/ninjatune/assets/talking-head.mp4" muted playsinline loop preload="metadata"></video>
-            </div>
-          </article>
-
-          <article class="panel reveal d4">
-            <h4>Operational Team</h4>
-            <p>The project is no longer a solo operator model. A focused team now supports execution velocity while Emma remains creative and strategic center.</p>
-            <ul class="bullets">
-              <li>Manager — strategy, growth, and positioning.</li>
-              <li>Mixing engineer — record quality and release consistency.</li>
-              <li>Visual director + booking support — stage and audience development.</li>
-            </ul>
-          </article>
+        <div class="team-member__info">
+          <div class="team-member__name">Manager</div>
+          <div class="team-member__role">Strategy &amp; Growth</div>
+          <div class="team-member__credits">Handles positioning, business development, label relationships, and growth strategy. Has been with the project since early stages and understands the operation end-to-end.</div>
         </div>
       </div>
 
-      <div class="cred-list reveal d3">
-        <span class="badge">mau5trap</span>
-        <span class="badge">Ophelia</span>
-        <span class="badge">Monstercat</span>
-        <span class="badge">Bitbird</span>
-        <span class="badge">Hexagon</span>
-        <span class="badge">Sable Valley</span>
-        <span class="badge">ILLfest</span>
-        <span class="badge">Freaky Deaky</span>
-        <span class="badge">Seismic</span>
-        <span class="badge">Big Bond</span>
+      <div class="team-member reveal d3">
+        <div class="team-member__photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
+        </div>
+        <div class="team-member__info">
+          <div class="team-member__name">Mixing Engineer</div>
+          <div class="team-member__role">Sound &amp; Record Quality</div>
+          <div class="team-member__credits">Ensures release-ready quality across every record. Responsible for mixing and mastering consistency that meets major label standards — the records on mau5trap, Ophelia, and Monstercat were mixed through this pipeline.</div>
+        </div>
+      </div>
+
+      <div class="team-member reveal d3">
+        <div class="team-member__photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
+        </div>
+        <div class="team-member__info">
+          <div class="team-member__name">Co-Producers</div>
+          <div class="team-member__role">Music Production</div>
+          <div class="team-member__credits">Collaborative production partners who contribute to the EMSKI sound. Emma drives creative direction; co-producers help refine and execute at a higher volume than solo output allows.</div>
+        </div>
+      </div>
+
+      <div class="team-member reveal d4">
+        <div class="team-member__photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
+        </div>
+        <div class="team-member__info">
+          <div class="team-member__name">Media Team</div>
+          <div class="team-member__role">Visual &amp; Content</div>
+          <div class="team-member__credits">Photography, videography, and live visual production. Works alongside Emma's own editing capability to maintain the visual identity across campaigns, social content, and stage production.</div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <div class="divider"></div>
+    <p class="body reveal d5" style="margin-top:24px;font-size:13px;color:rgba(244,247,255,.45)">Team photos and full credits will be added to the final version of this document.</p>
+  </div>
+</section>
 
-  <section>
-    <div class="wrap">
-      <div class="kicker reveal">Capital Plan</div>
-      <h2 class="h2 reveal d1">The Constraint Is Time. Capital Buys Focus.</h2>
-      <p class="body reveal d2">The core objective is simple: transition from part-time execution to full-time growth. Capital is directed to output, audience acquisition, and live expansion — not overhead bloat.</p>
+<div class="divider"></div>
 
-      <div class="capital">
-        <article class="card reveal d2">
-          <h3>Use of funds — Spark scenario ($25K)</h3>
-          <table class="table">
-            <thead>
-              <tr><th>Line Item</th><th>Amount</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Artist runway (full-time focus)</td><td>$6,000</td></tr>
-              <tr><td>Paid social (Meta / TikTok / YouTube)</td><td>$5,500</td></tr>
-              <tr><td>Tour support (travel + production)</td><td>$4,000</td></tr>
-              <tr><td>Video production (1–2 hero visuals)</td><td>$3,000</td></tr>
-              <tr><td>Playlist + PR support</td><td>$2,500</td></tr>
-              <tr><td>Content production (photo/video)</td><td>$2,000</td></tr>
-              <tr><td>Working capital + contingency</td><td>$2,000</td></tr>
-              <tr class="total"><td>Total</td><td>$25,000</td></tr>
-            </tbody>
-          </table>
-        </article>
+<section>
+  <div class="wrap">
+    <div class="kicker reveal">What Your Investment Funds</div>
+    <h2 class="h2 reveal d1">$75,000 to Go Full-Time and Scale</h2>
+    <p class="body reveal d2">Right now Emma funds EMSKI entirely from film production income. Every dollar she earns goes back into the project — but she's splitting time between two careers. This investment eliminates that constraint. It funds full-time dedication, covers the team, and puts real resources behind marketing and live expansion. This is a proven framework that needs capital to scale.</p>
 
-        <article class="card reveal d3">
-          <h3>Scale paths</h3>
-          <div class="modes">
-            <div class="mode">
-              <div class="name">Catalyst ($75K)</div>
-              <div class="desc">Extends runway, increases release cadence, expands live footprint, and supports deeper campaign iterations across channels.</div>
-            </div>
-            <div class="mode">
-              <div class="name">Architect ($150K+)</div>
-              <div class="desc">Builds institutional pace: stronger management infrastructure, larger market penetration, and longer compounding window for catalog + brand value.</div>
-            </div>
-            <div class="mode">
-              <div class="name">Risk control</div>
-              <div class="desc">Revenue participation is centered on master/publishing streaming and related rights frameworks — no broad 360 structure required to align incentives.</div>
-            </div>
-          </div>
-        </article>
+    <table class="budget-table reveal d3">
+      <thead>
+        <tr><th>Line Item</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Living costs — rent, utilities, full-time runway</td><td>$18,000</td></tr>
+        <tr><td>Team — engineer, co-producers, media</td><td>$12,000</td></tr>
+        <tr><td>Paid social ads — Meta, TikTok, YouTube</td><td>$10,000</td></tr>
+        <tr><td>Tour support — travel, accommodation, production</td><td>$10,000</td></tr>
+        <tr><td>Music video production — 2–3 hero visuals</td><td>$8,000</td></tr>
+        <tr><td>Playlist pitching &amp; PR campaigns</td><td>$5,000</td></tr>
+        <tr><td>Content creation — photo, video, social</td><td>$4,000</td></tr>
+        <tr><td>Management &amp; legal</td><td>$4,000</td></tr>
+        <tr><td>Working capital &amp; contingency</td><td>$4,000</td></tr>
+        <tr class="total"><td>Total Investment</td><td>$75,000</td></tr>
+      </tbody>
+    </table>
+
+    <p class="body reveal d4">Living costs are included because this investment is buying full-time dedication. Emma isn't splitting time with a day job anymore — every hour goes into EMSKI. The team costs are real and current; these people are already working on the project and this funds them at the pace needed to grow.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="wrap">
+    <div class="kicker reveal">The Deal</div>
+    <h2 class="h2 reveal d1">Clear Terms. Fast Return Path. Real Upside.</h2>
+    <p class="body reveal d2">This is structured so the investor sees returns quickly and retains long-term upside. The revenue share accelerates the payback period. The equity position gives you permanent ownership in a growing asset.</p>
+
+    <div class="terms-grid reveal d3">
+      <div class="term-card">
+        <div class="term-card__value">$1M</div>
+        <div class="term-card__label">Business Valuation</div>
+        <div class="term-card__detail">Based on existing catalog, audience, label relationships, and operational infrastructure already built.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-card__value">~5%</div>
+        <div class="term-card__label">Equity — Permanent</div>
+        <div class="term-card__detail">Permanent equity position in EMSKI. Right to buy back at max $1M valuation — your floor is protected.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-card__value">~10%</div>
+        <div class="term-card__label">Revenue Share</div>
+        <div class="term-card__detail">On shows, streaming, social deals, and brand deals — only on songs released during the investment period. Active until the initial $75K is fully recouped.</div>
       </div>
     </div>
-  </section>
 
-  <div class="divider"></div>
+    <p class="body reveal d4" style="margin-top:28px">The revenue share is intentionally structured at a higher percentage so you see your money back faster. Once the $75K is recouped, the revenue share ends — but your equity remains. You are not locked into a long tail. You get paid back, then your ownership continues to appreciate as the project grows.</p>
+    <p class="body reveal d5">Revenue share applies <em>only to songs released during the investment period</em> — not the existing catalog. This means your returns are directly tied to what your investment helps create and promote. Quarterly reporting, full spend transparency, direct access.</p>
+  </div>
+</section>
 
-  <section>
-    <div class="wrap">
-      <div class="kicker reveal">Partnership Framework</div>
-      <h2 class="h2 reveal d1">Clear Terms, Transparent Reporting, Shared Upside</h2>
-      <p class="body reveal d2">Three structures depending on level of conviction. Terms shown here are starting points for discussion and documentation.</p>
+<div class="divider"></div>
 
-      <div class="tiers">
-        <article class="tier reveal d2">
-          <h5>Spark</h5>
-          <div class="amt">$25K</div>
-          <ul>
-            <li>5% net revenue share on E/MOTION EP</li>
-            <li>Master + publishing streaming focus</li>
-            <li>Quarterly reporting and transparent spend visibility</li>
-          </ul>
-        </article>
-        <article class="tier reveal d3">
-          <h5>Catalyst</h5>
-          <div class="amt">$75K</div>
-          <ul>
-            <li>Everything in Spark + broader future release participation</li>
-            <li>3% equity position in The Effect LLC framework</li>
-            <li>Strategic advisory input with direct operator access</li>
-          </ul>
-        </article>
-        <article class="tier reveal d4">
-          <h5>Architect</h5>
-          <div class="amt">$150K+</div>
-          <ul>
-            <li>Everything in Catalyst + expanded upside terms</li>
-            <li>7% equity position in The Effect LLC framework</li>
-            <li>Pro-rata participation in future raises</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
+<section class="close">
+  <h3 class="reveal">With This Investment, You Can Leave a Lasting Effect.</h3>
+  <p class="reveal d1">Emma lives and breathes this. Every dollar she's ever made has gone back into building EMSKI. The music is resonating, the audience is real, the team is in place, and the system works. What's missing is the capital to do it full-time and at scale. This investment changes that equation.</p>
+  <p class="reveal d2"><a href="mailto:contact@emskimusic.com">contact@emskimusic.com</a></p>
+  <img class="logo reveal d3" src="/ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" />
+</section>
 
-  <div class="divider"></div>
-
-  <section class="close">
-    <h3 class="reveal">This is not a concept. It is an operating system.</h3>
-    <p class="reveal d1">The artist stack is already built. The audience signals are already present. The live conversion has already started. The project does not need permission to work — it needs runway to scale. Capital is the unlock.</p>
-    <a class="reveal d2" href="mailto:contact@emskimusic.com">contact@emskimusic.com</a>
-    <img class="logo reveal d3" src="/ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" />
-  </section>
+<footer style="text-align:center;padding:40px 28px 56px;border-top:1px solid rgba(167,216,255,.05)">
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(244,247,255,.15)">© 2025 EMSKI Music — Confidential</div>
+</footer>
 
   <script>
-(function gate() {
-  var gateEl = document.getElementById('gate');
-  var form = document.getElementById('gateForm');
-  var input = document.getElementById('gateInput');
-  if (sessionStorage.getItem('pitch-test-unlocked') === '1') {
-    gateEl.classList.add('hidden');
-    return;
-  }
+/* gate */
+(function() {
+  var g = document.getElementById('gate');
+  var f = document.getElementById('gateForm');
+  var i = document.getElementById('gateInput');
+  if (sessionStorage.getItem('pitch-test-unlocked') === '1') { g.classList.add('hidden'); return; }
   document.body.style.overflow = 'hidden';
-  input.focus();
-  form.addEventListener('submit', function(e) {
+  i.focus();
+  f.addEventListener('submit', function(e) {
     e.preventDefault();
-    if ((input.value || '').trim().toLowerCase() === 'effect') {
+    if ((i.value || '').trim().toLowerCase() === 'effect') {
       sessionStorage.setItem('pitch-test-unlocked', '1');
-      gateEl.classList.add('hidden');
+      g.classList.add('hidden');
       document.body.style.overflow = '';
-    } else {
-      input.value = '';
-      input.focus();
-    }
+    } else { i.value = ''; i.focus(); }
   });
 })();
 
-(function scrollProgress() {
+/* progress */
+(function() {
   var bar = document.getElementById('progress');
   window.addEventListener('scroll', function() {
     var h = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY;
-    bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
   }, { passive: true });
 })();
 
-(function reveal() {
-  var els = document.querySelectorAll('.reveal, .divider');
+/* reveal */
+(function() {
   var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        obs.unobserve(entry.target);
-      }
+    entries.forEach(function(en) {
+      if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); }
     });
   }, { threshold: 0.12 });
-  els.forEach(function(el){ obs.observe(el); });
+  document.querySelectorAll('.reveal, .divider').forEach(function(el) { obs.observe(el); });
 })();
 
-(function counters() {
-  function animate(el) {
-    var target = parseFloat(el.dataset.count || '0');
-    var suffix = el.dataset.suffix || '';
-    var start = performance.now();
-    var dur = 1500;
+/* counters */
+(function() {
+  function anim(el) {
+    var t = parseFloat(el.dataset.count || '0');
+    var s = el.dataset.suffix || '';
+    var start = performance.now(), dur = 1500;
     function step(now) {
       var p = Math.min((now - start) / dur, 1);
       var ease = 1 - Math.pow(1 - p, 3);
-      var val = target * ease;
-      var decimals = (target.toString().split('.')[1] || '').length || 0;
-      el.textContent = val.toFixed(decimals) + suffix;
+      var dec = (t.toString().split('.')[1] || '').length || 0;
+      el.textContent = (t * ease).toFixed(dec) + s;
       if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
@@ -842,38 +452,28 @@ section { padding: 100px 0; }
   document.querySelectorAll('[data-count]').forEach(function(el) {
     var done = false;
     var o = new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting && !done) {
-        done = true;
-        animate(el);
-        o.unobserve(el);
-      }
+      if (entries[0].isIntersecting && !done) { done = true; anim(el); o.unobserve(el); }
     }, { threshold: 0.35 });
     o.observe(el);
   });
 })();
 
-(function autoplayVideos() {
-  var videos = document.querySelectorAll('.js-autoplay, .hero__bg');
-  if (!videos.length) return;
+/* autoplay videos */
+(function() {
+  var vids = document.querySelectorAll('.js-autoplay, .hero__bg');
+  if (!vids.length) return;
   var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      var v = entry.target;
-      if (entry.isIntersecting) {
-        var p = v.play();
-        if (p && p.catch) p.catch(function(){});
-      } else if (!v.classList.contains('hero__bg')) {
-        v.pause();
-      }
+    entries.forEach(function(en) {
+      var v = en.target;
+      if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+      else if (!v.classList.contains('hero__bg')) v.pause();
     });
   }, { threshold: 0.22, rootMargin: '0px 0px -10% 0px' });
-  videos.forEach(function(v) {
-    v.muted = true;
-    v.playsInline = true;
-    obs.observe(v);
-  });
+  vids.forEach(function(v) { v.muted = true; v.playsInline = true; obs.observe(v); });
 })();
 
-(function parallaxE() {
+/* parallax floating E */
+(function() {
   var e = document.querySelector('.hero__e');
   if (!e) return;
   window.addEventListener('scroll', function() {
