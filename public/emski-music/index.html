@@ -92,7 +92,7 @@ body::after {
   padding: 0 var(--pad-x); height: 56px;
   flex-shrink: 0;
   opacity: 0;
-  animation: fadeIn .6s ease forwards 1.2s;
+  animation: fadeIn .6s ease forwards .1s;
 }
 .nav__logo {
   height: 14px;
@@ -124,60 +124,37 @@ body::after {
   position: relative;
 }
 
-/* ━━ TOUR TITLE — centered, then slides up ━━━━━━━━━━━━━━━ */
+/* ━━ TOUR TITLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .tour-title {
   text-align: center;
-  transition: all 1s cubic-bezier(.4,0,.2,1);
-  margin-bottom: 0;
+  margin-bottom: 16px;
 }
 .tour-title h1 {
   font-weight: 300;
-  font-size: clamp(48px, 10vw, 110px);
-  letter-spacing: clamp(6px, 2vw, 20px);
+  font-size: clamp(28px, 5vw, 48px);
+  letter-spacing: clamp(4px, 1vw, 10px);
   text-transform: uppercase;
   color: var(--c-white);
   line-height: 1;
   opacity: 0;
-  transform: scale(.9);
-  animation: titleIn .8s cubic-bezier(.4,0,.2,1) forwards .2s;
+  animation: fadeIn .6s ease forwards .1s;
 }
 .tour-title .subtitle {
   font-family: var(--f-mono); font-size: 10px;
   letter-spacing: 4px; text-transform: uppercase;
   color: var(--c-warm-dim);
   opacity: 0;
-  animation: fadeIn .5s ease forwards .7s;
+  animation: fadeIn .6s ease forwards .2s;
   margin-top: 8px;
 }
 
-/* After expand: title shrinks and moves up */
-.tour-title.collapsed {
-  margin-bottom: 16px;
-}
-.tour-title.collapsed h1 {
-  font-size: clamp(28px, 5vw, 48px);
-  letter-spacing: clamp(4px, 1vw, 10px);
-}
-
-@keyframes titleIn {
-  to { opacity: 1; transform: scale(1); }
-}
 @keyframes fadeIn {
   to { opacity: 1; }
 }
 
-/* ━━ DATES CONTAINER — expands from center ━━━━━━━━━━━━━━━ */
+/* ━━ DATES CONTAINER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .dates-wrap {
   width: 100%;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 1s cubic-bezier(.4,0,.2,1),
-              opacity .6s ease;
-}
-.dates-wrap.open {
-  max-height: 600px;
-  opacity: 1;
   overflow-y: auto;
 }
 .dates-wrap::-webkit-scrollbar { width: 2px; }
@@ -309,7 +286,7 @@ body::after {
   letter-spacing: 2px; text-transform: uppercase;
   color: rgba(232,213,183,.15);
   opacity: 0;
-  animation: fadeIn .6s ease forwards 1.6s;
+  animation: fadeIn .6s ease forwards .3s;
 }
 
 /* ━━ SCAN LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -342,11 +319,11 @@ body::after {
   .tour-title.collapsed h1 {
     font-size: clamp(24px, 7vw, 36px);
   }
-  .dates-wrap.open { max-height: 55vh; }
+  .dates-wrap { max-height: 55vh; overflow-y: auto; }
 }
 @media (max-height: 700px) {
   .date-row { padding: 12px 0; }
-  .dates-wrap.open { max-height: 50vh; }
+  .dates-wrap { max-height: 50vh; overflow-y: auto; }
   .tour-title.collapsed h1 { font-size: clamp(22px, 4vw, 36px); }
 }
 </style>
@@ -450,17 +427,11 @@ body::after {
     requestAnimationFrame(() => bg.classList.add('loaded'));
   });
 
-  /* 2. After title animates in, collapse it and expand dates */
-  setTimeout(() => {
-    title.classList.add('collapsed');
-    wrap.classList.add('open');
-
-    /* 3. Stagger each row in */
-    rows.forEach(row => {
-      const delay = parseInt(row.dataset.delay) || 0;
-      setTimeout(() => row.classList.add('visible'), 150 + delay);
-    });
-  }, 1000);
+  /* 2. Stagger each row in immediately */
+  rows.forEach(row => {
+    const delay = parseInt(row.dataset.delay) || 0;
+    setTimeout(() => row.classList.add('visible'), 300 + delay);
+  });
 
   /* Magnetic hover on active ticket buttons */
   document.querySelectorAll('.date-row:not(.blurred) .btn').forEach(btn => {
