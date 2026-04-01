@@ -309,30 +309,43 @@ body::after {
 
 /* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @media (max-width: 680px) {
-  .date-row {
-    grid-template-columns: 80px 1fr auto;
-    gap: 12px;
-    padding: 14px 0;
+  .main {
+    justify-content: flex-start;
+    padding-top: 12px;
   }
-  .date-day {
-    font-size: 13px;
-  }
-  .date-day span { font-size: 10px; }
-  .venue-name { font-size: 8px; }
-  .venue-city { font-size: 12px; letter-spacing: 1px; }
-  .btn { padding: 6px 12px; font-size: 8px; letter-spacing: 1px; }
-  .date-row:not(.blurred)::before { display: none; }
+  .tour-title { margin-bottom: 10px; }
   .tour-title h1 {
     font-size: clamp(24px, 7vw, 36px);
   }
-  .dates-wrap { max-height: 60vh; overflow-y: auto; }
-  .nav__logo { height: 11px; }
-  .nav__cta { font-size: 8px; padding: 4px 10px; }
+  .tour-title .subtitle { font-size: 8px; margin-top: 4px; }
+  .date-row {
+    grid-template-columns: 70px 1fr auto;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  .date-day { font-size: 12px; }
+  .date-day span { font-size: 9px; }
+  .venue-name { font-size: 7px; }
+  .venue-city { font-size: 11px; letter-spacing: 1px; }
+  .btn { padding: 5px 10px; font-size: 7px; letter-spacing: 1px; }
+  .date-row:not(.blurred)::before { display: none; }
+  .dates-wrap { max-height: none; overflow-y: auto; }
+  .nav { height: 44px; }
+  .nav__logo { height: 10px; }
+  .nav__cta { font-size: 7px; padding: 4px 10px; }
+  .footer { padding: 10px var(--pad-x); font-size: 7px; }
 }
 @media (max-height: 700px) {
-  .date-row { padding: 12px 0; }
-  .dates-wrap { max-height: 50vh; overflow-y: auto; }
-  .tour-title.collapsed h1 { font-size: clamp(22px, 4vw, 36px); }
+  .main {
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+  .tour-title { margin-bottom: 8px; }
+  .date-row { padding: 10px 0; }
+  .dates-wrap { max-height: none; overflow-y: auto; }
+  .tour-title h1 { font-size: clamp(22px, 4vw, 36px); }
+  .nav { height: 44px; }
+  .footer { padding: 10px var(--pad-x); }
 }
 </style>
 </head>
