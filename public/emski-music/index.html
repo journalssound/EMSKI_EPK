@@ -38,6 +38,8 @@ body {
   -webkit-font-smoothing: antialiased;
   height: 100%;
 }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
 ::selection { background: rgba(232,213,183,.2); color: var(--c-white); }
 
 /* ━━ FILM GRAIN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -67,7 +69,7 @@ body::after {
 /* Background image */
 .bg {
   position: fixed; inset: 0; z-index: 0;
-  background: url('/emski-music/assets/hero.jpg') center center / cover no-repeat;
+  background: url('/emski-music/hero.jpg') center center / cover no-repeat;
   filter: brightness(.25) saturate(.5);
   transform: scale(1.08);
   transition: transform 6s ease-out, filter 6s ease-out;
@@ -157,8 +159,8 @@ body::after {
   width: 100%;
   overflow-y: auto;
 }
-.dates-wrap::-webkit-scrollbar { width: 2px; }
-.dates-wrap::-webkit-scrollbar-thumb { background: rgba(232,213,183,.15); }
+.dates-wrap { -ms-overflow-style: none; scrollbar-width: none; }
+.dates-wrap::-webkit-scrollbar { display: none; }
 
 .dates {
   list-style: none;
