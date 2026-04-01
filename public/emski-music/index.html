@@ -64,6 +64,7 @@ body::after {
   position: fixed; inset: 0;
   display: flex; flex-direction: column;
   z-index: 2;
+  padding: 0 8px;
 }
 
 /* Background image */
@@ -186,11 +187,21 @@ body::after {
   transform: translateY(0) scaleY(1);
 }
 
-/* Blurred rows */
+/* Blurred rows — everything blurred */
 .date-row.blurred .date-venue,
 .date-row.blurred .date-day {
   filter: blur(6px);
   user-select: none;
+}
+
+/* Blurred-city rows — date & venue name blurred, city visible */
+.date-row.blurred-city .date-day,
+.date-row.blurred-city .venue-name {
+  filter: blur(6px);
+  user-select: none;
+}
+.date-row.blurred-city .venue-city {
+  color: var(--c-white);
 }
 
 /* Date */
@@ -241,7 +252,6 @@ body::after {
 .btn:hover {
   color: var(--c-warm);
   border-color: var(--c-border-bright);
-  box-shadow: 0 0 20px rgba(232,213,183,.08), inset 0 0 20px rgba(232,213,183,.04);
 }
 .btn .arrow {
   display: inline-block;
@@ -384,45 +394,68 @@ body::after {
           </a>
         </li>
 
-        <!-- Blurred upcoming — RSVP links to vault -->
-        <li class="date-row blurred" data-delay="80">
-          <div class="date-day">MAY 3<span>2026</span></div>
+        <!-- City-visible upcoming — date & venue blurred, city shown, RSVP links to vault -->
+        <li class="date-row blurred-city" data-delay="80">
+          <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
-            <span class="venue-name">The Echo</span>
-            <span class="venue-city">Los Angeles, CA</span>
+            <span class="venue-name">TBA</span>
+            <span class="venue-city">Austin, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
           </a>
         </li>
 
-        <li class="date-row blurred" data-delay="160">
-          <div class="date-day">MAY 10<span>2026</span></div>
+        <li class="date-row blurred-city" data-delay="160">
+          <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
-            <span class="venue-name">Holocene</span>
-            <span class="venue-city">Portland, OR</span>
+            <span class="venue-name">TBA</span>
+            <span class="venue-city">Dallas, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
           </a>
         </li>
 
-        <li class="date-row blurred" data-delay="240">
-          <div class="date-day">MAY 16<span>2026</span></div>
+        <li class="date-row blurred-city" data-delay="240">
+          <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
-            <span class="venue-name">Barboza</span>
-            <span class="venue-city">Seattle, WA</span>
+            <span class="venue-name">TBA</span>
+            <span class="venue-city">San Antonio, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
           </a>
         </li>
 
-        <li class="date-row blurred" data-delay="320">
-          <div class="date-day">JUN 7<span>2026</span></div>
+        <li class="date-row blurred-city" data-delay="320">
+          <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
-            <span class="venue-name">Public Works</span>
-            <span class="venue-city">San Francisco, CA</span>
+            <span class="venue-name">TBA</span>
+            <span class="venue-city">Houston, TX</span>
+          </div>
+          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
+            RSVP <span class="arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Fully blurred teaser rows -->
+        <li class="date-row blurred" data-delay="400">
+          <div class="date-day">TBA<span>&nbsp;</span></div>
+          <div class="date-venue">
+            <span class="venue-name">TBA</span>
+            <span class="venue-city">TBA</span>
+          </div>
+          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
+            RSVP <span class="arrow">→</span>
+          </a>
+        </li>
+
+        <li class="date-row blurred" data-delay="480">
+          <div class="date-day">TBA<span>&nbsp;</span></div>
+          <div class="date-venue">
+            <span class="venue-name">TBA</span>
+            <span class="venue-city">TBA</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
