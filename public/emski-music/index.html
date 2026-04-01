@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 <title>EMSKI — Tour</title>
 <meta name="description" content="EMSKI — Upcoming tour dates and tickets." />
 <meta property="og:title" content="EMSKI — Tour" />
@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 <style>
-/* ━━ RESET & TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ━━ TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
   --c-bg: #060606;
   --c-white: #f0ece4;
@@ -24,23 +24,20 @@
   --c-border-bright: rgba(232,213,183,.5);
   --f-heading: "Jura", sans-serif;
   --f-mono: "Space Mono", monospace;
-  --pad-x: clamp(24px, 5vw, 64px);
+  --pad-x: clamp(16px, 4vw, 48px);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { overflow: hidden; height: 100%; }
 body {
   background: var(--c-bg);
   color: var(--c-white);
   font-family: var(--f-heading);
-  overflow-x: hidden;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  height: 100%;
 }
 ::selection { background: rgba(232,213,183,.2); color: var(--c-white); }
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(232,213,183,.15); }
 
 /* ━━ FILM GRAIN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 body::after {
@@ -59,464 +56,432 @@ body::after {
   80% { transform: translate(5%,-5%) }
 }
 
-/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+/* ━━ FULLSCREEN LAYOUT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.page {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  z-index: 2;
 }
-.hero__bg {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-  z-index: 0;
+
+/* Background image */
+.bg {
+  position: fixed; inset: 0; z-index: 0;
   background: url('assets/hero.jpg') center center / cover no-repeat;
-  filter: brightness(.3) saturate(.6);
-  transform: scale(1.05);
-  transition: transform 8s ease-out;
+  filter: brightness(.25) saturate(.5);
+  transform: scale(1.08);
+  transition: transform 6s ease-out, filter 6s ease-out;
 }
-.hero__bg.loaded { transform: scale(1); }
-.hero__overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-  z-index: 1;
+.bg.loaded {
+  transform: scale(1);
+  filter: brightness(.3) saturate(.6);
+}
+.bg-overlay {
+  position: fixed; inset: 0; z-index: 1;
   background: linear-gradient(180deg,
-    rgba(6,6,6,.7) 0%,
-    rgba(6,6,6,.3) 35%,
-    rgba(6,6,6,.3) 55%,
-    rgba(6,6,6,.85) 100%);
+    rgba(6,6,6,.75) 0%,
+    rgba(6,6,6,.35) 30%,
+    rgba(6,6,6,.35) 60%,
+    rgba(6,6,6,.88) 100%);
   pointer-events: none;
 }
 
 /* ━━ NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 0 var(--pad-x); height: 60px;
-  transition: background .4s;
-}
-.nav.scrolled {
-  background: rgba(6,6,6,.92);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  padding: 0 var(--pad-x); height: 56px;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: fadeIn .8s ease forwards 2.2s;
 }
 .nav__artist {
-  font-family: var(--f-heading); font-weight: 700;
-  font-size: 14px; letter-spacing: 6px;
+  font-weight: 700; font-size: 13px; letter-spacing: 6px;
   text-transform: uppercase; color: var(--c-warm);
   text-decoration: none;
 }
 .nav__cta {
-  font-family: var(--f-mono); font-size: 10px;
+  font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--c-warm-dim); text-decoration: none;
   border: 1px solid var(--c-border);
-  padding: 6px 16px;
+  padding: 5px 14px;
   transition: all .3s;
 }
 .nav__cta:hover {
   color: var(--c-warm); border-color: var(--c-border-bright);
 }
 
-/* ━━ CONTENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.content {
-  position: relative; z-index: 2;
-  max-width: 1100px;
-  margin: 0 auto;
+/* ━━ MAIN AREA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.main {
+  flex: 1;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
   padding: 0 var(--pad-x);
-  padding-top: 22vh;
-  padding-bottom: 120px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 
-/* ━━ TOUR HEADER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.tour-header {
+/* ━━ TOUR TITLE — centered, then slides up ━━━━━━━━━━━━━━━ */
+.tour-title {
   text-align: center;
-  margin-bottom: 80px;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1s ease forwards .3s;
+  transition: all 1s cubic-bezier(.4,0,.2,1);
+  margin-bottom: 0;
 }
-.tour-header h1 {
-  font-family: var(--f-heading); font-weight: 300;
-  font-size: clamp(56px, 12vw, 140px);
-  letter-spacing: clamp(8px, 2vw, 24px);
+.tour-title h1 {
+  font-weight: 300;
+  font-size: clamp(48px, 10vw, 110px);
+  letter-spacing: clamp(6px, 2vw, 20px);
   text-transform: uppercase;
   color: var(--c-white);
   line-height: 1;
-  margin-bottom: 16px;
+  opacity: 0;
+  transform: scale(.9);
+  animation: titleIn 1.2s cubic-bezier(.4,0,.2,1) forwards .4s;
 }
-.tour-header .subtitle {
-  font-family: var(--f-mono); font-size: 11px;
+.tour-title .subtitle {
+  font-family: var(--f-mono); font-size: 10px;
   letter-spacing: 4px; text-transform: uppercase;
   color: var(--c-warm-dim);
+  opacity: 0;
+  animation: fadeIn .8s ease forwards 1.2s;
+  margin-top: 8px;
 }
 
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
+/* After expand: title shrinks and moves up */
+.tour-title.collapsed {
+  margin-bottom: 16px;
+}
+.tour-title.collapsed h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  letter-spacing: clamp(4px, 1vw, 10px);
 }
 
-/* ━━ DATES LIST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes titleIn {
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ━━ DATES CONTAINER — expands from center ━━━━━━━━━━━━━━━ */
+.dates-wrap {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 1s cubic-bezier(.4,0,.2,1),
+              opacity .6s ease;
+}
+.dates-wrap.open {
+  max-height: 600px;
+  opacity: 1;
+  overflow-y: auto;
+}
+.dates-wrap::-webkit-scrollbar { width: 2px; }
+.dates-wrap::-webkit-scrollbar-thumb { background: rgba(232,213,183,.15); }
+
 .dates {
   list-style: none;
+  width: 100%;
 }
+
+/* ━━ DATE ROW ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .date-row {
   display: grid;
-  grid-template-columns: 140px 1fr auto;
+  grid-template-columns: 120px 1fr auto;
   align-items: center;
-  gap: 24px;
-  padding: 32px 0;
+  gap: 20px;
+  padding: 18px 0;
   border-top: 1px solid var(--c-border);
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity .6s ease, transform .6s ease;
+  transform: translateY(16px) scaleY(.9);
+  transition: opacity .5s ease, transform .5s ease;
   position: relative;
 }
-.date-row:last-child {
-  border-bottom: 1px solid var(--c-border);
-}
+.date-row:last-child { border-bottom: 1px solid var(--c-border); }
 .date-row.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scaleY(1);
 }
+
+/* Blurred rows */
 .date-row.blurred .date-venue,
 .date-row.blurred .date-day {
   filter: blur(6px);
   user-select: none;
-  pointer-events: none;
-}
-.date-row.blurred .ticket-btn {
-  filter: blur(4px);
-  pointer-events: none;
 }
 
-/* Date column */
+/* Date */
 .date-day {
-  font-family: var(--f-heading); font-weight: 300;
-  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 300;
+  font-size: clamp(15px, 2.2vw, 20px);
   line-height: 1.2;
   color: var(--c-warm-dim);
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-.date-row:not(.blurred) .date-day {
-  color: var(--c-warm);
-}
+.date-row:not(.blurred) .date-day { color: var(--c-warm); }
 .date-day span {
   display: block;
-  font-size: clamp(14px, 2vw, 18px);
-  color: inherit;
-  opacity: .7;
+  font-size: clamp(11px, 1.4vw, 14px);
+  opacity: .6;
 }
 
-/* Venue column */
-.date-venue {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+/* Venue */
+.date-venue { display: flex; flex-direction: column; gap: 1px; }
 .venue-name {
-  font-family: var(--f-mono); font-size: 11px;
+  font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--c-muted);
 }
 .venue-city {
-  font-family: var(--f-heading); font-weight: 600;
-  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 600;
+  font-size: clamp(13px, 2vw, 18px);
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--c-white);
 }
 .date-row.blurred .venue-city { color: var(--c-muted); }
 
-/* Ticket button */
-.ticket-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 10px 24px;
+/* ━━ BUTTONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px;
   border: 1px solid var(--c-border);
-  font-family: var(--f-mono); font-size: 11px;
-  letter-spacing: 3px; text-transform: uppercase;
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase;
   color: var(--c-warm-dim);
   text-decoration: none;
   position: relative;
   overflow: hidden;
   transition: all .4s ease;
   white-space: nowrap;
+  background: none;
+  cursor: pointer;
 }
-.ticket-btn::before {
+.btn::before {
   content: '';
   position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(232,213,183,.06), transparent);
   transition: left .5s ease;
 }
-.ticket-btn:hover::before { left: 100%; }
-.ticket-btn:hover {
+.btn:hover::before { left: 100%; }
+.btn:hover {
   color: var(--c-warm);
   border-color: var(--c-border-bright);
   box-shadow: 0 0 20px rgba(232,213,183,.08), inset 0 0 20px rgba(232,213,183,.04);
 }
-.ticket-btn .arrow {
+.btn .arrow {
   display: inline-block;
   transition: transform .3s ease;
-  font-size: 14px;
+  font-size: 12px;
 }
-.ticket-btn:hover .arrow { transform: translateX(4px); }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* RSVP button — visible on blurred rows, not blurred itself */
+.rsvp-btn {
+  composes: btn;
+  filter: none !important;
+  pointer-events: auto !important;
+  color: var(--c-warm-dim);
+  border-color: rgba(232,213,183,.15);
+}
+.rsvp-btn:hover {
+  color: var(--c-warm);
+  border-color: var(--c-border-bright);
+}
 
 /* Glow dot on active row */
 .date-row:not(.blurred)::before {
   content: '';
-  position: absolute; left: -24px; top: 50%;
+  position: absolute; left: -16px; top: 50%;
   transform: translateY(-50%);
-  width: 6px; height: 6px;
+  width: 5px; height: 5px;
   background: var(--c-warm);
   border-radius: 50%;
-  box-shadow: 0 0 12px var(--c-warm), 0 0 24px rgba(232,213,183,.3);
+  box-shadow: 0 0 10px var(--c-warm), 0 0 20px rgba(232,213,183,.3);
   animation: pulse-dot 2s ease-in-out infinite;
 }
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--c-warm), 0 0 24px rgba(232,213,183,.3); }
-  50% { opacity: .5; box-shadow: 0 0 6px var(--c-warm), 0 0 12px rgba(232,213,183,.15); }
+  0%, 100% { box-shadow: 0 0 10px var(--c-warm), 0 0 20px rgba(232,213,183,.3); }
+  50% { opacity: .5; box-shadow: 0 0 5px var(--c-warm), 0 0 10px rgba(232,213,183,.15); }
 }
-
-/* ━━ MORE DATES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.more-dates {
-  text-align: center;
-  margin-top: 64px;
-  opacity: 0;
-  animation: fadeUp 1s ease forwards 2s;
-}
-.more-dates p {
-  font-family: var(--f-mono); font-size: 11px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--c-warm-dim);
-  margin-bottom: 20px;
-}
-.more-dates a {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 36px;
-  border: 1px solid var(--c-border);
-  font-family: var(--f-mono); font-size: 12px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--c-warm);
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: all .4s ease;
-}
-.more-dates a::before {
-  content: '';
-  position: absolute; inset: 0;
-  border: 1px solid transparent;
-  transition: all .6s ease;
-}
-.more-dates a:hover {
-  border-color: var(--c-border-bright);
-  box-shadow: 0 0 30px rgba(232,213,183,.1), inset 0 0 30px rgba(232,213,183,.04);
-}
-.more-dates a .arrow {
-  display: inline-block;
-  transition: transform .3s ease;
-}
-.more-dates a:hover .arrow { transform: translateX(4px); }
 
 /* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .footer {
-  position: relative; z-index: 2;
+  flex-shrink: 0;
   text-align: center;
-  padding: 40px var(--pad-x);
-  border-top: 1px solid var(--c-border);
-  font-family: var(--f-mono); font-size: 10px;
+  padding: 16px var(--pad-x);
+  font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(232,213,183,.2);
+  color: rgba(232,213,183,.15);
+  opacity: 0;
+  animation: fadeIn .8s ease forwards 2.5s;
+}
+
+/* ━━ SCAN LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.scan-line {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--c-warm), transparent);
+  opacity: 0; z-index: 50;
+  pointer-events: none;
+  animation: scanDown 3s ease-in-out forwards .3s;
+}
+@keyframes scanDown {
+  0% { top: 0; opacity: 0; }
+  5% { opacity: .4; }
+  95% { opacity: .4; }
+  100% { top: 100vh; opacity: 0; }
 }
 
 /* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @media (max-width: 680px) {
   .date-row {
     grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 24px 0;
+    gap: 8px;
+    padding: 14px 0;
   }
-  .date-day {
-    display: flex; gap: 8px; align-items: baseline;
-  }
+  .date-day { display: flex; gap: 6px; align-items: baseline; }
   .date-day span { display: inline; }
-  .ticket-btn { justify-self: start; }
+  .btn { justify-self: start; }
   .date-row:not(.blurred)::before { display: none; }
-  .content { padding-top: 16vh; }
+  .tour-title.collapsed h1 {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+  .dates-wrap.open { max-height: 55vh; }
 }
-
-/* ━━ SCAN LINE (subtle) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.scan-line {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--c-warm), transparent);
-  opacity: 0;
-  z-index: 50;
-  pointer-events: none;
-  animation: scanDown 4s ease-in-out forwards .5s;
-}
-@keyframes scanDown {
-  0% { top: 0; opacity: 0; }
-  5% { opacity: .5; }
-  95% { opacity: .5; }
-  100% { top: 100vh; opacity: 0; }
+@media (max-height: 700px) {
+  .date-row { padding: 12px 0; }
+  .dates-wrap.open { max-height: 50vh; }
+  .tour-title.collapsed h1 { font-size: clamp(22px, 4vw, 36px); }
 }
 </style>
 </head>
 <body>
 
-<!-- Scan line effect on load -->
 <div class="scan-line"></div>
+<div class="bg" id="bg"></div>
+<div class="bg-overlay"></div>
 
-<!-- Background -->
-<div class="hero">
-  <div class="hero__bg" id="heroBg"></div>
-  <div class="hero__overlay"></div>
+<div class="page">
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="#" class="nav__artist">EMSKI</a>
+    <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="nav__cta">All Shows</a>
+  </nav>
+
+  <!-- Center area -->
+  <div class="main">
+    <div class="tour-title" id="tourTitle">
+      <h1>Tour</h1>
+      <p class="subtitle">2026 &mdash; Live Dates</p>
+    </div>
+
+    <div class="dates-wrap" id="datesWrap">
+      <ul class="dates">
+
+        <!-- ★ DENVER — active -->
+        <li class="date-row" data-delay="0">
+          <div class="date-day">APR 17<span>2026</span></div>
+          <div class="date-venue">
+            <span class="venue-name">Larimer Lounge</span>
+            <span class="venue-city">Denver, CO</span>
+          </div>
+          <a href="https://www.etix.com/ticket/p/82748661/open-house-featemski-audiovisual-set-denver-larimer-lounge" target="_blank" rel="noopener" class="btn">
+            Tickets <span class="arrow">→</span>
+          </a>
+        </li>
+
+        <!-- Blurred upcoming — RSVP links to vault -->
+        <li class="date-row blurred" data-delay="80">
+          <div class="date-day">MAY 3<span>2026</span></div>
+          <div class="date-venue">
+            <span class="venue-name">The Echo</span>
+            <span class="venue-city">Los Angeles, CA</span>
+          </div>
+          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
+            RSVP <span class="arrow">→</span>
+          </a>
+        </li>
+
+        <li class="date-row blurred" data-delay="160">
+          <div class="date-day">MAY 10<span>2026</span></div>
+          <div class="date-venue">
+            <span class="venue-name">Holocene</span>
+            <span class="venue-city">Portland, OR</span>
+          </div>
+          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
+            RSVP <span class="arrow">→</span>
+          </a>
+        </li>
+
+        <li class="date-row blurred" data-delay="240">
+          <div class="date-day">MAY 16<span>2026</span></div>
+          <div class="date-venue">
+            <span class="venue-name">Barboza</span>
+            <span class="venue-city">Seattle, WA</span>
+          </div>
+          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
+            RSVP <span class="arrow">→</span>
+          </a>
+        </li>
+
+        <li class="date-row blurred" data-delay="320">
+          <div class="date-day">JUN 7<span>2026</span></div>
+          <div class="date-venue">
+            <span class="venue-name">Public Works</span>
+            <span class="venue-city">San Francisco, CA</span>
+          </div>
+          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
+            RSVP <span class="arrow">→</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; 2026 EMSKI</footer>
 </div>
 
-<!-- Nav -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav__artist">EMSKI</a>
-  <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="nav__cta">All Shows</a>
-</nav>
-
-<!-- Main Content -->
-<main class="content">
-  <div class="tour-header">
-    <h1>Tour</h1>
-    <p class="subtitle">2026 &mdash; Live Dates</p>
-  </div>
-
-  <ul class="dates" id="datesList">
-
-    <!-- ★ DENVER — active -->
-    <li class="date-row" data-delay="0">
-      <div class="date-day">
-        APR 17<span>2026</span>
-      </div>
-      <div class="date-venue">
-        <span class="venue-name">Larimer Lounge</span>
-        <span class="venue-city">Denver, CO</span>
-      </div>
-      <a href="https://www.etix.com/ticket/p/82748661/open-house-featemski-audiovisual-set-denver-larimer-lounge" target="_blank" rel="noopener" class="ticket-btn">
-        Tickets <span class="arrow">→</span>
-      </a>
-    </li>
-
-    <!-- Blurred upcoming dates -->
-    <li class="date-row blurred" data-delay="100">
-      <div class="date-day">
-        MAY 3<span>2026</span>
-      </div>
-      <div class="date-venue">
-        <span class="venue-name">The Echo</span>
-        <span class="venue-city">Los Angeles, CA</span>
-      </div>
-      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
-        Tickets <span class="arrow">→</span>
-      </a>
-    </li>
-
-    <li class="date-row blurred" data-delay="200">
-      <div class="date-day">
-        MAY 10<span>2026</span>
-      </div>
-      <div class="date-venue">
-        <span class="venue-name">Holocene</span>
-        <span class="venue-city">Portland, OR</span>
-      </div>
-      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
-        Tickets <span class="arrow">→</span>
-      </a>
-    </li>
-
-    <li class="date-row blurred" data-delay="300">
-      <div class="date-day">
-        MAY 16<span>2026</span>
-      </div>
-      <div class="date-venue">
-        <span class="venue-name">Barboza</span>
-        <span class="venue-city">Seattle, WA</span>
-      </div>
-      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
-        Tickets <span class="arrow">→</span>
-      </a>
-    </li>
-
-    <li class="date-row blurred" data-delay="400">
-      <div class="date-day">
-        JUN 7<span>2026</span>
-      </div>
-      <div class="date-venue">
-        <span class="venue-name">Public Works</span>
-        <span class="venue-city">San Francisco, CA</span>
-      </div>
-      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
-        Tickets <span class="arrow">→</span>
-      </a>
-    </li>
-
-  </ul>
-
-  <!-- CTA -->
-  <div class="more-dates">
-    <p>More dates coming soon</p>
-    <a href="https://emski.vault.fm/" target="_blank" rel="noopener">
-      All Shows <span class="arrow">→</span>
-    </a>
-  </div>
-</main>
-
-<footer class="footer">
-  &copy; 2026 EMSKI
-</footer>
-
 <script>
-/* ━━ Hero BG zoom-in on load ━━ */
-window.addEventListener('load', () => {
-  requestAnimationFrame(() => {
-    document.getElementById('heroBg').classList.add('loaded');
-  });
-});
+(function() {
+  const bg = document.getElementById('bg');
+  const title = document.getElementById('tourTitle');
+  const wrap = document.getElementById('datesWrap');
+  const rows = document.querySelectorAll('.date-row');
 
-/* ━━ Nav scroll styling ━━ */
-const nav = document.getElementById('nav');
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-      ticking = false;
+  /* 1. BG zoom-in */
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => bg.classList.add('loaded'));
+  });
+
+  /* 2. After title animates in, collapse it and expand dates */
+  setTimeout(() => {
+    title.classList.add('collapsed');
+    wrap.classList.add('open');
+
+    /* 3. Stagger each row in */
+    rows.forEach(row => {
+      const delay = parseInt(row.dataset.delay) || 0;
+      setTimeout(() => row.classList.add('visible'), 200 + delay);
     });
-    ticking = true;
-  }
-});
+  }, 1800);
 
-/* ━━ Staggered date row reveal ━━ */
-const rows = document.querySelectorAll('.date-row');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const delay = parseInt(entry.target.dataset.delay) || 0;
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, delay);
-      observer.unobserve(entry.target);
-    }
+  /* Magnetic hover on active ticket buttons */
+  document.querySelectorAll('.date-row:not(.blurred) .btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      btn.style.transform = `translate(${x * .12}px, ${y * .2}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
   });
-}, { threshold: 0.15 });
-
-rows.forEach(row => observer.observe(row));
-
-/* ━━ Magnetic hover on ticket buttons ━━ */
-document.querySelectorAll('.ticket-btn:not(.blurred .ticket-btn)').forEach(btn => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.25}px)`;
-  });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = '';
-  });
-});
+})();
 </script>
 
 </body>
