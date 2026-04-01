@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EMSKI — Tour</title>
+<meta name="description" content="EMSKI — Upcoming tour dates and tickets." />
+<meta property="og:title" content="EMSKI — Tour" />
+<meta property="og:description" content="See EMSKI live. Get tickets now." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M16 8h32v10H28v8h16v10H28v8h20v10H16z' fill='%23e8d5b7'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ━━ RESET & TOKENS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --c-bg: #060606;
+  --c-white: #f0ece4;
+  --c-warm: #e8d5b7;
+  --c-warm-dim: rgba(232,213,183,.35);
+  --c-warm-glow: rgba(232,213,183,.08);
+  --c-muted: rgba(240,236,228,.45);
+  --c-border: rgba(232,213,183,.2);
+  --c-border-bright: rgba(232,213,183,.5);
+  --f-heading: "Jura", sans-serif;
+  --f-mono: "Space Mono", monospace;
+  --pad-x: clamp(24px, 5vw, 64px);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--c-bg);
+  color: var(--c-white);
+  font-family: var(--f-heading);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+::selection { background: rgba(232,213,183,.2); color: var(--c-white); }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(232,213,183,.15); }
+
+/* ━━ FILM GRAIN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+body::after {
+  content: '';
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: .5;
+  animation: grain .4s steps(5) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0) }
+  20% { transform: translate(-5%,-8%) }
+  40% { transform: translate(8%,5%) }
+  60% { transform: translate(-8%,8%) }
+  80% { transform: translate(5%,-5%) }
+}
+
+/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.hero__bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  z-index: 0;
+  background: url('assets/hero.jpg') center center / cover no-repeat;
+  filter: brightness(.3) saturate(.6);
+  transform: scale(1.05);
+  transition: transform 8s ease-out;
+}
+.hero__bg.loaded { transform: scale(1); }
+.hero__overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(6,6,6,.7) 0%,
+    rgba(6,6,6,.3) 35%,
+    rgba(6,6,6,.3) 55%,
+    rgba(6,6,6,.85) 100%);
+  pointer-events: none;
+}
+
+/* ━━ NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 var(--pad-x); height: 60px;
+  transition: background .4s;
+}
+.nav.scrolled {
+  background: rgba(6,6,6,.92);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+}
+.nav__artist {
+  font-family: var(--f-heading); font-weight: 700;
+  font-size: 14px; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--c-warm);
+  text-decoration: none;
+}
+.nav__cta {
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--c-warm-dim); text-decoration: none;
+  border: 1px solid var(--c-border);
+  padding: 6px 16px;
+  transition: all .3s;
+}
+.nav__cta:hover {
+  color: var(--c-warm); border-color: var(--c-border-bright);
+}
+
+/* ━━ CONTENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.content {
+  position: relative; z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  padding-top: 22vh;
+  padding-bottom: 120px;
+}
+
+/* ━━ TOUR HEADER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tour-header {
+  text-align: center;
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards .3s;
+}
+.tour-header h1 {
+  font-family: var(--f-heading); font-weight: 300;
+  font-size: clamp(56px, 12vw, 140px);
+  letter-spacing: clamp(8px, 2vw, 24px);
+  text-transform: uppercase;
+  color: var(--c-white);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.tour-header .subtitle {
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--c-warm-dim);
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ━━ DATES LIST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.dates {
+  list-style: none;
+}
+.date-row {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 0;
+  border-top: 1px solid var(--c-border);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+  position: relative;
+}
+.date-row:last-child {
+  border-bottom: 1px solid var(--c-border);
+}
+.date-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.date-row.blurred .date-venue,
+.date-row.blurred .date-day {
+  filter: blur(6px);
+  user-select: none;
+  pointer-events: none;
+}
+.date-row.blurred .ticket-btn {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Date column */
+.date-day {
+  font-family: var(--f-heading); font-weight: 300;
+  font-size: clamp(18px, 3vw, 26px);
+  line-height: 1.2;
+  color: var(--c-warm-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.date-row:not(.blurred) .date-day {
+  color: var(--c-warm);
+}
+.date-day span {
+  display: block;
+  font-size: clamp(14px, 2vw, 18px);
+  color: inherit;
+  opacity: .7;
+}
+
+/* Venue column */
+.date-venue {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.venue-name {
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--c-muted);
+}
+.venue-city {
+  font-family: var(--f-heading); font-weight: 600;
+  font-size: clamp(16px, 2.5vw, 22px);
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--c-white);
+}
+.date-row.blurred .venue-city { color: var(--c-muted); }
+
+/* Ticket button */
+.ticket-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 24px;
+  border: 1px solid var(--c-border);
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--c-warm-dim);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all .4s ease;
+  white-space: nowrap;
+}
+.ticket-btn::before {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(232,213,183,.06), transparent);
+  transition: left .5s ease;
+}
+.ticket-btn:hover::before { left: 100%; }
+.ticket-btn:hover {
+  color: var(--c-warm);
+  border-color: var(--c-border-bright);
+  box-shadow: 0 0 20px rgba(232,213,183,.08), inset 0 0 20px rgba(232,213,183,.04);
+}
+.ticket-btn .arrow {
+  display: inline-block;
+  transition: transform .3s ease;
+  font-size: 14px;
+}
+.ticket-btn:hover .arrow { transform: translateX(4px); }
+
+/* Glow dot on active row */
+.date-row:not(.blurred)::before {
+  content: '';
+  position: absolute; left: -24px; top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  background: var(--c-warm);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--c-warm), 0 0 24px rgba(232,213,183,.3);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--c-warm), 0 0 24px rgba(232,213,183,.3); }
+  50% { opacity: .5; box-shadow: 0 0 6px var(--c-warm), 0 0 12px rgba(232,213,183,.15); }
+}
+
+/* ━━ MORE DATES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.more-dates {
+  text-align: center;
+  margin-top: 64px;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 2s;
+}
+.more-dates p {
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--c-warm-dim);
+  margin-bottom: 20px;
+}
+.more-dates a {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 36px;
+  border: 1px solid var(--c-border);
+  font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--c-warm);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all .4s ease;
+}
+.more-dates a::before {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid transparent;
+  transition: all .6s ease;
+}
+.more-dates a:hover {
+  border-color: var(--c-border-bright);
+  box-shadow: 0 0 30px rgba(232,213,183,.1), inset 0 0 30px rgba(232,213,183,.04);
+}
+.more-dates a .arrow {
+  display: inline-block;
+  transition: transform .3s ease;
+}
+.more-dates a:hover .arrow { transform: translateX(4px); }
+
+/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.footer {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 40px var(--pad-x);
+  border-top: 1px solid var(--c-border);
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(232,213,183,.2);
+}
+
+/* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 680px) {
+  .date-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px 0;
+  }
+  .date-day {
+    display: flex; gap: 8px; align-items: baseline;
+  }
+  .date-day span { display: inline; }
+  .ticket-btn { justify-self: start; }
+  .date-row:not(.blurred)::before { display: none; }
+  .content { padding-top: 16vh; }
+}
+
+/* ━━ SCAN LINE (subtle) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.scan-line {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--c-warm), transparent);
+  opacity: 0;
+  z-index: 50;
+  pointer-events: none;
+  animation: scanDown 4s ease-in-out forwards .5s;
+}
+@keyframes scanDown {
+  0% { top: 0; opacity: 0; }
+  5% { opacity: .5; }
+  95% { opacity: .5; }
+  100% { top: 100vh; opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scan line effect on load -->
+<div class="scan-line"></div>
+
+<!-- Background -->
+<div class="hero">
+  <div class="hero__bg" id="heroBg"></div>
+  <div class="hero__overlay"></div>
+</div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav__artist">EMSKI</a>
+  <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="nav__cta">All Shows</a>
+</nav>
+
+<!-- Main Content -->
+<main class="content">
+  <div class="tour-header">
+    <h1>Tour</h1>
+    <p class="subtitle">2026 &mdash; Live Dates</p>
+  </div>
+
+  <ul class="dates" id="datesList">
+
+    <!-- ★ DENVER — active -->
+    <li class="date-row" data-delay="0">
+      <div class="date-day">
+        APR 17<span>2026</span>
+      </div>
+      <div class="date-venue">
+        <span class="venue-name">Larimer Lounge</span>
+        <span class="venue-city">Denver, CO</span>
+      </div>
+      <a href="https://www.etix.com/ticket/p/82748661/open-house-featemski-audiovisual-set-denver-larimer-lounge" target="_blank" rel="noopener" class="ticket-btn">
+        Tickets <span class="arrow">→</span>
+      </a>
+    </li>
+
+    <!-- Blurred upcoming dates -->
+    <li class="date-row blurred" data-delay="100">
+      <div class="date-day">
+        MAY 3<span>2026</span>
+      </div>
+      <div class="date-venue">
+        <span class="venue-name">The Echo</span>
+        <span class="venue-city">Los Angeles, CA</span>
+      </div>
+      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
+        Tickets <span class="arrow">→</span>
+      </a>
+    </li>
+
+    <li class="date-row blurred" data-delay="200">
+      <div class="date-day">
+        MAY 10<span>2026</span>
+      </div>
+      <div class="date-venue">
+        <span class="venue-name">Holocene</span>
+        <span class="venue-city">Portland, OR</span>
+      </div>
+      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
+        Tickets <span class="arrow">→</span>
+      </a>
+    </li>
+
+    <li class="date-row blurred" data-delay="300">
+      <div class="date-day">
+        MAY 16<span>2026</span>
+      </div>
+      <div class="date-venue">
+        <span class="venue-name">Barboza</span>
+        <span class="venue-city">Seattle, WA</span>
+      </div>
+      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
+        Tickets <span class="arrow">→</span>
+      </a>
+    </li>
+
+    <li class="date-row blurred" data-delay="400">
+      <div class="date-day">
+        JUN 7<span>2026</span>
+      </div>
+      <div class="date-venue">
+        <span class="venue-name">Public Works</span>
+        <span class="venue-city">San Francisco, CA</span>
+      </div>
+      <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="ticket-btn">
+        Tickets <span class="arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <!-- CTA -->
+  <div class="more-dates">
+    <p>More dates coming soon</p>
+    <a href="https://emski.vault.fm/" target="_blank" rel="noopener">
+      All Shows <span class="arrow">→</span>
+    </a>
+  </div>
+</main>
+
+<footer class="footer">
+  &copy; 2026 EMSKI
+</footer>
+
+<script>
+/* ━━ Hero BG zoom-in on load ━━ */
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => {
+    document.getElementById('heroBg').classList.add('loaded');
+  });
+});
+
+/* ━━ Nav scroll styling ━━ */
+const nav = document.getElementById('nav');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+/* ━━ Staggered date row reveal ━━ */
+const rows = document.querySelectorAll('.date-row');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const delay = parseInt(entry.target.dataset.delay) || 0;
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, delay);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+rows.forEach(row => observer.observe(row));
+
+/* ━━ Magnetic hover on ticket buttons ━━ */
+document.querySelectorAll('.ticket-btn:not(.blurred .ticket-btn)').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.25}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+</script>
+
+</body>
+</html>
