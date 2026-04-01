@@ -2,12 +2,12 @@
   publish = "dist"
   command = "npm run build"
 
-# Route emski-music.com to the /emski-music subfolder
+# Route emskitour.com to the /emski-music subfolder
 [[redirects]]
   from = "/*"
   to = "/emski-music/:splat"
   status = 200
-  conditions = { Host = ["emski-music.com", "www.emski-music.com"] }
+  conditions = { Host = ["emskitour.com", "www.emskitour.com"] }
 
 # Default: serve the main EPK site for emski-epk.com
 # (all other traffic goes to the normal build output)
