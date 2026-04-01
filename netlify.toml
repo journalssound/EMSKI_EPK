@@ -2,13 +2,7 @@
   publish = "dist"
   command = "npm run build"
 
-# Route emskitour.com to the /emski-music subfolder
-[[redirects]]
-  from = "/*"
-  to = "/emski-music/:splat"
-  status = 200
-  force = true
-  conditions = { Host = ["emskitour.com", "www.emskitour.com"] }
-
-# Default: serve the main EPK site for emski-epk.com
-# (all other traffic goes to the normal build output)
+# Edge function to route emskitour.com to /emski-music/
+[[edge_functions]]
+  path = "/*"
+  function = "host-router"
