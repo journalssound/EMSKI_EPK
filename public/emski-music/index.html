@@ -64,7 +64,25 @@ body::after {
   position: fixed; inset: 0;
   display: flex; flex-direction: column;
   z-index: 2;
-  padding: 0 8px;
+}
+
+/* Side fade overlays */
+.page::before,
+.page::after {
+  content: '';
+  position: fixed;
+  top: 0; bottom: 0;
+  width: clamp(40px, 8vw, 120px);
+  z-index: 10;
+  pointer-events: none;
+}
+.page::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(6,6,6,.95) 0%, transparent 100%);
+}
+.page::after {
+  right: 0;
+  background: linear-gradient(-90deg, rgba(6,6,6,.95) 0%, transparent 100%);
 }
 
 /* Background image */
@@ -174,7 +192,7 @@ body::after {
   grid-template-columns: 120px 1fr auto;
   align-items: center;
   gap: 20px;
-  padding: 18px 0;
+  padding: 18px 16px;
   border-top: 1px solid var(--c-border);
   opacity: 0;
   transform: translateY(16px) scaleY(.9);
@@ -399,7 +417,7 @@ body::after {
           <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
             <span class="venue-name">TBA</span>
-            <span class="venue-city">Austin, TX</span>
+            <span class="venue-city">Dallas, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
@@ -410,7 +428,7 @@ body::after {
           <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
             <span class="venue-name">TBA</span>
-            <span class="venue-city">Dallas, TX</span>
+            <span class="venue-city">San Antonio, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
@@ -421,7 +439,7 @@ body::after {
           <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
             <span class="venue-name">TBA</span>
-            <span class="venue-city">San Antonio, TX</span>
+            <span class="venue-city">Houston, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
@@ -432,7 +450,7 @@ body::after {
           <div class="date-day">TBA<span>&nbsp;</span></div>
           <div class="date-venue">
             <span class="venue-name">TBA</span>
-            <span class="venue-city">Houston, TX</span>
+            <span class="venue-city">Austin, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
