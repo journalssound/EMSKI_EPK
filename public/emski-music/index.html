@@ -8,6 +8,7 @@
 <meta property="og:title" content="EMSKI — Tour" />
 <meta property="og:description" content="See EMSKI live. Get tickets now." />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M16 8h32v10H28v8h16v10H28v8h20v10H16z' fill='%23e8d5b7'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://use.typekit.net/sag3htb.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -22,7 +23,7 @@
   --c-muted: rgba(240,236,228,.45);
   --c-border: rgba(232,213,183,.2);
   --c-border-bright: rgba(232,213,183,.5);
-  --f-heading: "Jura", sans-serif;
+  --f-heading: "aktiv-grotesk-extended", "Jura", sans-serif;
   --f-mono: "Space Mono", monospace;
   --pad-x: clamp(16px, 4vw, 48px);
 }
@@ -91,13 +92,14 @@ body::after {
   padding: 0 var(--pad-x); height: 56px;
   flex-shrink: 0;
   opacity: 0;
-  animation: fadeIn .8s ease forwards 2.2s;
+  animation: fadeIn .6s ease forwards 1.2s;
 }
-.nav__artist {
-  font-weight: 700; font-size: 13px; letter-spacing: 6px;
-  text-transform: uppercase; color: var(--c-warm);
-  text-decoration: none;
+.nav__logo {
+  height: 14px;
+  opacity: .85;
+  transition: opacity .3s;
 }
+.nav__logo:hover { opacity: 1; }
 .nav__cta {
   font-family: var(--f-mono); font-size: 9px;
   letter-spacing: 2px; text-transform: uppercase;
@@ -137,14 +139,14 @@ body::after {
   line-height: 1;
   opacity: 0;
   transform: scale(.9);
-  animation: titleIn 1.2s cubic-bezier(.4,0,.2,1) forwards .4s;
+  animation: titleIn .8s cubic-bezier(.4,0,.2,1) forwards .2s;
 }
 .tour-title .subtitle {
   font-family: var(--f-mono); font-size: 10px;
   letter-spacing: 4px; text-transform: uppercase;
   color: var(--c-warm-dim);
   opacity: 0;
-  animation: fadeIn .8s ease forwards 1.2s;
+  animation: fadeIn .5s ease forwards .7s;
   margin-top: 8px;
 }
 
@@ -252,20 +254,11 @@ body::after {
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--c-warm-dim);
   text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: all .4s ease;
+  transition: all .35s ease;
   white-space: nowrap;
   background: none;
   cursor: pointer;
 }
-.btn::before {
-  content: '';
-  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(232,213,183,.06), transparent);
-  transition: left .5s ease;
-}
-.btn:hover::before { left: 100%; }
 .btn:hover {
   color: var(--c-warm);
   border-color: var(--c-border-bright);
@@ -316,7 +309,7 @@ body::after {
   letter-spacing: 2px; text-transform: uppercase;
   color: rgba(232,213,183,.15);
   opacity: 0;
-  animation: fadeIn .8s ease forwards 2.5s;
+  animation: fadeIn .6s ease forwards 1.6s;
 }
 
 /* ━━ SCAN LINE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -326,7 +319,7 @@ body::after {
   background: linear-gradient(90deg, transparent, var(--c-warm), transparent);
   opacity: 0; z-index: 50;
   pointer-events: none;
-  animation: scanDown 3s ease-in-out forwards .3s;
+  animation: scanDown 1.8s ease-in-out forwards .2s;
 }
 @keyframes scanDown {
   0% { top: 0; opacity: 0; }
@@ -367,7 +360,7 @@ body::after {
 <div class="page">
   <!-- Nav -->
   <nav class="nav">
-    <a href="#" class="nav__artist">EMSKI</a>
+    <a href="#"><img class="nav__logo" src="../ninjatune/assets/EMSKI-logo-white-rgb.png" alt="EMSKI" /></a>
     <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="nav__cta">All Shows</a>
   </nav>
 
@@ -465,9 +458,9 @@ body::after {
     /* 3. Stagger each row in */
     rows.forEach(row => {
       const delay = parseInt(row.dataset.delay) || 0;
-      setTimeout(() => row.classList.add('visible'), 200 + delay);
+      setTimeout(() => row.classList.add('visible'), 150 + delay);
     });
-  }, 1800);
+  }, 1000);
 
   /* Magnetic hover on active ticket buttons */
   document.querySelectorAll('.date-row:not(.blurred) .btn').forEach(btn => {
