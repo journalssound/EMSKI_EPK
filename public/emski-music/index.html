@@ -309,6 +309,14 @@ body::after {
 
 /* ━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @media (max-width: 680px) {
+  .bg {
+    transform: scale(1.6);
+    filter: brightness(.35) saturate(.6);
+  }
+  .bg.loaded {
+    transform: scale(1.5);
+    filter: brightness(.4) saturate(.65);
+  }
   .tour-title { margin-bottom: 10px; }
   .tour-title h1 {
     font-size: clamp(28px, 8vw, 40px);
