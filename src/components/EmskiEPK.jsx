@@ -177,11 +177,10 @@ export default function EmskiEPK() {
 
         {/* ── UNRELEASED MUSIC ──────────────────────── */}
         <Reveal className="section-pad">
+          <h2 className="section-heading section-heading--lg">UNRELEASED</h2>
           <div className="sc-grid">
             <div className="sc-grid__col">
-              <h2 className="section-heading section-heading--lg">
-                e/MOTION [EP]
-              </h2>
+              <h3 className="sc-grid__subheading">e/MOTION EP</h3>
               <div className="sc-embed">
                 <iframe
                   src={SOUNDCLOUD_EP_EMBED_URL}
@@ -192,9 +191,7 @@ export default function EmskiEPK() {
               </div>
             </div>
             <div className="sc-grid__col">
-              <h2 className="section-heading section-heading--lg">
-                UNRELEASED SINGLES
-              </h2>
+              <h3 className="sc-grid__subheading">SINGLES</h3>
               <div className="sc-embed">
                 <iframe
                   src={SOUNDCLOUD_SINGLES_EMBED_URL}
