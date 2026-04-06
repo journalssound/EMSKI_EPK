@@ -615,23 +615,36 @@ button {
 .sc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: stretch;
+  grid-template-rows: auto 1fr;
+  gap: 16px 32px;
 }
 
 @media (max-width: 768px) {
   .sc-grid {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 40px;
   }
 }
 
 .sc-grid__col {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+}
+
+@media (max-width: 768px) {
+  .sc-grid__col {
+    grid-row: auto;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .sc-grid__col .section-heading {
   text-align: left;
+  margin: 0;
+  align-self: end;
 }
 
 .sc-embed {
