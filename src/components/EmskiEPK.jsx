@@ -6,7 +6,6 @@ import StaggerCell from "./StaggerCell";
 import AnimNum from "./AnimNum";
 import ParticleLogo from "./ParticleLogo";
 import VideoParticles from "./VideoParticles";
-import PasswordGate from "./PasswordGate";
 import {
   ARTISTS,
   FESTIVALS,
@@ -15,7 +14,8 @@ import {
   SOCIALS,
   NAV_LINKS,
   YOUTUBE_EMBED_URL,
-  SOUNDCLOUD_EMBED_URL,
+  SOUNDCLOUD_EP_EMBED_URL,
+  SOUNDCLOUD_SINGLES_EMBED_URL,
 } from "../data/content";
 
 import logo from "../assets/EMSKI-logo-white-rgb.png";
@@ -175,21 +175,36 @@ export default function EmskiEPK() {
 
         <div className="divider" />
 
-        {/* ── UNRELEASED MUSIC ───────────────────────── */}
+        {/* ── UNRELEASED EP ─────────────────────────── */}
         <Reveal className="section-pad">
           <h2 className="section-heading section-heading--lg">
             e/MOTION [EP]
           </h2>
-          <PasswordGate>
-            <div className="sc-embed">
-              <iframe
-                src={SOUNDCLOUD_EMBED_URL}
-                title="EMSKI — E-Motion (Private Playlist)"
-                allow="autoplay"
-                loading="lazy"
-              />
-            </div>
-          </PasswordGate>
+          <div className="sc-embed">
+            <iframe
+              src={SOUNDCLOUD_EP_EMBED_URL}
+              title="EMSKI — E-Motion (Private Playlist)"
+              allow="autoplay"
+              loading="lazy"
+            />
+          </div>
+        </Reveal>
+
+        <div className="divider" />
+
+        {/* ── UNRELEASED SINGLES ─────────────────────── */}
+        <Reveal className="section-pad">
+          <h2 className="section-heading section-heading--lg">
+            UNRELEASED SINGLES
+          </h2>
+          <div className="sc-embed">
+            <iframe
+              src={SOUNDCLOUD_SINGLES_EMBED_URL}
+              title="EMSKI — Unreleased Singles (Private Playlist)"
+              allow="autoplay"
+              loading="lazy"
+            />
+          </div>
         </Reveal>
 
         <div className="divider" />
@@ -237,20 +252,6 @@ export default function EmskiEPK() {
             <a href="mailto:contact@emskimusic.com" className="contact__email">
               contact@emskimusic.com
             </a>
-            <div className="contact__roles">
-              <div className="contact__role">
-                <span className="contact__role-label">Management</span>
-                <a href="mailto:justinb@veridianmgmt.com" className="contact__role-email">
-                  justinb@veridianmgmt.com
-                </a>
-              </div>
-              <div className="contact__role">
-                <span className="contact__role-label">Agent</span>
-                <a href="mailto:maxx.lesnick@roamartists.com" className="contact__role-email">
-                  maxx.lesnick@roamartists.com
-                </a>
-              </div>
-            </div>
             <div className="contact__socials">
               {SOCIALS.map((s) => (
                 <a
