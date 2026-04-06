@@ -3,6 +3,7 @@
 export const ARTISTS = [
   "deadmau5",
   "Devault",
+  "Amelie Lens",
   "Brutalismus 3000",
   "Jackie Hollander",
   "Golden Features",
@@ -56,7 +57,7 @@ export const YOUTUBE_EMBED_URL =
   "https://www.youtube.com/embed/Z7tTQKy81CM?rel=0&modestbranding=1";
 
 export const SOUNDCLOUD_EP_EMBED_URL =
-  "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/emskiiiiiiiiiii/sets/e-motion&secret_token=s-WTa5AWGV2UH&color=%2300efef&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true";
+  "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/emskiiiiiiiiiii/sets/e-motion&secret_token=s-WTa5AWGV2UH&color=%2300efef&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false";
 
 export const SOUNDCLOUD_SINGLES_EMBED_URL =
-  "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/emskiiiiiiiiiii/sets/unreleased-singles&secret_token=s-y0W5iR457NV&color=%2300efef&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true";
+  "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/emskiiiiiiiiiii/sets/unreleased-singles&secret_token=s-y0W5iR457NV&color=%2300efef&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false";

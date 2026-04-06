@@ -175,35 +175,35 @@ export default function EmskiEPK() {
 
         <div className="divider" />
 
-        {/* ── UNRELEASED EP ─────────────────────────── */}
+        {/* ── UNRELEASED MUSIC ──────────────────────── */}
         <Reveal className="section-pad">
-          <h2 className="section-heading section-heading--lg">
-            e/MOTION [EP]
-          </h2>
-          <div className="sc-embed">
-            <iframe
-              src={SOUNDCLOUD_EP_EMBED_URL}
-              title="EMSKI — E-Motion (Private Playlist)"
-              allow="autoplay"
-              loading="lazy"
-            />
-          </div>
-        </Reveal>
-
-        <div className="divider" />
-
-        {/* ── UNRELEASED SINGLES ─────────────────────── */}
-        <Reveal className="section-pad">
-          <h2 className="section-heading section-heading--lg">
-            UNRELEASED SINGLES
-          </h2>
-          <div className="sc-embed">
-            <iframe
-              src={SOUNDCLOUD_SINGLES_EMBED_URL}
-              title="EMSKI — Unreleased Singles (Private Playlist)"
-              allow="autoplay"
-              loading="lazy"
-            />
+          <div className="sc-grid">
+            <div className="sc-grid__col">
+              <h2 className="section-heading section-heading--lg">
+                e/MOTION [EP]
+              </h2>
+              <div className="sc-embed">
+                <iframe
+                  src={SOUNDCLOUD_EP_EMBED_URL}
+                  title="EMSKI — E-Motion (Private Playlist)"
+                  allow="autoplay"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div className="sc-grid__col">
+              <h2 className="section-heading section-heading--lg">
+                UNRELEASED SINGLES
+              </h2>
+              <div className="sc-embed">
+                <iframe
+                  src={SOUNDCLOUD_SINGLES_EMBED_URL}
+                  title="EMSKI — Unreleased Singles (Private Playlist)"
+                  allow="autoplay"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
         </Reveal>
 
