@@ -307,6 +307,24 @@ body::after {
   50% { opacity: .5; box-shadow: 0 0 5px var(--c-warm), 0 0 10px rgba(232,213,183,.15); }
 }
 
+/* ━━ PAST SHOW ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.date-row.past {
+  opacity: 0.35;
+}
+.date-row.past .date-day,
+.date-row.past .venue-name,
+.date-row.past .venue-city {
+  text-decoration: line-through;
+  text-decoration-color: rgba(232,213,183,.4);
+}
+.date-row.past::before { display: none !important; }
+.btn.past-label {
+  pointer-events: none;
+  opacity: 0.5;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
 /* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .footer {
   flex-shrink: 0;
@@ -404,23 +422,21 @@ body::after {
     <div class="dates-wrap" id="datesWrap">
       <ul class="dates">
 
-        <!-- ★ DENVER — active -->
-        <li class="date-row" data-delay="0">
+        <!-- ★ DENVER — past -->
+        <li class="date-row past" data-delay="0">
           <div class="date-day">APR 17<span>2026</span></div>
           <div class="date-venue">
             <span class="venue-name">Larimer Lounge</span>
             <span class="venue-city">Denver, CO</span>
           </div>
-          <a href="https://www.etix.com/ticket/p/82748661/open-house-featemski-audiovisual-set-denver-larimer-lounge" target="_blank" rel="noopener" class="btn">
-            Tickets <span class="arrow">→</span>
-          </a>
+          <span class="btn past-label">Past</span>
         </li>
 
-        <!-- City-visible upcoming — date & venue blurred, city shown, RSVP links to vault -->
-        <li class="date-row blurred-city" data-delay="80">
-          <div class="date-day">TBA<span>&nbsp;</span></div>
+        <!-- Confirmed upcoming dates -->
+        <li class="date-row" data-delay="80">
+          <div class="date-day">MAY 29<span>2026</span></div>
           <div class="date-venue">
-            <span class="venue-name">TBA</span>
+            <span class="venue-name">Deep Ellum Art Co.</span>
             <span class="venue-city">Dallas, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
@@ -428,10 +444,10 @@ body::after {
           </a>
         </li>
 
-        <li class="date-row blurred-city" data-delay="160">
-          <div class="date-day">TBA<span>&nbsp;</span></div>
+        <li class="date-row" data-delay="160">
+          <div class="date-day">JUN 4<span>2026</span></div>
           <div class="date-venue">
-            <span class="venue-name">TBA</span>
+            <span class="venue-name">1902 Nightclub</span>
             <span class="venue-city">San Antonio, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
@@ -439,21 +455,10 @@ body::after {
           </a>
         </li>
 
-        <li class="date-row blurred" data-delay="240">
-          <div class="date-day">TBA<span>&nbsp;</span></div>
+        <li class="date-row" data-delay="240">
+          <div class="date-day">JUN 11<span>2026</span></div>
           <div class="date-venue">
-            <span class="venue-name">TBA</span>
-            <span class="venue-city">Houston, TX</span>
-          </div>
-          <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
-            RSVP <span class="arrow">→</span>
-          </a>
-        </li>
-
-        <li class="date-row blurred-city" data-delay="320">
-          <div class="date-day">TBA<span>&nbsp;</span></div>
-          <div class="date-venue">
-            <span class="venue-name">TBA</span>
+            <span class="venue-name">ACL3TEN</span>
             <span class="venue-city">Austin, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
@@ -461,12 +466,11 @@ body::after {
           </a>
         </li>
 
-        <!-- Fully blurred teaser row -->
-        <li class="date-row blurred" data-delay="400">
-          <div class="date-day">TBA<span>&nbsp;</span></div>
+        <li class="date-row" data-delay="320">
+          <div class="date-day">JUN 20<span>2026</span></div>
           <div class="date-venue">
-            <span class="venue-name">TBA</span>
-            <span class="venue-city">TBA</span>
+            <span class="venue-name">La Bandida</span>
+            <span class="venue-city">McAllen, TX</span>
           </div>
           <a href="https://emski.vault.fm/" target="_blank" rel="noopener" class="btn rsvp-btn">
             RSVP <span class="arrow">→</span>
