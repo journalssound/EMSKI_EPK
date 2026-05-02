@@ -99,9 +99,9 @@ export default function EmskiPress() {
             producing, drumming, singing, and directing every visual.
           </p>
 
-          <ol id="ep" className={`press-tracklist ${loaded ? "press-tracklist--loaded" : ""}`}>
-            {EP_TRACKS.map((t) => (
-              <TracklistRow key={t.title} track={t} />
+          <ol id="ep" className={`press-stages ${loaded ? "press-stages--loaded" : ""}`}>
+            {EP_TRACKS.map((t, i) => (
+              <StageTile key={t.title} track={t} index={i} />
             ))}
           </ol>
         </div>
@@ -240,25 +240,51 @@ export default function EmskiPress() {
   );
 }
 
-/* ───────────────────────────────────────────────────────── * Tracklist row — compact, click to play inline.
- * ──────────────────────────────────────────────────────────── */
-function TracklistRow({ track }) {
+/* ─────────────────────────────────────────────────────────
+ * Stage tile — vertical card in the 5-across hero strip.
+ * Lyric video as ambient background; click to play audio.
+ * ───────────────────────────────────────────────────────── */
+function StageTile({ track, index }) {
   const [open, setOpen] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const id = setTimeout(() => {
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    }, 200 + index * 120);
+    return () => clearTimeout(id);
+  }, [index]);
+
   return (
-    <li className={`tracklist-row ${open ? "tracklist-row--open" : ""}`}>
+    <li className={`stage-tile ${open ? "stage-tile--open" : ""}`}>
       <button
         type="button"
-        className="tracklist-row__head"
+        className="stage-tile__trigger"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
+        aria-label={`${track.stage} — ${track.title}`}
       >
-        <span className="tracklist-row__play" aria-hidden="true">
-          {open ? "■" : "▶"}
-        </span>
-        <span className="tracklist-row__num">{track.stageNum}</span>
-        <span className="tracklist-row__stage">{track.stage}</span>
-        <span className="tracklist-row__title">{track.title}</span>
-        <span className="tracklist-row__duration">{track.duration}</span>
+        <video
+          ref={videoRef}
+          src={track.video}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="stage-tile__video"
+        />
+        <div className="stage-tile__overlay" />
+        <div className="stage-tile__content">
+          <span className="stage-tile__num">{track.stageNum}</span>
+          <span className="stage-tile__stage">{track.stage}</span>
+          <span className="stage-tile__title">{track.title}</span>
+          <span className="stage-tile__cta" aria-hidden="true">
+            {open ? "■ close" : "▶ play"}
+          </span>
+        </div>
       </button>
       {open && (
         <audio
@@ -267,7 +293,7 @@ function TracklistRow({ track }) {
           autoPlay
           preload="none"
           controlsList="nodownload"
-          className="tracklist-row__audio"
+          className="stage-tile__audio"
         />
       )}
     </li>
