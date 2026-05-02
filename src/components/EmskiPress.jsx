@@ -277,7 +277,7 @@ function StageTile({ track, index }) {
           className="stage-tile__video"
           style={
             track.videoShift
-              ? { transform: `scale(1.25) translateY(${track.videoShift}%)`, transformOrigin: "center top" }
+              ? { transform: `translateY(${track.videoShift}%)` }
               : undefined
           }
         />
