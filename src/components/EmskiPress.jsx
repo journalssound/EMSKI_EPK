@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useScrollY, useDelayedLoad, useInView } from "../hooks/useAnimations";
 import Reveal from "./Reveal";
-import AnimNum from "./AnimNum";
 import VideoParticles from "./VideoParticles";
 import {
   EP_TRACKS,
@@ -10,14 +9,12 @@ import {
   HERO_VIDEO_R2,
   ARTISTS,
   FESTIVALS,
-  LABELS,
-  STATS,
   SOCIALS,
 } from "../data/content";
 
 import logo from "../assets/EMSKI-logo-white-rgb.png";
 
-const PRESS_NAV = ["concept", "ep", "live", "artist", "photos", "contact"];
+const PRESS_NAV = ["ep", "live", "artist", "photos", "contact"];
 
 export default function EmskiPress() {
   const loaded = useDelayedLoad(300);
@@ -103,12 +100,7 @@ export default function EmskiPress() {
           </div>
 
           <p className={`press-hero__subtitle ${loaded ? "press-hero__subtitle--loaded" : ""}`}>
-            AN EP IN FIVE STAGES
-          </p>
-
-          <p className={`press-hero__release ${loaded ? "press-hero__release--loaded" : ""}`}>
-            <span className="press-hero__release-label">Release</span>
-            <span className="press-hero__release-value">[DATE TBD] · pre-save link forthcoming</span>
+            AN EP IN FIVE STAGES OF GRIEF
           </p>
 
           <div className={`hero__scroll-indicator ${loaded ? "hero__scroll-indicator--loaded" : ""}`}>
@@ -118,43 +110,15 @@ export default function EmskiPress() {
       </section>
 
       <div className="content-wrap">
-        {/* ── THE CONCEPT ─────────────────────────────── */}
+        {/* ── THE EP ──────────────────────────────────── */}
         <Reveal className="section-pad" style={{ paddingTop: 60 }}>
-          <div id="concept" className="press-concept">
-            <p className="press-eyebrow">The Concept</p>
-            <h2 className="press-h2">
-              Five tracks. Five stages.
-              <br />
-              One arc through grief.
-            </h2>
-            <div className="press-prose">
-              <p>
-                <strong>E/MOTION</strong> is built around the five stages of grief — denial,
-                anger, bargaining, depression, acceptance — held inside an electronic
-                record that doesn't soften the edges of any of them. Each track lives
-                inside a single stage, and the EP plays as a single emotional arc rather
-                than a collection of singles.
-              </p>
-              <p>
-                The production is hard-edged, vocal-forward, and deliberately exposed —
-                an invitation to walk into the deeper parts of your own emotional
-                boundaries instead of around them. The title is the thesis: <em>evolving
-                through emotion, in motion</em>.
-              </p>
-            </div>
-          </div>
-        </Reveal>
-
-        <div className="divider" />
-
-        {/* ── THE FIVE STAGES (the EP) ───────────────── */}
-        <Reveal className="section-pad">
           <div id="ep">
             <p className="press-eyebrow">The Record</p>
-            <h2 className="press-h2 press-h2--small">E/MOTION — five stages, in order.</h2>
-            <p className="press-helper">
-              Best heard front-to-back. Audio is private and pre-release — please do not
-              repost or distribute.
+            <h2 className="press-h2">Five tracks. Five stages. One arc.</h2>
+            <p className="press-prose" style={{ marginBottom: 36 }}>
+              <strong>E/MOTION</strong> moves through denial, anger, bargaining,
+              depression, acceptance — held inside an electronic record that doesn't
+              soften the edges of any of them. Best heard front-to-back.
             </p>
 
             <div className="stages">
@@ -171,115 +135,56 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="live">
             <p className="press-eyebrow">Live</p>
-            <h2 className="press-h2">An audiovisual world, run by one person.</h2>
-
-            <div className="press-prose">
-              <p>
-                EMSKI's live show is not a DJ set with visuals attached. It is a single,
-                cohesive world — the music, the visuals, and the lighting are all built,
-                programmed, and performed by Emma. The result is dark, energetic, and
-                captivating: a room that feels less like a club night and more like
-                walking into the inside of the record.
-              </p>
-              <p>
-                The format is hybrid — DJ and live drummer in the same set — which
-                gives the show the body of a live act and the velocity of an electronic
-                one.
-              </p>
-            </div>
-
+            <h2 className="press-h2 press-h2--small">An audiovisual world, run by one person.</h2>
+            <p className="press-prose" style={{ marginBottom: 24 }}>
+              Not a DJ set with visuals attached — a single world. Music, visuals, and
+              lighting all built and performed by Emma. DJ and live drummer in the same
+              set: the body of a live act, the velocity of an electronic one.
+            </p>
             <LiveVideo />
           </div>
         </Reveal>
 
         <div className="divider" />
 
-        {/* ── THE ARTIST (BIO) ───────────────────────── */}
+        {/* ── THE ARTIST (BIO + AT A GLANCE merged) ───── */}
         <Reveal className="section-pad">
           <div id="artist">
             <p className="press-eyebrow">The Artist</p>
-            <h2 className="press-h2">EMSKI.</h2>
+            <h2 className="press-h2 press-h2--small">EMSKI.</h2>
 
-            <div className="press-prose">
-              <p>
-                EMSKI is the project of Emma — a multi-instrumentalist who writes,
-                produces, sings, and drums, and who builds the visual world the music
-                lives inside. The project is a deliberate turn toward honest,
-                unapologetic songwriting: emotional risk-taking with hard-edged, bold
-                production sitting underneath it.
-              </p>
-              <p>
-                Across releases on <strong>mau5trap</strong>, <strong>Ophelia</strong>,{" "}
-                <strong>Monstercat</strong>, <strong>Bitbird</strong>,{" "}
-                <strong>Hexagon</strong>, and <strong>Sable Valley</strong>, EMSKI has
-                landed on rosters most artists spend years trying to reach — while
-                operating as a single creative unit: one person making the records,
-                playing the drums, singing the vocals, directing the visuals, and
-                running the live show.
-              </p>
-              <p>
-                <em>For fans of {PRESS_FFO.join(", ")}.</em>
+            <p className="press-prose">
+              EMSKI is the project of Emma — a multi-instrumentalist who writes,
+              produces, sings, drums, and builds the visual world the music lives
+              inside. Released on <strong>mau5trap</strong>, <strong>Ophelia</strong>,{" "}
+              <strong>Monstercat</strong>, <strong>Bitbird</strong>,{" "}
+              <strong>Hexagon</strong>, and <strong>Sable Valley</strong>. <em>For
+              fans of {PRESS_FFO.join(", ")}.</em>
+            </p>
+
+            <div className="glance-block" style={{ marginTop: 40 }}>
+              <p className="glance-label">Festivals</p>
+              <p className="artist-list">
+                {FESTIVALS.map((f, i) => (
+                  <span key={f.name}>
+                    {f.name}
+                    {i < FESTIVALS.length - 1 && <span className="artist-list__sep"> / </span>}
+                  </span>
+                ))}
               </p>
             </div>
 
-            <div className="press-tagline-card">
-              <p className="press-tagline-card__label">In one line</p>
-              <p className="press-tagline-card__quote">
-                "A project meant to show people what it is to explore the deeper parts
-                of their emotional boundaries — production with hard edges, vocals at
-                their most honest."
+            <div className="glance-block">
+              <p className="glance-label">Shared the stage with</p>
+              <p className="artist-list">
+                {ARTISTS.map((a, i) => (
+                  <span key={a}>
+                    {a}
+                    {i < ARTISTS.length - 1 && <span className="artist-list__sep"> / </span>}
+                  </span>
+                ))}
               </p>
             </div>
-          </div>
-        </Reveal>
-
-        <div className="divider" />
-
-        {/* ── AT A GLANCE ─────────────────────────────── */}
-        <Reveal className="section-pad">
-          <p className="press-eyebrow">At a Glance</p>
-          <h2 className="press-h2 press-h2--small">The receipts.</h2>
-
-          <div className="glance-block">
-            <p className="glance-label">Label releases</p>
-            <p className="artist-list">
-              {LABELS.map((l, i) => (
-                <span key={l.name}>
-                  {l.name}
-                  {i < LABELS.length - 1 && <span className="artist-list__sep"> / </span>}
-                </span>
-              ))}
-            </p>
-          </div>
-
-          <div className="glance-block">
-            <p className="glance-label">Festivals</p>
-            <p className="artist-list">
-              {FESTIVALS.map((f, i) => (
-                <span key={f.name}>
-                  {f.name}
-                  {i < FESTIVALS.length - 1 && <span className="artist-list__sep"> / </span>}
-                </span>
-              ))}
-            </p>
-          </div>
-
-          <div className="glance-block">
-            <p className="glance-label">Shared the stage with</p>
-            <p className="artist-list">
-              {ARTISTS.map((a, i) => (
-                <span key={a}>
-                  {a}
-                  {i < ARTISTS.length - 1 && <span className="artist-list__sep"> / </span>}
-                </span>
-              ))}
-            </p>
-          </div>
-
-          <div className="cell-grid cell-grid--stats" style={{ marginTop: 48 }}>
-            {STATS.slice(0, 3).map((s, i) => (
-              <StatCell key={s.label} stat={s} index={i} />
-            ))}
           </div>
         </Reveal>
 
@@ -289,12 +194,9 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="photos">
             <div className="photos-header">
-              <div>
-                <p className="press-eyebrow" style={{ marginBottom: 12 }}>Press Photos</p>
-                <h2 className="press-h2 press-h2--small" style={{ margin: 0 }}>
-                  Hi-res, free to use with credit.
-                </h2>
-              </div>
+              <h2 className="press-h2 press-h2--small" style={{ margin: 0 }}>
+                Press photos.
+              </h2>
               <a
                 href="https://www.dropbox.com/scl/fo/d97f64t3bj6qhnmz5v5gi/AGo56OIbpunUZkfeFouyFOo?rlkey=cyw60ahlbxabwiyx10m5pn71x&st=8uquqx8w&dl=0"
                 target="_blank"
@@ -305,7 +207,7 @@ export default function EmskiPress() {
               </a>
             </div>
 
-            <div className="photos-grid" style={{ marginTop: 32 }}>
+            <div className="photos-grid" style={{ marginTop: 24 }}>
               {[
                 { src: "/photos/shot-2.jpg", alt: "EMSKI press shot 2" },
                 { src: "/photos/shot-1.jpg", alt: "EMSKI press shot 1" },
@@ -325,29 +227,11 @@ export default function EmskiPress() {
 
         <div className="divider" />
 
-        {/* ── PRESS KIT ───────────────────────────────── */}
-        <Reveal className="section-pad">
-          <div className="press-kit-block">
-            <p className="press-eyebrow">Press Kit</p>
-            <h2 className="press-h2 press-h2--small">Full kit, one download.</h2>
-            <p className="press-helper">
-              Hi-res photos, logo files, EP audio, and a one-sheet PDF — packaged in a
-              single zip. Available shortly.
-            </p>
-            <button className="btn-outline btn-outline--disabled" disabled>
-              Full press kit — coming soon
-            </button>
-          </div>
-        </Reveal>
-
-        <div className="divider" />
-
         {/* ── CONTACT ─────────────────────────────────── */}
         <div id="contact">
           <Reveal className="section-pad contact">
-            <p className="press-eyebrow">Contact</p>
-            <h2 className="press-h2 press-h2--small" style={{ marginBottom: 32 }}>
-              For interviews, premieres, and review copies.
+            <h2 className="press-h2 press-h2--small" style={{ marginBottom: 24 }}>
+              Interviews, premieres, review copies.
             </h2>
             <a href="mailto:contact@emskimusic.com" className="contact__email">
               contact@emskimusic.com
@@ -473,27 +357,6 @@ function LiveVideo() {
           <span className="live-video__play-label">Play with sound</span>
         </button>
       )}
-    </div>
-  );
-}
-
-/* Stat cell with count-up trigger (mirrors EmskiEPK pattern). */
-function StatCell({ stat, index }) {
-  const [ref, visible] = useInView(0.15);
-  return (
-    <div
-      ref={ref}
-      className="stat-cell stagger-item"
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(12px)",
-        transitionDelay: `${index * 0.06}s`,
-      }}
-    >
-      <div className="stat-value">
-        <AnimNum value={stat.val} suffix={stat.suf} visible={visible} />
-      </div>
-      <div className="stat-label">{stat.label}</div>
     </div>
   );
 }
