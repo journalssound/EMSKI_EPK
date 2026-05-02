@@ -1223,10 +1223,32 @@ button {
 }
 
 @media (max-width: 720px) {
+  /* Shrink the hero so the EP fits on the first screen */
+  .press-hero {
+    padding-top: 64px;
+    padding-bottom: 24px;
+  }
+  .press-hero__video-wrap canvas {
+    max-width: min(120px, 24vw) !important;
+  }
+  .press-hero__title {
+    font-size: clamp(32px, 9vw, 44px);
+    margin-top: 0;
+  }
+  .press-hero__definition {
+    margin-top: 8px;
+    padding: 6px 12px;
+  }
+  .press-hero__lede {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
   .press-stages {
     grid-template-columns: 1fr;
     max-width: 420px;
-    gap: 8px;
+    gap: 6px;
+    margin-top: 16px;
   }
   /* Mobile: ditch the lyric videos, stack as compact rows */
   .stage-tile__video,
@@ -1235,7 +1257,7 @@ button {
   .stage-tile__trigger {
     position: relative;
     aspect-ratio: auto;
-    padding: 14px 16px;
+    padding: 10px 14px;
   }
   .stage-tile__content {
     position: static;
@@ -1248,18 +1270,19 @@ button {
   .stage-tile__num { order: 0; }
   .stage-tile__stage {
     order: 1;
-    font-size: 14px;
+    font-size: 13px;
     text-shadow: none;
   }
   .stage-tile__title {
     order: 2;
     flex: 1;
-    font-size: 13px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
   }
   .stage-tile__cta {
     order: 3;
     margin-top: 0;
+    font-size: 9px;
   }
 }
 
