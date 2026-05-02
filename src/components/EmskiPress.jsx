@@ -108,6 +108,15 @@ export default function EmskiPress() {
               </li>
             ))}
           </ol>
+
+          <button
+            className={`press-hero__scroll ${loaded ? "press-hero__scroll--loaded" : ""}`}
+            onClick={() => document.getElementById("ep")?.scrollIntoView({ behavior: "smooth" })}
+            aria-label="Listen to the EP"
+          >
+            <span className="press-hero__scroll-label">Listen to the EP</span>
+            <span className="press-hero__scroll-arrow" aria-hidden="true">↓</span>
+          </button>
         </div>
       </section>
 
