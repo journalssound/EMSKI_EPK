@@ -125,7 +125,7 @@ export default function EmskiPress() {
         {/* ── THE EP ──────────────────────────────────── */}
         <Reveal className="section-pad" style={{ paddingTop: 60 }}>
           <div id="ep">
-            <p className="press-eyebrow">The Record · listen front-to-back</p>
+            <p className="press-eyebrow">E/MOTION — the EP</p>
             <div className="stages">
               {EP_TRACKS.map((t, i) => (
                 <StageCard key={t.title} track={t} index={i} />
