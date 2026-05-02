@@ -1,7 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import EmskiEPK from "./components/EmskiEPK";
+import EmskiPress from "./components/EmskiPress";
 import logoSrc from "./assets/EMSKI-logo-white-rgb.png";
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
@@ -39,6 +41,12 @@ import logoSrc from "./assets/EMSKI-logo-white-rgb.png";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <EmskiEPK />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<EmskiEPK />} />
+        <Route path="/press" element={<EmskiPress />} />
+        <Route path="*" element={<EmskiEPK />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>
 );

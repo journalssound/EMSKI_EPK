@@ -6,3 +6,13 @@
 [[edge_functions]]
   path = "/*"
   function = "host-router"
+
+# SPA fallback — direct loads of React routes (e.g. /press)
+# fall through to index.html so client-side routing can handle them.
+# Excludes static sub-sites and known asset folders so they keep
+# serving their own files.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false

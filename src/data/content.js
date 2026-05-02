@@ -61,3 +61,66 @@ export const SOUNDCLOUD_EP_EMBED_URL =
 
 export const SOUNDCLOUD_SINGLES_EMBED_URL =
   "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/emskiiiiiiiiiii/sets/unreleased-singles&secret_token=s-y0W5iR457NV&color=%2300efef&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&show_artwork=true&show_playcount=true&single_active=true&dark_theme=true";
+
+/* ─────────────────────────────────────────────────────────
+ * E/MOTION EP — five tracks mapped to the five stages of grief.
+ * Listening order ≠ tracklist numbering: the EP plays as a
+ * journey through the stages in canonical order.
+ *
+ * Audio + lyric video assets live under /public/ninjatune/
+ * (originally produced for the Ninja Tune deck). They're the
+ * canonical source until the EP is released to DSPs.
+ * ───────────────────────────────────────────────────────── */
+export const EP_TRACKS = [
+  {
+    stage: "Denial",
+    stageNum: "01",
+    title: "Wait For Me",
+    duration: "3:15",
+    audio: "/ninjatune/songs/wait-for-me.mp3",
+    video: "/ninjatune/videos/lyric-waitforme.mp4",
+    note: "The refusal to let the moment move on. Asking the thing that's already gone to wait — as if pleading hard enough could keep time from advancing. The stage where you haven't accepted that anything has happened at all.",
+  },
+  {
+    stage: "Anger",
+    stageNum: "02",
+    title: "Calm Down",
+    duration: "2:54",
+    audio: "/ninjatune/songs/calm-down.mp3",
+    video: "/ninjatune/videos/lyric-calmdown.mp4",
+    note: "Anger wearing the mask of composure. Telling someone — or yourself — to calm down is the anger. The track where the heat finally comes through, even when the lyric is trying to keep its voice down.",
+  },
+  {
+    stage: "Bargaining",
+    stageNum: "03",
+    title: "For U",
+    duration: "3:46",
+    audio: "/ninjatune/songs/for-u.mp3",
+    video: "/ninjatune/videos/lyric-foru.mp4",
+    note: "The offering. \"I'd do it for you, give it for you, be different for you.\" Trying to trade your way back to a version of things that no longer exists. The most desperate stage, dressed up as devotion.",
+  },
+  {
+    stage: "Depression",
+    stageNum: "04",
+    title: "Hold Me Up",
+    duration: "3:53",
+    audio: "/ninjatune/songs/hold-me-up.mp3",
+    video: "/ninjatune/videos/lyric-holdmeup.mp4",
+    note: "The collapse. The point where bargaining stops working and there's nothing left to do but ask to be carried. Production at its most stripped back; vocal at its most exposed.",
+  },
+  {
+    stage: "Acceptance",
+    stageNum: "05",
+    title: "Never Let Go",
+    duration: "3:36",
+    audio: "/ninjatune/songs/never-let-go.mp3",
+    video: "/ninjatune/videos/lyric-nlg.mp4",
+    note: "Acceptance is not moving on. It's learning to carry it. The closer reframes \"never let go\" not as denial but as integration — you don't release the grief; you make a place for it inside the rest of your life.",
+  },
+];
+
+export const PRESS_FFO = ["BRONSON", "Golden Features", "IMANU"];
+
+export const HERO_VIDEO_R2 =
+  "https://pub-9a90af40c4df4a8aa36505acb79e02b3.r2.dev/warehouse-show-hd.mp4";
+
