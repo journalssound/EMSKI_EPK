@@ -125,15 +125,7 @@ export default function EmskiPress() {
         {/* ── THE EP ──────────────────────────────────── */}
         <Reveal className="section-pad" style={{ paddingTop: 60 }}>
           <div id="ep">
-            <p className="press-eyebrow">The Record</p>
-            <h2 className="press-h2">Five tracks. Five stages. One arc.</h2>
-            <p className="press-prose" style={{ marginBottom: 36 }}>
-              Each track lives inside a single stage of grief. The production is
-              hard-edged, vocal-forward, and deliberately exposed — an invitation to
-              walk into the deeper parts of your own emotional boundaries instead of
-              around them. Best heard front-to-back.
-            </p>
-
+            <p className="press-eyebrow">The Record · listen front-to-back</p>
             <div className="stages">
               {EP_TRACKS.map((t, i) => (
                 <StageCard key={t.title} track={t} index={i} />
