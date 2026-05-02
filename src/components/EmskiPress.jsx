@@ -275,6 +275,7 @@ function StageTile({ track, index }) {
           playsInline
           preload="metadata"
           className="stage-tile__video"
+          style={track.videoPos ? { objectPosition: track.videoPos } : undefined}
         />
         <div className="stage-tile__overlay" />
         <div className="stage-tile__content">

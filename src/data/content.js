@@ -79,6 +79,7 @@ export const EP_TRACKS = [
     duration: "3:15",
     audio: "/ninjatune/songs/wait-for-me.mp3",
     video: "/ninjatune/videos/lyric-waitforme.mp4",
+    videoPos: "center 30%",
     note: "Asking the thing that's already gone to wait — as if pleading could keep time from advancing.",
   },
   {
@@ -88,6 +89,7 @@ export const EP_TRACKS = [
     duration: "2:54",
     audio: "/ninjatune/songs/calm-down.mp3",
     video: "/ninjatune/videos/lyric-calmdown.mp4",
+    videoPos: "center 30%",
     note: "Anger wearing the mask of composure. Telling someone to calm down is the anger.",
   },
   {
@@ -97,6 +99,7 @@ export const EP_TRACKS = [
     duration: "3:46",
     audio: "/ninjatune/songs/for-u.mp3",
     video: "/ninjatune/videos/lyric-foru.mp4",
+    videoPos: "center 30%",
     note: "The offering. Trading your way back to a version of things that no longer exists.",
   },
   {
@@ -115,6 +118,7 @@ export const EP_TRACKS = [
     duration: "3:36",
     audio: "/ninjatune/songs/never-let-go.mp3",
     video: "/ninjatune/videos/lyric-nlg.mp4",
+    videoPos: "center 30%",
     note: "Acceptance isn't moving on. It's learning to carry it.",
   },
 ];
