@@ -1157,9 +1157,9 @@ button {
   height: 100%;
   object-fit: cover;
   opacity: 0.55;
-  transition: opacity 0.3s, transform 6s ease;
+  transition: opacity 0.3s;
 }
-.stage-tile:hover .stage-tile__video { opacity: 0.75; transform: scale(1.04); }
+.stage-tile:hover .stage-tile__video { opacity: 0.75; }
 
 .stage-tile__overlay {
   position: absolute;

@@ -275,7 +275,11 @@ function StageTile({ track, index }) {
           playsInline
           preload="metadata"
           className="stage-tile__video"
-          style={track.videoPos ? { objectPosition: track.videoPos } : undefined}
+          style={
+            track.videoShift
+              ? { transform: `scale(1.25) translateY(${track.videoShift}%)`, transformOrigin: "center top" }
+              : undefined
+          }
         />
         <div className="stage-tile__overlay" />
         <div className="stage-tile__content">
