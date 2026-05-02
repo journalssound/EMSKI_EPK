@@ -12,7 +12,7 @@ import {
 
 import logo from "../assets/EMSKI-logo-white-rgb.png";
 
-const PRESS_NAV = ["ep", "live", "artist", "photos", "contact"];
+const PRESS_NAV = ["ep", "artist", "live", "photos", "contact"];
 
 export default function EmskiPress() {
   const loaded = useDelayedLoad(300);
@@ -108,23 +108,7 @@ export default function EmskiPress() {
       <div className="content-wrap">
         <div className="divider" />
 
-        {/* ── LIVE ───────────────────────────────────── */}
-        <Reveal className="section-pad">
-          <div id="live">
-            <p className="press-eyebrow">Live</p>
-            <h2 className="press-h2 press-h2--small">An audiovisual world, run by one person.</h2>
-            <p className="press-prose" style={{ marginBottom: 24 }}>
-              Not a DJ set with visuals attached — a single world. Music, visuals, and
-              lighting all built and performed by Emma. DJ and live drummer in the same
-              set: the body of a live act, the velocity of an electronic one.
-            </p>
-            <LiveVideo />
-          </div>
-        </Reveal>
-
-        <div className="divider" />
-
-        {/* ── THE ARTIST (BIO + AT A GLANCE merged) ───── */}
+        {/* ── THE ARTIST ───────────────────────────────── */}
         <Reveal className="section-pad">
           <div id="artist">
             <p className="press-eyebrow">The Artist</p>
@@ -138,6 +122,22 @@ export default function EmskiPress() {
               <strong>Hexagon</strong>, and <strong>Sable Valley</strong>. <em>For
               fans of {PRESS_FFO.join(", ")}.</em>
             </p>
+          </div>
+        </Reveal>
+
+        <div className="divider" />
+
+        {/* ── LIVE ─────────────────────────────────────── */}
+        <Reveal className="section-pad">
+          <div id="live">
+            <p className="press-eyebrow">Live</p>
+            <h2 className="press-h2 press-h2--small">An audiovisual world, run by one person.</h2>
+            <p className="press-prose" style={{ marginBottom: 24 }}>
+              Not a DJ set with visuals attached — a single world. Music, visuals, and
+              lighting all built and performed by Emma. DJ and live drummer in the same
+              set: the body of a live act, the velocity of an electronic one.
+            </p>
+            <LiveVideo />
           </div>
         </Reveal>
 
