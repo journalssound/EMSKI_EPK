@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useScrollY, useDelayedLoad, useInView } from "../hooks/useAnimations";
+import { useScrollY, useDelayedLoad } from "../hooks/useAnimations";
 import Reveal from "./Reveal";
 import VideoParticles from "./VideoParticles";
 import {
@@ -99,40 +99,15 @@ export default function EmskiPress() {
             producing, drumming, singing, and directing every visual.
           </p>
 
-          <ol className={`press-hero__stages ${loaded ? "press-hero__stages--loaded" : ""}`}>
+          <ol id="ep" className={`press-tracklist ${loaded ? "press-tracklist--loaded" : ""}`}>
             {EP_TRACKS.map((t) => (
-              <li key={t.stage} className="press-hero__stage">
-                <span className="press-hero__stage-num">{t.stageNum}</span>
-                <span className="press-hero__stage-name">{t.stage}</span>
-                <span className="press-hero__stage-track">{t.title}</span>
-              </li>
+              <TracklistRow key={t.title} track={t} />
             ))}
           </ol>
-
-          <button
-            className={`press-hero__scroll ${loaded ? "press-hero__scroll--loaded" : ""}`}
-            onClick={() => document.getElementById("ep")?.scrollIntoView({ behavior: "smooth" })}
-            aria-label="Listen to the EP"
-          >
-            <span className="press-hero__scroll-label">Listen to the EP</span>
-            <span className="press-hero__scroll-arrow" aria-hidden="true">↓</span>
-          </button>
         </div>
       </section>
 
       <div className="content-wrap">
-        {/* ── THE EP ──────────────────────────────────── */}
-        <Reveal className="section-pad" style={{ paddingTop: 60 }}>
-          <div id="ep">
-            <p className="press-eyebrow">E/MOTION — the EP</p>
-            <div className="stages">
-              {EP_TRACKS.map((t, i) => (
-                <StageCard key={t.title} track={t} index={i} />
-              ))}
-            </div>
-          </div>
-        </Reveal>
-
         <div className="divider" />
 
         {/* ── LIVE ───────────────────────────────────── */}
@@ -265,62 +240,37 @@ export default function EmskiPress() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * Stage card — one per track. Lyric video plays muted as
- * background; an audio player drives the actual listen.
- * ───────────────────────────────────────────────────────── */
-function StageCard({ track, index }) {
-  const [ref, visible] = useInView(0.12);
-  const videoRef = useRef(null);
-
-  // Lazy-start the lyric video once the card scrolls into view
-  // (saves bandwidth and prevents 5 simultaneous decodes on load).
-  useEffect(() => {
-    if (!visible) return;
-    const v = videoRef.current;
-    if (!v) return;
-    const p = v.play();
-    if (p && typeof p.catch === "function") p.catch(() => {});
-  }, [visible]);
-
+/* ───────────────────────────────────────────────────────── * Tracklist row — compact, click to play inline.
+ * ──────────────────────────────────────────────────────────── */
+function TracklistRow({ track }) {
+  const [open, setOpen] = useState(false);
   return (
-    <article
-      ref={ref}
-      className={`stage-card ${visible ? "stage-card--visible" : ""}`}
-      style={{ transitionDelay: `${index * 0.06}s` }}
-    >
-      <div className="stage-card__visual">
-        <video
-          ref={videoRef}
-          src={track.video}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="stage-card__video"
-        />
-        <div className="stage-card__overlay" />
-        <div className="stage-card__stage">
-          <span className="stage-card__stage-num">{track.stageNum}</span>
-          <span className="stage-card__stage-name">{track.stage}</span>
-        </div>
-      </div>
-
-      <div className="stage-card__body">
-        <div className="stage-card__head">
-          <h3 className="stage-card__title">{track.title}</h3>
-          <span className="stage-card__duration">{track.duration}</span>
-        </div>
-        <p className="stage-card__note">{track.note}</p>
+    <li className={`tracklist-row ${open ? "tracklist-row--open" : ""}`}>
+      <button
+        type="button"
+        className="tracklist-row__head"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+      >
+        <span className="tracklist-row__play" aria-hidden="true">
+          {open ? "■" : "▶"}
+        </span>
+        <span className="tracklist-row__num">{track.stageNum}</span>
+        <span className="tracklist-row__stage">{track.stage}</span>
+        <span className="tracklist-row__title">{track.title}</span>
+        <span className="tracklist-row__duration">{track.duration}</span>
+      </button>
+      {open && (
         <audio
           src={track.audio}
           controls
+          autoPlay
           preload="none"
           controlsList="nodownload"
-          className="stage-card__audio"
+          className="tracklist-row__audio"
         />
-      </div>
-    </article>
+      )}
+    </li>
   );
 }
 
