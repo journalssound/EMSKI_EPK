@@ -1008,7 +1008,26 @@ button {
   min-height: auto;
   height: auto;
   padding-top: 110px;
-  padding-bottom: 60px;
+  padding-bottom: 96px;
+  display: block;
+  position: relative;
+}
+.press-hero .hero__content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Soft fade out into the next section */
+.press-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--c-bg));
+  pointer-events: none;
 }
 
 /* Smaller E on the press page */

@@ -78,13 +78,7 @@ export default function EmskiPress() {
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="hero press-hero">
         <div className="hero__glow" />
-        <div
-          className="hero__content"
-          style={{
-            transform: `translateY(${Math.min(scrollY * 0.25, 150)}px)`,
-            opacity: Math.max(1 - scrollY / 600, 0),
-          }}
-        >
+        <div className="hero__content">
           <div className={`hero__video-wrap press-hero__video-wrap ${loaded ? "hero__video-wrap--loaded" : ""}`}>
             <VideoParticles src="/E_video_loop.mp4" width={340} height={340} />
           </div>
@@ -114,10 +108,6 @@ export default function EmskiPress() {
               </li>
             ))}
           </ol>
-
-          <div className={`hero__scroll-indicator ${loaded ? "hero__scroll-indicator--loaded" : ""}`}>
-            <div className="hero__scroll-indicator-line" />
-          </div>
         </div>
       </section>
 
