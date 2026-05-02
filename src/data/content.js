@@ -118,7 +118,7 @@ export const EP_TRACKS = [
     duration: "3:36",
     audio: "/ninjatune/songs/never-let-go.mp3",
     video: "/ninjatune/videos/lyric-nlg.mp4",
-    videoFit: "contain",
+    videoShift: -14,
     note: "Acceptance isn't moving on. It's learning to carry it.",
   },
 ];
