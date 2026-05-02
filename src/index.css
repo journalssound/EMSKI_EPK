@@ -1031,21 +1031,24 @@ button {
 }
 
 /* Smaller E on the press page */
+.press-hero__video-wrap {
+  margin-bottom: 0 !important;
+}
 .press-hero__video-wrap canvas {
-  max-width: min(220px, 38vw) !important;
+  max-width: min(180px, 32vw) !important;
 }
 
 .press-hero__title {
   font-family: var(--f-heading);
   font-weight: 700;
-  font-size: clamp(40px, 7vw, 80px);
+  font-size: clamp(36px, 6vw, 68px);
   letter-spacing: 0.02em;
   line-height: 1;
   background: linear-gradient(135deg, #A7D0E3 0%, #C2E7F7 50%, #A7D0E3 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  margin-top: 12px;
+  margin-top: 4px;
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.9s ease 0.25s, transform 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.25s;
@@ -1091,12 +1094,12 @@ button {
 
 /* Hero lede — the actual summary */
 .press-hero__lede {
-  max-width: 640px;
-  margin: 32px auto 0;
+  max-width: 620px;
+  margin: 18px auto 0;
   font-family: var(--f-body);
-  font-size: clamp(15px, 1.6vw, 18px);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.78);
   text-align: center;
   opacity: 0;
   transform: translateY(8px);
@@ -1111,7 +1114,7 @@ button {
 /* ── Stage tiles — 5-across, video-backed ─────────────── */
 .press-stages {
   list-style: none;
-  margin: 36px auto 0;
+  margin: 24px auto 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
