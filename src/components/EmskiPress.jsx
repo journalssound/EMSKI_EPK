@@ -85,8 +85,8 @@ export default function EmskiPress() {
             opacity: Math.max(1 - scrollY / 600, 0),
           }}
         >
-          <div className={`hero__video-wrap ${loaded ? "hero__video-wrap--loaded" : ""}`}>
-            <VideoParticles src="/E_video_loop.mp4" width={600} height={600} />
+          <div className={`hero__video-wrap press-hero__video-wrap ${loaded ? "hero__video-wrap--loaded" : ""}`}>
+            <VideoParticles src="/E_video_loop.mp4" width={340} height={340} />
           </div>
 
           <h1 className={`press-hero__title ${loaded ? "press-hero__title--loaded" : ""}`}>
@@ -99,9 +99,21 @@ export default function EmskiPress() {
             <span className="press-hero__defn">— evolving through emotion in motion.</span>
           </div>
 
-          <p className={`press-hero__subtitle ${loaded ? "press-hero__subtitle--loaded" : ""}`}>
-            AN EP IN FIVE STAGES OF GRIEF
+          <p className={`press-hero__lede ${loaded ? "press-hero__lede--loaded" : ""}`}>
+            A five-track electronic EP from <strong>EMSKI</strong> — built as a single
+            arc through the <strong>five stages of grief.</strong> One artist writing,
+            producing, drumming, singing, and directing every visual.
           </p>
+
+          <ol className={`press-hero__stages ${loaded ? "press-hero__stages--loaded" : ""}`}>
+            {EP_TRACKS.map((t) => (
+              <li key={t.stage} className="press-hero__stage">
+                <span className="press-hero__stage-num">{t.stageNum}</span>
+                <span className="press-hero__stage-name">{t.stage}</span>
+                <span className="press-hero__stage-track">{t.title}</span>
+              </li>
+            ))}
+          </ol>
 
           <div className={`hero__scroll-indicator ${loaded ? "hero__scroll-indicator--loaded" : ""}`}>
             <div className="hero__scroll-indicator-line" />
@@ -116,9 +128,10 @@ export default function EmskiPress() {
             <p className="press-eyebrow">The Record</p>
             <h2 className="press-h2">Five tracks. Five stages. One arc.</h2>
             <p className="press-prose" style={{ marginBottom: 36 }}>
-              <strong>E/MOTION</strong> moves through denial, anger, bargaining,
-              depression, acceptance — held inside an electronic record that doesn't
-              soften the edges of any of them. Best heard front-to-back.
+              Each track lives inside a single stage of grief. The production is
+              hard-edged, vocal-forward, and deliberately exposed — an invitation to
+              walk into the deeper parts of your own emotional boundaries instead of
+              around them. Best heard front-to-back.
             </p>
 
             <div className="stages">
