@@ -7,8 +7,6 @@ import {
   EP_TRACKS,
   PRESS_FFO,
   HERO_VIDEO_R2,
-  ARTISTS,
-  FESTIVALS,
   SOCIALS,
 } from "../data/content";
 
@@ -140,30 +138,6 @@ export default function EmskiPress() {
               <strong>Hexagon</strong>, and <strong>Sable Valley</strong>. <em>For
               fans of {PRESS_FFO.join(", ")}.</em>
             </p>
-
-            <div className="glance-block" style={{ marginTop: 40 }}>
-              <p className="glance-label">Festivals</p>
-              <p className="artist-list">
-                {FESTIVALS.map((f, i) => (
-                  <span key={f.name}>
-                    {f.name}
-                    {i < FESTIVALS.length - 1 && <span className="artist-list__sep"> / </span>}
-                  </span>
-                ))}
-              </p>
-            </div>
-
-            <div className="glance-block">
-              <p className="glance-label">Shared the stage with</p>
-              <p className="artist-list">
-                {ARTISTS.map((a, i) => (
-                  <span key={a}>
-                    {a}
-                    {i < ARTISTS.length - 1 && <span className="artist-list__sep"> / </span>}
-                  </span>
-                ))}
-              </p>
-            </div>
           </div>
         </Reveal>
 
