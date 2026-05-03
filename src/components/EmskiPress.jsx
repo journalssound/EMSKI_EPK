@@ -97,6 +97,10 @@ export default function EmskiPress() {
             <span className="press-hero__lede-sub">From <strong>EMSKI</strong> — hard-edged, vocal-forward electronic music.</span>
           </p>
 
+          <p className={`press-hero__meta ${loaded ? "press-hero__meta--loaded" : ""}`}>
+            Independent release · 16-week rollout
+          </p>
+
           <ol id="ep" className={`press-stages ${loaded ? "press-stages--loaded" : ""}`}>
             {EP_TRACKS.map((t, i) => (
               <StageTile key={t.title} track={t} index={i} />

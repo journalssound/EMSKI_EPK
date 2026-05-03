@@ -1124,6 +1124,20 @@ button {
 .press-hero__lede-sub {
   color: rgba(255, 255, 255, 0.65);
 }
+.press-hero__meta {
+  margin: 14px auto 0;
+  font-family: var(--f-heading);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.9s ease 0.75s, transform 0.9s ease 0.75s;
+}
+.press-hero__meta--loaded { opacity: 1; transform: none; }
 @media (max-width: 760px) {
   .press-hero__lede-line { white-space: normal; }
 }
