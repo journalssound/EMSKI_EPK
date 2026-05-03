@@ -680,8 +680,12 @@ button {
 }
 
 .photos-grid {
-  columns: 2;
-  column-gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .photos-grid { grid-template-columns: 1fr; }
 }
 
 .photo-cell {

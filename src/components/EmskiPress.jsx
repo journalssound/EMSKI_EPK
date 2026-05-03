@@ -173,10 +173,9 @@ export default function EmskiPress() {
 
             <div className="photos-grid" style={{ marginTop: 24 }}>
               {[
-                { src: "/photos/shot-2.jpg", alt: "EMSKI press shot 2" },
-                { src: "/photos/shot-1.jpg", alt: "EMSKI press shot 1" },
-                { src: "/photos/main-press.jpg", alt: "EMSKI main press shot" },
-                { src: "/photos/emski-sweat.jpg", alt: "EMSKI sweat" },
+                { src: "/photos/emotion-1.jpg", alt: "EMSKI e/MOTION press 1" },
+                { src: "/photos/emotion-2.jpg", alt: "EMSKI e/MOTION press 2" },
+                { src: "/photos/emotion-3.jpg", alt: "EMSKI e/MOTION press 3" },
               ].map((photo, i) => (
                 <div
                   key={photo.src}
