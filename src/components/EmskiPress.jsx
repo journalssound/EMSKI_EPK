@@ -156,79 +156,58 @@ export default function EmskiPress() {
             <p className="press-eyebrow">The Rollout</p>
             <h2 className="press-h2 press-h2--small">Five chapters. Sixteen weeks. One arc.</h2>
 
-            <p className="press-prose" style={{ marginBottom: 32 }}>
+            <p className="press-prose" style={{ marginBottom: 36 }}>
               <strong>e/MOTION</strong> releases as five episodes from{" "}
-              <strong>May 28 – Aug 20</strong>. Each chapter ships a single, a
-              music video, and a short companion film — following one character
-              across the five stages of grief, never named on screen.
+              <strong>May 28 – Aug 20</strong>, following one character across
+              the five stages of grief — never named on screen. Built from two
+              threads running in parallel: a narrative arc and a documentary
+              throughline.
             </p>
 
-            <ol className="rollout-timeline">
+            <ul className="campaign-grid">
               {[
                 {
-                  code: "EF-0001",
-                  date: "May 28",
-                  title: "Wait For Me",
-                  stage: "Denial",
-                  drops: ["Single", "Music Video", "Companion Film"],
+                  count: "5",
+                  label: "Singles",
+                  desc: "Released across 16 weeks. Hold Me Up is the anchor.",
                 },
                 {
-                  code: "EF-0002",
-                  date: "Jun 18",
-                  title: "For U",
-                  stage: "Bargaining",
-                  drops: ["Single", "Music Video", "Companion Film"],
+                  count: "5",
+                  label: "Music Videos",
+                  desc: "One per chapter. Color, pacing, and weight track the arc.",
                 },
                 {
-                  code: "EF-0003",
-                  date: "Jul 9",
-                  title: "Calm Down",
-                  stage: "Anger",
-                  drops: ["Single", "Music Video", "Format Break"],
+                  count: "5",
+                  label: "Documentary Episodes",
+                  desc: "Tight close-ups, one ambiguous question per chapter — answers read as the loss of someone, or who you used to be.",
                 },
                 {
-                  code: "EF-0004",
-                  date: "Jul 30",
-                  title: "Hold Me Up",
-                  stage: "Depression",
-                  drops: ["Anchor Single", "Music Video", "Companion Film", "Press Push"],
-                  peak: true,
+                  count: "1",
+                  label: "Full EP",
+                  desc: "Lands with the final chapter on Aug 20.",
                 },
                 {
-                  code: "EF-0005",
-                  date: "Aug 20",
-                  title: "Never Let Go",
-                  stage: "Acceptance",
-                  drops: ["Final Single", "Full EP", "Live Performance Video"],
-                  finale: true,
+                  count: "1",
+                  label: "Live Performance Film",
+                  desc: "Drops alongside the EP. Full audiovisual set.",
                 },
-              ].map((ch, i) => (
+                {
+                  count: "1",
+                  label: "Press Window",
+                  desc: "Coordinated push around the anchor track in late July.",
+                },
+              ].map((item, i) => (
                 <li
-                  key={ch.code}
-                  className={`rollout-chapter${ch.peak ? " rollout-chapter--peak" : ""}${ch.finale ? " rollout-chapter--finale" : ""}`}
+                  key={item.label}
+                  className="campaign-card"
                   style={{ "--i": i }}
                 >
-                  <div className="rollout-chapter__rail">
-                    <span className="rollout-chapter__node" />
-                  </div>
-                  <div className="rollout-chapter__body">
-                    <div className="rollout-chapter__head">
-                      <span className="rollout-chapter__code">{ch.code}</span>
-                      <span className="rollout-chapter__date">{ch.date}</span>
-                      {ch.peak && <span className="rollout-chapter__tag">PEAK</span>}
-                      {ch.finale && <span className="rollout-chapter__tag">EP COMPLETE</span>}
-                    </div>
-                    <p className="rollout-chapter__title">{ch.title}</p>
-                    <p className="rollout-chapter__stage">[{ch.stage}]</p>
-                    <ul className="rollout-chapter__drops">
-                      {ch.drops.map((d) => (
-                        <li key={d}>{d}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  <span className="campaign-card__count">{item.count}</span>
+                  <p className="campaign-card__label">{item.label}</p>
+                  <p className="campaign-card__desc">{item.desc}</p>
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
         </Reveal>
 
