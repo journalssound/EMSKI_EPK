@@ -122,10 +122,7 @@ export default function EmskiPress() {
               EMSKI is the electronic project of Emma — released on{" "}
               <strong>mau5trap</strong>, <strong>Ophelia</strong>,{" "}
               <strong>Monstercat</strong>, <strong>Bitbird</strong>,{" "}
-              <strong>Hexagon</strong>, and <strong>Sable Valley</strong>. The
-              project sits closer to <strong>Rüfüs Du Sol</strong>,{" "}
-              <strong>Elderbrook</strong>, and <strong>Mind Chatter</strong> than
-              the main-stage house lane — songwriting first, electronic by craft.{" "}
+              <strong>Hexagon</strong>, and <strong>Sable Valley</strong>.{" "}
               <em>For fans of {PRESS_FFO.join(", ")}.</em>
             </p>
 
