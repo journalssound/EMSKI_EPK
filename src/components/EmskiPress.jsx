@@ -142,11 +142,11 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="live">
             <p className="press-eyebrow">Live</p>
-            <h2 className="press-h2 press-h2--small">An audiovisual world, run by one person.</h2>
+            <h2 className="press-h2 press-h2--small">A single audiovisual world.</h2>
             <p className="press-prose" style={{ marginBottom: 24 }}>
-              Not a DJ set with visuals attached — a single world. Music, visuals, and
-              lighting all built and performed by Emma. DJ and live drummer in the same
-              set: the body of a live act, the velocity of an electronic one.
+              Not a DJ set with visuals attached — music, visuals, and lighting move
+              as one. DJ and live drummer in the same set: the body of a live act,
+              the velocity of an electronic one.
             </p>
             <LiveVideo />
           </div>
