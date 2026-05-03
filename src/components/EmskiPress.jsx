@@ -127,11 +127,11 @@ export default function EmskiPress() {
             </p>
 
             <p className="press-prose" style={{ marginTop: 18 }}>
-              The audience is the person standing at the edge of a change they
-              haven't made yet — scared, in transition, looking for permission to
-              be messy and against the grain. Earlier EMSKI material gave them the
-              adrenaline to jump. <strong>e/MOTION</strong> is the companion that
-              walks beside them through the mess.
+              This project is for the person standing at the edge of a change
+              they haven't made yet — scared, in transition, looking for
+              permission to be messy and against the grain. <strong>e/MOTION</strong>{" "}
+              is EMSKI branching into a new direction: something more vulnerable,
+              emotional, honest — a companion through the mess.
             </p>
 
             <div className="glance-block" style={{ marginTop: 40 }}>
@@ -240,9 +240,9 @@ export default function EmskiPress() {
             <p className="press-eyebrow">Live</p>
             <h2 className="press-h2 press-h2--small">A full live audiovisual set.</h2>
             <p className="press-prose" style={{ marginBottom: 24 }}>
-              Not a DJ set with visuals attached — music, visuals, and lighting move
-              as one. DJ and live drummer in the same set: the body of a live act,
-              the velocity of an electronic one.
+              Music, visuals, and lighting move as one. DJ and live drummer in
+              the same set — the body of a live act with the velocity of an
+              electronic one.
             </p>
             <LiveVideo />
           </div>
@@ -267,8 +267,8 @@ export default function EmskiPress() {
               </a>
             </div>
 
-            <div className="photos-grid" style={{ marginTop: 24 }}>
-              {[
+            <PhotoGrid
+              photos={[
                 { src: "/photos/live-2.jpg", alt: "EMSKI live 2" },
                 { src: "/photos/emotion-2.jpg", alt: "EMSKI e/MOTION press 2" },
                 { src: "/photos/live-4.jpg", alt: "EMSKI live 4" },
@@ -276,15 +276,8 @@ export default function EmskiPress() {
                 { src: "/photos/live-1.jpg", alt: "EMSKI live 1" },
                 { src: "/photos/emotion-3.jpg", alt: "EMSKI e/MOTION press 3" },
                 { src: "/photos/live-3.jpg", alt: "EMSKI live 3" },
-              ].map((photo, i) => (
-                <div
-                  key={photo.src}
-                  className={`photo-cell ${i === 0 ? "photo-cell--hero" : "photo-cell--std"}`}
-                >
-                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-                </div>
-              ))}
-            </div>
+              ]}
+            />
           </div>
         </Reveal>
 
@@ -429,5 +422,100 @@ function LiveVideo() {
         </button>
       )}
     </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * Photo masonry grid + lightbox
+ * ───────────────────────────────────────────────────────── */
+function PhotoGrid({ photos }) {
+  const [active, setActive] = useState(null);
+
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setActive(null);
+      if (e.key === "ArrowRight") setActive((i) => (i + 1) % photos.length);
+      if (e.key === "ArrowLeft") setActive((i) => (i - 1 + photos.length) % photos.length);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [active, photos.length]);
+
+  return (
+    <>
+      <div className="photos-grid" style={{ marginTop: 24 }}>
+        {photos.map((photo, i) => (
+          <button
+            key={photo.src}
+            type="button"
+            className="photo-cell"
+            onClick={() => setActive(i)}
+            style={{ "--i": i }}
+          >
+            <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+            <span className="photo-cell__overlay" aria-hidden="true">
+              <span className="photo-cell__expand">VIEW</span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {active !== null && (
+        <div
+          className="photo-lightbox"
+          onClick={() => setActive(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            type="button"
+            className="photo-lightbox__close"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActive(null);
+            }}
+            aria-label="Close"
+          >
+            ×
+          </button>
+          <button
+            type="button"
+            className="photo-lightbox__nav photo-lightbox__nav--prev"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActive((i) => (i - 1 + photos.length) % photos.length);
+            }}
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+          <img
+            className="photo-lightbox__img"
+            src={photos[active].src}
+            alt={photos[active].alt}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            type="button"
+            className="photo-lightbox__nav photo-lightbox__nav--next"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActive((i) => (i + 1) % photos.length);
+            }}
+            aria-label="Next"
+          >
+            ›
+          </button>
+          <div className="photo-lightbox__counter">
+            {active + 1} / {photos.length}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
