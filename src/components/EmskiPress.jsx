@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { useScrollY, useDelayedLoad } from "../hooks/useAnimations";
 import Reveal from "./Reveal";
@@ -238,7 +239,7 @@ export default function EmskiPress() {
         <div id="contact">
           <Reveal className="section-pad contact">
             <h2 className="press-h2 press-h2--small" style={{ marginBottom: 24 }}>
-              Interviews, premieres, review copies.
+              Contact
             </h2>
             <a href="mailto:contact@emskimusic.com" className="contact__email">
               contact@emskimusic.com
@@ -416,7 +417,7 @@ function PhotoGrid({ photos }) {
         ))}
       </div>
 
-      {active !== null && (
+      {active !== null && createPortal(
         <div
           className="photo-lightbox"
           onClick={() => setActive(null)}
@@ -465,7 +466,8 @@ function PhotoGrid({ photos }) {
           <div className="photo-lightbox__counter">
             {active + 1} / {photos.length}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
