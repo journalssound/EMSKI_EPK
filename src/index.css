@@ -1360,6 +1360,41 @@ button {
   font-style: italic;
 }
 
+.rollout-list {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: var(--f-body);
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.74);
+}
+.rollout-list li {
+  padding-left: 14px;
+  border-left: 1px solid rgba(167, 208, 227, 0.35);
+}
+.rollout-list__label {
+  font-family: var(--f-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #A7D0E3 0%, #C2E7F7 50%, #A7D0E3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-right: 6px;
+}
+.rollout-list em {
+  color: rgba(255, 255, 255, 0.92);
+  font-style: italic;
+}
+
 .press-helper {
   font-family: var(--f-body);
   font-size: 12px;
