@@ -98,7 +98,7 @@ export default function EmskiPress() {
           </p>
 
           <p className={`press-hero__meta ${loaded ? "press-hero__meta--loaded" : ""}`}>
-            Independent release · 16-week rollout
+            Independent release · May 28 – Aug 20, 2026 · 16-week rollout
           </p>
 
           <ol id="ep" className={`press-stages ${loaded ? "press-stages--loaded" : ""}`}>
@@ -339,6 +339,9 @@ function StageTile({ track, index }) {
           <span className="stage-tile__num">{track.stageNum}</span>
           <span className="stage-tile__title">{track.title}</span>
           <span className="stage-tile__stage">[{track.stage}]</span>
+          {track.release && (
+            <span className="stage-tile__release">{track.release}</span>
+          )}
           <span className="stage-tile__cta" aria-hidden="true">
             {open ? "■ close" : "▶ play"}
           </span>

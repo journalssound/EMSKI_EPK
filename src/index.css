@@ -1242,6 +1242,15 @@ button {
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+.stage-tile__release {
+  margin-top: 4px;
+  font-family: var(--f-heading);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
 .stage-tile__cta {
   margin-top: 6px;
   font-size: 9px;
