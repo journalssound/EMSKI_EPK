@@ -157,44 +157,11 @@ export default function EmskiPress() {
             <h2 className="press-h2 press-h2--small">Five chapters. Sixteen weeks. One arc.</h2>
 
             <p className="press-prose">
-              <strong>e/MOTION</strong> drops as five chapters across a 16-week
-              independent rollout. Each single is an episode, not a post — built
-              from two threads that run in parallel.
-            </p>
-
-            <ul className="rollout-list">
-              <li>
-                <span className="rollout-list__label">Documentary thread.</span>{" "}
-                Tight, body-part close-ups in a Netflix-grade interview format. An
-                off-camera voice asks one question per chapter. Every answer is
-                deliberately ambiguous — it reads as the loss of someone, or the
-                loss of who you used to be. Both are true.
-              </li>
-              <li>
-                <span className="rollout-list__label">Narrative thread.</span>{" "}
-                Each answer cuts into trailer footage from that chapter's music
-                video, announcing the next single. The character introduced in{" "}
-                <em>Wait For Me</em>'s overdose narrative is the through-line —
-                we follow them across all five stages.
-              </li>
-              <li>
-                <span className="rollout-list__label">The engine.</span> The five
-                chapters track the five stages of grief, never named on screen.
-                The viewer feels the arc through color, pacing, and weight before
-                the lyrics ever land.
-              </li>
-              <li>
-                <span className="rollout-list__label">The breaks.</span> Two
-                chapters break the interview format on purpose. <em>Calm Down</em>{" "}
-                erupts. <em>Hold Me Up</em> collapses into silence. The format is
-                the rule; the breaks are the bridges.
-              </li>
-            </ul>
-
-            <p className="press-prose" style={{ marginTop: 18, color: "rgba(255,255,255,0.65)" }}>
-              The intent: an episodic release viewers stay with for 16 weeks
-              because they want to know what happens to her — not just what song
-              drops next.
+              <strong>e/MOTION</strong> rolls out as five episodes over 16 weeks
+              (May 28 – Aug 20). Each single arrives with a music video and a
+              short companion film — together they follow one character across
+              the five stages of grief, never named on screen. The full EP and a
+              live performance video drop with the final chapter.
             </p>
           </div>
         </Reveal>
