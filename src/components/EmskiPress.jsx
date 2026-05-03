@@ -22,7 +22,7 @@ export default function EmskiPress() {
   // Per-route document title + meta
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "EMSKI — Press · E/MOTION EP";
+    document.title = "EMSKI — Press · e/MOTION EP";
 
     const setMeta = (selector, attr, value) => {
       const el = document.querySelector(selector);
@@ -35,9 +35,9 @@ export default function EmskiPress() {
     const undo1 = setMeta(
       'meta[name="description"]',
       "content",
-      "EMSKI — press materials for E/MOTION, a five-track EP through the stages of grief. Bio, music, photos, contact."
+      "EMSKI — press materials for e/MOTION, a five-track EP through the stages of grief. Bio, music, photos, contact."
     );
-    const undo2 = setMeta('meta[property="og:title"]', "content", "EMSKI — Press · E/MOTION EP");
+    const undo2 = setMeta('meta[property="og:title"]', "content", "EMSKI — Press · e/MOTION EP");
     const undo3 = setMeta(
       'meta[property="og:description"]',
       "content",
@@ -83,7 +83,7 @@ export default function EmskiPress() {
           </div>
 
           <h1 className={`press-hero__title ${loaded ? "press-hero__title--loaded" : ""}`}>
-            E/MOTION
+            e/MOTION
           </h1>
 
           <div className={`press-hero__definition ${loaded ? "press-hero__definition--loaded" : ""}`}>
@@ -221,7 +221,7 @@ export default function EmskiPress() {
 
       <footer className="site-footer">
         <span className="site-footer__text">&copy; 2026 EMSKI MUSIC</span>
-        <span className="site-footer__text site-footer__text--dim">PRESS · E/MOTION EP</span>
+        <span className="site-footer__text site-footer__text--dim">PRESS · e/MOTION EP</span>
       </footer>
     </>
   );
