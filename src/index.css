@@ -680,13 +680,11 @@ button {
 }
 
 .photos-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  columns: 3;
+  column-gap: 8px;
 }
-@media (max-width: 720px) {
-  .photos-grid { grid-template-columns: 1fr; }
-}
+@media (max-width: 900px) { .photos-grid { columns: 2; } }
+@media (max-width: 560px) { .photos-grid { columns: 1; } }
 
 .photo-cell {
   background: rgba(255, 255, 255, 0.02);
