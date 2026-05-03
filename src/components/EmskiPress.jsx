@@ -93,9 +93,8 @@ export default function EmskiPress() {
           </div>
 
           <p className={`press-hero__lede ${loaded ? "press-hero__lede--loaded" : ""}`}>
-            A five-track electronic EP from <strong>EMSKI</strong> — built as a single
-            arc through the <strong>five stages of grief.</strong> One artist writing,
-            producing, drumming, singing, and directing every visual.
+            <span className="press-hero__lede-line">A five-track EP built as one arc through the five stages of grief.</span>
+            <span className="press-hero__lede-sub">From <strong>EMSKI</strong> — hard-edged, vocal-forward electronic music.</span>
           </p>
 
           <ol id="ep" className={`press-stages ${loaded ? "press-stages--loaded" : ""}`}>
@@ -116,9 +115,8 @@ export default function EmskiPress() {
             <h2 className="press-h2 press-h2--small">EMSKI.</h2>
 
             <p className="press-prose">
-              EMSKI is the project of Emma — a multi-instrumentalist who writes,
-              produces, sings, drums, and builds the visual world the music lives
-              inside. Released on <strong>mau5trap</strong>, <strong>Ophelia</strong>,{" "}
+              EMSKI is the electronic project of Emma. Released on{" "}
+              <strong>mau5trap</strong>, <strong>Ophelia</strong>,{" "}
               <strong>Monstercat</strong>, <strong>Bitbird</strong>,{" "}
               <strong>Hexagon</strong>, and <strong>Sable Valley</strong>. <em>For
               fans of {PRESS_FFO.join(", ")}.</em>

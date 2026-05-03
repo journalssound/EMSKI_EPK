@@ -1094,7 +1094,7 @@ button {
 
 /* Hero lede — the actual summary */
 .press-hero__lede {
-  max-width: 620px;
+  max-width: 760px;
   margin: 18px auto 0;
   font-family: var(--f-body);
   font-size: clamp(14px, 1.4vw, 16px);
@@ -1104,11 +1104,26 @@ button {
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
 }
 .press-hero__lede--loaded { opacity: 1; transform: none; }
 .press-hero__lede strong {
   color: var(--c-white);
   font-weight: 600;
+}
+.press-hero__lede-line {
+  white-space: nowrap;
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(255, 255, 255, 0.9);
+}
+.press-hero__lede-sub {
+  color: rgba(255, 255, 255, 0.65);
+}
+@media (max-width: 760px) {
+  .press-hero__lede-line { white-space: normal; }
 }
 
 /* ── Stage tiles — 5-across, video-backed ─────────────── */
