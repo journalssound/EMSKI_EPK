@@ -116,7 +116,7 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="artist">
             <p className="press-eyebrow">The Artist</p>
-            <h2 className="press-h2 press-h2--small">EMSKI.</h2>
+            <h2 className="press-h2 press-h2--small">EMSKI</h2>
 
             <p className="press-prose">
               EMSKI is the electronic project of Emma — released on{" "}
@@ -154,7 +154,7 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="rollout">
             <p className="press-eyebrow">The Rollout</p>
-            <h2 className="press-h2 press-h2--small">Five chapters. Sixteen weeks. One arc.</h2>
+            <h2 className="press-h2 press-h2--small">Five chapters. Sixteen weeks. One arc</h2>
 
             <p className="press-prose" style={{ marginBottom: 36 }}>
               <strong>e/MOTION</strong> releases as five episodes from{" "}
@@ -217,7 +217,7 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="live">
             <p className="press-eyebrow">Live</p>
-            <h2 className="press-h2 press-h2--small">A full live audiovisual set.</h2>
+            <h2 className="press-h2 press-h2--small">A full live audiovisual set</h2>
             <p className="press-prose" style={{ marginBottom: 24 }}>
               Music, visuals, and lighting move as one. DJ and live drummer in
               the same set — the body of a live act with the velocity of an
