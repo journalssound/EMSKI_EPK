@@ -131,7 +131,7 @@ export default function EmskiPress() {
               they haven't made yet — scared, in transition, looking for
               permission to be messy and against the grain. <strong>e/MOTION</strong>{" "}
               is EMSKI branching into a new direction: something more vulnerable,
-              emotional, honest — a companion through the mess.
+              emotional, honest.
             </p>
 
             <div className="glance-block" style={{ marginTop: 40 }}>
