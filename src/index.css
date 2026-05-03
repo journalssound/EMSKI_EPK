@@ -1204,20 +1204,22 @@ button {
   letter-spacing: 0.3em;
   color: var(--c-cyan);
 }
-.stage-tile__stage {
+.stage-tile__title {
   font-family: var(--f-heading);
   font-weight: 700;
-  font-size: clamp(12px, 1.4vw, 15px);
-  letter-spacing: 0.05em;
+  font-size: clamp(14px, 1.6vw, 18px);
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--c-white);
   line-height: 1.05;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
-.stage-tile__title {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.02em;
+.stage-tile__stage {
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 239, 239, 0.85);
   line-height: 1.2;
 }
 .stage-tile__cta {
@@ -1279,16 +1281,15 @@ button {
     padding: 0;
   }
   .stage-tile__num { order: 0; }
-  .stage-tile__stage {
+  .stage-tile__title {
     order: 1;
-    font-size: 14px;
+    font-size: 15px;
     text-shadow: none;
   }
-  .stage-tile__title {
+  .stage-tile__stage {
     order: 2;
     flex: 1;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
   }
   .stage-tile__cta {
     order: 3;

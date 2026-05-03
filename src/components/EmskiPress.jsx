@@ -268,8 +268,8 @@ function StageTile({ track, index }) {
         <div className="stage-tile__overlay" />
         <div className="stage-tile__content">
           <span className="stage-tile__num">{track.stageNum}</span>
-          <span className="stage-tile__stage">{track.stage}</span>
           <span className="stage-tile__title">{track.title}</span>
+          <span className="stage-tile__stage">[{track.stage}]</span>
           <span className="stage-tile__cta" aria-hidden="true">
             {open ? "■ close" : "▶ play"}
           </span>
