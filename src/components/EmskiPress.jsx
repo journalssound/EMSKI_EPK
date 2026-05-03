@@ -166,36 +166,9 @@ export default function EmskiPress() {
 
             <ul className="campaign-grid">
               {[
-                {
-                  count: "5",
-                  label: "Singles",
-                  desc: "Released across 16 weeks. Hold Me Up is the anchor.",
-                },
-                {
-                  count: "5",
-                  label: "Music Videos",
-                  desc: "One per chapter. Color, pacing, and weight track the arc.",
-                },
-                {
-                  count: "5",
-                  label: "Documentary Episodes",
-                  desc: "Tight close-ups, one ambiguous question per chapter — answers read as the loss of someone, or who you used to be.",
-                },
-                {
-                  count: "1",
-                  label: "Full EP",
-                  desc: "Lands with the final chapter on Aug 20.",
-                },
-                {
-                  count: "1",
-                  label: "Live Performance Film",
-                  desc: "Drops alongside the EP. Full audiovisual set.",
-                },
-                {
-                  count: "1",
-                  label: "Press Window",
-                  desc: "Coordinated push around the anchor track in late July.",
-                },
+                { count: "5", label: "Singles" },
+                { count: "5", label: "Music Videos" },
+                { count: "5", label: "Documentary Episodes" },
               ].map((item, i) => (
                 <li
                   key={item.label}
@@ -204,7 +177,6 @@ export default function EmskiPress() {
                 >
                   <span className="campaign-card__count">{item.count}</span>
                   <p className="campaign-card__label">{item.label}</p>
-                  <p className="campaign-card__desc">{item.desc}</p>
                 </li>
               ))}
             </ul>
@@ -234,7 +206,7 @@ export default function EmskiPress() {
           <div id="photos">
             <div className="photos-header">
               <h2 className="press-h2 press-h2--small" style={{ margin: 0 }}>
-                Press photos.
+                Press photos
               </h2>
               <a
                 href="https://www.dropbox.com/scl/fo/d97f64t3bj6qhnmz5v5gi/AGo56OIbpunUZkfeFouyFOo?rlkey=cyw60ahlbxabwiyx10m5pn71x&st=8uquqx8w&dl=0"
