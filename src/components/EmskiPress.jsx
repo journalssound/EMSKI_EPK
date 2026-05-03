@@ -156,13 +156,79 @@ export default function EmskiPress() {
             <p className="press-eyebrow">The Rollout</p>
             <h2 className="press-h2 press-h2--small">Five chapters. Sixteen weeks. One arc.</h2>
 
-            <p className="press-prose">
-              <strong>e/MOTION</strong> rolls out as five episodes over 16 weeks
-              (May 28 – Aug 20). Each single arrives with a music video and a
-              short companion film — together they follow one character across
-              the five stages of grief, never named on screen. The full EP and a
-              live performance video drop with the final chapter.
+            <p className="press-prose" style={{ marginBottom: 32 }}>
+              <strong>e/MOTION</strong> releases as five episodes from{" "}
+              <strong>May 28 – Aug 20</strong>. Each chapter ships a single, a
+              music video, and a short companion film — following one character
+              across the five stages of grief, never named on screen.
             </p>
+
+            <ol className="rollout-timeline">
+              {[
+                {
+                  code: "EF-0001",
+                  date: "May 28",
+                  title: "Wait For Me",
+                  stage: "Denial",
+                  drops: ["Single", "Music Video", "Companion Film"],
+                },
+                {
+                  code: "EF-0002",
+                  date: "Jun 18",
+                  title: "For U",
+                  stage: "Bargaining",
+                  drops: ["Single", "Music Video", "Companion Film"],
+                },
+                {
+                  code: "EF-0003",
+                  date: "Jul 9",
+                  title: "Calm Down",
+                  stage: "Anger",
+                  drops: ["Single", "Music Video", "Format Break"],
+                },
+                {
+                  code: "EF-0004",
+                  date: "Jul 30",
+                  title: "Hold Me Up",
+                  stage: "Depression",
+                  drops: ["Anchor Single", "Music Video", "Companion Film", "Press Push"],
+                  peak: true,
+                },
+                {
+                  code: "EF-0005",
+                  date: "Aug 20",
+                  title: "Never Let Go",
+                  stage: "Acceptance",
+                  drops: ["Final Single", "Full EP", "Live Performance Video"],
+                  finale: true,
+                },
+              ].map((ch, i) => (
+                <li
+                  key={ch.code}
+                  className={`rollout-chapter${ch.peak ? " rollout-chapter--peak" : ""}${ch.finale ? " rollout-chapter--finale" : ""}`}
+                  style={{ "--i": i }}
+                >
+                  <div className="rollout-chapter__rail">
+                    <span className="rollout-chapter__node" />
+                  </div>
+                  <div className="rollout-chapter__body">
+                    <div className="rollout-chapter__head">
+                      <span className="rollout-chapter__code">{ch.code}</span>
+                      <span className="rollout-chapter__date">{ch.date}</span>
+                      {ch.peak && <span className="rollout-chapter__tag">PEAK</span>}
+                      {ch.finale && <span className="rollout-chapter__tag">EP COMPLETE</span>}
+                    </div>
+                    <p className="rollout-chapter__title">{ch.title}</p>
+                    <p className="rollout-chapter__stage">[{ch.stage}]</p>
+                    <ul className="rollout-chapter__drops">
+                      {ch.drops.map((d) => (
+                        <li key={d}>{d}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </Reveal>
 
