@@ -1216,11 +1216,15 @@ button {
 }
 .stage-tile__stage {
   font-size: clamp(10px, 1.1vw, 12px);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(0, 239, 239, 0.85);
   line-height: 1.2;
+  background: linear-gradient(135deg, #A7D0E3 0%, #C2E7F7 50%, #A7D0E3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .stage-tile__cta {
   margin-top: 6px;
