@@ -219,9 +219,16 @@ export default function EmskiEPK() {
             </div>
             <div className="photos-grid">
               {[
+                { src: "/photos/emotion-2.jpg", alt: "EMSKI e/MOTION press 2" },
+                { src: "/photos/live-3.jpg", alt: "EMSKI live 3" },
                 { src: "/photos/shot-2.jpg", alt: "EMSKI press shot 2" },
-                { src: "/photos/shot-1.jpg", alt: "EMSKI press shot 1" },
+                { src: "/photos/live-1.jpg", alt: "EMSKI live 1" },
                 { src: "/photos/main-press.jpg", alt: "EMSKI main press shot" },
+                { src: "/photos/emotion-3.jpg", alt: "EMSKI e/MOTION press 3" },
+                { src: "/photos/live-4.jpg", alt: "EMSKI live 4" },
+                { src: "/photos/shot-1.jpg", alt: "EMSKI press shot 1" },
+                { src: "/photos/emotion-1.jpg", alt: "EMSKI e/MOTION press 1" },
+                { src: "/photos/live-2.jpg", alt: "EMSKI live 2" },
                 { src: "/photos/emski-sweat.jpg", alt: "EMSKI sweat" },
               ].map((photo, i) => (
                 <div
