@@ -99,7 +99,7 @@ export default function EmskiPress() {
           </p>
 
           <p className={`press-hero__meta ${loaded ? "press-hero__meta--loaded" : ""}`}>
-            Independent release · May 28 – Aug 20, 2026 · 16-week rollout
+            Distribution & administration by Create Music Group · May 28 – Aug 20, 2026 · 16-week rollout
           </p>
 
           <ol id="ep" className={`press-stages ${loaded ? "press-stages--loaded" : ""}`}>
@@ -136,15 +136,12 @@ export default function EmskiPress() {
             </p>
 
             <div className="glance-block" style={{ marginTop: 40 }}>
-              <p className="glance-label">Shared the stage with</p>
-              <p className="artist-list">
-                {ARTISTS.map((a, i) => (
-                  <span key={a}>
-                    {a}
-                    {i < ARTISTS.length - 1 && <span className="artist-list__sep"> / </span>}
-                  </span>
+              <p className="glance-label">Supported by</p>
+              <ul className="artist-chips">
+                {ARTISTS.map((a) => (
+                  <li key={a} className="artist-chip">{a}</li>
                 ))}
-              </p>
+              </ul>
             </div>
           </div>
         </Reveal>

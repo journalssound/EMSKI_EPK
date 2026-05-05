@@ -120,7 +120,7 @@ export const EP_TRACKS = [
     stageNum: "05",
     title: "Never Let Go",
     duration: "3:36",
-    release: "Aug 20 · full EP",
+    release: "Aug 20 · Full EP",
     audio: "/ninjatune/songs/never-let-go.mp3",
     video: "/ninjatune/videos/lyric-nlg.mp4",
     videoShift: -14,
