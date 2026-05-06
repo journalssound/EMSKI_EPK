@@ -193,7 +193,7 @@ export default function EmskiPress() {
             <p className="press-eyebrow">Live</p>
             <h2 className="press-h2 press-h2--small">A full live audiovisual set</h2>
             <p className="press-prose" style={{ marginBottom: 24 }}>
-              A live show built around drums, vocals, and visuals EMSKI runs herself.
+              Vocals, drums, and visuals created by EMSKI.
             </p>
             <p className="press-prose" style={{ marginBottom: 24 }}>
               <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in
