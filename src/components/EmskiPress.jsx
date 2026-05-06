@@ -171,7 +171,7 @@ export default function EmskiPress() {
                 drops, fans hear a snippet and log how it makes them feel —
                 their response is rendered as a unique, ID-tagged visual
                 fragment. Every fragment becomes one tile in the song's final
-                cover artwork — letting fans become part of the project
+                cover artwork — bringing fans in to be a part of the project
                 itself.
               </p>
             </div>
