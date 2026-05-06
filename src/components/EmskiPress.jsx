@@ -208,7 +208,7 @@ export default function EmskiPress() {
                 Press photos
               </h2>
               <a
-                href="https://www.dropbox.com/scl/fo/d97f64t3bj6qhnmz5v5gi/AGo56OIbpunUZkfeFouyFOo?rlkey=cyw60ahlbxabwiyx10m5pn71x&st=8uquqx8w&dl=0"
+                href="https://www.dropbox.com/scl/fo/j8pvftivxe1zumur6whs9/AN7Ce3QCd3P98XSqkxR8TIw?rlkey=58h37m73nbt98bsnkbihoxm6c&e=1&dl=0"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline"
