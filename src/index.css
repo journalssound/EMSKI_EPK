@@ -1565,6 +1565,41 @@ button {
   color: rgba(255, 255, 255, 0.78);
 }
 
+.rollout-callout--media {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 22px;
+  align-items: center;
+}
+.rollout-callout__preview {
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #060609;
+}
+.rollout-callout__text { min-width: 0; }
+.rollout-callout__caption {
+  margin: 10px 0 0;
+  font-family: var(--f-heading);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+@media (max-width: 640px) {
+  .rollout-callout--media {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .rollout-callout__preview {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 .campaign-card {
   position: relative;
   padding: 22px 20px 20px;

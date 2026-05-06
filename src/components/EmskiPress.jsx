@@ -13,6 +13,7 @@ import {
 } from "../data/content";
 
 import logo from "../assets/EMSKI-logo-white-rgb.png";
+import EmotionField from "./EmotionField";
 
 const PRESS_NAV = ["ep", "artist", "rollout", "live", "photos", "contact"];
 
@@ -163,17 +164,25 @@ export default function EmskiPress() {
               a documentary episode.
             </p>
 
-            <div className="rollout-callout">
-              <p className="rollout-callout__eyebrow">Fan-built cover art</p>
-              <p className="rollout-callout__body">
-                An EMSKI-designed algorithm powers an immersive, interactive
-                art experience built around community. Before each track
-                drops, fans hear a snippet and log how it makes them feel.
-                Their response is rendered as a unique, ID-tagged visual
-                fragment. Every fragment becomes one tile in the song's final
-                cover artwork — bringing fans in to be a part of the project
-                itself.
-              </p>
+            <div className="rollout-callout rollout-callout--media">
+              <div className="rollout-callout__preview" aria-hidden="true">
+                <EmotionField />
+              </div>
+              <div className="rollout-callout__text">
+                <p className="rollout-callout__eyebrow">Fan-built cover art</p>
+                <p className="rollout-callout__body">
+                  An EMSKI-designed algorithm powers an immersive, interactive
+                  art experience built around community. Before each track
+                  drops, fans hear a snippet and log how it makes them feel.
+                  Their response is rendered as a unique, ID-tagged visual
+                  fragment. Every fragment becomes one tile in the song's
+                  final cover artwork — bringing fans in to be a part of the
+                  project itself.
+                </p>
+                <p className="rollout-callout__caption">
+                  Live preview — the field at rest, before any fan input.
+                </p>
+              </div>
             </div>
           </div>
         </Reveal>
