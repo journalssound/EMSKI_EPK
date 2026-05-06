@@ -121,18 +121,18 @@ export default function EmskiPress() {
 
             <p className="press-prose">
               EMSKI is the electronic project of Emma — released on{" "}
-              <strong>mau5trap</strong>, <strong>Ophelia</strong>,{" "}
-              <strong>Monstercat</strong>, <strong>Bitbird</strong>,{" "}
-              <strong>Hexagon</strong>, and <strong>Sable Valley</strong>.{" "}
+              <strong>mau5trap</strong>, <strong>Monstercat</strong>,{" "}
+              <strong>Bitbird</strong>, <strong>Hexagon</strong>, and{" "}
+              <strong>Sable Valley</strong>.{" "}
               <em>For fans of {PRESS_FFO.join(", ")}.</em>
             </p>
 
             <p className="press-prose" style={{ marginTop: 18 }}>
-              This project is for the person standing at the edge of a change
-              they haven't made yet — scared, in transition, looking for
-              permission to be messy and against the grain. <strong>e/MOTION</strong>{" "}
-              is EMSKI branching into a new direction: something more vulnerable,
-              emotional, honest.
+              The <strong>e/MOTION</strong> EP is for the person standing at
+              the edge of a change they haven't made yet — scared, in
+              transition, looking for permission to be messy and against the
+              grain. It's EMSKI branching into a new direction: something more
+              vulnerable, emotional, honest.
             </p>
 
             <div className="glance-block" style={{ marginTop: 40 }}>
@@ -152,40 +152,27 @@ export default function EmskiPress() {
         <Reveal className="section-pad">
           <div id="rollout">
             <p className="press-eyebrow">The Rollout</p>
-            <h2 className="press-h2 press-h2--small">Five chapters. Sixteen weeks. One arc</h2>
+            <h2 className="press-h2 press-h2--small">5 chapters. 16 weeks. 1 arc</h2>
 
             <p className="press-prose" style={{ marginBottom: 36 }}>
               <strong>e/MOTION</strong> releases as five episodes from{" "}
               <strong>May 28 – Aug 20</strong>, following one character across
               the five stages of grief — never named on screen. Built from two
               threads running in parallel: a narrative arc and a documentary
-              throughline.
+              throughline. Each chapter ships with a single, a music video, and
+              a documentary episode.
             </p>
-
-            <ul className="campaign-grid">
-              {[
-                { count: "5", label: "Singles" },
-                { count: "5", label: "Music Videos" },
-                { count: "5", label: "Documentary Episodes" },
-              ].map((item, i) => (
-                <li
-                  key={item.label}
-                  className="campaign-card"
-                  style={{ "--i": i }}
-                >
-                  <span className="campaign-card__count">{item.count}</span>
-                  <p className="campaign-card__label">{item.label}</p>
-                </li>
-              ))}
-            </ul>
 
             <div className="rollout-callout">
               <p className="rollout-callout__eyebrow">Fan-built cover art</p>
               <p className="rollout-callout__body">
-                Before each track drops, fans hear a snippet and log how it
-                made them feel. An algorithm turns each response into a
-                unique, ID-tagged visual fragment — and every fragment
-                becomes one tile in the song's final cover artwork.
+                An EMSKI-designed algorithm powers an immersive, interactive
+                art experience built around community. Before each track
+                drops, fans hear a snippet and log how it makes them feel —
+                their response is rendered as a unique, ID-tagged visual
+                fragment. Every fragment becomes one tile in the song's final
+                cover artwork, making each fan a literal piece of the
+                project.
               </p>
             </div>
           </div>
