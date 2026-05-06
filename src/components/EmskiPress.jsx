@@ -195,16 +195,9 @@ export default function EmskiPress() {
             <p className="press-prose" style={{ marginBottom: 24 }}>
               Vocals, drums, and visuals created by EMSKI.
             </p>
-            <p className="press-prose" style={{ marginBottom: 12 }}>
-              <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in:
+            <p className="press-prose" style={{ marginBottom: 24 }}>
+              <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in <strong>Dallas</strong>, <strong>Austin</strong>, <strong>McAllen</strong>, <strong>San Antonio</strong>, and <strong>Denver</strong>.
             </p>
-            <ul className="tour-list">
-              <li>Dallas</li>
-              <li>Austin</li>
-              <li>McAllen</li>
-              <li>San Antonio</li>
-              <li>Denver</li>
-            </ul>
             <LiveVideo />
           </div>
         </Reveal>
