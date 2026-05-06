@@ -178,6 +178,16 @@ export default function EmskiPress() {
                 </li>
               ))}
             </ul>
+
+            <div className="rollout-callout">
+              <p className="rollout-callout__eyebrow">Fan-built cover art</p>
+              <p className="rollout-callout__body">
+                Before each track drops, fans hear a snippet and log how it
+                made them feel. An algorithm turns each response into a
+                unique, ID-tagged visual fragment — and every fragment
+                becomes one tile in the song's final cover artwork.
+              </p>
+            </div>
           </div>
         </Reveal>
 
