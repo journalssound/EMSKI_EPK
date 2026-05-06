@@ -177,9 +177,6 @@ export default function EmskiPress() {
                   final cover artwork — bringing fans in to be a part of the
                   project itself.
                 </p>
-                <p className="rollout-callout__caption">
-                  Live preview — the field at rest, before any fan input.
-                </p>
               </div>
             </div>
           </div>
