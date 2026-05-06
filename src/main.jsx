@@ -1,10 +1,15 @@
-import { StrictMode } from "react";
+import { StrictMode, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import EmskiEPK from "./components/EmskiEPK";
 import EmskiPress from "./components/EmskiPress";
 import logoSrc from "./assets/EMSKI-logo-white-rgb.png";
+
+const WaitForMe = lazy(() => import("./components/wait-for-me/WaitForMe"));
+const WaitForMeGallery = lazy(() => import("./components/wait-for-me/WaitForMeGallery"));
+const WaitForMePreview = lazy(() => import("./components/wait-for-me/WaitForMePreview"));
+const WaitForMeGallery2 = lazy(() => import("./components/wait-for-me/WaitForMeGallery2"));
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
@@ -45,6 +50,38 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<EmskiEPK />} />
         <Route path="/press" element={<EmskiPress />} />
+        <Route
+          path="/wait-for-me"
+          element={
+            <Suspense fallback={<div style={{ background: "#060609", position: "fixed", inset: 0 }} />}>
+              <WaitForMe />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/wait-for-me/gallery"
+          element={
+            <Suspense fallback={<div style={{ background: "#060609", position: "fixed", inset: 0 }} />}>
+              <WaitForMeGallery />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/wait-for-me/preview"
+          element={
+            <Suspense fallback={<div style={{ background: "#060609", position: "fixed", inset: 0 }} />}>
+              <WaitForMePreview />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/wait-for-me/gallery2"
+          element={
+            <Suspense fallback={<div style={{ background: "#060609", position: "fixed", inset: 0 }} />}>
+              <WaitForMeGallery2 />
+            </Suspense>
+          }
+        />
         <Route path="*" element={<EmskiEPK />} />
       </Routes>
     </BrowserRouter>
