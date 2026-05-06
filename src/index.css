@@ -853,6 +853,11 @@ button {
   padding-bottom: 160px;
 }
 
+.contact .press-h2 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .contact__email {
   font-family: var(--f-body);
   font-size: clamp(16px, 2.2vw, 20px);
