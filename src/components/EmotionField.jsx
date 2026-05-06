@@ -243,9 +243,6 @@ export default function EmotionField({ className, style }) {
       const dt = Math.min(48, ts - lastTs) / 16.67;
       lastTs = ts;
 
-      // Fade buffer toward background each frame so trails decay instead of saturating.
-      drawFade({ alpha: 0.02 });
-
       const p = NEUTRAL_PARAMS;
       // Slightly more motion than the actual idle mode (which uses 0.4×).
       const speedMul = 0.6;
@@ -325,7 +322,7 @@ export default function EmotionField({ className, style }) {
         drawLineBufferGL.subdata(drawLineBuf.subarray(0, drawCount * 4));
         drawLines({
           color: NEUTRAL_TINT,
-          alpha: 0.3 * brightness,
+          alpha: 0.18 * brightness,
           count: drawCount * 2,
         });
       }
