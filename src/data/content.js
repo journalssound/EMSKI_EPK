@@ -128,7 +128,7 @@ export const EP_TRACKS = [
   },
 ];
 
-export const PRESS_FFO = ["BRONSON", "Golden Features", "IMANU", "Billie Eilish"];
+export const PRESS_FFO = ["Golden Features", "Rufus Du Sol", "IMANU", "Billie Eilish"];
 
 export const HERO_VIDEO_R2 =
   "https://pub-9a90af40c4df4a8aa36505acb79e02b3.r2.dev/warehouse-show-hd.mp4";
