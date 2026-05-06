@@ -196,7 +196,7 @@ export default function EmskiPress() {
               Vocals, drums, and visuals created by EMSKI.
             </p>
             <p className="press-prose" style={{ marginBottom: 12 }}>
-              <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong>:
+              <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in:
             </p>
             <ul className="tour-list">
               <li>Dallas</li>
