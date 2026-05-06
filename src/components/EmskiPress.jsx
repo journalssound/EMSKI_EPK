@@ -168,8 +168,8 @@ export default function EmskiPress() {
               <p className="rollout-callout__body">
                 An EMSKI-designed algorithm powers an immersive, interactive
                 art experience built around community. Before each track
-                drops, fans hear a snippet and log how it makes them feel —
-                their response is rendered as a unique, ID-tagged visual
+                drops, fans hear a snippet and log how it makes them feel.
+                Their response is rendered as a unique, ID-tagged visual
                 fragment. Every fragment becomes one tile in the song's final
                 cover artwork — bringing fans in to be a part of the project
                 itself.
