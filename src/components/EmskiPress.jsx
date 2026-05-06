@@ -171,8 +171,8 @@ export default function EmskiPress() {
                 drops, fans hear a snippet and log how it makes them feel —
                 their response is rendered as a unique, ID-tagged visual
                 fragment. Every fragment becomes one tile in the song's final
-                cover artwork, making each fan a literal piece of the
-                project.
+                cover artwork — letting fans become part of the project
+                itself.
               </p>
             </div>
           </div>
@@ -189,6 +189,10 @@ export default function EmskiPress() {
               Music, visuals, and lighting move as one. DJ and live drummer in
               the same set — the body of a live act with the velocity of an
               electronic one.
+            </p>
+            <p className="press-prose" style={{ marginBottom: 24 }}>
+              <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in
+              <strong> Dallas, Austin, McAllen, San Antonio,</strong> and <strong>Denver</strong>.
             </p>
             <LiveVideo />
           </div>
