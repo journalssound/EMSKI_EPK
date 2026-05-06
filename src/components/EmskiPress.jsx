@@ -160,8 +160,7 @@ export default function EmskiPress() {
               <strong>May 28 – Aug 20</strong>, following one character across
               the five stages of grief — never named on screen. Built from two
               threads running in parallel: a narrative arc and a documentary
-              throughline. Each chapter ships with a single, a music video, and
-              a documentary episode.
+              throughline.
             </p>
 
             <div className="rollout-callout rollout-callout--media">
