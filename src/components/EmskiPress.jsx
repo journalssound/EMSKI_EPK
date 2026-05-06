@@ -165,9 +165,7 @@ export default function EmskiPress() {
             </p>
 
             <div className="rollout-callout rollout-callout--media">
-              <div className="rollout-callout__preview" aria-hidden="true">
-                <EmotionField />
-              </div>
+              <LazyEmotionField />
               <div className="rollout-callout__text">
                 <p className="rollout-callout__eyebrow">Fan-built cover art</p>
                 <p className="rollout-callout__body">
@@ -278,6 +276,32 @@ export default function EmskiPress() {
  * Stage tile — vertical card in the 5-across hero strip.
  * Lyric video as ambient background; click to play audio.
  * ───────────────────────────────────────────────────────── */
+function LazyEmotionField() {
+  const ref = useRef(null);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (show || !ref.current) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShow(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [show]);
+
+  return (
+    <div ref={ref} className="rollout-callout__preview" aria-hidden="true">
+      {show && <EmotionField />}
+    </div>
+  );
+}
+
 function StageTile({ track, index }) {
   const [open, setOpen] = useState(false);
   const videoRef = useRef(null);
