@@ -193,6 +193,9 @@ export default function EmskiPress() {
             <p className="press-eyebrow">Live</p>
             <h2 className="press-h2 press-h2--small">A full live audiovisual set</h2>
             <p className="press-prose" style={{ marginBottom: 24 }}>
+              EMSKI sings, drums, and runs the visuals herself.
+            </p>
+            <p className="press-prose" style={{ marginBottom: 24 }}>
               <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in
               <strong> Dallas, Austin, McAllen, San Antonio,</strong> and <strong>Denver</strong>.
             </p>
