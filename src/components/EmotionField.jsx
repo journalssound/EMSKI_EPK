@@ -47,6 +47,17 @@ uniform vec3 u_color;
 uniform float u_alpha;
 void main() { gl_FragColor = vec4(u_color, u_alpha); }
 `;
+const FADE_VERT = `
+precision highp float;
+attribute vec2 a_pos;
+void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+`;
+const FADE_FRAG = `
+precision highp float;
+uniform vec3 u_color;
+uniform float u_alpha;
+void main() { gl_FragColor = vec4(u_color, u_alpha); }
+`;
 
 function hash2(x, y) {
   let h = ((x | 0) * 374761393 + (y | 0) * 668265263) | 0;
@@ -177,6 +188,22 @@ export default function EmotionField({ className, style }) {
     const drawBuffer = regl.buffer({ data: drawBuf, usage: "dynamic", length: N * 2 * 4 });
     const drawLineBufferGL = regl.buffer({ data: drawLineBuf, usage: "dynamic", length: N * 4 * 4 });
 
+    // Fullscreen quad for per-frame fade toward background (prevents trail buildup → white).
+    const fadeQuadBuffer = regl.buffer(new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]));
+    const drawFade = regl({
+      vert: FADE_VERT,
+      frag: FADE_FRAG,
+      attributes: { a_pos: fadeQuadBuffer },
+      uniforms: {
+        u_color: [BG_RGB[0], BG_RGB[1], BG_RGB[2]],
+        u_alpha: regl.prop("alpha"),
+      },
+      count: 4,
+      primitive: "triangle strip",
+      blend: { enable: true, func: { src: "src alpha", dst: "one minus src alpha" } },
+      depth: { enable: false },
+    });
+
     const drawLines = regl({
       vert: LINE_VERT,
       frag: LINE_FRAG,
@@ -215,6 +242,9 @@ export default function EmotionField({ className, style }) {
       if (!lastTs) lastTs = ts;
       const dt = Math.min(48, ts - lastTs) / 16.67;
       lastTs = ts;
+
+      // Fade buffer toward background each frame so trails decay instead of saturating.
+      drawFade({ alpha: 0.06 });
 
       const p = NEUTRAL_PARAMS;
       // Slightly more motion than the actual idle mode (which uses 0.4×).

@@ -193,11 +193,6 @@ export default function EmskiPress() {
             <p className="press-eyebrow">Live</p>
             <h2 className="press-h2 press-h2--small">A full live audiovisual set</h2>
             <p className="press-prose" style={{ marginBottom: 24 }}>
-              Music, visuals, and lighting move as one. DJ and live drummer in
-              the same set — the body of a live act with the velocity of an
-              electronic one.
-            </p>
-            <p className="press-prose" style={{ marginBottom: 24 }}>
               <strong>Currently on tour</strong> in support of <strong>e/MOTION</strong> — stops in
               <strong> Dallas, Austin, McAllen, San Antonio,</strong> and <strong>Denver</strong>.
             </p>
