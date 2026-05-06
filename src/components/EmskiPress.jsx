@@ -325,7 +325,7 @@ function StageTile({ track, index }) {
             <span className="stage-tile__release">{track.release}</span>
           )}
           <span className="stage-tile__cta" aria-hidden="true">
-            {open ? "■ close" : "▶ play"}
+            {open ? "close" : "play"}
           </span>
         </div>
       </button>
@@ -376,7 +376,11 @@ function LiveVideo() {
       />
       {!playing && (
         <button className="live-video__play" onClick={start} type="button">
-          <span className="live-video__play-icon" aria-hidden="true">▶</span>
+          <span className="live-video__play-icon" aria-hidden="true">
+            <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor">
+              <path d="M0 0 L14 8 L0 16 Z" />
+            </svg>
+          </span>
           <span className="live-video__play-label">Play with sound</span>
         </button>
       )}
