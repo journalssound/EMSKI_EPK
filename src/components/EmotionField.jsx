@@ -91,7 +91,7 @@ const NEUTRAL_PARAMS = {
 };
 
 // Tint matches FieldCanvas's default for neutral
-const NEUTRAL_TINT = [0.7, 0.85, 0.93];
+const NEUTRAL_TINT = [0.42, 0.55, 0.62];
 const BG_RGB = [6 / 255, 6 / 255, 9 / 255]; // #060609
 
 export default function EmotionField({ className, style }) {
@@ -295,7 +295,7 @@ export default function EmotionField({ className, style }) {
         drawLineBufferGL.subdata(drawLineBuf.subarray(0, drawCount * 4));
         drawLines({
           color: NEUTRAL_TINT,
-          alpha: 0.36 * brightness,
+          alpha: 0.18 * brightness,
           count: drawCount * 2,
         });
       }
