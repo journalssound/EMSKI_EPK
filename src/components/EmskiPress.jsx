@@ -213,7 +213,7 @@ export default function EmskiPress() {
                 rel="noopener noreferrer"
                 className="btn-outline"
               >
-                Download All
+                Download full photo set ↗
               </a>
             </div>
 
