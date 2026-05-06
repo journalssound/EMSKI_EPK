@@ -228,8 +228,11 @@ export default function EmskiPress() {
               photos={[
                 { src: "/photos/live-2.jpg", alt: "EMSKI live 2" },
                 { src: "/photos/emotion-2.jpg", alt: "EMSKI e/MOTION press 2" },
+                { src: "/photos/live-5.jpg", alt: "EMSKI live 5" },
+                { src: "/photos/portrait-1.jpg", alt: "EMSKI portrait 1" },
                 { src: "/photos/live-4.jpg", alt: "EMSKI live 4" },
                 { src: "/photos/emotion-1.jpg", alt: "EMSKI e/MOTION press 1" },
+                { src: "/photos/live-6.jpg", alt: "EMSKI live 6" },
                 { src: "/photos/live-1.jpg", alt: "EMSKI live 1" },
               ]}
             />
