@@ -224,8 +224,6 @@ export default function EmskiPress() {
                 { src: "/photos/live-4.jpg", alt: "EMSKI live 4" },
                 { src: "/photos/emotion-1.jpg", alt: "EMSKI e/MOTION press 1" },
                 { src: "/photos/live-1.jpg", alt: "EMSKI live 1" },
-                { src: "/photos/emotion-3.jpg", alt: "EMSKI e/MOTION press 3" },
-                { src: "/photos/live-3.jpg", alt: "EMSKI live 3" },
               ]}
             />
           </div>
