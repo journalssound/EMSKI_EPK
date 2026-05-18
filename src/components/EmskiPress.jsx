@@ -100,7 +100,7 @@ export default function EmskiPress() {
           </p>
 
           <p className={`press-hero__meta ${loaded ? "press-hero__meta--loaded" : ""}`}>
-            Distribution & administration by Create Music Group · May 28 – Aug 20, 2026 · 16-week rollout
+            Distribution & administration by Create Music Group · Jun 4 – Aug 27, 2026 · 16-week rollout
           </p>
 
           <ol id="ep" className={`press-stages ${loaded ? "press-stages--loaded" : ""}`}>
@@ -157,7 +157,7 @@ export default function EmskiPress() {
 
             <p className="press-prose" style={{ marginBottom: 36 }}>
               <strong>e/MOTION</strong> releases as five episodes from{" "}
-              <strong>May 28 – Aug 20</strong>, following one character across
+              <strong>Jun 4 – Aug 27</strong>, following one character across
               the five stages of grief — never named on screen. Built from two
               threads running in parallel: a narrative arc and a documentary
               throughline.
