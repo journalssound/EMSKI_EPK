@@ -1,10 +1,19 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import EmskiEPK from "./components/EmskiEPK";
 import EmskiPress from "./components/EmskiPress";
 import logoSrc from "./assets/EMSKI-logo-white-rgb.png";
+
+// Generative-art handoff (lives in /emski-wait-for-me-handoff/ as a self-contained
+// drop-in). Lazy-loaded so the regl/WebGL bundle doesn't ship with the main EPK page.
+const WaitForMe = lazy(() =>
+  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMe.jsx")
+);
+const WaitForMeV0 = lazy(() =>
+  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeV0.jsx")
+);
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
@@ -45,6 +54,22 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<EmskiEPK />} />
         <Route path="/press" element={<EmskiPress />} />
+        <Route
+          path="/generative_art"
+          element={
+            <Suspense fallback={null}>
+              <WaitForMe />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/generative_art/v0"
+          element={
+            <Suspense fallback={null}>
+              <WaitForMeV0 />
+            </Suspense>
+          }
+        />
         <Route path="*" element={<EmskiEPK />} />
       </Routes>
     </BrowserRouter>

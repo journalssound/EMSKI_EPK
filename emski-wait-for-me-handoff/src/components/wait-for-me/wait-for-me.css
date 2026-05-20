@@ -1,0 +1,392 @@
+/* /wait-for-me — generative cover-art landing for "Wait For Me". */
+
+.wfm-root {
+  position: fixed;
+  inset: 0;
+  background: #060609;
+  color: #E6F1F7;
+  font-family: var(--f-body, "Jura"), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.wfm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 640px;
+  padding: 32px 24px 64px;
+}
+
+/* Art frame — square. Matches page bg so the canvas dissolves into the page;
+   no visible border so the rectangle isn't obvious. */
+.wfm-art-frame {
+  width: min(560px, 82vw);
+  aspect-ratio: 1 / 1;
+  background: #060609;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.wfm-art-frame canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Controls — small, vertical, below the art. */
+.wfm-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 320px;
+  transition: opacity 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.wfm-controls--gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mini audio player */
+.wfm-mini-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 200px;
+}
+
+.wfm-mini-player__btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgba(230, 241, 247, 0.5);
+  color: #E6F1F7;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 180ms ease, color 180ms ease;
+  padding: 0;
+}
+
+.wfm-mini-player__btn:hover {
+  border-color: rgba(230, 241, 247, 0.9);
+  color: #ffffff;
+}
+
+.wfm-mini-player__btn svg { display: block; }
+
+.wfm-mini-player__bar {
+  flex: 1;
+  height: 1px;
+  background: rgba(230, 241, 247, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.wfm-mini-player__fill {
+  position: absolute;
+  inset: 0;
+  background: rgba(230, 241, 247, 0.85);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 100ms linear;
+}
+
+/* Input */
+.wfm-input-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.wfm-input {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(230, 241, 247, 0.3);
+  color: #E6F1F7;
+  font-family: inherit;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  width: 100%;
+  padding: 10px 8px;
+  outline: none;
+  transition: border-color 200ms ease;
+}
+
+.wfm-input::placeholder {
+  color: rgba(230, 241, 247, 0.32);
+}
+
+.wfm-input:focus {
+  border-color: rgba(230, 241, 247, 0.7);
+}
+
+.wfm-submit {
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgba(230, 241, 247, 0.4);
+  color: #E6F1F7;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 9px 24px;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.wfm-submit:hover:not(:disabled) {
+  border-color: rgba(230, 241, 247, 0.9);
+  color: #ffffff;
+}
+
+.wfm-submit:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.wfm-status {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(230, 241, 247, 0.5);
+  min-height: 14px;
+}
+
+.wfm-stamp {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: rgba(230, 241, 247, 0.4);
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+  text-align: center;
+}
+
+.wfm-stamp--visible { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wfm-controls, .wfm-stamp {
+    transition: none;
+  }
+}
+
+/* Gallery — 10 algorithm directions */
+.gallery-root {
+  min-height: 100vh;
+  background: #060609;
+  color: #E6F1F7;
+  font-family: var(--f-body, "Jura"), system-ui, sans-serif;
+  padding: 48px 32px 64px;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.gallery-header h1 {
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  font-weight: 400;
+  margin: 0 0 12px;
+}
+
+.gallery-header p {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: rgba(230, 241, 247, 0.55);
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 48px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.gallery-wrap {
+  position: relative;
+}
+
+.gallery-num {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(230, 241, 247, 0.4);
+  z-index: 2;
+}
+
+.gallery-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gallery-cell canvas {
+  display: block;
+  background: #060609;
+  border: 1px solid rgba(230, 241, 247, 0.06);
+}
+
+.gallery-cell-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gallery-cell-name {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #E6F1F7;
+}
+
+.gallery-cell-desc {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(230, 241, 247, 0.5);
+}
+
+/* Preview — three full-size renders */
+.preview-root {
+  min-height: 100vh;
+  background: #060609;
+  color: #E6F1F7;
+  font-family: var(--f-body, "Jura"), system-ui, sans-serif;
+  padding: 48px 32px 64px;
+}
+
+.preview-header { text-align: center; margin-bottom: 48px; }
+.preview-header h1 {
+  font-size: 18px;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  font-weight: 400;
+  margin: 0;
+}
+
+.preview-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.preview-wrap { position: relative; }
+
+.preview-num {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(230, 241, 247, 0.4);
+  z-index: 2;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preview-cell canvas {
+  display: block;
+  background: #060609;
+  border: 1px solid rgba(230, 241, 247, 0.06);
+}
+
+.preview-cell-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-cell-name {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: #E6F1F7;
+}
+
+.preview-cell-desc {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(230, 241, 247, 0.5);
+}
+
+/* Gallery 2 — grid of variants */
+.gallery2-root {
+  min-height: 100vh;
+  background: #060609;
+  color: #E6F1F7;
+  font-family: var(--f-body, "Jura"), system-ui, sans-serif;
+  padding: 24px 16px 48px;
+}
+.gallery2-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px 14px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+@media (max-width: 1500px) {
+  .gallery2-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 1100px) {
+  .gallery2-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .gallery2-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.gallery2-grid .gallery-wrap {
+  min-width: 0;
+}
+.gallery2-grid .gallery-cell {
+  gap: 6px;
+}
+.gallery2-grid .gallery-cell canvas {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+}
+.gallery2-grid .gallery-cell-name {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.gallery2-grid .gallery-cell-desc {
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
