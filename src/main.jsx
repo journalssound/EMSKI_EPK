@@ -71,6 +71,7 @@ createRoot(document.getElementById("root")).render(
             </Suspense>
           }
         />
+        <Route
           path="/generative_art/ribbon"
           element={
             <Suspense fallback={null}>
@@ -94,7 +95,6 @@ createRoot(document.getElementById("root")).render(
             </Suspense>
           }
         />
-        <Route
         <Route
           path="/generative_art/v0"
           element={
