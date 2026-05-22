@@ -203,8 +203,11 @@ const FieldCanvas = forwardRef(function FieldCanvas(
       return;
     }
 
+    // Particle count cut significantly (was 1400/750) per Emma's feedback that
+    // the composition reads as messy. Fewer particles = each stroke reads as a
+    // discrete deliberate gesture instead of a swarm.
     const isMobile = width <= 480 || (navigator.hardwareConcurrency || 8) <= 4;
-    const N = isMobile ? 750 : 1400;
+    const N = isMobile ? 220 : 420;
 
     const posX = new Float32Array(N);
     const posY = new Float32Array(N);
@@ -216,13 +219,6 @@ const FieldCanvas = forwardRef(function FieldCanvas(
     const lifeMax = new Float32Array(N);
     const alive = new Uint8Array(N);
     const spawnDelay = new Float32Array(N);
-    // Two-layer compositional system:
-    //   isGesture = 1  →  hero stroke (~20%): full force pipeline, high alpha
-    //   isGesture = 0  →  wash particle (~80%): only curl drift, low alpha
-    // The gesture particles carry the emotion's directional signature;
-    // the wash particles fill the canvas with the emotion's mood texture.
-    const isGesture = new Uint8Array(N);
-    const alphaMul = new Float32Array(N);
     // Per-particle phase offset — used by emotions that need each line to
     // oscillate/waver/pulse out-of-sync with its neighbors (fear, disgust).
     const particlePhase = new Float32Array(N);
@@ -236,23 +232,11 @@ const FieldCanvas = forwardRef(function FieldCanvas(
       const flow = params && params.flow;
       let x, y, vx0 = 0, vy0 = 0;
 
-      // 20% gesture (hero stroke, carries emotion signature) — uses
-      // the existing per-emotion flow spawn bands.
-      // 80% wash (background mood texture) — spawn anywhere on canvas with
-      // near-zero velocity, drifts gently with curl noise only.
-      const isHero = Math.random() < 0.20;
-      isGesture[i] = isHero ? 1 : 0;
-      alphaMul[i] = isHero ? 1.0 : 0.22;
+      // All particles are now gesture strokes. The wash/background layer was
+      // removed per Emma's feedback — it was reading as muddy ambient noise.
       particlePhase[i] = Math.random() * Math.PI * 2;
 
-      if (!isHero) {
-        // Wash particle — random position across full canvas, very weak
-        // initial velocity. Mood texture only, no directional gesture.
-        x = width * (0.05 + Math.random() * 0.90);
-        y = height * (0.05 + Math.random() * 0.90);
-        vx0 = 0;
-        vy0 = 0;
-      } else if (flow) {
+      if (flow) {
         const ox = (flow.ox != null ? flow.ox : 0.5) * width;
         const oy = (flow.oy != null ? flow.oy : 0.5) * height;
         const jitter = Math.min(width, height) * 0.04;
@@ -365,23 +349,23 @@ const FieldCanvas = forwardRef(function FieldCanvas(
       posY[i] = yc;
       prevX[i] = xc;
       prevY[i] = yc;
-      // Tighter initial velocity scatter for wash (so they drift gently)
-      const scatter = isHero ? 0.2 : 0.06;
-      velX[i] = vx0 + (Math.random() - 0.5) * scatter;
-      velY[i] = vy0 + (Math.random() - 0.5) * scatter;
+      velX[i] = vx0 + (Math.random() - 0.5) * 0.2;
+      velY[i] = vy0 + (Math.random() - 0.5) * 0.2;
       ages[i] = 0;
       // Per-emotion lifetime — surprise = punctuation, trust = sustained,
       // anger = quick punctuation, joy/etc = medium.
-      let heroLife = 200 + Math.random() * 180;
-      if (flow && isHero) {
-        if (flow.mode === "flash") heroLife = 80 + Math.random() * 60;        // very short
-        else if (flow.mode === "jagged-burst") heroLife = 110 + Math.random() * 70; // short
-        else if (flow.mode === "rotational") heroLife = 280 + Math.random() * 200; // long
-        else if (flow.mode === "settle-down") heroLife = 240 + Math.random() * 180; // long
+      let life = 200 + Math.random() * 180;
+      if (flow) {
+        if (flow.mode === "flash") life = 80 + Math.random() * 60;        // very short
+        else if (flow.mode === "jagged-burst") life = 110 + Math.random() * 70; // short
+        else if (flow.mode === "rotational") life = 280 + Math.random() * 200; // long
+        else if (flow.mode === "settle-down") life = 240 + Math.random() * 180; // long
       }
-      lifeMax[i] = isHero ? heroLife : (320 + Math.random() * 200);
+      lifeMax[i] = life;
       alive[i] = 1;
-      spawnDelay[i] = fresh ? Math.random() * 70 : 0;
+      // Wider spawn stagger so the canvas doesn't fill all at once — gives
+      // each stroke room to read before the next one arrives.
+      spawnDelay[i] = fresh ? Math.random() * 140 : Math.random() * 40;
     }
 
     function spawnAll() {
@@ -508,10 +492,13 @@ const FieldCanvas = forwardRef(function FieldCanvas(
       //   - Larger noise scale → bigger sweeping eddies (paths curve, don't scatter)
       //   - Stronger curl + higher drag → momentum carries particles in curves
       //   - Weaker flow → less straight-line forcing, more curl character
+      // Curl noise weakened (0.014 → 0.006) so lines stay more deliberate and
+      // don't get whipped into ambient turbulence. Each stroke now carries its
+      // emotion's intent more clearly.
       const flow = p.flow;
       const seedCurlMul = flow && flow.curlMul ? flow.curlMul : 1;
       const time = ts * 0.00035 * (p.noiseSpeed || 0.3) * speedMul;
-      const curlIntensity = (p.curlIntensity || 100) * intensityMul * seedCurlMul * 0.014;
+      const curlIntensity = (p.curlIntensity || 100) * intensityMul * seedCurlMul * 0.006;
       const noiseScale = (p.noiseScale || 0.003) * 580;
       const dragF = Math.pow(0.97, dt);
 
@@ -569,11 +556,8 @@ const FieldCanvas = forwardRef(function FieldCanvas(
         let vxNew = velX[i] * dragF + chFx * dt + cvx * curlIntensity * dt;
         let vyNew = velY[i] * dragF + chFy * dt + cvy * curlIntensity * dt;
 
-        // ── Directional flow + jitter — gesture particles only ──
-        // Wash particles get only curl + drag (already applied above), so
-        // they drift gently as ambient texture without carrying the
-        // emotion's directional signature.
-        if (isGesture[i]) {
+        // ── Directional flow + jitter ──
+        {
           if (flow) {
             let baseFx = 0, baseFy = 0;
             if (flow.mode === "settle-down" || flow.mode === "gravity-down") {
@@ -593,25 +577,23 @@ const FieldCanvas = forwardRef(function FieldCanvas(
             } else if (flow.mode === "horizontal-left") {
               baseFx = -flowS;
             } else if (flow.mode === "recoil") {
-              // DISGUST — strong sinusoidal pulse in line speed. Each line
-              // visibly speeds up and slows down repeatedly along its
-              // length, creating thick/thin segments. Reads as queasy
-              // recoil — pushing-away in pulses.
+              // DISGUST — softer sinusoidal pulse in line speed (was 0.4+1.1*sin,
+              // now 0.3+0.5*sin) so lines pulse subtly rather than visibly jerking.
               const phase = particlePhase[i];
-              const pulse = 0.4 + 1.1 * Math.sin(ts * 0.006 + phase);
+              const pulse = 0.3 + 0.5 * Math.sin(ts * 0.006 + phase);
               // Force in direction of current velocity = speed modulation
               const vmag = Math.hypot(vxNew, vyNew) + 0.0001;
               baseFx = (vxNew / vmag) * flowS * pulse;
               baseFy = (vyNew / vmag) * flowS * pulse;
             } else if (flow.mode === "scatter") {
               // FEAR — perpendicular oscillation = trembling/wavering lines.
-              // Force is perpendicular to particle's current velocity, sin-
-              // modulated. Each line shakes side-to-side as it travels.
+              // Wobble amplitude reduced (3.0 → 1.4) so lines tremble subtly
+              // rather than thrashing.
               const phase = particlePhase[i];
               const vmag = Math.hypot(vxNew, vyNew) + 0.0001;
               const perpX = -vyNew / vmag;
               const perpY = vxNew / vmag;
-              const wobble = Math.sin(ts * 0.012 + phase * 4) * 3.0;
+              const wobble = Math.sin(ts * 0.012 + phase * 4) * 1.4;
               baseFx = perpX * flowS * wobble;
               baseFy = perpY * flowS * wobble;
             } else if (flow.mode === "flash") {
@@ -623,17 +605,16 @@ const FieldCanvas = forwardRef(function FieldCanvas(
               vyNew *= flashDrag;
             } else if (flow.mode === "rotational") {
               // TRUST — tangential force keeps rotation going; weak inward
-              // pull makes a SPIRAL (lines curve as they rotate around
-              // center) rather than just an orbit. Distinguished from a
-              // simple circle.
+              // pull makes a SPIRAL. Tangential strength dialed back
+              // (1.5 → 1.0) so the spiral reads as calm rather than busy.
               const rdx = px - flowOx;
               const rdy = py - flowOy;
               const rd = Math.hypot(rdx, rdy) + 1;
               // Tangential vector (perpendicular to radius)
               const tx = -rdy / rd;
               const ty = rdx / rd;
-              baseFx = tx * flowS * 1.5 - (rdx / rd) * flowS * 0.25;
-              baseFy = ty * flowS * 1.5 - (rdy / rd) * flowS * 0.25;
+              baseFx = tx * flowS * 1.0 - (rdx / rd) * flowS * 0.20;
+              baseFy = ty * flowS * 1.0 - (rdy / rd) * flowS * 0.20;
             }
             // jagged-burst / flash / bloom / radial-out / rotational —
             // no continuous force, initial velocity carries the gesture.
@@ -642,9 +623,11 @@ const FieldCanvas = forwardRef(function FieldCanvas(
             vxNew += rotFx * dt;
             vyNew += rotFy * dt;
           }
+          // Jitter halved (0.06 → 0.03) — fear/anger now tremble instead of
+          // scattering into noise.
           if (p.jitter > 0) {
-            vxNew += (Math.random() - 0.5) * p.jitter * jitterMul * 0.06 * dt;
-            vyNew += (Math.random() - 0.5) * p.jitter * jitterMul * 0.06 * dt;
+            vxNew += (Math.random() - 0.5) * p.jitter * jitterMul * 0.03 * dt;
+            vyNew += (Math.random() - 0.5) * p.jitter * jitterMul * 0.03 * dt;
           }
         }
 
@@ -680,9 +663,9 @@ const FieldCanvas = forwardRef(function FieldCanvas(
         drawLineBuf[drawCount * 4 + 1] = py;
         drawLineBuf[drawCount * 4 + 2] = nx;
         drawLineBuf[drawCount * 4 + 3] = ny;
-        // Per-particle alpha multiplier — same on both line vertices.
-        drawAlphaBuf[drawCount * 2] = alphaMul[i];
-        drawAlphaBuf[drawCount * 2 + 1] = alphaMul[i];
+        // All particles render at full alpha now that the wash layer is gone.
+        drawAlphaBuf[drawCount * 2] = 1.0;
+        drawAlphaBuf[drawCount * 2 + 1] = 1.0;
         drawBuf[drawCount * 2] = nx;
         drawBuf[drawCount * 2 + 1] = ny;
         drawCount++;
@@ -692,11 +675,11 @@ const FieldCanvas = forwardRef(function FieldCanvas(
         const brightness = Math.max(0.55, Math.min(1.3, p.brightnessMul || 1));
         drawLineBufferGL.subdata(drawLineBuf.subarray(0, drawCount * 4));
         drawAlphaBufferGL.subdata(drawAlphaBuf.subarray(0, drawCount * 2));
-        // Base alpha bumped 0.30 → 0.45 so heroes (a_alpha=1.0) read clearly
-        // at 0.45; wash (a_alpha=0.22) lands at ~0.10 — a soft mood layer.
+        // Alpha lowered (0.45 → 0.32) so accumulating strokes don't pile into
+        // a muddy block over the duration of the song.
         drawLines({
           color: state.tint,
-          alpha: 0.45 * brightness,
+          alpha: 0.32 * brightness,
           count: drawCount * 2,
         });
       }
