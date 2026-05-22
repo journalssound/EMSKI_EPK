@@ -14,6 +14,15 @@ const WaitForMe = lazy(() =>
 const WaitForMeV0 = lazy(() =>
   import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeV0.jsx")
 );
+const WaitForMeRibbon = lazy(() =>
+  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeRibbon.jsx")
+);
+const WaitForMeContours = lazy(() =>
+  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeContours.jsx")
+);
+const WaitForMePhase = lazy(() =>
+  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMePhase.jsx")
+);
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
@@ -62,6 +71,30 @@ createRoot(document.getElementById("root")).render(
             </Suspense>
           }
         />
+          path="/generative_art/ribbon"
+          element={
+            <Suspense fallback={null}>
+              <WaitForMeRibbon />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/generative_art/contours"
+          element={
+            <Suspense fallback={null}>
+              <WaitForMeContours />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/generative_art/phase"
+          element={
+            <Suspense fallback={null}>
+              <WaitForMePhase />
+            </Suspense>
+          }
+        />
+        <Route
         <Route
           path="/generative_art/v0"
           element={
