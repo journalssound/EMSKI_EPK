@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import EmskiEPK from "./components/EmskiEPK";
 import EmskiPress from "./components/EmskiPress";
+import EmskiSite from "./components/website-draft/EmskiSite";
 import logoSrc from "./assets/EMSKI-logo-white-rgb.png";
 
 // Generative-art handoff (lives in /emski-wait-for-me-handoff/ as a self-contained
@@ -14,14 +15,8 @@ const WaitForMe = lazy(() =>
 const WaitForMeV0 = lazy(() =>
   import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeV0.jsx")
 );
-const WaitForMeRibbon = lazy(() =>
-  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeRibbon.jsx")
-);
-const WaitForMeContours = lazy(() =>
-  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeContours.jsx")
-);
-const WaitForMePhase = lazy(() =>
-  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMePhase.jsx")
+const WaitForMeSculpt = lazy(() =>
+  import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeSculpt.jsx")
 );
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
@@ -63,6 +58,7 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<EmskiEPK />} />
         <Route path="/press" element={<EmskiPress />} />
+        <Route path="/website-draft" element={<EmskiSite />} />
         <Route
           path="/generative_art"
           element={
@@ -72,26 +68,10 @@ createRoot(document.getElementById("root")).render(
           }
         />
         <Route
-          path="/generative_art/ribbon"
+          path="/generative_art/sculpted"
           element={
             <Suspense fallback={null}>
-              <WaitForMeRibbon />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/generative_art/contours"
-          element={
-            <Suspense fallback={null}>
-              <WaitForMeContours />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/generative_art/phase"
-          element={
-            <Suspense fallback={null}>
-              <WaitForMePhase />
+              <WaitForMeSculpt />
             </Suspense>
           }
         />
