@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ParticleLogo from "../ParticleLogo.jsx";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
 import {
@@ -22,11 +22,12 @@ import "./website-draft.css";
  *
  * Single long-scroll page: Hero → Tour → Music → Vault → Videos → Merch → Footer.
  * All styles scoped under .ws-root. Reuses the existing ParticleLogo for the hero
- * "E" without modifying it.
+ * "E" without modifying it. Scroll-reveal via IntersectionObserver — no deps.
  */
 export default function EmskiSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showPast, setShowPast] = useState(false);
+  const rootRef = useRef(null);
 
   // Close mobile menu on resize past breakpoint
   useEffect(() => {
@@ -37,13 +38,51 @@ export default function EmskiSite() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Scroll-reveal: add .is-in to any .ws-reveal as it enters viewport
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    if (
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      root.querySelectorAll(".ws-reveal").forEach((el) => el.classList.add("is-in"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    root.querySelectorAll(".ws-reveal").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    if (menuOpen) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [menuOpen]);
+
   const nextShow = UPCOMING_SHOWS[0];
   const heroCtaLabel = nextShow
     ? `Next show · ${nextShow.date} · ${nextShow.city.split(",")[0]}`
     : "Tickets";
 
+  // Helper for stagger delays
+  const delay = (ms) => ({ "--ws-reveal-delay": `${ms}ms` });
+
   return (
-    <div className="ws-root">
+    <div className="ws-root" ref={rootRef}>
       {/* ── Nav ─────────────────────────────────────────── */}
       <nav className="ws-nav" aria-label="Primary">
         <a href="#top" aria-label="EMSKI home" onClick={() => setMenuOpen(false)}>
@@ -107,12 +146,18 @@ export default function EmskiSite() {
 
       {/* ── Tour ────────────────────────────────────────── */}
       <section id="tour" className="ws-section">
-        <p className="ws-section__eyebrow">01 — Tour</p>
-        <h2 className="ws-section__title">On the road</h2>
+        <div className="ws-section__head">
+          <p className="ws-section__eyebrow ws-reveal">01 — Tour</p>
+          <h2 className="ws-section__title ws-reveal" style={delay(80)}>On the road</h2>
+        </div>
 
         <ul className="ws-tour__list">
-          {UPCOMING_SHOWS.map((show) => (
-            <li key={show.date + show.city} className="ws-tour__row">
+          {UPCOMING_SHOWS.map((show, i) => (
+            <li
+              key={show.date + show.city}
+              className="ws-tour__row ws-reveal"
+              style={delay(80 * i)}
+            >
               <div className="ws-tour__date">
                 {show.date}
                 <span className="ws-tour__year">{show.year}</span>
@@ -150,14 +195,14 @@ export default function EmskiSite() {
 
         {PAST_SHOWS.length > 0 ? (
           <button
-            className="ws-tour__toggle"
+            className="ws-tour__toggle ws-reveal"
             onClick={() => setShowPast((v) => !v)}
           >
             {showPast ? "Hide past shows" : `Show past shows (${PAST_SHOWS.length})`}
           </button>
         ) : null}
 
-        <div className="ws-tour__footer">
+        <div className="ws-tour__footer ws-reveal">
           <a
             href={VAULT_URL}
             target="_blank"
@@ -171,14 +216,16 @@ export default function EmskiSite() {
 
       {/* ── Music ───────────────────────────────────────── */}
       <section id="music" className="ws-section">
-        <p className="ws-section__eyebrow">02 — Music</p>
-        <h2 className="ws-section__title">Latest</h2>
+        <div className="ws-section__head">
+          <p className="ws-section__eyebrow ws-reveal">02 — Music</p>
+          <h2 className="ws-section__title ws-reveal" style={delay(80)}>Latest</h2>
+        </div>
 
         <div className="ws-music__featured">
-          <div className="ws-music__cover">
+          <div className="ws-music__cover ws-reveal">
             <img src={FEATURED_RELEASE.cover} alt={FEATURED_RELEASE.title} />
           </div>
-          <div>
+          <div className="ws-reveal" style={delay(160)}>
             <p className="ws-music__featured-label">{FEATURED_RELEASE.label}</p>
             <h3 className="ws-music__featured-title">{FEATURED_RELEASE.title}</h3>
             <p className="ws-music__featured-tagline">{FEATURED_RELEASE.tagline}</p>
@@ -197,9 +244,14 @@ export default function EmskiSite() {
           </div>
         </div>
 
+        <p className="ws-music__tracks-head ws-reveal">Tracklist</p>
         <ul className="ws-music__tracks">
-          {TRACKS.map((t) => (
-            <li key={t.title} className="ws-music__track">
+          {TRACKS.map((t, i) => (
+            <li
+              key={t.title}
+              className="ws-music__track ws-reveal"
+              style={delay(60 * i)}
+            >
               <span className="ws-music__track-num">{t.stageNum}</span>
               <span className="ws-music__track-stage">{t.stage}</span>
               <span className="ws-music__track-title">{t.title}</span>
@@ -210,37 +262,44 @@ export default function EmskiSite() {
       </section>
 
       {/* ── Vault ───────────────────────────────────────── */}
-      <section id="vault" className="ws-section ws-vault">
-        <div className="ws-vault__inner">
-          <p className="ws-section__eyebrow">03 — Vault</p>
-          <h2 className="ws-section__title">The Vault</h2>
-          <p className="ws-vault__lede">
+      <div className="ws-vault-wrap">
+        <section id="vault" className="ws-section ws-vault">
+          <div className="ws-section__head">
+            <p className="ws-section__eyebrow ws-reveal">03 — Vault</p>
+            <h2 className="ws-section__title ws-reveal" style={delay(80)}>The Vault</h2>
+          </div>
+          <p className="ws-vault__lede ws-reveal" style={delay(160)}>
             The home base for fans. Shows, drops, and behind-the-scenes — all in one place.
           </p>
           <ul className="ws-vault__bullets">
-            {VAULT_BULLETS.map((b) => (
-              <li key={b}>{b}</li>
+            {VAULT_BULLETS.map((b, i) => (
+              <li key={b} className="ws-reveal" style={delay(240 + 80 * i)}>
+                {b}
+              </li>
             ))}
           </ul>
           <a
             href={VAULT_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="ws-vault__cta"
+            className="ws-vault__cta ws-reveal"
+            style={delay(480)}
           >
             Enter the Vault <span className="ws-arrow">→</span>
           </a>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* ── Videos ──────────────────────────────────────── */}
       {VIDEOS.length > 0 ? (
         <section className="ws-section">
-          <p className="ws-section__eyebrow">04 — Live</p>
-          <h2 className="ws-section__title">Watch</h2>
+          <div className="ws-section__head">
+            <p className="ws-section__eyebrow ws-reveal">04 — Live</p>
+            <h2 className="ws-section__title ws-reveal" style={delay(80)}>Watch</h2>
+          </div>
           <div className="ws-videos__grid">
-            {VIDEOS.map((v) => (
-              <div key={v.title}>
+            {VIDEOS.map((v, i) => (
+              <div key={v.title} className="ws-reveal" style={delay(80 * i)}>
                 <div className="ws-video">
                   <iframe
                     src={v.embedUrl}
@@ -259,9 +318,9 @@ export default function EmskiSite() {
 
       {/* ── Merch (coming soon) ─────────────────────────── */}
       <section id="merch" className="ws-merch">
-        <p className="ws-section__eyebrow">05 — Merch</p>
-        <h2 className="ws-merch__big">Coming Soon</h2>
-        <p className="ws-merch__sub">In production · drops soon</p>
+        <p className="ws-merch__eyebrow ws-reveal">05 — Merch</p>
+        <h2 className="ws-merch__big ws-reveal" style={delay(120)}>Coming Soon</h2>
+        <p className="ws-merch__sub ws-reveal" style={delay(240)}>In production · drops soon</p>
       </section>
 
       {/* ── Footer ──────────────────────────────────────── */}
