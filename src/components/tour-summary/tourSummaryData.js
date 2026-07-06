@@ -9,10 +9,10 @@
  * ───────────────────────────────────────────────────────── */
 
 export const TOUR_META = {
-  title: "THE_EFFECT TOUR",
+  title: "the_effect tour",
   year: "2026",
-  kicker: "First regional tour",
-  subline: "Live audio-visual set · Five cities · April – June 2026",
+  subline: "Live audio-visual set",
+  kicker: "First regional tour · Five cities · April – June 2026",
   // PLACEHOLDER — swap for real tour recap footage
   heroVideo: "/E_video_loop.mp4",
 };

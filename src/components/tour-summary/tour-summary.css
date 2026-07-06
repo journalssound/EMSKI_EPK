@@ -84,30 +84,30 @@
   transform: scale(1);
 }
 
-.ts-hero__kicker {
-  font-family: var(--f-heading);
-  font-weight: 700;
-  font-size: clamp(10px, 1.3vw, 12px);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(0, 239, 239, 0.8);
-  margin-bottom: 18px;
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 1s ease 0.2s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.2s;
-}
-
 .ts-hero__title {
   font-family: var(--f-heading);
   font-weight: 800;
   font-size: clamp(30px, 6vw, 64px);
   letter-spacing: 0.04em;
-  text-transform: uppercase;
+  text-transform: lowercase;
   line-height: 1.02;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 1s ease 0.3s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.3s;
+}
+
+.ts-hero__subline {
+  font-family: var(--f-heading);
+  font-weight: 700;
+  font-size: clamp(14px, 2.2vw, 20px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 239, 239, 0.9);
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s ease 0.45s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.45s;
 }
 
 .ts-hero__tagline {
@@ -117,11 +117,11 @@
   color: rgba(255, 255, 255, 0.45);
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.5s;
+  transition: opacity 1s ease 0.6s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.6s;
 }
 
-.ts-hero--loaded .ts-hero__kicker,
 .ts-hero--loaded .ts-hero__title,
+.ts-hero--loaded .ts-hero__subline,
 .ts-hero--loaded .ts-hero__tagline {
   opacity: 1;
   transform: translateY(0);
@@ -176,7 +176,7 @@
 }
 
 .ts-city--visible .ts-city__photo {
-  opacity: 0.22;
+  opacity: 0.3;
   transform: scale(1);
 }
 
