@@ -11,7 +11,7 @@
 export const TOUR_META = {
   title: "e/MOTION TOUR",
   year: "2026",
-  subline: "Five cities · April – June 2026",
+  subline: "Tour Summary · Five cities · April – June 2026",
   // PLACEHOLDER — swap for real tour recap footage
   heroVideo: "/E_video_loop.mp4",
 };
@@ -136,7 +136,7 @@ export const NEXT_TOUR = {
     },
     {
       title: "Arizona",
-      body: "Date in motion with Ekonovah's team.",
+      body: "Booking lead via Ekonovah's team.",
     },
     {
       title: "Richmond",
