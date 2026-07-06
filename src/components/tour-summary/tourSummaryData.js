@@ -9,7 +9,7 @@
  * ───────────────────────────────────────────────────────── */
 
 export const TOUR_META = {
-  title: "the_effect tour",
+  title: "the_effect TOUR",
   year: "2026",
   subline: "Live audio-visual set",
   kicker: "First regional tour · Five cities · April – June 2026",
@@ -30,7 +30,11 @@ export const TOUR_STOPS = [
     stat: "SOLD OUT",
     statLabel: "250 / 250",
     soldOut: true,
-    points: ["First night of the run", "Full room in an AEG venue"],
+    points: [
+      "First show of tour",
+      "Sold-out show in an AEG venue",
+      "Return date requested — Richmond & Portland booking leads via venue staff",
+    ],
     // PLACEHOLDER — swap for Denver show photo
     photo: "/photos/live-1.jpg",
   },
@@ -44,7 +48,9 @@ export const TOUR_STOPS = [
     stat: "204",
     statLabel: "Tickets · 550 cap",
     soldOut: false,
-    points: ["Local promoter street team", "Fully tracked attribution ↓"],
+    blurb:
+      "The test market — promoter partnerships, paid Meta ads and organic TikTok / Instagram run side-by-side, every ticket tracked to its source. TikTok converted highest by far and set the strategy for the rest of the run.",
+    points: [],
     showAttribution: true,
     // PLACEHOLDER — swap for Dallas show photo
     photo: "/photos/live-2.jpg",
@@ -73,7 +79,7 @@ export const TOUR_STOPS = [
     stat: "193",
     statLabel: "Tickets · 360 cap",
     soldOut: false,
-    points: ["First Live Nation room"],
+    points: [],
     // PLACEHOLDER — swap for Austin show photo
     photo: "/photos/live-4.jpg",
   },
@@ -88,6 +94,10 @@ export const TOUR_STOPS = [
     statLabel: "Sold out",
     soldOut: true,
     points: ["First Rio Grande Valley date", "120K-view TikTok drove the sellout"],
+    tiktok: {
+      videoId: "7651755227023969549",
+      label: "Watch the TikTok · 120K views",
+    },
     // PLACEHOLDER — swap for McAllen show photo
     photo: "/photos/live-5.jpg",
   },
@@ -95,6 +105,7 @@ export const TOUR_STOPS = [
 
 /* Ticket attribution (Dallas, fully-tracked show) — % of tickets.
  * Rendered inside the Dallas section. */
+export const ATTRIBUTION_TITLE = "Ticket breakdown — by source";
 export const ATTRIBUTION = [
   { source: "Organic / word of mouth", pct: 65, organic: true },
   { source: "Door walk-up", pct: 18, organic: true },

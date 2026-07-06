@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useScrollY, useDelayedLoad, useInView } from "../../hooks/useAnimations";
 import Reveal from "../Reveal";
 import VideoParticles from "../VideoParticles";
@@ -7,6 +7,7 @@ import {
   TOUR_META,
   TOUR_STOPS,
   ATTRIBUTION,
+  ATTRIBUTION_TITLE,
   TOTALS,
   FINDING,
   NEXT_TOUR,
@@ -20,6 +21,7 @@ function AttributionBars() {
 
   return (
     <div ref={ref} className="ts-attr">
+      <div className="ts-attr__title">{ATTRIBUTION_TITLE}</div>
       {ATTRIBUTION.map((row, i) => (
         <div key={row.source} className="ts-attr__row">
           <div className="ts-attr__source">{row.source}</div>
@@ -36,6 +38,53 @@ function AttributionBars() {
         </div>
       ))}
     </div>
+  );
+}
+
+/* ── TikTok pop-up — muted by default, native controls to unmute ── */
+function TikTokPopup({ tiktok }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button type="button" className="ts-tiktok__trigger" onClick={() => setOpen(true)}>
+        <span className="ts-tiktok__play" />
+        {tiktok.label}
+      </button>
+
+      {open && (
+        <div className="ts-tiktok__overlay" onClick={() => setOpen(false)}>
+          <div className="ts-tiktok__modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="ts-tiktok__close"
+              aria-label="Close"
+              onClick={() => setOpen(false)}
+            >
+              ×
+            </button>
+            <iframe
+              className="ts-tiktok__frame"
+              src={`https://www.tiktok.com/player/v1/${tiktok.videoId}?autoplay=1&muted=1&loop=1&rel=0&native_context_menu=0`}
+              allow="autoplay; fullscreen; encrypted-media"
+              allowFullScreen
+              title="TikTok video"
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -74,6 +123,8 @@ function CitySection({ stop }) {
           <span className="ts-city__statlabel">{stop.statLabel}</span>
         </div>
 
+        {stop.blurb && <p className="ts-city__blurb">{stop.blurb}</p>}
+
         {stop.points?.length > 0 && (
           <ul className="ts-city__points">
             {stop.points.map((p) => (
@@ -81,6 +132,8 @@ function CitySection({ stop }) {
             ))}
           </ul>
         )}
+
+        {stop.tiktok && <TikTokPopup tiktok={stop.tiktok} />}
 
         {stop.showAttribution && <AttributionBars />}
       </div>
