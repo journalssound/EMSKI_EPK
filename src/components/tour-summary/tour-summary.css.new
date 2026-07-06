@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────
- * e/MOTION TOUR 2026 — Summary page styles
- * Scoped under .ts-root. Inherits global tokens from index.css.
+ * STRAY FILE — SAFE TO DELETE. Not imported anywhere.
+ * The real styles live in tour-summary.css
  * ───────────────────────────────────────────────────────── */
 
 .ts-root {
@@ -302,6 +302,11 @@
 .ts-city--visible .ts-city__statrow,
 .ts-city--visible .ts-city__points {
   opacity: 1;
+  transform: translateY(0);
+}
+
+/* keep the outline numeral's own transform */
+.ts-city--visible .ts-city__idx {
   transform: translateY(0);
 }
 
