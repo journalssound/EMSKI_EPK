@@ -12,6 +12,7 @@ import {
   FINDING,
   NEXT_TOUR,
 } from "./tourSummaryData";
+import { HERO_VIDEO_R2 } from "../../data/content";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
 import "./tour-summary.css";
 
@@ -146,8 +147,15 @@ export default function TourSummary() {
       </header>
 
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section className={`ts-hero ${loaded ? "ts-hero--loaded" : ""}`}>
-        <div className="ts-hero__glow" />
+      <section className={`ts-hero ${loaded ? "ts-hero--loaded" : ""}`}>        <video
+          className="ts-hero__bg"
+          src={HERO_VIDEO_R2}
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="ts-hero__veil" />        <div className="ts-hero__glow" />
         <div className={`ts-hero__video ${loaded ? "ts-hero__video--loaded" : ""}`}>
           <VideoParticles src={TOUR_META.heroVideo} width={600} height={600} />
         </div>
