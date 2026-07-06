@@ -19,6 +19,10 @@ const WaitForMeSculpt = lazy(() =>
   import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeSculpt.jsx")
 );
 
+// Private e/MOTION tour recap (unlisted, noindex). Lazy-loaded so the
+// regl/EmotionField bundle doesn't ship with the main EPK page.
+const TourSummary = lazy(() => import("./components/tour-summary/TourSummary.jsx"));
+
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
   const img = new Image();
@@ -80,6 +84,14 @@ createRoot(document.getElementById("root")).render(
           element={
             <Suspense fallback={null}>
               <WaitForMeV0 />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/e_motion_tour_summary"
+          element={
+            <Suspense fallback={null}>
+              <TourSummary />
             </Suspense>
           }
         />
