@@ -149,7 +149,7 @@ export default function TourSummary() {
       <section className={`ts-hero ${loaded ? "ts-hero--loaded" : ""}`}>
         <div className="ts-hero__glow" />
         <div className={`ts-hero__video ${loaded ? "ts-hero__video--loaded" : ""}`}>
-          <VideoParticles src={TOUR_META.heroVideo} width={280} height={280} />
+          <VideoParticles src={TOUR_META.heroVideo} width={600} height={600} />
         </div>
         <h1 className="ts-hero__title">{TOUR_META.title}</h1>
         <div className="ts-hero__subline">{TOUR_META.subline}</div>

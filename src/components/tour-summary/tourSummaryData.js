@@ -9,7 +9,7 @@
  * ───────────────────────────────────────────────────────── */
 
 export const TOUR_META = {
-  title: "the_effect TOUR",
+  title: "THE_EFFECT TOUR",
   year: "2026",
   subline: "Live audio-visual set",
   kicker: "First regional tour · Five cities · April – June 2026",
@@ -81,7 +81,9 @@ export const TOUR_STOPS = [
     stat: "193",
     statLabel: "Tickets · 360 cap",
     soldOut: false,
-    points: [],
+    points: [
+      "Debuted a live fan camera in the set — crowd projected onto the LED wall in real time",
+    ],
     // PLACEHOLDER — swap for Austin show photo
     photo: "/photos/live-4.jpg",
   },
@@ -89,7 +91,7 @@ export const TOUR_STOPS = [
     idx: "05",
     city: "McAllen",
     state: "TX",
-    venue: "via Upbeat Live", // PLACEHOLDER — confirm final venue name
+    venue: "La Bandida Vivo Bar",
     operator: "Upbeat Live",
     dateLabel: "SAT JUN 20",
     stat: "350 / 350",
@@ -136,7 +138,7 @@ export const FINDING = {
 
 /* Winter run — the ask. */
 export const NEXT_TOUR = {
-  heading: "Winter 2026–27",
+  heading: "Winter 2026 – Spring 2027",
   body: "Booking now.",
   leads: [
     {

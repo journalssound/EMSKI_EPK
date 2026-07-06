@@ -84,6 +84,17 @@
   transform: scale(1);
 }
 
+.ts-hero__video canvas {
+  max-width: min(440px, 72vw) !important;
+  height: auto !important;
+  filter: brightness(1.3) drop-shadow(0 0 14px rgba(0, 220, 245, 0.25));
+}
+
+.ts-hero__video > div {
+  display: flex;
+  justify-content: center;
+}
+
 .ts-hero__title {
   font-family: var(--f-heading);
   font-weight: 800;
@@ -297,27 +308,29 @@
   list-style: none;
   margin-top: 24px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px 28px;
+  flex-direction: column;
+  gap: 12px;
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.9s ease 0.5s, transform 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.5s;
 }
 
 .ts-city__points li {
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.6);
-  padding-left: 14px;
+  font-size: clamp(15px, 1.9vw, 18px);
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.85);
+  padding-left: 18px;
   position: relative;
+  max-width: 560px;
 }
 
 .ts-city__points li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.55em;
-  width: 5px;
+  top: 0.65em;
+  width: 8px;
   height: 1px;
   background: var(--c-cyan);
 }
@@ -507,19 +520,25 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 56px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(6, 6, 9, 0.55);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  padding: 8px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(6, 6, 9, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .ts-lead {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 20px;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
   align-items: baseline;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ts-lead:last-child {
+  border-bottom: none;
 }
 
 .ts-lead__title {
@@ -528,14 +547,14 @@
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--c-white);
+  color: var(--c-cyan);
 }
 
 .ts-lead__body {
-  font-size: 13.5px;
+  font-size: clamp(14px, 1.8vw, 16px);
+  line-height: 1.55;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 8px rgba(6, 6, 9, 0.9);
 }
 
 .ts-next__cta {
@@ -638,9 +657,14 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .ts-leads {
+    padding: 4px 20px;
+  }
+
   .ts-lead {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: 8px;
+    padding: 18px 0;
   }
 }
 
