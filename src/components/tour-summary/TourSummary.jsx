@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useScrollY, useDelayedLoad, useInView } from "../../hooks/useAnimations";
 import Reveal from "../Reveal";
 import VideoParticles from "../VideoParticles";
@@ -41,50 +41,24 @@ function AttributionBars() {
   );
 }
 
-/* ── TikTok pop-up — muted by default, native controls to unmute ── */
-function TikTokPopup({ tiktok }) {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
+/* ── TikTok mini-player — pops up muted, beneath the content, hanging off a dotted line ── */
+function TikTokPopup({ tiktok, sectionVisible }) {
   return (
-    <>
-      <button type="button" className="ts-tiktok__trigger" onClick={() => setOpen(true)}>
-        <span className="ts-tiktok__play" />
-        {tiktok.label}
-      </button>
-
-      {open && (
-        <div className="ts-tiktok__overlay" onClick={() => setOpen(false)}>
-          <div className="ts-tiktok__modal" onClick={(e) => e.stopPropagation()}>
-            <button
-              type="button"
-              className="ts-tiktok__close"
-              aria-label="Close"
-              onClick={() => setOpen(false)}
-            >
-              ×
-            </button>
-            <iframe
-              className="ts-tiktok__frame"
-              src={`https://www.tiktok.com/player/v1/${tiktok.videoId}?autoplay=1&muted=1&loop=1&rel=0&native_context_menu=0`}
-              allow="autoplay; fullscreen; encrypted-media"
-              allowFullScreen
-              title="TikTok video"
-            />
-          </div>
-        </div>
-      )}
-    </>
+    <div className={`ts-tiktok ${sectionVisible ? "ts-tiktok--visible" : ""}`}>
+      <span className="ts-tiktok__line" />
+      <div className="ts-tiktok__mini">
+        {sectionVisible && (
+          <iframe
+            className="ts-tiktok__frame"
+            src={`https://www.tiktok.com/player/v1/${tiktok.videoId}?autoplay=1&muted=1&loop=1&rel=0&native_context_menu=0`}
+            allow="autoplay; fullscreen; encrypted-media"
+            allowFullScreen
+            title="TikTok video"
+          />
+        )}
+      </div>
+      <span className="ts-tiktok__label">{tiktok.label}</span>
+    </div>
   );
 }
 
@@ -133,7 +107,7 @@ function CitySection({ stop }) {
           </ul>
         )}
 
-        {stop.tiktok && <TikTokPopup tiktok={stop.tiktok} />}
+        {stop.tiktok && <TikTokPopup tiktok={stop.tiktok} sectionVisible={visible} />}
 
         {stop.showAttribution && <AttributionBars />}
       </div>

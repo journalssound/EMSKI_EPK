@@ -48,9 +48,11 @@ export const TOUR_STOPS = [
     stat: "204",
     statLabel: "Tickets · 550 cap",
     soldOut: false,
-    blurb:
-      "The test market — promoter partnerships, paid Meta ads and organic TikTok / Instagram run side-by-side, every ticket tracked to its source. TikTok converted highest by far and set the strategy for the rest of the run.",
-    points: [],
+    points: [
+      "The test market — every ticket tracked to its source",
+      "Promoter partnerships · paid Meta ads · organic TikTok & Instagram",
+      "TikTok converted highest by far — set the strategy for the rest of the run",
+    ],
     showAttribution: true,
     // PLACEHOLDER — swap for Dallas show photo
     photo: "/photos/live-2.jpg",
@@ -93,7 +95,7 @@ export const TOUR_STOPS = [
     stat: "350 / 350",
     statLabel: "Sold out",
     soldOut: true,
-    points: ["First Rio Grande Valley date", "120K-view TikTok drove the sellout"],
+    points: ["120K-view TikTok drove the sellout"],
     tiktok: {
       videoId: "7651755227023969549",
       label: "Watch the TikTok · 120K views",
