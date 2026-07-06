@@ -84,6 +84,19 @@
   transform: scale(1);
 }
 
+.ts-hero__kicker {
+  font-family: var(--f-heading);
+  font-weight: 700;
+  font-size: clamp(10px, 1.3vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(0, 239, 239, 0.8);
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s ease 0.2s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.2s;
+}
+
 .ts-hero__title {
   font-family: var(--f-heading);
   font-weight: 800;
@@ -97,12 +110,6 @@
   transition: opacity 1s ease 0.3s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.3s;
 }
 
-.ts-hero__title em {
-  font-style: normal;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(0, 239, 239, 0.8);
-}
-
 .ts-hero__tagline {
   font-size: clamp(11px, 1.4vw, 13px);
   letter-spacing: 0.24em;
@@ -113,6 +120,7 @@
   transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.5s;
 }
 
+.ts-hero--loaded .ts-hero__kicker,
 .ts-hero--loaded .ts-hero__title,
 .ts-hero--loaded .ts-hero__tagline {
   opacity: 1;
@@ -213,6 +221,10 @@
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.8s ease 0.1s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
+}
+
+.ts-city__venue {
+  color: rgba(0, 239, 239, 0.85);
 }
 
 .ts-city__name {

@@ -58,7 +58,7 @@ function CitySection({ stop }) {
         <div className="ts-city__idx">{stop.idx}</div>
 
         <div className="ts-city__meta">
-          {stop.dateLabel} · {stop.venue}
+          {stop.dateLabel} · <span className="ts-city__venue">{stop.venue}</span>
           {stop.operator ? ` · ${stop.operator}` : ""}
         </div>
 
@@ -95,7 +95,7 @@ export default function TourSummary() {
   /* Private page: custom title + noindex. */
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "EMSKI — e/MOTION Tour 2026";
+    document.title = "EMSKI — The_Effect Tour 2026";
 
     const robots = document.createElement("meta");
     robots.name = "robots";
@@ -115,7 +115,7 @@ export default function TourSummary() {
         <span className="ts-topbar__logo">
           <img src={logo} alt="EMSKI" />
         </span>
-        <span className="ts-topbar__tag">e/MOTION Tour {TOUR_META.year}</span>
+        <span className="ts-topbar__tag">The_Effect Tour {TOUR_META.year}</span>
       </header>
 
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -124,9 +124,8 @@ export default function TourSummary() {
         <div className={`ts-hero__video ${loaded ? "ts-hero__video--loaded" : ""}`}>
           <VideoParticles src={TOUR_META.heroVideo} width={280} height={280} />
         </div>
-        <h1 className="ts-hero__title">
-          e/<em>MOTION</em> TOUR
-        </h1>
+        <div className="ts-hero__kicker">{TOUR_META.kicker}</div>
+        <h1 className="ts-hero__title">{TOUR_META.title}</h1>
         <div className="ts-hero__tagline">{TOUR_META.subline}</div>
         <div className="ts-hero__scrollcue" />
       </section>
@@ -193,7 +192,7 @@ export default function TourSummary() {
       </section>
 
       <footer className="ts-footer">
-        EMSKI · e/MOTION Tour {TOUR_META.year} · Private
+        EMSKI · The_Effect Tour {TOUR_META.year} · Private
       </footer>
     </div>
   );

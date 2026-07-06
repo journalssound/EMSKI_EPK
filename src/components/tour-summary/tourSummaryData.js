@@ -9,9 +9,10 @@
  * ───────────────────────────────────────────────────────── */
 
 export const TOUR_META = {
-  title: "e/MOTION TOUR",
+  title: "THE_EFFECT TOUR",
   year: "2026",
-  subline: "Tour Summary · Five cities · April – June 2026",
+  kicker: "First regional tour",
+  subline: "Live audio-visual set · Five cities · April – June 2026",
   // PLACEHOLDER — swap for real tour recap footage
   heroVideo: "/E_video_loop.mp4",
 };
@@ -43,7 +44,7 @@ export const TOUR_STOPS = [
     stat: "204",
     statLabel: "Tickets · 550 cap",
     soldOut: false,
-    points: ["49-ambassador street team", "Fully tracked attribution ↓"],
+    points: ["Local promoter street team", "Fully tracked attribution ↓"],
     showAttribution: true,
     // PLACEHOLDER — swap for Dallas show photo
     photo: "/photos/live-2.jpg",
@@ -52,10 +53,10 @@ export const TOUR_STOPS = [
     idx: "03",
     city: "San Antonio",
     state: "TX",
-    venue: "1902",
+    venue: "1902 Nightclub",
     operator: null,
     dateLabel: "THU JUN 4",
-    stat: "~700",
+    stat: "941",
     statLabel: "RSVPs · 800 cap",
     soldOut: false,
     points: [],
@@ -72,7 +73,7 @@ export const TOUR_STOPS = [
     stat: "193",
     statLabel: "Tickets · 360 cap",
     soldOut: false,
-    points: ["First Live Nation room", "Full audiovisual headline set"],
+    points: ["First Live Nation room"],
     // PLACEHOLDER — swap for Austin show photo
     photo: "/photos/live-4.jpg",
   },
@@ -82,11 +83,11 @@ export const TOUR_STOPS = [
     state: "TX",
     venue: "via Upbeat Live", // PLACEHOLDER — confirm final venue name
     operator: "Upbeat Live",
-    dateLabel: "JUN", // PLACEHOLDER — confirm final date
+    dateLabel: "SAT JUN 20",
     stat: "350 / 350",
     statLabel: "Sold out",
     soldOut: true,
-    points: ["First Rio Grande Valley date"],
+    points: ["First Rio Grande Valley date", "120K-view TikTok drove the sellout"],
     // PLACEHOLDER — swap for McAllen show photo
     photo: "/photos/live-5.jpg",
   },
@@ -98,7 +99,7 @@ export const ATTRIBUTION = [
   { source: "Organic / word of mouth", pct: 65, organic: true },
   { source: "Door walk-up", pct: 18, organic: true },
   { source: "Paid ads", pct: 7, organic: false },
-  { source: "Ambassadors", pct: 5, organic: false },
+  { source: "Promoters", pct: 5, organic: false },
   { source: "Venue site", pct: 4, organic: false },
 ];
 
@@ -112,11 +113,11 @@ export const TOTALS = [
 
 /* The finding. One lead line, quiet receipts under it. */
 export const FINDING = {
-  lead: "Discovery happened on TikTok.",
+  lead: "TikTok sold this tour.",
   lines: [
-    "~65% of tickets came from organic discovery. 7% from paid ads.",
-    "30K → 34K followers over the run — the top-performing tour content drove ticket links directly.",
-    "Tickets sold direct. Fan data from every stop is in the vault.",
+    "~65% of tickets came from organic discovery — led by TikTok. Paid ads: 7%.",
+    "A single TikTok hit 120K views and sold out McAllen.",
+    "30K → 34K followers over the run. Tickets sold direct — fan data from every stop is in the vault.",
   ],
 };
 

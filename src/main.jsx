@@ -1,6 +1,6 @@
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
 import EmskiEPK from "./components/EmskiEPK";
 import EmskiPress from "./components/EmskiPress";
@@ -19,7 +19,7 @@ const WaitForMeSculpt = lazy(() =>
   import("../emski-wait-for-me-handoff/src/components/wait-for-me/WaitForMeSculpt.jsx")
 );
 
-// Private e/MOTION tour recap (unlisted, noindex). Lazy-loaded so the
+// Private The_Effect tour recap (unlisted, noindex). Lazy-loaded so the
 // regl/EmotionField bundle doesn't ship with the main EPK page.
 const TourSummary = lazy(() => import("./components/tour-summary/TourSummary.jsx"));
 
@@ -88,12 +88,17 @@ createRoot(document.getElementById("root")).render(
           }
         />
         <Route
-          path="/e_motion_tour_summary"
+          path="/the_effect_tour_summary"
           element={
             <Suspense fallback={null}>
               <TourSummary />
             </Suspense>
           }
+        />
+        {/* Legacy path — page was briefly shared under the old tour name */}
+        <Route
+          path="/e_motion_tour_summary"
+          element={<Navigate to="/the_effect_tour_summary" replace />}
         />
         <Route path="*" element={<EmskiEPK />} />
       </Routes>
