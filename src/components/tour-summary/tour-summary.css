@@ -391,13 +391,29 @@
   margin-top: 12px;
 }
 
-.ts-totals__note {
+/* ── The finding ────────────────────────────────────────────── */
+.ts-finding {
+  margin-top: 72px;
+  max-width: 620px;
+}
+
+.ts-finding__lead {
+  font-family: var(--f-heading);
+  font-weight: 800;
+  font-size: clamp(20px, 3vw, 30px);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: var(--c-white);
+  margin-bottom: 22px;
+}
+
+.ts-finding__line {
   font-size: 13px;
-  letter-spacing: 0.06em;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 28px;
-  text-align: center;
+  letter-spacing: 0.05em;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.55);
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* ── Winter run ───────────────────────────────────────── */

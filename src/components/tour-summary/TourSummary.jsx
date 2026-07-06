@@ -8,7 +8,7 @@ import {
   TOUR_STOPS,
   ATTRIBUTION,
   TOTALS,
-  TOTALS_NOTE,
+  FINDING,
   NEXT_TOUR,
 } from "./tourSummaryData";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
@@ -148,7 +148,17 @@ export default function TourSummary() {
                 </div>
               ))}
             </div>
-            <p className="ts-totals__note">{TOTALS_NOTE}</p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="ts-finding">
+              <p className="ts-finding__lead">{FINDING.lead}</p>
+              {FINDING.lines.map((line) => (
+                <p key={line} className="ts-finding__line">
+                  {line}
+                </p>
+              ))}
+            </div>
           </Reveal>
         </div>
       </section>

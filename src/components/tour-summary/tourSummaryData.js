@@ -110,9 +110,15 @@ export const TOTALS = [
   { label: "TikTok", value: "30K → 34K" },
 ];
 
-/* One line, not a section. */
-export const TOTALS_NOTE =
-  "Discovery happened on TikTok. Tickets sold direct. Fan data from every stop is in the vault.";
+/* The finding. One lead line, quiet receipts under it. */
+export const FINDING = {
+  lead: "Discovery happened on TikTok.",
+  lines: [
+    "~65% of tickets came from organic discovery. 7% from paid ads.",
+    "30K → 34K followers over the run — the top-performing tour content drove ticket links directly.",
+    "Tickets sold direct. Fan data from every stop is in the vault.",
+  ],
+};
 
 /* Winter run — the ask. */
 export const NEXT_TOUR = {
@@ -127,6 +133,18 @@ export const NEXT_TOUR = {
     {
       title: "Rio Grande Valley",
       body: "Return routing in discussion with Upbeat Live.",
+    },
+    {
+      title: "Arizona",
+      body: "Date in motion with Ekonovah's team.",
+    },
+    {
+      title: "Richmond",
+      body: "Venue interest — Gallery5, Rhythm City Collective.",
+    },
+    {
+      title: "New markets",
+      body: "Inbound fan demand via Reddit — San Francisco, Los Angeles, Chicago, Portland.",
     },
   ],
   contactEmail: "contact@emskimusic.com",
