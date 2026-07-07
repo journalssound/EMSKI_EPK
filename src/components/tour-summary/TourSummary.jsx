@@ -81,36 +81,59 @@ function CitySection({ stop }) {
       <div className="ts-wrap ts-city__inner">
         <div className="ts-city__idx">{stop.idx}</div>
 
-        <div className="ts-city__meta">
-          {stop.dateLabel} · <span className="ts-city__venue">{stop.venue}</span>
-          {stop.operator ? ` · ${stop.operator}` : ""}
+        <div className="ts-city__cols">
+          <div className="ts-city__content">
+            <div className="ts-city__meta">
+              {stop.dateLabel} · <span className="ts-city__venue">{stop.venue}</span>
+              {stop.operator ? ` · ${stop.operator}` : ""}
+            </div>
+
+            <h2 className="ts-city__name">
+              {stop.city}
+              <span className="ts-city__state">{stop.state}</span>
+            </h2>
+
+            <div className="ts-city__statrow">
+              <span className={`ts-city__stat ${stop.soldOut ? "ts-city__stat--sold" : ""}`}>
+                {stop.stat}
+              </span>
+              <span className="ts-city__statlabel">{stop.statLabel}</span>
+            </div>
+
+            {stop.blurb && <p className="ts-city__blurb">{stop.blurb}</p>}
+
+            {stop.points?.length > 0 && (
+              <ul className="ts-city__points">
+                {stop.points.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+            )}
+
+            {stop.tiktok && <TikTokPopup tiktok={stop.tiktok} sectionVisible={visible} />}
+
+            {stop.showAttribution && <AttributionBars />}
+          </div>
+
+          {stop.video && (
+            <div className="ts-city__media">
+              <div className="ts-city__video-frame">
+                {visible && (
+                  <video
+                    className="ts-city__video"
+                    src={stop.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                  />
+                )}
+              </div>
+              <span className="ts-city__video-label">Recap · {stop.city}</span>
+            </div>
+          )}
         </div>
-
-        <h2 className="ts-city__name">
-          {stop.city}
-          <span className="ts-city__state">{stop.state}</span>
-        </h2>
-
-        <div className="ts-city__statrow">
-          <span className={`ts-city__stat ${stop.soldOut ? "ts-city__stat--sold" : ""}`}>
-            {stop.stat}
-          </span>
-          <span className="ts-city__statlabel">{stop.statLabel}</span>
-        </div>
-
-        {stop.blurb && <p className="ts-city__blurb">{stop.blurb}</p>}
-
-        {stop.points?.length > 0 && (
-          <ul className="ts-city__points">
-            {stop.points.map((p) => (
-              <li key={p}>{p}</li>
-            ))}
-          </ul>
-        )}
-
-        {stop.tiktok && <TikTokPopup tiktok={stop.tiktok} sectionVisible={visible} />}
-
-        {stop.showAttribution && <AttributionBars />}
       </div>
     </section>
   );

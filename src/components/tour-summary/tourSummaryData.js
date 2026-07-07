@@ -35,6 +35,7 @@ export const TOUR_STOPS = [
       "Sold-out show in an AEG venue",
       "Return date requested — Richmond & Portland booking leads via venue staff",
     ],
+    video: "/tour/denver-montage.mp4",
     // PLACEHOLDER — swap for Denver show photo
     photo: "/photos/live-1.jpg",
   },
@@ -54,6 +55,7 @@ export const TOUR_STOPS = [
       "TikTok converted highest by far — set the strategy for the rest of the run",
     ],
     showAttribution: true,
+    video: "/tour/dallas-montage.mp4",
     // PLACEHOLDER — swap for Dallas show photo
     photo: "/photos/live-2.jpg",
   },
@@ -68,6 +70,7 @@ export const TOUR_STOPS = [
     statLabel: "RSVPs · 800 cap",
     soldOut: false,
     points: [],
+    video: "/tour/san-antonio-montage.mp4",
     // PLACEHOLDER — swap for San Antonio show photo
     photo: "/photos/live-3.jpg",
   },
@@ -84,6 +87,7 @@ export const TOUR_STOPS = [
     points: [
       "Debuted a live fan camera in the set — crowd projected onto the LED wall in real time",
     ],
+    video: "/tour/austin-montage.mp4",
     // PLACEHOLDER — swap for Austin show photo
     photo: "/photos/live-4.jpg",
   },
@@ -102,6 +106,7 @@ export const TOUR_STOPS = [
       videoId: "7651755227023969549",
       label: "Watch the TikTok · 120K views",
     },
+    video: "/tour/mcallen-montage.mp4",
     // PLACEHOLDER — swap for McAllen show photo
     photo: "/photos/live-5.jpg",
   },
