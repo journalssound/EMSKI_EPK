@@ -259,7 +259,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-self: end;
+  justify-self: center;
+  width: 100%;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 1s ease 0.35s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.35s;
@@ -270,6 +271,8 @@
   transform: translateY(0);
 }
 
+/* Native aspect ratio — no cropping. Width and height caps
+ * keep portrait and landscape clips at a similar visual size. */
 .ts-city__video-frame {
   max-width: 100%;
   background: #000;
@@ -281,10 +284,10 @@
 
 .ts-city__video {
   display: block;
-  max-width: 100%;
-  max-height: min(62vh, 560px);
   width: auto;
   height: auto;
+  max-width: min(440px, 100%);
+  max-height: min(58vh, 480px);
 }
 
 .ts-city__video-label {
@@ -730,12 +733,12 @@
   }
 
   .ts-city__media {
-    justify-self: start;
+    justify-self: center;
     margin-top: 36px;
   }
 
   .ts-city__video {
-    max-height: 55vh;
+    max-height: 50vh;
   }
 }
 
