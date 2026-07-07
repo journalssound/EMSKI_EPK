@@ -241,12 +241,14 @@
 .ts-city__inner {
   position: relative;
   width: 100%;
+  /* Wider than the default 960px wrap so the two columns breathe */
+  max-width: 1240px;
 }
 
 .ts-city__cols {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(40px, 6vw, 96px);
   align-items: center;
 }
 
@@ -259,8 +261,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-self: center;
-  width: 100%;
+  justify-self: end;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 1s ease 0.35s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.35s;
