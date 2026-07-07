@@ -247,7 +247,7 @@
 
 .ts-city__cols {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
   gap: clamp(40px, 6vw, 96px);
   align-items: center;
 }
@@ -272,8 +272,8 @@
   transform: translateY(0);
 }
 
-/* Native aspect ratio — no cropping. Width and height caps
- * keep portrait and landscape clips at a similar visual size. */
+/* Frame width + aspect-ratio are set inline per video (computed
+ * in CitySection) — the clip fills the frame exactly, no bars. */
 .ts-city__video-frame {
   max-width: 100%;
   background: #000;
@@ -285,10 +285,9 @@
 
 .ts-city__video {
   display: block;
-  width: auto;
-  height: auto;
-  max-width: min(440px, 100%);
-  max-height: min(58vh, 480px);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .ts-city__video-label {
@@ -736,10 +735,6 @@
   .ts-city__media {
     justify-self: center;
     margin-top: 36px;
-  }
-
-  .ts-city__video {
-    max-height: 50vh;
   }
 }
 

@@ -67,6 +67,15 @@ function TikTokPopup({ tiktok, sectionVisible }) {
 function CitySection({ stop }) {
   const [ref, visible] = useInView(0.25);
 
+  /* Fit each video's true ratio inside a 460×500 box — no cropping,
+   * every window lands at a comparable size. */
+  let frameStyle;
+  if (stop.videoAspect) {
+    const [aw, ah] = stop.videoAspect.split("/").map(Number);
+    const w = Math.round(Math.min(460, (500 * aw) / ah));
+    frameStyle = { aspectRatio: stop.videoAspect, width: `${w}px` };
+  }
+
   return (
     <section
       ref={ref}
@@ -117,7 +126,7 @@ function CitySection({ stop }) {
 
           {stop.video && (
             <div className="ts-city__media">
-              <div className="ts-city__video-frame">
+              <div className="ts-city__video-frame" style={frameStyle}>
                 {visible && (
                   <video
                     className="ts-city__video"
