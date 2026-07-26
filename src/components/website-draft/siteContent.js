@@ -128,7 +128,78 @@ export const VIDEOS = [
 
 /* ─── Hero ───────────────────────────────────────────────────────────── */
 export const HERO_VIDEO = HERO_VIDEO_R2;
+/* ═══ V2 (COBRAH-style redesign) content ═══════════════════════════
+ * Everything below powers EmskiSiteV2. Edit freely — all links/copy in one place.
+ * ══════════════════════════════════════════════════════════════ */
 
+// Hero background video ("video behind should change to be something else")
+export const HERO_VIDEO_V2 = "/ninjatune/assets/hq-production.mp4";
+
+// Main EP slide — swap `url` for the smart link / pre-save when ready,
+// and `cover` for the final EP artwork.
+export const FEATURED_EP = {
+  title: "e/MOTION",
+  tagline: "debut EP out now",
+  cover: "/photos/emotion-1.jpg",
+  url: "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK",
+};
+
+// Video carousel — lyric videos (local files) + live footage (YouTube).
+export const MUSIC_VIDEOS = [
+  {
+    title: "Wait For Me",
+    kind: "file",
+    src: "/ninjatune/videos/lyric-waitforme.mp4",
+    thumb: "/photos/emotion-1.jpg",
+  },
+  {
+    title: "Calm Down",
+    kind: "file",
+    src: "/ninjatune/videos/lyric-calmdown.mp4",
+    thumb: "/photos/emotion-2.jpg",
+  },
+  {
+    title: "For U",
+    kind: "file",
+    src: "/ninjatune/videos/lyric-foru.mp4",
+    thumb: "/photos/emotion-3.jpg",
+  },
+  {
+    title: "THE_EFFECT — Live",
+    kind: "youtube",
+    src: "https://www.youtube.com/embed/Z7tTQKy81CM?rel=0&modestbranding=1&autoplay=1",
+    thumb: "https://i.ytimg.com/vi/Z7tTQKy81CM/hqdefault.jpg",
+  },
+];
+
+// Merch — swap `url` for the shop link once the store exists.
+export const MERCH_ITEMS = [
+  {
+    name: "THE_EFFECT Tee",
+    image: "/ninjatune/assets/merch-tshirt.png",
+    url: VAULT_URL,
+    note: "Drops soon · get notified",
+  },
+];
+
+// Icon row at the top of the hero + footer (order matters).
+export const SOCIAL_ICONS = [
+  { icon: "instagram", label: "Instagram", url: "https://instagram.com/emskimusic" },
+  { icon: "tiktok", label: "TikTok", url: "https://tiktok.com/@emskimusic" },
+  { icon: "youtube", label: "YouTube", url: "https://www.youtube.com/@emskimusic333" },
+  {
+    icon: "spotify",
+    label: "Spotify",
+    url: "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK?si=mIf5D4rVSuu15HD6MvMpfQ",
+  },
+  {
+    icon: "apple",
+    label: "Apple Music",
+    url: "https://music.apple.com/us/artist/emski/1658955209",
+  },
+  { icon: "soundcloud", label: "SoundCloud", url: "https://soundcloud.com/emskiiiiiiiiiii" },
+  { icon: "mail", label: "Contact", url: "mailto:contact@emskimusic.com" },
+];
 /* ─── Footer / contact ───────────────────────────────────────────────── */
 export const SOCIALS = [
   ...EPK_SOCIALS,

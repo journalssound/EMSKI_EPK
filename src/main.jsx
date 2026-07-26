@@ -5,6 +5,7 @@ import "./index.css";
 import EmskiEPK from "./components/EmskiEPK";
 import EmskiPress from "./components/EmskiPress";
 import EmskiSite from "./components/website-draft/EmskiSite";
+import EmskiSiteV2 from "./components/website-draft/EmskiSiteV2";
 import logoSrc from "./assets/EMSKI-logo-white-rgb.png";
 
 // Generative-art handoff (lives in /emski-wait-for-me-handoff/ as a self-contained
@@ -62,7 +63,8 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<EmskiEPK />} />
         <Route path="/press" element={<EmskiPress />} />
-        <Route path="/website-draft" element={<EmskiSite />} />
+        <Route path="/website-draft" element={<EmskiSiteV2 />} />
+        <Route path="/website-draft-v1" element={<EmskiSite />} />
         <Route
           path="/generative_art"
           element={
