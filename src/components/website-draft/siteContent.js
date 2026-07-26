@@ -79,7 +79,7 @@ export function formatShowYear(iso) {
 }
 
 /* ─── Music — released tracks ─────────────────────────────────────────────
- * At runtime, the site fetches the latest releases from /.netlify/functions/releases
+ * At runtime, the site fetches the latest releases from /api/releases
  * (Spotify Web API). The list below is the static fallback used when that
  * call fails (or during local dev without env vars).
  *

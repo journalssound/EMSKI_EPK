@@ -34,10 +34,10 @@ export default function EmskiSite() {
 
   const { upcoming, past } = useMemo(() => splitShows(SHOWS), []);
 
-  // Pull latest releases from Spotify via Netlify function. Silent fallback on failure.
+  // Pull latest releases from Spotify via Cloudflare Pages Function. Silent fallback on failure.
   useEffect(() => {
     let cancelled = false;
-    fetch("/.netlify/functions/releases")
+    fetch("/api/releases")
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`http_${r.status}`))))
       .then((data) => {
         if (cancelled) return;
