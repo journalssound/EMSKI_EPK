@@ -51,7 +51,11 @@ export async function onRequestGet(context) {
   const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_ARTIST_ID } = env;
 
   if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
-    return json({ error: "spotify_creds_missing" }, 500);
+    // 200 so Cloudflare doesn't replace the body with its generic error page;
+    // the client only accepts payloads with a non-empty `releases` array.
+    return json({ error: "spotify_creds_missing" }, 200, {
+      "cache-control": "no-store",
+    });
   }
 
   const artistId = SPOTIFY_ARTIST_ID || DEFAULT_ARTIST_ID;
@@ -120,9 +124,12 @@ export async function onRequestGet(context) {
     waitUntil(cache.put(cacheKey, response.clone()));
     return response;
   } catch (err) {
+    // 200 so Cloudflare doesn't replace the body with its generic error page;
+    // the client only accepts payloads with a non-empty `releases` array.
     return json(
       { error: "spotify_fetch_failed", message: String(err?.message || err) },
-      502
+      200,
+      { "cache-control": "no-store" }
     );
   }
 }
