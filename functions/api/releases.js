@@ -18,6 +18,16 @@
 
 const DEFAULT_ARTIST_ID = "3UqDUfl2fG8ygrFRlgHVZK";
 
+/**
+ * Accepts a raw ID, a spotify:artist: URI, or a full open.spotify.com URL
+ * (with or without query params / whitespace) and returns the bare 22-char ID.
+ */
+function normalizeArtistId(value) {
+  if (!value) return null;
+  const match = String(value).match(/[0-9A-Za-z]{22}/);
+  return match ? match[0] : null;
+}
+
 async function getToken(clientId, clientSecret) {
   const res = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
@@ -58,10 +68,13 @@ export async function onRequestGet(context) {
     });
   }
 
-  const artistId = SPOTIFY_ARTIST_ID || DEFAULT_ARTIST_ID;
+  const artistId = normalizeArtistId(SPOTIFY_ARTIST_ID) || DEFAULT_ARTIST_ID;
 
   try {
-    const token = await getToken(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET);
+    const token = await getToken(
+      SPOTIFY_CLIENT_ID.trim(),
+      SPOTIFY_CLIENT_SECRET.trim()
+    );
 
     // 1) List the artist's albums + singles (simplified album objects — no label here)
     const albumsRes = await fetch(
