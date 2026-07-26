@@ -10,6 +10,7 @@ import {
   HERO_VIDEO_V2,
   FEATURED_EP,
   MUSIC_VIDEOS,
+  MERCH_BG,
   MERCH_ITEMS,
   SOCIAL_ICONS,
   CONTACT_EMAIL,
@@ -128,17 +129,16 @@ function Carousel({ label, children }) {
 /**
  * Public-facing fan site at /website-draft — COBRAH-style redesign.
  *
- * Hero (video + blend-mode wordmark + icon row)
- *   → EP slide (debut EP out now / get it now)
- *   → Video carousel (lyric + live videos, modal player)
- *   → Merch (shop cards)
- *   → Music carousel (full-bleed covers, GET IT NOW → Spotify)
- *   → Tour (upcoming + completed dates, get-notified → Vault)
+ * Hero (video + difference-blend wordmark + icon row)
+ *   → EP slide (E/MOTION · debut EP · LISTEN NOW, live-show backdrop)
+ *   → Music videos (embedded autoplaying players, horizontal scroll)
+ *   → Merch (product over live-photo band)
+ *   → Music (animated tracklist → streaming links)
+ *   → Tour (centered · completed dates · Vault signup CTA)
  *   → Footer (subscribe → Vault, icons)
  */
 export default function EmskiSiteV2() {
   const [releases, setReleases] = useState(RELEASES);
-  const [activeVideo, setActiveVideo] = useState(null); // MUSIC_VIDEOS entry or null
   const rootRef = useRef(null);
 
   const { upcoming, past } = useMemo(() => splitShows(SHOWS), []);
@@ -190,22 +190,8 @@ export default function EmskiSiteV2() {
     return () => io.disconnect();
   }, [releases]);
 
-  // Close video modal on Escape; lock scroll while open.
-  useEffect(() => {
-    if (!activeVideo) return;
-    const onKey = (e) => {
-      if (e.key === "Escape") setActiveVideo(null);
-    };
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [activeVideo]);
-
   const spotifyUrl = SOCIAL_ICONS.find((s) => s.icon === "spotify")?.url;
+  const appleUrl = SOCIAL_ICONS.find((s) => s.icon === "apple")?.url;
 
   return (
     <div className="wv-root" ref={rootRef}>
@@ -219,29 +205,18 @@ export default function EmskiSiteV2() {
           loop
           playsInline
         />
-        <div className="wv-hero__grade" />
 
         <IconRow className="wv-icons--hero" />
 
+        {/* Wordmark inverts the raw video behind it — COBRAH negative treatment */}
         <div className="wv-hero__name-wrap">
           <img className="wv-hero__name" src={logo} alt="EMSKI" />
-          <div className="wv-hero__release">
-            <span className="wv-hero__release-title">{FEATURED_EP.title}</span>
-            <a
-              className="wv-hero__release-link"
-              href={FEATURED_EP.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Get it now
-            </a>
-          </div>
         </div>
       </header>
 
       {/* ── EP slide ─────────────────────────────────────── */}
-      <section className="wv-ep" id="music">
-        <img className="wv-ep__bg" src={FEATURED_EP.cover} alt="" aria-hidden="true" />
+      <section className="wv-ep">
+        <img className="wv-ep__bg" src={FEATURED_EP.bg} alt="" aria-hidden="true" />
         <div className="wv-ep__veil" />
         <div className="wv-ep__content">
           <h2 className="wv-ep__title wv-reveal">{FEATURED_EP.title}</h2>
@@ -252,82 +227,103 @@ export default function EmskiSiteV2() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            get it now
+            {FEATURED_EP.cta}
           </a>
         </div>
       </section>
 
-      {/* ── Video ────────────────────────────────────────── */}
+      {/* ── Music videos ─────────────────────────────────── */}
       <section className="wv-section" id="video">
-        <h2 className="wv-section__title wv-reveal">Video</h2>
-        <Carousel label="Music and live videos">
-          {MUSIC_VIDEOS.map((v) => (
-            <div className="wv-carousel__item wv-video-card" key={v.title}>
-              <button
-                type="button"
-                className="wv-video-card__thumb"
-                onClick={() => setActiveVideo(v)}
-                aria-label={`Play ${v.title}`}
-              >
-                <img src={v.thumb} alt={v.title} loading="lazy" />
-                <span className="wv-video-card__play" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-                  </svg>
-                </span>
-              </button>
-              <p className="wv-video-card__title">{v.title}</p>
+        <h2 className="wv-section__title wv-reveal">Music Videos</h2>
+        <Carousel label="Music videos">
+          {MUSIC_VIDEOS.map((v, i) => (
+            <div
+              className="wv-carousel__item wv-mv wv-reveal"
+              key={v.id}
+              style={{ "--wv-delay": `${i * 120}ms` }}
+            >
+              <div className="wv-mv__frame">
+                <iframe
+                  src={v.embedUrl}
+                  title={`${v.title} — music video`}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <p className="wv-mv__title">{v.title}</p>
             </div>
           ))}
         </Carousel>
       </section>
 
       {/* ── Merch ────────────────────────────────────────── */}
-      <section className="wv-section" id="merch">
-        <h2 className="wv-section__title wv-reveal">Merch</h2>
-        <div className="wv-merch">
-          {MERCH_ITEMS.map((m) => (
-            <div className="wv-merch__item wv-reveal" key={m.name}>
-              <img src={m.image} alt={m.name} loading="lazy" />
-              <p className="wv-merch__note">{m.note}</p>
-              <a
-                className="wv-boxlink"
-                href={m.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Shop now
-              </a>
-            </div>
-          ))}
+      <section className="wv-merch-band" id="merch">
+        <img className="wv-merch-band__bg" src={MERCH_BG} alt="" aria-hidden="true" />
+        <div className="wv-merch-band__veil" />
+        <div className="wv-merch-band__inner">
+          <h2 className="wv-section__title wv-reveal">Merch</h2>
+          <div className="wv-merch">
+            {MERCH_ITEMS.map((m) => (
+              <div className="wv-merch__item wv-reveal" key={m.name}>
+                <div className="wv-merch__card">
+                  <img src={m.image} alt={m.name} loading="lazy" />
+                </div>
+                <p className="wv-merch__note">{m.note}</p>
+                <a
+                  className="wv-boxlink"
+                  href={m.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Shop now
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── Music ────────────────────────────────────────── */}
-      <section className="wv-music">
+      <section className="wv-section wv-music" id="music">
         <h2 className="wv-section__title wv-reveal">Music</h2>
-        <Carousel label="Releases">
-          {releases.map((r) => (
-            <div className="wv-carousel__item wv-music-slide" key={r.id || r.title}>
-              {r.cover ? (
-                <img className="wv-music-slide__bg" src={r.cover} alt="" aria-hidden="true" loading="lazy" />
-              ) : null}
-              <div className="wv-music-slide__veil" />
-              <span className="wv-music-slide__title">{r.title}</span>
+        <ul className="wv-tracks">
+          {releases.map((r, i) => (
+            <li
+              className="wv-tracks__row wv-reveal"
+              key={r.id || r.title}
+              style={{ "--wv-delay": `${Math.min(i, 6) * 70}ms` }}
+            >
               <a
-                className="wv-boxlink wv-music-slide__link"
+                className="wv-tracks__link"
                 href={r.spotifyUrl || spotifyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Get it now
+                <span className="wv-tracks__num">{String(i + 1).padStart(2, "0")}</span>
+                {r.cover ? (
+                  <span className="wv-tracks__cover" aria-hidden="true">
+                    <img src={r.cover} alt="" loading="lazy" />
+                  </span>
+                ) : null}
+                <span className="wv-tracks__title">{r.title}</span>
+                <span className="wv-tracks__meta">
+                  {r.label ? <span className="wv-tracks__label">{r.label}</span> : null}
+                  {r.releaseDate ? (
+                    <span className="wv-tracks__year">{String(r.releaseDate).slice(0, 4)}</span>
+                  ) : null}
+                </span>
+                <span className="wv-tracks__stream">Stream</span>
               </a>
-            </div>
+            </li>
           ))}
-        </Carousel>
+        </ul>
         <div className="wv-music__all wv-reveal">
-          <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="wv-underline-link">
+          <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
             All music on Spotify
+          </a>
+          <a href={appleUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
+            Apple Music
           </a>
         </div>
       </section>
@@ -379,9 +375,9 @@ export default function EmskiSiteV2() {
         ) : null}
 
         <div className="wv-tour__notify wv-reveal">
-          <span>Get notified when new events are announced</span>
-          <a href={VAULT_URL} target="_blank" rel="noopener noreferrer" className="wv-underline-link">
-            Follow EMSKI
+          <span className="wv-tour__notify-text">Get notified when new events are announced</span>
+          <a href={VAULT_URL} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
+            Sign up for tour updates
           </a>
         </div>
       </section>
@@ -406,38 +402,6 @@ export default function EmskiSiteV2() {
           <span>© {new Date().getFullYear()} EMSKI</span>
         </div>
       </footer>
-
-      {/* ── Video modal ──────────────────────────────────── */}
-      {activeVideo ? (
-        <div
-          className="wv-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-label={activeVideo.title}
-          onClick={() => setActiveVideo(null)}
-        >
-          <div className="wv-modal__body" onClick={(e) => e.stopPropagation()}>
-            {activeVideo.kind === "youtube" ? (
-              <iframe
-                src={activeVideo.src}
-                title={activeVideo.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <video src={activeVideo.src} controls autoPlay playsInline />
-            )}
-            <button
-              type="button"
-              className="wv-modal__close"
-              aria-label="Close video"
-              onClick={() => setActiveVideo(null)}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }

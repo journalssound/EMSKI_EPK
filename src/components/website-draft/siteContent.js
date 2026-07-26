@@ -135,44 +135,28 @@ export const HERO_VIDEO = HERO_VIDEO_R2;
 // Hero background video ("video behind should change to be something else")
 export const HERO_VIDEO_V2 = "/ninjatune/assets/hq-production.mp4";
 
-// Main EP slide — swap `url` for the smart link / pre-save when ready,
-// and `cover` for the final EP artwork.
+// Main EP slide — swap `url` for the smart link / pre-save when ready.
+// `bg` is a live show photo from the tour recap; `cover` kept for future EP art.
 export const FEATURED_EP = {
-  title: "e/MOTION",
-  tagline: "debut EP out now",
-  cover: "/photos/emotion-1.jpg",
+  title: "E/MOTION",
+  tagline: "Debut EP out now",
+  cta: "Listen now",
+  bg: "/photos/live-3.jpg",
   url: "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK",
 };
 
-// Video carousel — lyric videos (local files) + live footage (YouTube).
+// Music videos — embedded YouTube players (autoplay muted, unmute via controls).
+const ytEmbed = (id) =>
+  `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=1&rel=0&modestbranding=1&playsinline=1`;
+
 export const MUSIC_VIDEOS = [
-  {
-    title: "Wait For Me",
-    kind: "file",
-    src: "/ninjatune/videos/lyric-waitforme.mp4",
-    thumb: "/photos/emotion-1.jpg",
-  },
-  {
-    title: "Calm Down",
-    kind: "file",
-    src: "/ninjatune/videos/lyric-calmdown.mp4",
-    thumb: "/photos/emotion-2.jpg",
-  },
-  {
-    title: "For U",
-    kind: "file",
-    src: "/ninjatune/videos/lyric-foru.mp4",
-    thumb: "/photos/emotion-3.jpg",
-  },
-  {
-    title: "THE_EFFECT — Live",
-    kind: "youtube",
-    src: "https://www.youtube.com/embed/Z7tTQKy81CM?rel=0&modestbranding=1&autoplay=1",
-    thumb: "https://i.ytimg.com/vi/Z7tTQKy81CM/hqdefault.jpg",
-  },
+  { title: "Wait For Me", id: "I-bVDnsQJIs", embedUrl: ytEmbed("I-bVDnsQJIs") },
+  { title: "DRIP", id: "T4FQgsZhEY8", embedUrl: ytEmbed("T4FQgsZhEY8") },
+  { title: "Psycho", id: "rZBWLj2rZsQ", embedUrl: ytEmbed("rZBWLj2rZsQ") },
 ];
 
-// Merch — swap `url` for the shop link once the store exists.
+// Merch — shown over a live-photo backdrop; swap `url` for the shop when live.
+export const MERCH_BG = "/photos/live-5.jpg";
 export const MERCH_ITEMS = [
   {
     name: "THE_EFFECT Tee",
