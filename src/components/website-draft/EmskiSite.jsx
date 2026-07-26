@@ -27,7 +27,6 @@ import "./website-draft.css";
  */
 export default function EmskiSite() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showPast, setShowPast] = useState(false);
   const [flippedRelease, setFlippedRelease] = useState(null); // index of flipped card, or null
   const [releases, setReleases] = useState(RELEASES); // static fallback; replaced by live data on mount
   const rootRef = useRef(null);
@@ -210,8 +209,8 @@ export default function EmskiSite() {
           </p>
         )}
 
-        {past.length > 0 && showPast && (
-          <ul className="ws-tour__list ws-tour__list--past">
+        {past.length > 0 && (
+          <ul className="ws-tour__list ws-tour__list--past ws-reveal">
             {past.map((show) => (
               <li key={show.date + show.city} className="ws-tour__row is-past">
                 <div className="ws-tour__date">
@@ -226,15 +225,6 @@ export default function EmskiSite() {
               </li>
             ))}
           </ul>
-        )}
-
-        {past.length > 0 && (
-          <button
-            className="ws-tour__toggle ws-reveal"
-            onClick={() => setShowPast((v) => !v)}
-          >
-            {showPast ? "Hide past shows" : `Show past shows (${past.length})`}
-          </button>
         )}
 
         <div className="ws-tour__footer ws-reveal">
@@ -273,7 +263,6 @@ export default function EmskiSite() {
                   >
                     {r.cover ? <img src={r.cover} alt={r.title} loading="lazy" /> : null}
                     <div className="ws-release__overlay">
-                      <span className="ws-release__label">{r.label || r.title}</span>
                       <span className="ws-release__play">▶ Listen</span>
                     </div>
                   </button>

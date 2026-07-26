@@ -104,7 +104,7 @@ export const STREAMING_LINKS = [
     name: "Spotify",
     url: "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK?si=mIf5D4rVSuu15HD6MvMpfQ",
   },
-  { name: "Apple Music", url: "https://music.apple.com/us/artist/emski/1568068420" },
+  { name: "Apple Music", url: "https://music.apple.com/us/artist/emski/1658955209" },
   { name: "SoundCloud", url: "https://soundcloud.com/emskiiiiiiiiiii" },
 ];
 
