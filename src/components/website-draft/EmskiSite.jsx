@@ -61,7 +61,9 @@ export default function EmskiSite() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Scroll-reveal: add .is-in to any .ws-reveal as it enters viewport
+  // Scroll-reveal: mark any .ws-reveal as it enters the viewport.
+  // Uses a data attribute (not a class) so React className updates (e.g. card
+  // flips) can't wipe it, and re-runs when releases swap in new DOM nodes.
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -69,23 +71,27 @@ export default function EmskiSite() {
       typeof IntersectionObserver === "undefined" ||
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
     ) {
-      root.querySelectorAll(".ws-reveal").forEach((el) => el.classList.add("is-in"));
+      root.querySelectorAll(".ws-reveal").forEach((el) => {
+        el.dataset.revealed = "true";
+      });
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
+            entry.target.dataset.revealed = "true";
             io.unobserve(entry.target);
           }
         }
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
-    root.querySelectorAll(".ws-reveal").forEach((el) => io.observe(el));
+    root.querySelectorAll(".ws-reveal").forEach((el) => {
+      if (!el.dataset.revealed) io.observe(el);
+    });
     return () => io.disconnect();
-  }, []);
+  }, [releases]);
 
   // Lock body scroll while mobile menu is open
   useEffect(() => {

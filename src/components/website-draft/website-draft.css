@@ -57,7 +57,8 @@
   transition-delay: var(--ws-reveal-delay, 0ms);
   will-change: opacity, transform;
 }
-.ws-reveal.is-in { opacity: 1; transform: translateY(0); }
+.ws-reveal.is-in,
+.ws-reveal[data-revealed] { opacity: 1; transform: translateY(0); }
 
 @media (prefers-reduced-motion: reduce) {
   .ws-reveal { opacity: 1; transform: none; transition: none; }
