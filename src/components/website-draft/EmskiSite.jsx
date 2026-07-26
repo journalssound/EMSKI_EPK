@@ -270,9 +270,6 @@ export default function EmskiSite() {
                     </div>
                   </button>
                   <div className="ws-release__face ws-release__back" aria-hidden={!isFlipped}>
-                    {r.cover ? (
-                      <img className="ws-release__back-bg" src={r.cover} alt="" aria-hidden="true" />
-                    ) : null}
                     <div className="ws-release__back-inner">
                       <span className="ws-release__back-title">{r.title}</span>
                       <div className="ws-release__back-links">
