@@ -248,6 +248,9 @@ export default function EmskiSite() {
         <div className="ws-releases">
           {releases.map((r, i) => {
             const isFlipped = flippedRelease === i;
+            const spotifyHref =
+              r.spotifyUrl || STREAMING_LINKS.find((s) => s.name === "Spotify")?.url;
+            const appleHref = STREAMING_LINKS.find((s) => s.name === "Apple Music")?.url;
             return (
               <div
                 key={r.id || r.cover}
@@ -258,7 +261,7 @@ export default function EmskiSite() {
                   <button
                     type="button"
                     className="ws-release__face ws-release__front"
-                    aria-label={`Play ${r.title}`}
+                    aria-label={`Listen to ${r.title}`}
                     onClick={() => setFlippedRelease(i)}
                   >
                     {r.cover ? <img src={r.cover} alt={r.title} loading="lazy" /> : null}
@@ -267,19 +270,41 @@ export default function EmskiSite() {
                     </div>
                   </button>
                   <div className="ws-release__face ws-release__back" aria-hidden={!isFlipped}>
-                    {isFlipped ? (
-                      <iframe
-                        src={r.embedUrl}
-                        title={`${r.title} — Spotify`}
-                        loading="lazy"
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        allowFullScreen
-                      />
+                    {r.cover ? (
+                      <img className="ws-release__back-bg" src={r.cover} alt="" aria-hidden="true" />
                     ) : null}
+                    <div className="ws-release__back-inner">
+                      <span className="ws-release__back-title">{r.title}</span>
+                      <div className="ws-release__back-links">
+                        {spotifyHref ? (
+                          <a
+                            href={spotifyHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ws-release__back-link"
+                            tabIndex={isFlipped ? 0 : -1}
+                          >
+                            Spotify <span className="ws-arrow">→</span>
+                          </a>
+                        ) : null}
+                        {appleHref ? (
+                          <a
+                            href={appleHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ws-release__back-link"
+                            tabIndex={isFlipped ? 0 : -1}
+                          >
+                            Apple Music <span className="ws-arrow">→</span>
+                          </a>
+                        ) : null}
+                      </div>
+                    </div>
                     <button
                       type="button"
                       className="ws-release__close"
-                      aria-label="Close player"
+                      aria-label="Close"
+                      tabIndex={isFlipped ? 0 : -1}
                       onClick={() => setFlippedRelease(null)}
                     >
                       ×

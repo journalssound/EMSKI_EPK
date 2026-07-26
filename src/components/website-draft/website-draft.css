@@ -604,9 +604,9 @@
   color: var(--ws-ice);
 }
 
-/* Back: Spotify iframe */
+/* Back: streaming links */
 .ws-release__back {
-  background: #000;
+  background: #0b0b14;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -621,11 +621,60 @@
   pointer-events: auto;
   transition-delay: 0s;
 }
-.ws-release__back iframe {
+.ws-release__back-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border: 0;
+  object-fit: cover;
+  filter: blur(24px) brightness(0.3) saturate(1.2);
+  transform: scale(1.2);
 }
+.ws-release__back-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ws-release__back-title {
+  font-family: var(--ws-font-display);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ws-fg);
+}
+.ws-release__back-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ws-release__back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  font-family: var(--ws-font-display);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  background: rgba(6, 6, 9, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color var(--ws-dur) var(--ws-ease), color var(--ws-dur) var(--ws-ease), background var(--ws-dur) var(--ws-ease);
+}
+.ws-release__back-link:hover {
+  border-color: var(--ws-ice);
+  color: var(--ws-ice);
+  background: rgba(167, 216, 255, 0.08);
+}
+.ws-release__back-link:hover .ws-arrow { transform: translateX(4px); }
 .ws-release__close {
   position: absolute;
   top: 6px;
@@ -693,11 +742,15 @@
 .ws-vault {
   text-align: center;
   max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .ws-vault .ws-section__head {
   align-items: center;
   text-align: center;
   gap: 14px;
+  width: 100%;
 }
 .ws-vault__eyebrow {
   font-family: var(--ws-font-mono);
@@ -712,6 +765,7 @@
   flex-direction: column;
   gap: 0;
   margin: 0 auto 56px;
+  width: 100%;
   max-width: 480px;
   border-top: 1px solid var(--ws-rule);
 }
