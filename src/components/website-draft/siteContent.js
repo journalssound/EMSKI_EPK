@@ -88,16 +88,17 @@ export function formatShowYear(iso) {
 const SPOTIFY_ARTIST_URL =
   "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK";
 const art = (path) => `https://is1-ssl.mzstatic.com/image/thumb/${path}/600x600bb.jpg`;
+const sp = (albumId) => `https://open.spotify.com/album/${albumId}`;
 
 export const RELEASES = [
-  { id: "fallback-1", title: "For You",      label: "The_Effect", releaseDate: "2026-07-16", cover: art("Music221/v4/dc/25/06/dc2506cb-5aa7-9a75-40a9-233b154730ff/612891035759.jpg"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-2", title: "Wait For Me",  label: "The_Effect", releaseDate: "2026-06-04", cover: art("Music221/v4/92/e9/01/92e9017a-7cb1-7ded-6724-c79aec4461ce/612891034462.jpg"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-3", title: "Relief",       label: "The_Effect", releaseDate: "2026-04-30", cover: art("Music211/v4/a9/47/96/a94796a8-c777-eaea-3e4e-b6ea4693bdcc/663918956571.jpg"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-4", title: "Reality",      label: "The_Effect", releaseDate: "2026-03-27", cover: art("Music211/v4/d2/92/fc/d292fc74-ba0f-29ef-5ba9-64c2c0255851/663918918524.jpg"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-5", title: "DRIP",         label: "The_Effect", releaseDate: "2025-10-15", cover: art("Music211/v4/45/ac/8b/45ac8b03-91b1-c285-aca4-014da1c76db3/663918545966.jpg"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-6", title: "Body on Mine", label: "HEXAGON",    releaseDate: "2025-09-12", cover: art("Music221/v4/55/c9/66/55c96622-38a9-6ddb-b2df-7fd35bfa27b4/8721416287664.png"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-7", title: "Pyro (feat. Emski)", label: "Feed Me", releaseDate: "2025-08-15", cover: art("Music221/v4/35/88/cf/3588cf7d-8576-7585-dd26-bc2debd009bd/5055199579306.png"), spotifyUrl: SPOTIFY_ARTIST_URL },
-  { id: "fallback-8", title: "SWEAT",        label: "mau5trap",   releaseDate: "2025-04-25", cover: art("Music221/v4/46/4f/c6/464fc66c-247c-9682-e5e4-8abcad5adfc7/663918167199.jpg"), spotifyUrl: SPOTIFY_ARTIST_URL },
+  { id: "fallback-1", title: "For You",      label: "The_Effect", releaseDate: "2026-07-16", cover: art("Music221/v4/dc/25/06/dc2506cb-5aa7-9a75-40a9-233b154730ff/612891035759.jpg"), spotifyUrl: sp("05Ekt5D8yBzFfR9zGrSgVH") },
+  { id: "fallback-2", title: "Wait For Me",  label: "The_Effect", releaseDate: "2026-06-04", cover: art("Music221/v4/92/e9/01/92e9017a-7cb1-7ded-6724-c79aec4461ce/612891034462.jpg"), spotifyUrl: sp("2ysj0TVBSCQcxMsbIvlmta") },
+  { id: "fallback-3", title: "Relief",       label: "The_Effect", releaseDate: "2026-04-30", cover: art("Music211/v4/a9/47/96/a94796a8-c777-eaea-3e4e-b6ea4693bdcc/663918956571.jpg"), spotifyUrl: sp("3UBxLCQ1zaNGCB2c9C9Yj0") },
+  { id: "fallback-4", title: "Reality",      label: "The_Effect", releaseDate: "2026-03-27", cover: art("Music211/v4/d2/92/fc/d292fc74-ba0f-29ef-5ba9-64c2c0255851/663918918524.jpg"), spotifyUrl: sp("6VJSVtx6HhLxPZtBhlT8cV") },
+  { id: "fallback-5", title: "DRIP",         label: "The_Effect", releaseDate: "2025-10-15", cover: art("Music211/v4/45/ac/8b/45ac8b03-91b1-c285-aca4-014da1c76db3/663918545966.jpg"), spotifyUrl: sp("42kf3I3ZIyNRdWk4L60OlV") },
+  { id: "fallback-6", title: "Body on Mine", label: "HEXAGON",    releaseDate: "2025-09-12", cover: art("Music221/v4/55/c9/66/55c96622-38a9-6ddb-b2df-7fd35bfa27b4/8721416287664.png"), spotifyUrl: sp("1YpryApD3iqq7PCWfffkJm") },
+  { id: "fallback-7", title: "Pyro (feat. Emski)", label: "Feed Me", releaseDate: "2025-08-15", cover: art("Music221/v4/35/88/cf/3588cf7d-8576-7585-dd26-bc2debd009bd/5055199579306.png"), spotifyUrl: sp("342mmDGOIUhV5NQOIUTC3b") },
+  { id: "fallback-8", title: "SWEAT",        label: "mau5trap",   releaseDate: "2025-04-25", cover: art("Music221/v4/46/4f/c6/464fc66c-247c-9682-e5e4-8abcad5adfc7/663918167199.jpg"), spotifyUrl: sp("2EzhFRr2MsmRsBPeeWR655") },
 ];
 
 // Streaming destinations (Listen-on links beneath the grid)
