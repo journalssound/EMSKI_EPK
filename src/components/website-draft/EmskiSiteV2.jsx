@@ -98,9 +98,72 @@ function IconRow({ className = "" }) {
   );
 }
 
-/* ─── Carousel (scroll-snap + arrows, COBRAH prev/next style) ───────────── */
+/* ─── Image that fades in once loaded (no pop-in) ───────────────────────── */
+function FadeImg({ className = "", ...props }) {
+  const [loaded, setLoaded] = useState(false);
+  // Cached images may already be complete before onLoad can fire.
+  const onRef = useCallback((el) => {
+    if (el && el.complete && el.naturalWidth > 0) setLoaded(true);
+  }, []);
+  return (
+    <img
+      {...props}
+      ref={onRef}
+      className={`wv-fadeimg ${className}`}
+      data-loaded={loaded || undefined}
+      onLoad={() => setLoaded(true)}
+    />
+  );
+}
+
+/* ─── Music video card — ambient muted autoplay in a clean frame ────────── */
+function MusicVideoCard({ video, index }) {
+  return (
+    <div
+      className="wv-carousel__item wv-mv wv-reveal"
+      style={{ "--wv-delay": `${index * 120}ms` }}
+    >
+      <div className="wv-mv__frame">
+        <iframe
+          src={video.embedUrl}
+          title={`${video.title} — music video`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+      <p className="wv-mv__title">{video.title}</p>
+    </div>
+  );
+}
+
+/* ─── Carousel (scroll-snap + arrows, COBRAH prev/next style) ─────────────
+ * Arrows disable at the ends, a hairline progress bar tracks position,
+ * and the track supports mouse drag-to-scroll (touch scrolls natively). */
 function Carousel({ label, children }) {
   const trackRef = useRef(null);
+  const dragRef = useRef(null);
+  const suppressClickRef = useRef(false);
+  const [pos, setPos] = useState({ atStart: true, atEnd: true, progress: 0 });
+
+  const update = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const max = track.scrollWidth - track.clientWidth;
+    const x = track.scrollLeft;
+    setPos({
+      atStart: x <= 4,
+      atEnd: x >= max - 4,
+      progress: max > 0 ? Math.min(1, Math.max(0, x / max)) : 1,
+    });
+  }, []);
+
+  useEffect(() => {
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [update, children]);
+
   const scrollByPage = useCallback((dir) => {
     const track = trackRef.current;
     if (!track) return;
@@ -109,16 +172,71 @@ function Carousel({ label, children }) {
     track.scrollBy({ left: dir * step, behavior: "smooth" });
   }, []);
 
+  const onPointerDown = (e) => {
+    const track = trackRef.current;
+    if (!track || e.pointerType !== "mouse") return;
+    dragRef.current = { startX: e.clientX, startLeft: track.scrollLeft, moved: false };
+    track.classList.add("is-dragging");
+    track.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e) => {
+    const d = dragRef.current;
+    const track = trackRef.current;
+    if (!d || !track) return;
+    const dx = e.clientX - d.startX;
+    if (Math.abs(dx) > 5) d.moved = true;
+    track.scrollLeft = d.startLeft - dx;
+  };
+  const endDrag = () => {
+    const track = trackRef.current;
+    if (!dragRef.current || !track) return;
+    track.classList.remove("is-dragging");
+    if (dragRef.current.moved) suppressClickRef.current = true;
+    dragRef.current = null;
+  };
+  const onClickCapture = (e) => {
+    if (suppressClickRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      suppressClickRef.current = false;
+    }
+  };
+
   return (
     <div className="wv-carousel">
-      <div className="wv-carousel__track" ref={trackRef} aria-label={label}>
+      <div
+        className="wv-carousel__track"
+        ref={trackRef}
+        aria-label={label}
+        onScroll={update}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onClickCapture={onClickCapture}
+      >
         {children}
       </div>
+      <div className="wv-carousel__progress" aria-hidden="true">
+        <span style={{ transform: `scaleX(${pos.progress})` }} />
+      </div>
       <div className="wv-carousel__nav">
-        <button type="button" className="wv-carousel__btn" aria-label="Previous" onClick={() => scrollByPage(-1)}>
+        <button
+          type="button"
+          className="wv-carousel__btn"
+          aria-label="Previous"
+          disabled={pos.atStart}
+          onClick={() => scrollByPage(-1)}
+        >
           ←
         </button>
-        <button type="button" className="wv-carousel__btn" aria-label="Next" onClick={() => scrollByPage(1)}>
+        <button
+          type="button"
+          className="wv-carousel__btn"
+          aria-label="Next"
+          disabled={pos.atEnd}
+          onClick={() => scrollByPage(1)}
+        >
           →
         </button>
       </div>
@@ -131,17 +249,39 @@ function Carousel({ label, children }) {
  *
  * Hero (video + difference-blend wordmark + icon row)
  *   → EP slide (E/MOTION · debut EP · LISTEN NOW, live-show backdrop)
- *   → Music videos (embedded autoplaying players, horizontal scroll)
+ *   → Music videos (ambient muted autoplay, clean frames)
  *   → Merch (product over live-photo band)
- *   → Music (animated tracklist → streaming links)
+ *   → Music (release carousel — big covers → streaming links)
  *   → Tour (centered · completed dates · Vault signup CTA)
  *   → Footer (subscribe → Vault, icons)
  */
 export default function EmskiSiteV2() {
   const [releases, setReleases] = useState(RELEASES);
   const rootRef = useRef(null);
+  const nameWrapRef = useRef(null);
 
   const { upcoming, past } = useMemo(() => splitShows(SHOWS), []);
+
+  // Hero parallax — wordmark recedes slower than the video as you scroll.
+  useEffect(() => {
+    const el = nameWrapRef.current;
+    if (!el || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const y = Math.min(window.scrollY, window.innerHeight);
+        el.style.setProperty("--wv-parallax", `${y * 0.22}px`);
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   // Latest releases from Spotify via Cloudflare Pages Function; silent fallback.
   useEffect(() => {
@@ -208,15 +348,15 @@ export default function EmskiSiteV2() {
 
         <IconRow className="wv-icons--hero" />
 
-        {/* Wordmark inverts the raw video behind it — COBRAH negative treatment */}
-        <div className="wv-hero__name-wrap">
+        {/* Wordmark blends the raw video through itself — glassy COBRAH treatment */}
+        <div className="wv-hero__name-wrap" ref={nameWrapRef}>
           <img className="wv-hero__name" src={logo} alt="EMSKI" />
         </div>
       </header>
 
       {/* ── EP slide ─────────────────────────────────────── */}
       <section className="wv-ep">
-        <img className="wv-ep__bg" src={FEATURED_EP.bg} alt="" aria-hidden="true" />
+        <FadeImg className="wv-ep__bg" src={FEATURED_EP.bg} alt="" aria-hidden="true" />
         <div className="wv-ep__veil" />
         <div className="wv-ep__content">
           <h2 className="wv-ep__title wv-reveal">{FEATURED_EP.title}</h2>
@@ -237,29 +377,14 @@ export default function EmskiSiteV2() {
         <h2 className="wv-section__title wv-reveal">Music Videos</h2>
         <Carousel label="Music videos">
           {MUSIC_VIDEOS.map((v, i) => (
-            <div
-              className="wv-carousel__item wv-mv wv-reveal"
-              key={v.id}
-              style={{ "--wv-delay": `${i * 120}ms` }}
-            >
-              <div className="wv-mv__frame">
-                <iframe
-                  src={v.embedUrl}
-                  title={`${v.title} — music video`}
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-              <p className="wv-mv__title">{v.title}</p>
-            </div>
+            <MusicVideoCard video={v} index={i} key={v.id} />
           ))}
         </Carousel>
       </section>
 
       {/* ── Merch ────────────────────────────────────────── */}
       <section className="wv-merch-band" id="merch">
-        <img className="wv-merch-band__bg" src={MERCH_BG} alt="" aria-hidden="true" />
+        <FadeImg className="wv-merch-band__bg" src={MERCH_BG} alt="" aria-hidden="true" />
         <div className="wv-merch-band__veil" />
         <div className="wv-merch-band__inner">
           <h2 className="wv-section__title wv-reveal">Merch</h2>
@@ -267,7 +392,7 @@ export default function EmskiSiteV2() {
             {MERCH_ITEMS.map((m) => (
               <div className="wv-merch__item wv-reveal" key={m.name}>
                 <div className="wv-merch__card">
-                  <img src={m.image} alt={m.name} loading="lazy" />
+                  <FadeImg src={m.image} alt={m.name} loading="lazy" />
                 </div>
                 <p className="wv-merch__note">{m.note}</p>
                 <a
@@ -284,40 +409,38 @@ export default function EmskiSiteV2() {
         </div>
       </section>
 
-      {/* ── Music ────────────────────────────────────────── */}
+      {/* ── Music — release carousel (COBRAH slides) ─────── */}
       <section className="wv-section wv-music" id="music">
         <h2 className="wv-section__title wv-reveal">Music</h2>
-        <ul className="wv-tracks">
+        <Carousel label="Releases">
           {releases.map((r, i) => (
-            <li
-              className="wv-tracks__row wv-reveal"
+            <div
+              className="wv-carousel__item wv-rel wv-reveal"
               key={r.id || r.title}
-              style={{ "--wv-delay": `${Math.min(i, 6) * 70}ms` }}
+              style={{ "--wv-delay": `${Math.min(i, 6) * 90}ms` }}
             >
               <a
-                className="wv-tracks__link"
+                className="wv-rel__link"
                 href={r.spotifyUrl || spotifyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="wv-tracks__num">{String(i + 1).padStart(2, "0")}</span>
                 {r.cover ? (
-                  <span className="wv-tracks__cover" aria-hidden="true">
-                    <img src={r.cover} alt="" loading="lazy" />
+                  <span className="wv-rel__cover">
+                    <FadeImg src={r.cover} alt={`${r.title} cover art`} loading="lazy" />
                   </span>
                 ) : null}
-                <span className="wv-tracks__title">{r.title}</span>
-                <span className="wv-tracks__meta">
-                  {r.label ? <span className="wv-tracks__label">{r.label}</span> : null}
-                  {r.releaseDate ? (
-                    <span className="wv-tracks__year">{String(r.releaseDate).slice(0, 4)}</span>
-                  ) : null}
+                <span className="wv-rel__title">{r.title}</span>
+                <span className="wv-rel__meta">
+                  {[r.label, r.releaseDate ? String(r.releaseDate).slice(0, 4) : null]
+                    .filter(Boolean)
+                    .join(" · ")}
                 </span>
-                <span className="wv-tracks__stream">Stream</span>
+                <span className="wv-boxlink wv-boxlink--sm">Listen now</span>
               </a>
-            </li>
+            </div>
           ))}
-        </ul>
+        </Carousel>
         <div className="wv-music__all wv-reveal">
           <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
             All music on Spotify
