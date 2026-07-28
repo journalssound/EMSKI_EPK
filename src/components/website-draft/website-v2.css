@@ -150,7 +150,8 @@
   left: var(--wv-pad-x);
   right: var(--wv-pad-x);
   top: 50%;
-  max-width: min(72vw, 720px);
+  /* just a touch narrower than full-bleed */
+  max-width: min(88vw, 1060px);
   margin-inline: auto;
   /* --wv-parallax is driven by a scroll listener in the component */
   transform: translateY(calc(-50% + var(--wv-parallax, 0px)));
