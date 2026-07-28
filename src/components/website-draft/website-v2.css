@@ -150,6 +150,8 @@
   left: var(--wv-pad-x);
   right: var(--wv-pad-x);
   top: 50%;
+  max-width: min(72vw, 720px);
+  margin-inline: auto;
   /* --wv-parallax is driven by a scroll listener in the component */
   transform: translateY(calc(-50% + var(--wv-parallax, 0px)));
   /* Translucent treatment: overlay lets the raw video glow through the
@@ -321,14 +323,14 @@
   pointer-events: none;
 }
 
-/* ───── Music videos — clean cinematic posters (COBRAH: no frames) ───── */
-#video .wv-carousel__track { --wv-item-half: min(39vw, 380px); }
+/* ───── Music videos — one per view, centered window (COBRAH) ───── */
 .wv-mv {
-  width: min(78vw, 760px);
+  width: 100%;
 }
 .wv-mv__frame {
   position: relative;
-  width: 100%;
+  width: min(100%, 880px);
+  margin-inline: auto;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #0a0a0a;
@@ -414,10 +416,9 @@
   margin: 0;
 }
 
-/* ───── Music — release carousel (COBRAH slides: big art, centered) ───── */
-.wv-music .wv-carousel__track { --wv-item-half: min(33vw, 210px); }
+/* ───── Music — one release per slide, centered (COBRAH) ───── */
 .wv-rel {
-  width: min(66vw, 420px);
+  width: 100%;
   text-align: center;
 }
 .wv-rel__link {
@@ -428,7 +429,7 @@
 }
 .wv-rel__cover {
   display: block;
-  width: 100%;
+  width: min(56vw, 360px);
   aspect-ratio: 1;
   overflow: hidden;
   background: #0a0a0a;
@@ -444,9 +445,9 @@
 .wv-rel__link:hover .wv-rel__cover img { transform: scale(1.05); }
 .wv-rel__title {
   font-family: var(--wv-font-display);
-  font-weight: 700;
-  font-size: clamp(20px, 3vw, 34px);
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  font-size: clamp(18px, 2.6vw, 30px);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.05;
   margin-top: 10px;
@@ -614,8 +615,5 @@
 
 /* ───── Mobile ───── */
 @media (max-width: 640px) {
-  .wv-mv { width: 86vw; }
-  .wv-rel { width: 74vw; }
-  #video .wv-carousel__track { --wv-item-half: 43vw; }
-  .wv-music .wv-carousel__track { --wv-item-half: 37vw; }
+  .wv-rel__cover { width: 74vw; }
 }

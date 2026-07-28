@@ -118,6 +118,28 @@ function FadeImg({ className = "", ...props }) {
 
 /* ─── Music video card — ambient muted autoplay in a clean frame ────────── */
 function MusicVideoCard({ video, index }) {
+  const iframeRef = useRef(null);
+
+  // YouTube force-enables captions on muted autoplay and ignores
+  // cc_load_policy for that, so tell the player to unload its caption
+  // modules via the IFrame API (enablejsapi=1 on the embed URL).
+  const killCaptions = useCallback(() => {
+    const win = iframeRef.current?.contentWindow;
+    if (!win) return;
+    for (const mod of ["captions", "cc"]) {
+      win.postMessage(
+        JSON.stringify({ event: "command", func: "unloadModule", args: [mod] }),
+        "*"
+      );
+    }
+  }, []);
+
+  // The player boots asynchronously after the iframe loads — nudge it a few times.
+  useEffect(() => {
+    const timers = [800, 2000, 4000, 8000].map((ms) => setTimeout(killCaptions, ms));
+    return () => timers.forEach(clearTimeout);
+  }, [killCaptions]);
+
   return (
     <div
       className="wv-carousel__item wv-mv wv-reveal"
@@ -125,9 +147,11 @@ function MusicVideoCard({ video, index }) {
     >
       <div className="wv-mv__frame">
         <iframe
+          ref={iframeRef}
           src={video.embedUrl}
           title={`${video.title} — music video`}
           loading="lazy"
+          onLoad={killCaptions}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />

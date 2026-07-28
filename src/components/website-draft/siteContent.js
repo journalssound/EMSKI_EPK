@@ -149,7 +149,7 @@ export const FEATURED_EP = {
 // cc_load_policy=3 keeps captions off by default (YouTube force-enables them on
 // muted autoplay otherwise); iv_load_policy=3 hides annotation overlays.
 const ytEmbed = (id) =>
-  `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=3&iv_load_policy=3`;
+  `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=3&iv_load_policy=3&enablejsapi=1`;
 
 export const MUSIC_VIDEOS = [
   { title: "Wait For Me", id: "I-bVDnsQJIs", embedUrl: ytEmbed("I-bVDnsQJIs") },
