@@ -128,6 +128,14 @@ function albumTitleSize(title) {
   return "clamp(28px, 5.5vw, 72px)";
 }
 
+/* Music-section song names run smaller than the section titles */
+function songTitleSize(title) {
+  const n = title.length;
+  if (n <= 8) return "clamp(28px, 5.9vw, 72px)";
+  if (n <= 13) return "clamp(24px, 4.6vw, 56px)";
+  return "clamp(20px, 4vw, 48px)";
+}
+
 /* ─── YouTube IFrame API loader (shared) ────────────────────────────────── */
 let ytApiPromise = null;
 function loadYouTubeApi() {
@@ -513,7 +521,7 @@ export default function EmskiSiteV2() {
 
       {/* ── Music videos ─────────────────────────────────── */}
       <section className="wv-section" id="video">
-        <h2 className="wv-section__title wv-reveal">Music Videos</h2>
+        <h2 className="wv-section__title wv-reveal">Video</h2>
         <Carousel label="Music videos">
           {MUSIC_VIDEOS.map((v, i) => (
             <MusicVideoCard video={v} index={i} key={v.id} />
@@ -567,7 +575,7 @@ export default function EmskiSiteV2() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="wv-rel__title" style={{ fontSize: albumTitleSize(r.title) }}>
+                  <span className="wv-rel__title" style={{ fontSize: songTitleSize(r.title) }}>
                     {r.title}
                   </span>
                   <span className="wv-rel__meta">
@@ -599,12 +607,14 @@ export default function EmskiSiteV2() {
           <ul className="wv-tour__list wv-reveal">
             {upcoming.map((show) => (
               <li key={show.date + show.city} className="wv-tour__row">
-                <span className="wv-tour__date">
-                  {formatShowDate(show.date)} {formatShowYear(show.date)}
-                </span>
-                <span className="wv-tour__venue">
-                  <span className="wv-tour__venue-name">{show.venue}</span>
-                  <span className="wv-tour__venue-city">{show.city}</span>
+                <span className="wv-tour__info">
+                  <span className="wv-tour__date">
+                    {formatShowDate(show.date)} {formatShowYear(show.date)}
+                  </span>
+                  <span className="wv-tour__venue">
+                    <span className="wv-tour__venue-name">{show.venue}</span>
+                    <span className="wv-tour__venue-city">{show.city}</span>
+                  </span>
                 </span>
                 {show.tickets ? (
                   <a className="wv-boxlink wv-boxlink--sm" href={show.tickets} target="_blank" rel="noopener noreferrer">
@@ -624,12 +634,14 @@ export default function EmskiSiteV2() {
           <ul className="wv-tour__list wv-tour__list--past wv-reveal">
             {past.map((show) => (
               <li key={show.date + show.city} className="wv-tour__row is-past">
-                <span className="wv-tour__date">
-                  {formatShowDate(show.date)} {formatShowYear(show.date)}
-                </span>
-                <span className="wv-tour__venue">
-                  <span className="wv-tour__venue-name">{show.venue}</span>
-                  <span className="wv-tour__venue-city">{show.city}</span>
+                <span className="wv-tour__info">
+                  <span className="wv-tour__date">
+                    {formatShowDate(show.date)} {formatShowYear(show.date)}
+                  </span>
+                  <span className="wv-tour__venue">
+                    <span className="wv-tour__venue-name">{show.venue}</span>
+                    <span className="wv-tour__venue-city">{show.city}</span>
+                  </span>
                 </span>
                 <span className="wv-tour__tba">Completed</span>
               </li>

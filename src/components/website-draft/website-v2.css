@@ -174,11 +174,11 @@
 .wv-section {
   padding: clamp(88px, 14vh, 170px) var(--wv-pad-x);
 }
-/* Section titles: plain white Michroma, no blend (COBRAH sectionTitle) */
+/* Section titles: plain white Michroma, no blend — BIGGER than song titles */
 .wv-section__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
-  font-size: clamp(24px, 4.3vw, 56px);
+  font-size: clamp(40px, 8.75vw, 112px);
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
@@ -253,7 +253,9 @@
   display: flex;
   gap: 24px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  /* proximity, not mandatory — mandatory made vertical scrolls "catch"
+     when the pointer passed over a carousel */
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 6px;
@@ -453,17 +455,17 @@
   gap: 16px;
   min-height: clamp(280px, 38vh, 420px);
 }
-/* Same negative treatment as the hero/section titles (COBRAH albumTitle) */
+/* Song names: plain white, no blend */
 .wv-rel__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
-  font-size: clamp(38px, 8.75vw, 112px);
+  font-size: clamp(28px, 5.9vw, 72px);
   letter-spacing: 0.03em;
   text-transform: uppercase;
   line-height: 1.0;
   padding: 0 var(--wv-pad-x);
   color: #fff;
-  mix-blend-mode: difference;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.55);
 }
 .wv-rel__meta {
   font-family: var(--wv-font-display);
@@ -485,7 +487,7 @@
   gap: 16px;
 }
 
-/* ───── Tour (centered, COBRAH scale) ───── */
+/* ───── Tour (COBRAH: two columns — info left, action right) ───── */
 .wv-tour { text-align: center; }
 /* .wv-root prefix outranks the `.wv-root ul` margin reset */
 .wv-root .wv-tour__list {
@@ -495,24 +497,32 @@
 }
 .wv-tour__row {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 18px;
   padding: 26px 0;
   border-bottom: 1px solid var(--wv-rule);
+  text-align: left;
 }
 .wv-tour__date {
   font-family: var(--wv-font-display);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(13px, 1.6vw, 15px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--wv-fg-dim);
 }
+.wv-tour__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
 .wv-tour__venue {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
 }
 .wv-tour__venue-name {
@@ -547,7 +557,7 @@
 
 /* Completed dates — dimmed + struck through */
 .wv-root .wv-tour__list--past { margin-top: 44px; opacity: 0.55; }
-.wv-tour__list--past .wv-tour__row { padding: 14px 0; gap: 4px; }
+.wv-tour__list--past .wv-tour__row { padding: 14px 0; }
 .wv-tour__list--past .wv-tour__date,
 .wv-tour__list--past .wv-tour__venue-name {
   text-decoration: line-through;
