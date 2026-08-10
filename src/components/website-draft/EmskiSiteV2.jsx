@@ -118,6 +118,16 @@ function FadeImg({ className = "", ...props }) {
   );
 }
 
+/* ─── COBRAH albumTitle sizing: long titles step down so they fit ────────
+ * Measured on cobrahcore.com: DOG/HUSH/TEA 8.75vw, SIGN FROM GOD 5.9vw,
+ * BRAND NEW BITCH 5vw. */
+function albumTitleSize(title) {
+  const n = title.length;
+  if (n <= 8) return "clamp(44px, 8.75vw, 120px)";
+  if (n <= 13) return "clamp(34px, 6.5vw, 88px)";
+  return "clamp(28px, 5.5vw, 72px)";
+}
+
 /* ─── YouTube IFrame API loader (shared) ────────────────────────────────── */
 let ytApiPromise = null;
 function loadYouTubeApi() {
@@ -212,7 +222,9 @@ function MusicVideoCard({ video, index }) {
           </button>
         ) : null}
       </div>
-      <p className="wv-mv__title">{video.title}</p>
+      <p className="wv-mv__title" style={{ fontSize: albumTitleSize(video.title) }}>
+        {video.title}
+      </p>
     </div>
   );
 }
@@ -555,7 +567,9 @@ export default function EmskiSiteV2() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="wv-rel__title">{r.title}</span>
+                  <span className="wv-rel__title" style={{ fontSize: albumTitleSize(r.title) }}>
+                    {r.title}
+                  </span>
                   <span className="wv-rel__meta">
                     {[r.label, r.releaseDate ? String(r.releaseDate).slice(0, 4) : null]
                       .filter(Boolean)

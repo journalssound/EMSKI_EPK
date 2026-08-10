@@ -13,7 +13,7 @@
   --wv-fg-mute: rgba(255, 255, 255, 0.38);
   --wv-rule: rgba(255, 255, 255, 0.16);
 
-  --wv-font-display: "aktiv-grotesk-extended", "Helvetica Neue", Arial, sans-serif;
+  --wv-font-display: "Michroma", "aktiv-grotesk-extended", "Helvetica Neue", Arial, sans-serif;
   --wv-font-body: "Jura", "Helvetica Neue", Arial, sans-serif;
 
   --wv-pad-x: clamp(20px, 5vw, 72px);
@@ -174,8 +174,7 @@
 .wv-section {
   padding: clamp(88px, 14vh, 170px) var(--wv-pad-x);
 }
-/* COBRAH titles: white, weight 400, difference blend over the imagery
-   (their "metallic" look IS the blend — no gradient fills) */
+/* Section titles: plain white Michroma, no blend (COBRAH sectionTitle) */
 .wv-section__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
@@ -186,7 +185,6 @@
   text-align: center;
   margin: 0 0 clamp(36px, 7vh, 72px);
   color: #fff;
-  mix-blend-mode: difference;
 }
 
 /* ───── EP slide ───── */
@@ -225,6 +223,9 @@
   /* wide enough that the clipped-gradient title never crops its last letter */
   max-width: 1280px;
 }
+/* COBRAH's featured-album title is blend NORMAL (only section/album titles
+   use difference) — and our EP bg has a bright screen that made the
+   inverted text unreadable */
 .wv-ep__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
@@ -234,7 +235,7 @@
   line-height: 0.95;
   margin: 0;
   color: #fff;
-  mix-blend-mode: difference;
+  text-shadow: 0 4px 60px rgba(0, 0, 0, 0.55), 0 1px 14px rgba(0, 0, 0, 0.45);
 }
 .wv-ep__tagline {
   font-family: var(--wv-font-display);
