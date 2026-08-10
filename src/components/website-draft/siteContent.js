@@ -164,6 +164,9 @@ export const MUSIC_VIDEOS = [
   { title: "Psycho", id: "rZBWLj2rZsQ", embedUrl: ytEmbed("rZBWLj2rZsQ") },
 ];
 
+// Music section — one live-photo backdrop behind all release slides (COBRAH).
+export const MUSIC_BG = "/photos/live-1.jpg";
+
 // Merch — shown over a live-photo backdrop; swap `url` for the shop when live.
 export const MERCH_BG = "/photos/live-5.jpg";
 export const MERCH_ITEMS = [

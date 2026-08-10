@@ -422,39 +422,42 @@
   margin: 0;
 }
 
-/* ───── Music — COBRAH slides: full-bleed artwork, title + CTA over it ───── */
-.wv-rel {
-  width: 100%;
-  text-align: center;
-}
-.wv-rel__link {
+/* ───── Music — COBRAH: one live-photo backdrop, titles scroll over it ───── */
+.wv-music-band {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  min-height: clamp(420px, 64vh, 640px);
   overflow: hidden;
-  background: #0a0a0a;
 }
-.wv-rel__bg {
+.wv-music-band__bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.02);
-  transition: transform 1200ms var(--wv-ease-out), opacity 700ms var(--wv-ease);
 }
-.wv-rel__link:hover .wv-rel__bg { transform: scale(1.07); }
-.wv-rel__veil {
+.wv-music-band__veil {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.72) 100%);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.85) 100%);
 }
-.wv-rel__title {
+.wv-music-band__inner {
   position: relative;
+  padding: clamp(88px, 14vh, 170px) var(--wv-pad-x);
+}
+.wv-rel {
+  width: 100%;
+  text-align: center;
+}
+.wv-rel__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: clamp(280px, 38vh, 420px);
+}
+/* Same chrome treatment as the section titles */
+.wv-rel__title {
   font-family: var(--wv-font-display);
   font-weight: 700;
   font-size: clamp(38px, 7vw, 96px);
@@ -462,10 +465,14 @@
   text-transform: uppercase;
   line-height: 1.0;
   padding: 0 var(--wv-pad-x);
+  background: linear-gradient(115deg, #ffffff 0%, #d8dde3 28%, #8d949e 52%, #e9edf2 74%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
   filter: drop-shadow(0 4px 32px rgba(0, 0, 0, 0.6));
 }
 .wv-rel__meta {
-  position: relative;
   font-family: var(--wv-font-display);
   font-size: 11px;
   letter-spacing: 0.3em;
@@ -473,7 +480,6 @@
   color: var(--wv-fg-dim);
 }
 .wv-rel__link .wv-boxlink {
-  position: relative;
   margin-top: 12px;
   width: min(420px, 72%);
 }

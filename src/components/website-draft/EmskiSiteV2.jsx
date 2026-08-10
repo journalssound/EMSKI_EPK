@@ -10,6 +10,7 @@ import {
   HERO_VIDEO_V2,
   FEATURED_EP,
   MUSIC_VIDEOS,
+  MUSIC_BG,
   MERCH_BG,
   MERCH_ITEMS,
   SOCIAL_ICONS,
@@ -535,50 +536,44 @@ export default function EmskiSiteV2() {
         </div>
       </section>
 
-      {/* ── Music — release carousel (COBRAH slides) ─────── */}
-      <section className="wv-section wv-music" id="music">
-        <h2 className="wv-section__title wv-reveal">Music</h2>
-        <Carousel label="Releases">
-          {releases.map((r, i) => (
-            <div
-              className="wv-carousel__item wv-rel wv-reveal"
-              key={r.id || r.title}
-              style={{ "--wv-delay": `${Math.min(i, 6) * 90}ms` }}
-            >
-              <a
-                className="wv-rel__link"
-                href={r.spotifyUrl || spotifyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+      {/* ── Music — COBRAH: one backdrop, titles scroll over it ── */}
+      <section className="wv-music-band" id="music">
+        <FadeImg className="wv-music-band__bg" src={MUSIC_BG} alt="" aria-hidden="true" />
+        <div className="wv-music-band__veil" />
+        <div className="wv-music-band__inner">
+          <h2 className="wv-section__title wv-reveal">Music</h2>
+          <Carousel label="Releases">
+            {releases.map((r, i) => (
+              <div
+                className="wv-carousel__item wv-rel wv-reveal"
+                key={r.id || r.title}
+                style={{ "--wv-delay": `${Math.min(i, 6) * 90}ms` }}
               >
-                {r.cover ? (
-                  <FadeImg
-                    className="wv-rel__bg"
-                    src={r.cover}
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                  />
-                ) : null}
-                <span className="wv-rel__veil" aria-hidden="true" />
-                <span className="wv-rel__title">{r.title}</span>
-                <span className="wv-rel__meta">
-                  {[r.label, r.releaseDate ? String(r.releaseDate).slice(0, 4) : null]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </span>
-                <span className="wv-boxlink">Listen now</span>
-              </a>
-            </div>
-          ))}
-        </Carousel>
-        <div className="wv-music__all wv-reveal">
-          <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
-            All music on Spotify
-          </a>
-          <a href={appleUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
-            Apple Music
-          </a>
+                <a
+                  className="wv-rel__link"
+                  href={r.spotifyUrl || spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="wv-rel__title">{r.title}</span>
+                  <span className="wv-rel__meta">
+                    {[r.label, r.releaseDate ? String(r.releaseDate).slice(0, 4) : null]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </span>
+                  <span className="wv-boxlink">Listen now</span>
+                </a>
+              </div>
+            ))}
+          </Carousel>
+          <div className="wv-music__all wv-reveal">
+            <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
+              All music on Spotify
+            </a>
+            <a href={appleUrl} target="_blank" rel="noopener noreferrer" className="wv-boxlink">
+              Apple Music
+            </a>
+          </div>
         </div>
       </section>
 
