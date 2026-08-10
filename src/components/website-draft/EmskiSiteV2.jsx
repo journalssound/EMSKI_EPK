@@ -15,6 +15,7 @@ import {
   SOCIAL_ICONS,
   CONTACT_EMAIL,
   BOOKING_EMAIL,
+  EP_LISTEN_LINKS,
 } from "./siteContent.js";
 import "./website-v2.css";
 
@@ -116,29 +117,62 @@ function FadeImg({ className = "", ...props }) {
   );
 }
 
+/* ─── YouTube IFrame API loader (shared) ────────────────────────────────── */
+let ytApiPromise = null;
+function loadYouTubeApi() {
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+  if (ytApiPromise) return ytApiPromise;
+  ytApiPromise = new Promise((resolve) => {
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      prev?.();
+      resolve(window.YT);
+    };
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  });
+  return ytApiPromise;
+}
+
 /* ─── Music video card — ambient muted autoplay in a clean frame ────────── */
 function MusicVideoCard({ video, index }) {
   const iframeRef = useRef(null);
 
   // YouTube force-enables captions on muted autoplay and ignores
-  // cc_load_policy for that, so tell the player to unload its caption
-  // modules via the IFrame API (enablejsapi=1 on the embed URL).
-  const killCaptions = useCallback(() => {
-    const win = iframeRef.current?.contentWindow;
-    if (!win) return;
-    for (const mod of ["captions", "cc"]) {
-      win.postMessage(
-        JSON.stringify({ event: "command", func: "unloadModule", args: [mod] }),
-        "*"
-      );
-    }
-  }, []);
-
-  // The player boots asynchronously after the iframe loads — nudge it a few times.
+  // cc_load_policy for that. Attach the official IFrame API to each embed
+  // and unload the caption modules on ready and whenever playback starts.
   useEffect(() => {
-    const timers = [800, 2000, 4000, 8000].map((ms) => setTimeout(killCaptions, ms));
-    return () => timers.forEach(clearTimeout);
-  }, [killCaptions]);
+    let player = null;
+    let cancelled = false;
+    const kill = (p) => {
+      try {
+        p.unloadModule("captions");
+        p.unloadModule("cc");
+      } catch {
+        /* player not ready yet — later events retry */
+      }
+    };
+    loadYouTubeApi().then((YT) => {
+      if (cancelled || !iframeRef.current) return;
+      player = new YT.Player(iframeRef.current, {
+        events: {
+          onReady: (e) => kill(e.target),
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.PLAYING) kill(e.target);
+          },
+        },
+      });
+    });
+    return () => {
+      cancelled = true;
+      try {
+        player?.destroy();
+      } catch {
+        /* already gone */
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -151,7 +185,6 @@ function MusicVideoCard({ video, index }) {
           src={video.embedUrl}
           title={`${video.title} — music video`}
           loading="lazy"
-          onLoad={killCaptions}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
@@ -281,8 +314,19 @@ function Carousel({ label, children }) {
  */
 export default function EmskiSiteV2() {
   const [releases, setReleases] = useState(RELEASES);
+  const [listenOpen, setListenOpen] = useState(false);
   const rootRef = useRef(null);
   const nameWrapRef = useRef(null);
+
+  // Esc closes the listen overlay
+  useEffect(() => {
+    if (!listenOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setListenOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [listenOpen]);
 
   const { upcoming, past } = useMemo(() => splitShows(SHOWS), []);
 
@@ -385,16 +429,52 @@ export default function EmskiSiteV2() {
         <div className="wv-ep__content">
           <h2 className="wv-ep__title wv-reveal">{FEATURED_EP.title}</h2>
           <p className="wv-ep__tagline wv-reveal">{FEATURED_EP.tagline}</p>
-          <a
+          <button
+            type="button"
             className="wv-boxlink wv-reveal"
-            href={FEATURED_EP.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => setListenOpen(true)}
           >
             {FEATURED_EP.cta}
-          </a>
+          </button>
         </div>
       </section>
+
+      {/* ── Listen overlay — link-tree platform chooser ──── */}
+      {listenOpen ? (
+        <div
+          className="wv-listen"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Choose a streaming platform"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setListenOpen(false);
+          }}
+        >
+          <button
+            type="button"
+            className="wv-listen__close"
+            aria-label="Close"
+            onClick={() => setListenOpen(false)}
+          >
+            ×
+          </button>
+          <p className="wv-listen__title">{FEATURED_EP.title}</p>
+          <p className="wv-listen__sub">Choose your platform</p>
+          <div className="wv-listen__links">
+            {EP_LISTEN_LINKS.map((l) => (
+              <a
+                key={l.name}
+                className="wv-boxlink"
+                href={l.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {l.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       {/* ── Music videos ─────────────────────────────────── */}
       <section className="wv-section" id="video">

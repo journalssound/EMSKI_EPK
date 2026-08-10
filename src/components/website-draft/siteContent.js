@@ -136,7 +136,7 @@ export const HERO_VIDEO = HERO_VIDEO_R2;
 // Hero background video ("video behind should change to be something else")
 export const HERO_VIDEO_V2 = "/ninjatune/assets/hq-production.mp4";
 
-// Main EP slide — swap `url` for the smart link / pre-save when ready.
+// Main EP slide — "Listen now" opens the in-page platform chooser below.
 // `bg` is a live show photo from the tour recap; `cover` kept for future EP art.
 export const FEATURED_EP = {
   title: "E/MOTION",
@@ -145,6 +145,12 @@ export const FEATURED_EP = {
   bg: "/photos/live-3.jpg",
   url: "https://open.spotify.com/artist/3UqDUfl2fG8ygrFRlgHVZK",
 };
+
+// Platform chooser for the EP CTA (link-tree style overlay).
+export const EP_LISTEN_LINKS = [
+  ...STREAMING_LINKS,
+  { name: "YouTube", url: "https://www.youtube.com/@emskimusic333" },
+];
 
 // Music videos — embedded YouTube players (autoplay muted, unmute via controls).
 // cc_load_policy=3 keeps captions off by default (YouTube force-enables them on
