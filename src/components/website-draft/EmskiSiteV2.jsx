@@ -138,6 +138,10 @@ function loadYouTubeApi() {
 /* ─── Music video card — ambient muted autoplay in a clean frame ────────── */
 function MusicVideoCard({ video, index }) {
   const iframeRef = useRef(null);
+  const playerRef = useRef(null);
+  // Shield blocks hover from reaching the player (no YouTube chrome while
+  // scrolling past). First click removes it and unmutes.
+  const [engaged, setEngaged] = useState(false);
 
   // YouTube force-enables captions on muted autoplay and ignores
   // cc_load_policy for that. Attach the official IFrame API to each embed
@@ -163,6 +167,7 @@ function MusicVideoCard({ video, index }) {
           },
         },
       });
+      playerRef.current = player;
     });
     return () => {
       cancelled = true;
@@ -188,6 +193,23 @@ function MusicVideoCard({ video, index }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
+        {!engaged ? (
+          <button
+            type="button"
+            className="wv-mv__shield"
+            aria-label={`Enable sound for ${video.title}`}
+            onClick={() => {
+              setEngaged(true);
+              try {
+                playerRef.current?.unMute();
+              } catch {
+                /* player not ready — controls are usable once engaged */
+              }
+            }}
+          >
+            <span>Tap for sound</span>
+          </button>
+        ) : null}
       </div>
       <p className="wv-mv__title">{video.title}</p>
     </div>
@@ -530,17 +552,22 @@ export default function EmskiSiteV2() {
                 rel="noopener noreferrer"
               >
                 {r.cover ? (
-                  <span className="wv-rel__cover">
-                    <FadeImg src={r.cover} alt={`${r.title} cover art`} loading="lazy" />
-                  </span>
+                  <FadeImg
+                    className="wv-rel__bg"
+                    src={r.cover}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
                 ) : null}
+                <span className="wv-rel__veil" aria-hidden="true" />
                 <span className="wv-rel__title">{r.title}</span>
                 <span className="wv-rel__meta">
                   {[r.label, r.releaseDate ? String(r.releaseDate).slice(0, 4) : null]
                     .filter(Boolean)
                     .join(" · ")}
                 </span>
-                <span className="wv-boxlink wv-boxlink--sm">Listen now</span>
+                <span className="wv-boxlink">Listen now</span>
               </a>
             </div>
           ))}

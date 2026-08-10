@@ -422,50 +422,61 @@
   margin: 0;
 }
 
-/* ───── Music — multi-release row, next one peeks in (scroll cue) ───── */
+/* ───── Music — COBRAH slides: full-bleed artwork, title + CTA over it ───── */
 .wv-rel {
-  width: clamp(240px, 27vw, 340px);
+  width: 100%;
   text-align: center;
 }
 .wv-rel__link {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-}
-.wv-rel__cover {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1;
+  justify-content: center;
+  gap: 16px;
+  min-height: clamp(420px, 64vh, 640px);
   overflow: hidden;
   background: #0a0a0a;
 }
-.wv-rel__cover img {
+.wv-rel__bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transform: scale(1.01);
-  transition: transform 900ms var(--wv-ease-out), opacity 700ms var(--wv-ease);
+  transform: scale(1.02);
+  transition: transform 1200ms var(--wv-ease-out), opacity 700ms var(--wv-ease);
 }
-.wv-rel__link:hover .wv-rel__cover img { transform: scale(1.05); }
+.wv-rel__link:hover .wv-rel__bg { transform: scale(1.07); }
+.wv-rel__veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.72) 100%);
+}
 .wv-rel__title {
+  position: relative;
   font-family: var(--wv-font-display);
-  font-weight: 500;
-  font-size: clamp(18px, 2.6vw, 30px);
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  font-size: clamp(38px, 7vw, 96px);
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  line-height: 1.05;
-  margin-top: 10px;
+  line-height: 1.0;
+  padding: 0 var(--wv-pad-x);
+  filter: drop-shadow(0 4px 32px rgba(0, 0, 0, 0.6));
 }
 .wv-rel__meta {
+  position: relative;
   font-family: var(--wv-font-display);
-  font-size: 10px;
-  letter-spacing: 0.26em;
+  font-size: 11px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--wv-fg-mute);
+  color: var(--wv-fg-dim);
 }
-.wv-rel__link .wv-boxlink { margin-top: 10px; }
+.wv-rel__link .wv-boxlink {
+  position: relative;
+  margin-top: 12px;
+  width: min(420px, 72%);
+}
 .wv-rel__link:hover .wv-boxlink { background: var(--wv-fg); color: var(--wv-bg); }
 .wv-music__all {
   margin-top: 44px;
@@ -620,9 +631,30 @@
 }
 
 /* ───── Mobile ───── */
-@media (max-width: 640px) {
-  .wv-rel { width: 64vw; }
+/* Shield keeps YouTube chrome from appearing on hover while scrolling;
+   first tap removes it and unmutes */
+.wv-root .wv-mv__shield {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: block;
 }
+.wv-mv__shield span {
+  position: absolute;
+  bottom: 14px;
+  right: 18px;
+  font-family: var(--wv-font-display);
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--wv-fg-dim);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity var(--wv-dur) var(--wv-ease);
+}
+.wv-mv__shield:hover span { opacity: 1; }
 
 /* ───── Listen overlay (link-tree platform chooser) ───── */
 .wv-listen {
