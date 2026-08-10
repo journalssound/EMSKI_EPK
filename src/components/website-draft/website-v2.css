@@ -77,8 +77,10 @@
   animation: wv-fade-in 900ms var(--wv-ease) 1100ms both;
 }
 
-/* ───── Boxed CTA (COBRAH "GET IT NOW" / "SHOP NOW") ───── */
-.wv-boxlink {
+/* ───── Boxed CTA (COBRAH "GET IT NOW" / "SHOP NOW") ─────
+ * .wv-root prefix so <button class="wv-boxlink"> keeps its border
+ * (the `.wv-root button { border: 0 }` reset outranks a lone class) */
+.wv-root .wv-boxlink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -168,9 +170,9 @@
   animation: wv-name-in 1200ms var(--wv-ease-out) 500ms both;
 }
 
-/* ───── Section shell ───── */
+/* ───── Section shell (COBRAH breathing room) ───── */
 .wv-section {
-  padding: clamp(72px, 12vh, 140px) var(--wv-pad-x);
+  padding: clamp(88px, 14vh, 170px) var(--wv-pad-x);
 }
 /* COBRAH-style titles: huge, centered, chrome-gradient fill */
 .wv-section__title {
@@ -282,10 +284,10 @@
   flex: 0 0 auto;
 }
 
-/* Hairline progress bar under the track */
+/* Hairline progress bar between the arrows */
 .wv-carousel__progress {
+  flex: 1;
   height: 1px;
-  margin-top: 28px;
   background: rgba(255, 255, 255, 0.12);
   overflow: hidden;
 }
@@ -297,19 +299,20 @@
   transform: scaleX(0);
   transition: transform 160ms linear;
 }
-/* COBRAH-style prev/next: two wide boxes sharing the full row */
+/* COBRAH-style nav: compact bordered arrow boxes flanking a hairline */
 .wv-carousel__nav {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  align-items: center;
+  gap: clamp(18px, 3vw, 32px);
+  margin-top: 30px;
 }
 /* .wv-root prefix outranks the `.wv-root button { font: inherit }` reset */
 .wv-root .wv-carousel__btn {
-  flex: 1;
-  height: clamp(54px, 6vw, 72px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  flex: 0 0 clamp(110px, 13vw, 160px);
+  height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: var(--wv-fg);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 300;
   display: inline-flex;
   align-items: center;

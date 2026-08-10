@@ -274,9 +274,6 @@ function Carousel({ label, children }) {
       >
         {children}
       </div>
-      <div className="wv-carousel__progress" aria-hidden="true">
-        <span style={{ transform: `scaleX(${pos.progress})` }} />
-      </div>
       <div className="wv-carousel__nav">
         <button
           type="button"
@@ -287,6 +284,9 @@ function Carousel({ label, children }) {
         >
           ←
         </button>
+        <div className="wv-carousel__progress" aria-hidden="true">
+          <span style={{ transform: `scaleX(${pos.progress})` }} />
+        </div>
         <button
           type="button"
           className="wv-carousel__btn"
