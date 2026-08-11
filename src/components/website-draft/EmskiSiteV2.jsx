@@ -150,9 +150,9 @@ function loadYouTubeApi() {
 function MusicVideoCard({ video, index }) {
   const iframeRef = useRef(null);
   const playerRef = useRef(null);
-  // Shield blocks hover from reaching the player (no YouTube chrome while
-  // scrolling past). First click removes it and unmutes.
-  const [engaged, setEngaged] = useState(false);
+  // Permanent shield: hover never reaches the player (no YouTube chrome),
+  // and tapping toggles sound via the API instead of exposing controls.
+  const [muted, setMuted] = useState(true);
 
   // YouTube force-enables captions on muted autoplay and ignores
   // cc_load_policy for that. Attach the official IFrame API to each embed
@@ -204,23 +204,22 @@ function MusicVideoCard({ video, index }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
-        {!engaged ? (
-          <button
-            type="button"
-            className="wv-mv__shield"
-            aria-label={`Enable sound for ${video.title}`}
-            onClick={() => {
-              setEngaged(true);
-              try {
-                playerRef.current?.unMute();
-              } catch {
-                /* player not ready — controls are usable once engaged */
-              }
-            }}
-          >
-            <span>Tap for sound</span>
-          </button>
-        ) : null}
+        <button
+          type="button"
+          className="wv-mv__shield"
+          aria-label={muted ? `Enable sound for ${video.title}` : `Mute ${video.title}`}
+          onClick={() => {
+            try {
+              if (muted) playerRef.current?.unMute();
+              else playerRef.current?.mute();
+              setMuted(!muted);
+            } catch {
+              /* player not ready yet — tap again once it is */
+            }
+          }}
+        >
+          <span>{muted ? "Tap for sound" : "Mute"}</span>
+        </button>
       </div>
       <p className="wv-mv__title">{video.title}</p>
     </div>
