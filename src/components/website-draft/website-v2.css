@@ -459,7 +459,7 @@
    instead of the backdrop photo). Music items fade only — no transform. */
 .wv-root .wv-rel.wv-reveal { transform: none; }
 
-/* Song names: difference blend over the backdrop (COBRAH albumTitle) */
+/* Song names: same glassy overlay blend as the hero EMSKI wordmark */
 .wv-rel__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
@@ -469,7 +469,8 @@
   line-height: 1.0;
   padding: 0 var(--wv-pad-x);
   color: #fff;
-  mix-blend-mode: difference;
+  mix-blend-mode: overlay;
+  filter: drop-shadow(0 3px 28px rgba(0, 0, 0, 0.5));
 }
 .wv-rel__meta {
   font-family: var(--wv-font-display);
