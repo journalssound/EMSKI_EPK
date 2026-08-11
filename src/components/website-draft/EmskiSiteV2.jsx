@@ -123,17 +123,9 @@ function FadeImg({ className = "", ...props }) {
  * BRAND NEW BITCH 5vw. */
 function albumTitleSize(title) {
   const n = title.length;
-  if (n <= 8) return "clamp(44px, 8.75vw, 120px)";
-  if (n <= 13) return "clamp(34px, 6.5vw, 88px)";
-  return "clamp(28px, 5.5vw, 72px)";
-}
-
-/* Music-section song names run smaller than the section titles */
-function songTitleSize(title) {
-  const n = title.length;
-  if (n <= 8) return "clamp(28px, 5.9vw, 72px)";
-  if (n <= 13) return "clamp(24px, 4.6vw, 56px)";
-  return "clamp(20px, 4vw, 48px)";
+  if (n <= 8) return "clamp(34px, 8.75vw, 160px)";
+  if (n <= 13) return "clamp(26px, 5.9vw, 108px)";
+  return "clamp(22px, 5vw, 92px)";
 }
 
 /* ─── YouTube IFrame API loader (shared) ────────────────────────────────── */
@@ -575,7 +567,7 @@ export default function EmskiSiteV2() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="wv-rel__title" style={{ fontSize: songTitleSize(r.title) }}>
+                  <span className="wv-rel__title" style={{ fontSize: albumTitleSize(r.title) }}>
                     {r.title}
                   </span>
                   <span className="wv-rel__meta">
