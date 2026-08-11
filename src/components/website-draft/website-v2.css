@@ -454,6 +454,11 @@
   gap: 16px;
   min-height: clamp(280px, 38vh, 420px);
 }
+/* The reveal transform creates a stacking context on the carousel item,
+   which traps the title's blend inside it (blending against transparent
+   instead of the backdrop photo). Music items fade only — no transform. */
+.wv-root .wv-rel.wv-reveal { transform: none; }
+
 /* Song names: difference blend over the backdrop (COBRAH albumTitle) */
 .wv-rel__title {
   font-family: var(--wv-font-display);
