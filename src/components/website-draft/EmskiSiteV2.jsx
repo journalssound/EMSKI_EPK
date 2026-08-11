@@ -222,9 +222,7 @@ function MusicVideoCard({ video, index }) {
           </button>
         ) : null}
       </div>
-      <p className="wv-mv__title" style={{ fontSize: albumTitleSize(video.title) }}>
-        {video.title}
-      </p>
+      <p className="wv-mv__title">{video.title}</p>
     </div>
   );
 }

@@ -343,17 +343,16 @@
   border: 0;
   background: #000;
 }
-/* Video titles carry COBRAH's albumTitle scale + negative blend */
+/* Video captions: COBRAH-exact 2.29vw (33px @1440), plain white */
 .wv-mv__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
-  font-size: clamp(24px, 5.9vw, 64px);
+  font-size: clamp(14px, 2.29vw, 40px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-align: center;
   margin: 22px 0 0;
   color: #fff;
-  mix-blend-mode: difference;
 }
 
 /* ───── Merch — live-photo band with floating product ───── */
