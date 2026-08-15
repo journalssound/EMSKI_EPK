@@ -175,12 +175,21 @@ export const MUSIC_BG = "/photos/live-1.jpg";
  * item's `url` for its Square product link — nothing else has to change.
  *
  * Per item:
- *   name    — product title
- *   image   — product shot (swap the placeholders for real photography)
- *   price   — display string, e.g. "$35"; omit while unannounced
- *   sizes   — optional array shown under the name, e.g. ["S","M","L","XL"]
- *   status  — "available" | "soon" | "sold-out" (drives the button + badge)
- *   url     — product page when available; falls back to the Vault signup
+ *   name        — product title
+ *   image       — card thumbnail
+ *   views       — [{label, src}] for the front/back toggle in the overlay
+ *   price       — display string, e.g. "$35"; omit while unannounced
+ *   sizes       — ["S","M","L","XL"] or [{size, soldOut}] for per-size state
+ *   status      — "available" | "soon" | "sold-out" (drives badge + CTA)
+ *   checkoutUrl — Square payment link (https://square.link/u/XXXX). When set
+ *                 and status is "available", the CTA becomes real checkout.
+ *   url         — fallback link (Vault signup) while there's no checkout
+ *
+ * IMPORTANT — Square payment links do NOT reliably enforce inventory
+ * (Square's own dev forum confirms; merchants report overselling races).
+ * So stock is guarded HERE: mark a size soldOut as it runs out, and flip
+ * `status` to "sold-out" when the run is gone. Treat this file as the
+ * source of truth for what's buyable, not the Square dashboard.
  * ──────────────────────────────────────────────────────────────────────── */
 export const MERCH_BG = "/photos/live-5.jpg";
 
@@ -199,8 +208,16 @@ export const MERCH_ITEMS = [
       { label: "Back", src: "/photos/merch/blurred-faces-back.jpg" },
     ],
     price: "$35",
-    sizes: ["S", "M", "L", "XL"],
+    // Flip `soldOut` per size as stock runs out — this is the real guard.
+    sizes: [
+      { size: "S", soldOut: false },
+      { size: "M", soldOut: false },
+      { size: "L", soldOut: false },
+      { size: "XL", soldOut: false },
+    ],
     status: "soon",
+    // Paste the Square payment link here, then flip status to "available".
+    checkoutUrl: "",
     url: VAULT_URL,
     tagline: "Numb isn't neutral",
     description:

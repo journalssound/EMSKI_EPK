@@ -877,6 +877,23 @@
   border-color: var(--wv-fg);
   color: var(--wv-bg);
 }
+/* Sold-out size: struck through, not clickable */
+.wv-root .wv-product__size.is-out {
+  opacity: 0.32;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.wv-root .wv-product__size.is-out:hover {
+  border-color: var(--wv-rule);
+  color: var(--wv-fg-dim);
+}
+.wv-product__note {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--wv-fg-mute);
+  margin: 10px 0 0;
+}
 .wv-product__buy { margin-top: 6px; }
 .wv-product__buy .wv-boxlink { width: min(360px, 100%); }
 .wv-product__details {

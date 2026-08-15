@@ -126,10 +126,17 @@ function ProductOverlay({ item, onClose }) {
   const views = item.views?.length
     ? item.views
     : [{ label: "Front", src: item.image }];
+  // sizes accept plain strings or {size, soldOut}
+  const sizes = (item.sizes || []).map((s) =>
+    typeof s === "string" ? { size: s, soldOut: false } : s
+  );
   const [view, setView] = useState(0);
   const [size, setSize] = useState(null);
-  const soldOut = item.status === "sold-out";
+  const soldOut = item.status === "sold-out" || sizes.every((s) => s.soldOut);
   const soon = item.status === "soon";
+  const canBuy = !soldOut && !soon && Boolean(item.checkoutUrl);
+  // Square doesn't enforce stock, so require a size before we hand off.
+  const needsSize = canBuy && sizes.length > 0 && !size;
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -178,19 +185,23 @@ function ProductOverlay({ item, onClose }) {
             <p className="wv-product__desc">{item.description}</p>
           ) : null}
 
-          {item.sizes?.length ? (
+          {sizes.length ? (
             <div className="wv-product__sizes">
               <span className="wv-product__label">Size</span>
               <div className="wv-product__sizerow">
-                {item.sizes.map((s) => (
+                {sizes.map((s) => (
                   <button
-                    key={s}
+                    key={s.size}
                     type="button"
-                    className={`wv-product__size${size === s ? " is-active" : ""}`}
-                    aria-pressed={size === s}
-                    onClick={() => setSize(s)}
+                    className={`wv-product__size${size === s.size ? " is-active" : ""}${
+                      s.soldOut ? " is-out" : ""
+                    }`}
+                    aria-pressed={size === s.size}
+                    disabled={s.soldOut}
+                    title={s.soldOut ? "Sold out" : undefined}
+                    onClick={() => setSize(s.size)}
                   >
-                    {s}
+                    {s.size}
                   </button>
                 ))}
               </div>
@@ -199,13 +210,24 @@ function ProductOverlay({ item, onClose }) {
 
           <div className="wv-product__buy">
             <a
-              className={`wv-boxlink${soldOut ? " is-disabled" : ""}`}
-              href={item.url}
+              className={`wv-boxlink${soldOut || needsSize ? " is-disabled" : ""}`}
+              href={canBuy ? item.checkoutUrl : item.url}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {soldOut ? "Sold out" : soon ? "Get notified" : "Add to cart"}
+              {soldOut
+                ? "Sold out"
+                : soon
+                  ? "Get notified"
+                  : needsSize
+                    ? "Select a size"
+                    : "Buy now"}
             </a>
+            {canBuy && size ? (
+              <p className="wv-product__note">
+                Checkout opens on Square — choose {size} there to match.
+              </p>
+            ) : null}
           </div>
 
           {item.details?.length ? (
@@ -630,7 +652,11 @@ export default function EmskiSiteV2() {
           <h2 className="wv-section__title wv-reveal">Merch</h2>
           <div className="wv-merch">
             {MERCH_ITEMS.map((m) => {
-              const soldOut = m.status === "sold-out";
+              const allOut =
+                Array.isArray(m.sizes) &&
+                m.sizes.length > 0 &&
+                m.sizes.every((s) => typeof s !== "string" && s.soldOut);
+              const soldOut = m.status === "sold-out" || allOut;
               const soon = m.status === "soon";
               return (
                 <div className="wv-merch__item wv-reveal" key={m.name}>
@@ -650,7 +676,11 @@ export default function EmskiSiteV2() {
                   <p className="wv-merch__name">{m.name}</p>
                   {m.price ? <p className="wv-merch__price">{m.price}</p> : null}
                   {m.sizes?.length ? (
-                    <p className="wv-merch__sizes">{m.sizes.join(" · ")}</p>
+                    <p className="wv-merch__sizes">
+                      {m.sizes
+                        .map((s) => (typeof s === "string" ? s : s.size))
+                        .join(" · ")}
+                    </p>
                   ) : null}
                   <button
                     type="button"
