@@ -169,14 +169,32 @@ export const MUSIC_VIDEOS = [
 // Brightened in CSS so the overlay-blend titles still read glassy.
 export const MUSIC_BG = "/photos/live-1.jpg";
 
-// Merch — shown over a live-photo backdrop; swap `url` for the shop when live.
+/* ─── Merch ───────────────────────────────────────────────────────────────
+ * Store-agnostic: each item just needs a `url` pointing at its product page.
+ * When the Square Online store is live, set MERCH_STORE_URL and swap each
+ * item's `url` for its Square product link — nothing else has to change.
+ *
+ * Per item:
+ *   name    — product title
+ *   image   — product shot (swap the placeholders for real photography)
+ *   price   — display string, e.g. "$35"; omit while unannounced
+ *   sizes   — optional array shown under the name, e.g. ["S","M","L","XL"]
+ *   status  — "available" | "soon" | "sold-out" (drives the button + badge)
+ *   url     — product page when available; falls back to the Vault signup
+ * ──────────────────────────────────────────────────────────────────────── */
 export const MERCH_BG = "/photos/live-5.jpg";
+
+// Set this once the Square store exists — powers the "Shop all" link.
+export const MERCH_STORE_URL = "";
+
 export const MERCH_ITEMS = [
   {
     name: "THE_EFFECT Tee",
     image: "/ninjatune/assets/merch-tshirt.png",
+    price: "$35",
+    sizes: ["S", "M", "L", "XL"],
+    status: "soon",
     url: VAULT_URL,
-    note: "Drops soon · get notified",
   },
 ];
 

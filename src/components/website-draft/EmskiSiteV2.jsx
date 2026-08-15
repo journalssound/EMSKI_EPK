@@ -13,6 +13,7 @@ import {
   MUSIC_BG,
   MERCH_BG,
   MERCH_ITEMS,
+  MERCH_STORE_URL,
   SOCIAL_ICONS,
   CONTACT_EMAIL,
   BOOKING_EMAIL,
@@ -525,23 +526,55 @@ export default function EmskiSiteV2() {
         <div className="wv-merch-band__inner">
           <h2 className="wv-section__title wv-reveal">Merch</h2>
           <div className="wv-merch">
-            {MERCH_ITEMS.map((m) => (
-              <div className="wv-merch__item wv-reveal" key={m.name}>
-                <div className="wv-merch__card">
-                  <FadeImg src={m.image} alt={m.name} loading="lazy" />
+            {MERCH_ITEMS.map((m) => {
+              const soldOut = m.status === "sold-out";
+              const soon = m.status === "soon";
+              return (
+                <div className="wv-merch__item wv-reveal" key={m.name}>
+                  <a
+                    className="wv-merch__card"
+                    href={m.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={m.name}
+                  >
+                    <FadeImg src={m.image} alt={m.name} loading="lazy" />
+                    {soldOut || soon ? (
+                      <span className="wv-merch__badge">
+                        {soldOut ? "Sold out" : "Coming soon"}
+                      </span>
+                    ) : null}
+                  </a>
+                  <p className="wv-merch__name">{m.name}</p>
+                  {m.price ? <p className="wv-merch__price">{m.price}</p> : null}
+                  {m.sizes?.length ? (
+                    <p className="wv-merch__sizes">{m.sizes.join(" · ")}</p>
+                  ) : null}
+                  <a
+                    className={`wv-boxlink${soldOut ? " is-disabled" : ""}`}
+                    href={m.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-disabled={soldOut || undefined}
+                  >
+                    {soldOut ? "Sold out" : soon ? "Get notified" : "Shop now"}
+                  </a>
                 </div>
-                <p className="wv-merch__note">{m.note}</p>
-                <a
-                  className="wv-boxlink"
-                  href={m.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Shop now
-                </a>
-              </div>
-            ))}
+              );
+            })}
           </div>
+          {MERCH_STORE_URL ? (
+            <div className="wv-merch__all wv-reveal">
+              <a
+                className="wv-boxlink"
+                href={MERCH_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Shop all merch
+              </a>
+            </div>
+          ) : null}
         </div>
       </section>
 

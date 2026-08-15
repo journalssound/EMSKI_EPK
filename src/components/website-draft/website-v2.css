@@ -394,12 +394,28 @@
   text-align: center;
 }
 .wv-merch__card {
+  position: relative;
+  display: block;
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: none;
   padding: clamp(20px, 3vw, 36px);
   transition: transform 600ms var(--wv-ease-out), border-color var(--wv-dur) var(--wv-ease), background var(--wv-dur) var(--wv-ease);
+}
+/* Status badge (Coming soon / Sold out) */
+.wv-merch__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--wv-font-display);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--wv-fg);
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 6px 10px;
 }
 .wv-merch__item:hover .wv-merch__card {
   transform: translateY(-6px);
@@ -412,13 +428,39 @@
   display: block;
   filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.5));
 }
-.wv-merch__note {
+.wv-merch__name {
   font-family: var(--wv-font-display);
-  font-size: 11px;
-  letter-spacing: 0.24em;
+  font-size: clamp(14px, 1.8vw, 19px);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--wv-fg-dim);
+  color: var(--wv-fg);
   margin: 0;
+}
+.wv-merch__price {
+  font-family: var(--wv-font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--wv-fg-dim);
+  margin: -6px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.wv-merch__sizes {
+  font-family: var(--wv-font-display);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--wv-fg-mute);
+  margin: -6px 0 0;
+}
+.wv-merch__all {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(36px, 6vh, 64px);
+}
+/* Sold out — visibly inert, still focusable for screen readers */
+.wv-root .wv-boxlink.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 /* ───── Music — COBRAH: one live-photo backdrop, titles scroll over it ───── */
