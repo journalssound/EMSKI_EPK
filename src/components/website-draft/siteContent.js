@@ -191,13 +191,12 @@ export const MERCH_ITEMS = [
   {
     id: "blurred-faces-tee",
     name: "Blurred Faces Tee",
-    // `views` powers the front/back toggle in the product overlay. Drop the
-    // real shots at these paths (see /photos/merch/README) — until then both
-    // fall back to the combined on-model sheet.
-    image: "/ninjatune/assets/merch-tshirt.png",
+    // Cut from the Industry Print Shop proof (#19123) — real garment, real
+    // print placement. Swap for restyled/on-model shots when they exist.
+    image: "/photos/merch/blurred-faces-front.jpg",
     views: [
-      { label: "Front", src: "/ninjatune/assets/merch-tshirt.png" },
-      { label: "Back", src: "/ninjatune/assets/merch-tshirt.png" },
+      { label: "Front", src: "/photos/merch/blurred-faces-front.jpg" },
+      { label: "Back", src: "/photos/merch/blurred-faces-back.jpg" },
     ],
     price: "$35",
     sizes: ["S", "M", "L", "XL"],
