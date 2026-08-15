@@ -430,8 +430,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* lift the dark live shot so the overlay-blend titles read glassy */
-  filter: brightness(1.9) saturate(1.05);
+  /* tame the blown stage lights so the screen-blend titles read evenly */
+  filter: brightness(0.5) contrast(0.85) saturate(1.1);
 }
 .wv-music-band__veil {
   position: absolute;
@@ -462,7 +462,9 @@
    instead of the backdrop photo). Music items fade only — no transform. */
 .wv-root .wv-rel.wv-reveal { transform: none; }
 
-/* Song names: same glassy overlay blend as the hero EMSKI wordmark */
+/* Song names: glassy like the hero wordmark, but screen instead of overlay —
+   overlay goes muddy on a dark photo, screen always lifts above the backdrop
+   so the letters stay readable while the photo still shows through them. */
 .wv-rel__title {
   font-family: var(--wv-font-display);
   font-weight: 400;
@@ -471,9 +473,8 @@
   text-transform: uppercase;
   line-height: 1.0;
   padding: 0 var(--wv-pad-x);
-  color: #fff;
-  mix-blend-mode: overlay;
-  filter: drop-shadow(0 3px 28px rgba(0, 0, 0, 0.5));
+  color: #b9b9b9;
+  mix-blend-mode: screen;
 }
 .wv-rel__meta {
   font-family: var(--wv-font-display);
