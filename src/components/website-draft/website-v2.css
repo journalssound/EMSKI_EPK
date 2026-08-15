@@ -213,8 +213,10 @@
 .wv-ep__veil {
   position: absolute;
   inset: 0;
+  /* the stage screen behind the title is near-white — needs real weight at
+     the centre or E/MOTION washes out (worst on mobile, where it fills more) */
   background:
-    radial-gradient(ellipse at 50% 55%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.66) 100%);
+    radial-gradient(ellipse at 50% 55%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.78) 100%);
 }
 .wv-ep__content {
   position: relative;
@@ -648,7 +650,6 @@
   outline-offset: 3px;
 }
 
-/* ───── Mobile ───── */
 /* Shield keeps YouTube chrome from appearing on hover while scrolling;
    first tap removes it and unmutes */
 .wv-root .wv-mv__shield {
@@ -722,3 +723,19 @@
   width: min(78vw, 320px);
 }
 .wv-listen__links .wv-boxlink { width: 100%; }
+
+/* ───── Mobile ───── */
+@media (max-width: 640px) {
+  .wv-rel { width: 64vw; }
+
+  /* Venue names were wrapping to 2-3 lines because COMPLETED/TICKETS ate
+     half the row — shrink the status and let the info column breathe. */
+  .wv-tour__row { gap: 12px; }
+  .wv-tour__info { flex: 1 1 auto; min-width: 0; }
+  .wv-tour__venue-name { font-size: 15px; letter-spacing: 0.08em; }
+  .wv-tour__tba { flex: 0 0 auto; font-size: 9px; letter-spacing: 0.16em; }
+  .wv-tour__row .wv-boxlink { flex: 0 0 auto; padding: 10px 16px; }
+
+  /* Touch devices never hover — keep the sound hint visible. */
+  .wv-mv__shield span { opacity: 1; }
+}
