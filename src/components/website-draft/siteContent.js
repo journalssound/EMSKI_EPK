@@ -189,12 +189,29 @@ export const MERCH_STORE_URL = "";
 
 export const MERCH_ITEMS = [
   {
-    name: "THE_EFFECT Tee",
+    id: "blurred-faces-tee",
+    name: "Blurred Faces Tee",
+    // `views` powers the front/back toggle in the product overlay. Drop the
+    // real shots at these paths (see /photos/merch/README) — until then both
+    // fall back to the combined on-model sheet.
     image: "/ninjatune/assets/merch-tshirt.png",
+    views: [
+      { label: "Front", src: "/ninjatune/assets/merch-tshirt.png" },
+      { label: "Back", src: "/ninjatune/assets/merch-tshirt.png" },
+    ],
     price: "$35",
     sizes: ["S", "M", "L", "XL"],
     status: "soon",
     url: VAULT_URL,
+    tagline: "Numb isn't neutral",
+    description:
+      "Oversized black tee from the E/MOTION run. Front carries the Blurred Faces print in cyan and white; the back runs the e/MOTION column type down the spine, with the E mark on the left sleeve.",
+    details: [
+      "100% cotton, oversized fit",
+      "Front print 16\" × 16.5\"",
+      "Back print 11.6\" × 17\"",
+      "Screen printed in Austin, TX",
+    ],
   },
 ];
 

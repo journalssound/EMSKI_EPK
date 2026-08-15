@@ -119,6 +119,108 @@ function FadeImg({ className = "", ...props }) {
   );
 }
 
+/* ─── Product overlay — front/back views, sizes, details ────────────────
+ * Checkout slots in at `wv-product__buy`: drop the Square buy-button embed
+ * there (or a per-size link) once the store exists. */
+function ProductOverlay({ item, onClose }) {
+  const views = item.views?.length
+    ? item.views
+    : [{ label: "Front", src: item.image }];
+  const [view, setView] = useState(0);
+  const [size, setSize] = useState(null);
+  const soldOut = item.status === "sold-out";
+  const soon = item.status === "soon";
+
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="wv-product"
+      role="dialog"
+      aria-modal="true"
+      aria-label={item.name}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <button type="button" className="wv-product__close" aria-label="Close" onClick={onClose}>
+        ×
+      </button>
+
+      <div className="wv-product__inner">
+        <div className="wv-product__media">
+          <div className="wv-product__frame">
+            <FadeImg src={views[view].src} alt={`${item.name} — ${views[view].label}`} />
+          </div>
+          {views.length > 1 ? (
+            <div className="wv-product__views">
+              {views.map((v, i) => (
+                <button
+                  key={v.label}
+                  type="button"
+                  className={`wv-product__view${i === view ? " is-active" : ""}`}
+                  onClick={() => setView(i)}
+                >
+                  {v.label}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="wv-product__info">
+          <h3 className="wv-product__name">{item.name}</h3>
+          {item.tagline ? <p className="wv-product__tagline">{item.tagline}</p> : null}
+          {item.price ? <p className="wv-product__price">{item.price}</p> : null}
+          {item.description ? (
+            <p className="wv-product__desc">{item.description}</p>
+          ) : null}
+
+          {item.sizes?.length ? (
+            <div className="wv-product__sizes">
+              <span className="wv-product__label">Size</span>
+              <div className="wv-product__sizerow">
+                {item.sizes.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    className={`wv-product__size${size === s ? " is-active" : ""}`}
+                    aria-pressed={size === s}
+                    onClick={() => setSize(s)}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          <div className="wv-product__buy">
+            <a
+              className={`wv-boxlink${soldOut ? " is-disabled" : ""}`}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {soldOut ? "Sold out" : soon ? "Get notified" : "Add to cart"}
+            </a>
+          </div>
+
+          {item.details?.length ? (
+            <ul className="wv-product__details">
+              {item.details.map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── COBRAH albumTitle sizing: long titles step down so they fit ────────
  * Measured on cobrahcore.com: DOG/HUSH/TEA 8.75vw, SIGN FROM GOD 5.9vw,
  * BRAND NEW BITCH 5vw. */
@@ -348,6 +450,7 @@ function Carousel({ label, children }) {
 export default function EmskiSiteV2() {
   const [releases, setReleases] = useState(RELEASES);
   const [listenOpen, setListenOpen] = useState(false);
+  const [product, setProduct] = useState(null);
   const rootRef = useRef(null);
   const nameWrapRef = useRef(null);
 
@@ -531,12 +634,11 @@ export default function EmskiSiteV2() {
               const soon = m.status === "soon";
               return (
                 <div className="wv-merch__item wv-reveal" key={m.name}>
-                  <a
+                  <button
+                    type="button"
                     className="wv-merch__card"
-                    href={m.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={m.name}
+                    onClick={() => setProduct(m)}
+                    aria-label={`View ${m.name}`}
                   >
                     <FadeImg src={m.image} alt={m.name} loading="lazy" />
                     {soldOut || soon ? (
@@ -544,21 +646,20 @@ export default function EmskiSiteV2() {
                         {soldOut ? "Sold out" : "Coming soon"}
                       </span>
                     ) : null}
-                  </a>
+                  </button>
                   <p className="wv-merch__name">{m.name}</p>
                   {m.price ? <p className="wv-merch__price">{m.price}</p> : null}
                   {m.sizes?.length ? (
                     <p className="wv-merch__sizes">{m.sizes.join(" · ")}</p>
                   ) : null}
-                  <a
+                  <button
+                    type="button"
                     className={`wv-boxlink${soldOut ? " is-disabled" : ""}`}
-                    href={m.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => setProduct(m)}
                     aria-disabled={soldOut || undefined}
                   >
                     {soldOut ? "Sold out" : soon ? "Get notified" : "Shop now"}
-                  </a>
+                  </button>
                 </div>
               );
             })}
@@ -577,6 +678,11 @@ export default function EmskiSiteV2() {
           ) : null}
         </div>
       </section>
+
+      {/* ── Product overlay ──────────────────────────────── */}
+      {product ? (
+        <ProductOverlay item={product} onClose={() => setProduct(null)} />
+      ) : null}
 
       {/* ── Music — COBRAH: one backdrop, titles scroll over it ── */}
       <section className="wv-music-band" id="music">
