@@ -207,13 +207,17 @@ export const MERCH_ITEMS = [
       { label: "Front", src: "/photos/merch/blurred-faces-front.jpg" },
       { label: "Back", src: "/photos/merch/blurred-faces-back.jpg" },
     ],
-    price: "$35",
+    price: "$45",
     // Flip `soldOut` per size as stock runs out — this is the real guard.
+    // `stock` is the on-hand count from the Industry Print Shop run
+    // (invoice #26693, paid 2026-05-29). Reference only — nothing reads it;
+    // set soldOut by hand when a size is gone.
     sizes: [
-      { size: "S", soldOut: false },
-      { size: "M", soldOut: false },
-      { size: "L", soldOut: false },
-      { size: "XL", soldOut: false },
+      { size: "S", stock: 12, soldOut: false },
+      { size: "M", stock: 14, soldOut: false },
+      { size: "L", stock: 30, soldOut: false },
+      { size: "XL", stock: 22, soldOut: false },
+      { size: "2XL", stock: 4, soldOut: false },
     ],
     status: "soon",
     // Paste the Square payment link here, then flip status to "available".
@@ -223,7 +227,8 @@ export const MERCH_ITEMS = [
     description:
       "Oversized black tee from the E/MOTION run. Front carries the Blurred Faces print in cyan and white; the back runs the e/MOTION column type down the spine, with the E mark on the left sleeve.",
     details: [
-      "100% cotton, oversized fit",
+      "Shaka Wear 6.5oz retro garment dye, Shadow",
+      "Oversized fit, 3-colour screen print",
       "Front print 16\" × 16.5\"",
       "Back print 11.6\" × 17\"",
       "Screen printed in Austin, TX",
