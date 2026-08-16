@@ -202,10 +202,10 @@ export const MERCH_ITEMS = [
     name: "Blurred Faces Tee",
     // Cut from the Industry Print Shop proof (#19123) — real garment, real
     // print placement. Swap for restyled/on-model shots when they exist.
-    image: "/photos/merch/blurred-faces-front.jpg",
+    image: "/photos/merch/blurred-faces-front-dark.jpg",
     views: [
-      { label: "Front", src: "/photos/merch/blurred-faces-front.jpg" },
-      { label: "Back", src: "/photos/merch/blurred-faces-back.jpg" },
+      { label: "Front", src: "/photos/merch/blurred-faces-front-dark.jpg" },
+      { label: "Back", src: "/photos/merch/blurred-faces-back-dark.jpg" },
     ],
     price: "$45",
     // Flip `soldOut` per size as stock runs out — this is the real guard.
