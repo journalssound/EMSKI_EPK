@@ -14,6 +14,7 @@ import {
   MERCH_BG,
   MERCH_ITEMS,
   MERCH_STORE_URL,
+  BACKORDER_NOTE,
   SOCIAL_ICONS,
   CONTACT_EMAIL,
   BOOKING_EMAIL,
@@ -126,9 +127,9 @@ function ProductOverlay({ item, onClose }) {
   const views = item.views?.length
     ? item.views
     : [{ label: "Front", src: item.image }];
-  // sizes accept plain strings or {size, soldOut}
+  // sizes accept plain strings or {size, soldOut, backorder}
   const sizes = (item.sizes || []).map((s) =>
-    typeof s === "string" ? { size: s, soldOut: false } : s
+    typeof s === "string" ? { size: s } : s
   );
   const [view, setView] = useState(0);
   const [size, setSize] = useState(null);
@@ -137,6 +138,8 @@ function ProductOverlay({ item, onClose }) {
   const canBuy = !soldOut && !soon && Boolean(item.checkoutUrl);
   // Square doesn't enforce stock, so require a size before we hand off.
   const needsSize = canBuy && sizes.length > 0 && !size;
+  const picked = sizes.find((s) => s.size === size);
+  const anyBackorder = sizes.some((s) => s.backorder && !s.soldOut);
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -195,17 +198,35 @@ function ProductOverlay({ item, onClose }) {
                     type="button"
                     className={`wv-product__size${size === s.size ? " is-active" : ""}${
                       s.soldOut ? " is-out" : ""
-                    }`}
+                    }${s.backorder && !s.soldOut ? " is-backorder" : ""}`}
                     aria-pressed={size === s.size}
                     disabled={s.soldOut}
-                    title={s.soldOut ? "Sold out" : undefined}
+                    title={
+                      s.soldOut
+                        ? "Sold out"
+                        : s.backorder
+                          ? "Made to order — ships later"
+                          : undefined
+                    }
                     onClick={() => setSize(s.size)}
                   >
                     {s.size}
+                    {s.backorder && !s.soldOut ? (
+                      <span className="wv-product__dot" aria-hidden="true">
+                        *
+                      </span>
+                    ) : null}
                   </button>
                 ))}
               </div>
+              {anyBackorder ? (
+                <p className="wv-product__legend">* Made to order</p>
+              ) : null}
             </div>
+          ) : null}
+
+          {picked?.backorder && !picked.soldOut ? (
+            <p className="wv-product__backorder">{BACKORDER_NOTE}</p>
           ) : null}
 
           <div className="wv-product__buy">
@@ -658,6 +679,11 @@ export default function EmskiSiteV2() {
                 m.sizes.every((s) => typeof s !== "string" && s.soldOut);
               const soldOut = m.status === "sold-out" || allOut;
               const soon = m.status === "soon";
+              // Some sizes ship on a reprint — surfaced on the card so it's
+              // known before opening the product.
+              const hasBackorder =
+                Array.isArray(m.sizes) &&
+                m.sizes.some((s) => typeof s !== "string" && s.backorder && !s.soldOut);
               return (
                 <div className="wv-merch__item wv-reveal" key={m.name}>
                   <button
@@ -667,9 +693,13 @@ export default function EmskiSiteV2() {
                     aria-label={`View ${m.name}`}
                   >
                     <FadeImg src={m.image} alt={m.name} loading="lazy" />
-                    {soldOut || soon ? (
+                    {soldOut || soon || hasBackorder ? (
                       <span className="wv-merch__badge">
-                        {soldOut ? "Sold out" : "Coming soon"}
+                        {soldOut
+                          ? "Sold out"
+                          : soon
+                            ? "Coming soon"
+                            : "Some sizes made to order"}
                       </span>
                     ) : null}
                   </button>

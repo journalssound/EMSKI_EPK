@@ -179,7 +179,9 @@ export const MUSIC_BG = "/photos/live-1.jpg";
  *   image       — card thumbnail
  *   views       — [{label, src}] for the front/back toggle in the overlay
  *   price       — display string, e.g. "$35"; omit while unannounced
- *   sizes       — ["S","M","L","XL"] or [{size, soldOut}] for per-size state
+ *   sizes       — ["S","M","L","XL"] or [{size, soldOut, backorder}] per size.
+ *                 backorder = out of stock but still sellable on a longer
+ *                 lead time; soldOut = not sellable at all.
  *   status      — "available" | "soon" | "sold-out" (drives badge + CTA)
  *   checkoutUrl — Square payment link (https://square.link/u/XXXX). When set
  *                 and status is "available", the CTA becomes real checkout.
@@ -192,6 +194,12 @@ export const MUSIC_BG = "/photos/live-1.jpg";
  * source of truth for what's buyable, not the Square dashboard.
  * ──────────────────────────────────────────────────────────────────────── */
 export const MERCH_BG = "/photos/live-5.jpg";
+
+// Shown when a customer picks a backordered size. EDIT THIS to the real
+// lead time before launch — it's a promise to the customer, and right now
+// it deliberately avoids naming a number we haven't confirmed with the printer.
+export const BACKORDER_NOTE =
+  "Out of the current run — this size is reprinted to order and ships later than in-stock sizes. We'll email you a ship date after checkout.";
 
 // Set this once the Square store exists — powers the "Shop all" link.
 export const MERCH_STORE_URL = "";
@@ -210,14 +218,14 @@ export const MERCH_ITEMS = [
     price: "$45",
     // Flip `soldOut` per size as stock runs out — this is the real guard.
     // `stock` = units REMAINING from the Industry Print Shop run (invoice
-    // #26693). 20 left of the 102 printed; S and L are gone. Reference only —
-    // nothing reads it, so update soldOut by hand as sizes run out.
+    // #26693). 20 left of the 102 printed. S and L are out of the current run
+    // but still sellable on a reprint — mark those `backorder`, not `soldOut`.
     sizes: [
-      { size: "S", stock: 0, soldOut: true },
-      { size: "M", stock: 4, soldOut: false },
-      { size: "L", stock: 0, soldOut: true },
-      { size: "XL", stock: 8, soldOut: false },
-      { size: "2XL", stock: 8, soldOut: false },
+      { size: "S", stock: 0, backorder: true },
+      { size: "M", stock: 4 },
+      { size: "L", stock: 0, backorder: true },
+      { size: "XL", stock: 8 },
+      { size: "2XL", stock: 8 },
     ],
     status: "available",
     // Square payment link (item "Blurred Faces Tee", all 5 size variations).

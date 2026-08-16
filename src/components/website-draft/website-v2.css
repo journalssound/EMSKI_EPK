@@ -894,6 +894,31 @@
   color: var(--wv-fg-mute);
   margin: 10px 0 0;
 }
+/* Backordered size: selectable, marked with an asterisk */
+.wv-root .wv-product__size.is-backorder { color: var(--wv-fg-dim); }
+.wv-product__dot {
+  font-size: 13px;
+  line-height: 1;
+  vertical-align: super;
+  margin-left: 2px;
+}
+.wv-product__legend {
+  font-family: var(--wv-font-display);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wv-fg-mute);
+  margin: 10px 0 0;
+}
+.wv-product__backorder {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--wv-fg-dim);
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  padding-left: 12px;
+  margin: 0;
+  max-width: 46ch;
+}
 .wv-product__buy { margin-top: 6px; }
 .wv-product__buy .wv-boxlink { width: min(360px, 100%); }
 .wv-product__details {
