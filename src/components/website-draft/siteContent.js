@@ -219,9 +219,11 @@ export const MERCH_ITEMS = [
       { size: "XL", stock: 8, soldOut: false },
       { size: "2XL", stock: 8, soldOut: false },
     ],
-    status: "soon",
-    // Paste the Square payment link here, then flip status to "available".
-    checkoutUrl: "",
+    status: "available",
+    // Square payment link (item "Blurred Faces Tee", all 5 size variations).
+    // Square does NOT hard-enforce stock on payment links — the soldOut flags
+    // above are the guard. Keep them current.
+    checkoutUrl: "https://square.link/u/GbX8Ntbd",
     url: VAULT_URL,
     tagline: "Numb isn't neutral",
     description:
