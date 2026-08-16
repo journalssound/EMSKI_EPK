@@ -209,15 +209,15 @@ export const MERCH_ITEMS = [
     ],
     price: "$45",
     // Flip `soldOut` per size as stock runs out — this is the real guard.
-    // `stock` is the on-hand count from the Industry Print Shop run
-    // (invoice #26693, paid 2026-05-29). Reference only — nothing reads it;
-    // set soldOut by hand when a size is gone.
+    // `stock` = units REMAINING from the Industry Print Shop run (invoice
+    // #26693). 20 left of the 102 printed; S and L are gone. Reference only —
+    // nothing reads it, so update soldOut by hand as sizes run out.
     sizes: [
-      { size: "S", stock: 12, soldOut: false },
-      { size: "M", stock: 14, soldOut: false },
-      { size: "L", stock: 30, soldOut: false },
-      { size: "XL", stock: 22, soldOut: false },
-      { size: "2XL", stock: 4, soldOut: false },
+      { size: "S", stock: 0, soldOut: true },
+      { size: "M", stock: 4, soldOut: false },
+      { size: "L", stock: 0, soldOut: true },
+      { size: "XL", stock: 8, soldOut: false },
+      { size: "2XL", stock: 8, soldOut: false },
     ],
     status: "soon",
     // Paste the Square payment link here, then flip status to "available".
