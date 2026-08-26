@@ -30,7 +30,7 @@ export const TOUR_STOPS = [
     operator: null,
     dateLabel: "SAT NOV 22 2025",
     stat: "SOLD OUT",
-    statLabel: "700 / 700",
+    statLabel: "600 / 600",
     soldOut: true,
     points: [
       "First performance of THE_EFFECT live set",
@@ -153,7 +153,7 @@ export const ATTRIBUTION = [
 
 /* Aggregate strip after the cities. Numbers only. */
 export const TOTALS = [
-  { label: "Fans reached", value: "2,570+" },
+  { label: "Fans reached", value: "2,470+" },
   { label: "Sellouts", value: "3" },
   { label: "Instagram", value: "7K → 10.5K" },
   { label: "TikTok", value: "30K → 34K" },

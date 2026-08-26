@@ -741,11 +741,17 @@
  * Stack instead of letting them overlap. */
 @media (max-width: 1200px) {
   .ts-city__cols {
-    grid-template-columns: 1fr;
+    /* minmax(0, …) not 1fr — a bare 1fr track keeps min-width:auto, which
+     * lets the video frame's inline width escape the track and overflow the
+     * screen instead of honouring its own max-width:100%. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .ts-city__media {
-    justify-self: center;
+    /* stretch, not center — a content-sized grid item lets the frame keep its
+     * full inline width. Stretching gives max-width:100% something to clamp
+     * against; the flex align-items:center still centres the frame. */
+    justify-self: stretch;
     margin-top: 36px;
   }
 }
@@ -758,6 +764,13 @@
 
   .ts-city__idx {
     top: -0.4em;
+  }
+
+  /* Keep the date · venue line from wrapping underneath the big outlined
+   * 01–06 glyph pinned to the right. Only bites on phones — at 900px up
+   * the line is already clear of it. */
+  .ts-city__meta {
+    padding-right: 76px;
   }
 
   .ts-attr__row {
