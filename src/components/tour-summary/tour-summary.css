@@ -689,9 +689,16 @@
   border-left: 1px dotted rgba(0, 239, 239, 0.6);
 }
 
+/* TikTok's v2 embed lays out at a fixed ~740px height with a ~325px min
+ * width and ignores whatever size the iframe is given. So render it at its
+ * native size and scale the whole thing down — clip and caption panel both
+ * fit, nothing cropped. Resize by changing --tt-scale alone. */
 .ts-tiktok__mini {
-  width: min(210px, 42vw);
-  aspect-ratio: 9 / 16;
+  --tt-w: 325;
+  --tt-h: 740;
+  --tt-scale: 0.646;
+  width: calc(var(--tt-w) * var(--tt-scale) * 1px);
+  height: calc(var(--tt-h) * var(--tt-scale) * 1px);
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
@@ -700,10 +707,10 @@
 }
 
 .ts-tiktok__frame {
-  width: 100%;
-  /* The v2 embed stacks a light caption panel under the clip. Overrun the
-   * frame so the parent's overflow:hidden crops it and only the video shows. */
-  height: 128%;
+  width: calc(var(--tt-w) * 1px);
+  height: calc(var(--tt-h) * 1px);
+  transform: scale(var(--tt-scale));
+  transform-origin: top left;
   border: 0;
   display: block;
 }
