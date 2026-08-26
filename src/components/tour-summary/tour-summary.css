@@ -727,7 +727,10 @@
 }
 
 /* ── Responsive ───────────────────────────────────────── */
-@media (max-width: 900px) {
+/* Below ~1200px the fixed 460px video column leaves too little room for the
+ * city name (8vw, capped at 88px) — "SAN ANTONIO" collides with the video.
+ * Stack instead of letting them overlap. */
+@media (max-width: 1200px) {
   .ts-city__cols {
     grid-template-columns: 1fr;
   }

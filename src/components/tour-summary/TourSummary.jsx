@@ -76,6 +76,21 @@ function CitySection({ stop }) {
     frameStyle = { aspectRatio: stop.videoAspect, width: `${w}px` };
   }
 
+  /* Optional start offset (seconds) — lets a stop open on a different frame
+   * than another section sharing the same source file. `loop` always rewinds
+   * to 0, so re-seek on the wrap to keep the clip inside its window. */
+  const startAt = stop.videoStart ?? 0;
+  const seekStart = (e) => {
+    const v = e.currentTarget;
+    if (startAt > 0 && v.duration > startAt) v.currentTime = startAt;
+  };
+  const holdWindow = (e) => {
+    const v = e.currentTarget;
+    if (startAt > 0 && v.duration > startAt && v.currentTime < startAt - 0.25) {
+      v.currentTime = startAt;
+    }
+  };
+
   return (
     <section
       ref={ref}
@@ -136,6 +151,8 @@ function CitySection({ stop }) {
                     loop
                     playsInline
                     preload="metadata"
+                    onLoadedMetadata={seekStart}
+                    onTimeUpdate={holdWindow}
                   />
                 )}
               </div>
