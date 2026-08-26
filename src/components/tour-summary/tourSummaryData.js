@@ -128,10 +128,10 @@ export const TOUR_STOPS = [
     stat: "350 / 350",
     statLabel: "Sold out",
     soldOut: true,
-    points: ["120K-view TikTok drove the sellout"],
+    points: ["140K-view TikTok drove the sellout"],
     tiktok: {
       videoId: "7651755227023969549",
-      label: "Watch the TikTok · 120K views",
+      label: "Watch the TikTok · 140K views",
     },
     video: "/tour/mcallen-montage.mp4",
     videoAspect: "9 / 16",
@@ -164,7 +164,7 @@ export const FINDING = {
   lead: "TikTok sold this tour.",
   lines: [
     "~65% of tickets came from organic discovery — led by TikTok. Paid ads: 7%.",
-    "A single TikTok hit 120K views and sold out McAllen.",
+    "A single TikTok hit 140K views and sold out McAllen.",
     "30K → 34K followers over the run. Tickets sold direct — fan data from every stop is in the vault.",
   ],
 };

@@ -51,7 +51,7 @@ function TikTokPopup({ tiktok, sectionVisible }) {
         {sectionVisible && (
           <iframe
             className="ts-tiktok__frame"
-            src={`https://www.tiktok.com/player/v1/${tiktok.videoId}?autoplay=1&muted=1&loop=1&rel=0&native_context_menu=0`}
+            src={`https://www.tiktok.com/embed/v2/${tiktok.videoId}`}
             allow="autoplay; fullscreen; encrypted-media"
             allowFullScreen
             title="TikTok video"

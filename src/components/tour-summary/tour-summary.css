@@ -701,7 +701,9 @@
 
 .ts-tiktok__frame {
   width: 100%;
-  height: 100%;
+  /* The v2 embed stacks a light caption panel under the clip. Overrun the
+   * frame so the parent's overflow:hidden crops it and only the video shows. */
+  height: 128%;
   border: 0;
   display: block;
 }
