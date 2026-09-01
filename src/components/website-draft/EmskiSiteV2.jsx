@@ -439,41 +439,45 @@ function Carousel({ label, children }) {
 
   return (
     <div className="wv-carousel">
-      <div
-        className="wv-carousel__track"
-        ref={trackRef}
-        aria-label={label}
-        onScroll={update}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onClickCapture={onClickCapture}
-      >
-        {children}
-      </div>
-      <div className="wv-carousel__nav">
+      {/* Window wraps the track so the side arrows center on it (COBRAH:
+          arrows flank the cards mid-height, progress hairline below). */}
+      <div className="wv-carousel__window">
+        <div
+          className="wv-carousel__track"
+          ref={trackRef}
+          aria-label={label}
+          onScroll={update}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onClickCapture={onClickCapture}
+        >
+          {children}
+        </div>
         <button
           type="button"
-          className="wv-carousel__btn"
+          className="wv-carousel__btn wv-carousel__btn--prev"
           aria-label="Previous"
           disabled={pos.atStart}
           onClick={() => scrollByPage(-1)}
         >
           ←
         </button>
-        <div className="wv-carousel__progress" aria-hidden="true">
-          <span style={{ transform: `scaleX(${pos.progress})` }} />
-        </div>
         <button
           type="button"
-          className="wv-carousel__btn"
+          className="wv-carousel__btn wv-carousel__btn--next"
           aria-label="Next"
           disabled={pos.atEnd}
           onClick={() => scrollByPage(1)}
         >
           →
         </button>
+      </div>
+      <div className="wv-carousel__nav">
+        <div className="wv-carousel__progress" aria-hidden="true">
+          <span style={{ transform: `scaleX(${pos.progress})` }} />
+        </div>
       </div>
     </div>
   );

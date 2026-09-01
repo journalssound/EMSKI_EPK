@@ -234,8 +234,6 @@ export const MERCH_ITEMS = [
     checkoutUrl: "https://square.link/u/GbX8Ntbd",
     url: VAULT_URL,
     tagline: "Numb isn't neutral",
-    description:
-      "Oversized black tee from the E/MOTION run. Front carries the Blurred Faces print in cyan and white; the back runs the e/MOTION column type down the spine, with the E mark on the left sleeve.",
     details: [
       "Shaka Wear 6.5oz retro garment dye, Shadow",
       "Oversized fit, 3-colour screen print",

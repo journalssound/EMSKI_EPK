@@ -296,30 +296,38 @@
   transform: scaleX(0);
   transition: transform 160ms linear;
 }
-/* COBRAH-style nav: compact bordered arrow boxes flanking a hairline */
+/* COBRAH-style nav: bordered arrow boxes overlay the track at its middle
+   sides (blend-difference keeps them legible over any card); a hairline
+   progress bar runs alone underneath. */
+.wv-carousel__window {
+  position: relative;
+}
 .wv-carousel__nav {
-  display: flex;
-  align-items: center;
-  gap: clamp(18px, 3vw, 32px);
-  margin-top: 30px;
+  margin-top: 26px;
 }
 /* .wv-root prefix outranks the `.wv-root button { font: inherit }` reset */
 .wv-root .wv-carousel__btn {
-  flex: 0 0 clamp(110px, 13vw, 160px);
-  height: 46px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: clamp(72px, 10vw, 142px);
+  height: 45px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
   color: var(--wv-fg);
   font-size: 24px;
   font-weight: 300;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: border-color var(--wv-dur) var(--wv-ease), color var(--wv-dur) var(--wv-ease), background var(--wv-dur) var(--wv-ease);
+  mix-blend-mode: difference;
+  transition: border-color var(--wv-dur) var(--wv-ease), color var(--wv-dur) var(--wv-ease), opacity var(--wv-dur) var(--wv-ease);
 }
+.wv-carousel__btn--prev { left: clamp(10px, 2vw, 28px); }
+.wv-carousel__btn--next { right: clamp(10px, 2vw, 28px); }
 .wv-carousel__btn:hover {
   border-color: var(--wv-fg);
   color: var(--wv-fg);
-  background: rgba(255, 255, 255, 0.05);
 }
 .wv-carousel__btn:disabled {
   opacity: 0.28;
