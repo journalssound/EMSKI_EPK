@@ -56,6 +56,11 @@ export const NAV_LINKS = ["music", "stats", "photos", "contact"];
 export const YOUTUBE_EMBED_URL =
   "https://www.youtube.com/embed/Z7tTQKy81CM?rel=0&modestbranding=1";
 
+// Released e/MOTION EP — full album player. `theme=0` is Spotify's dark
+// variant; the si= share token is dropped, the album id is all the embed needs.
+export const SPOTIFY_EP_EMBED_URL =
+  "https://open.spotify.com/embed/album/17f5owUCON6SDnIPNjCZ88?utm_source=generator&theme=0";
+
 export const SOUNDCLOUD_EP_EMBED_URL =
   "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/emskiiiiiiiiiii/sets/e-motion&secret_token=s-WTa5AWGV2UH&color=%2300efef&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&show_artwork=true&show_playcount=true&single_active=true&dark_theme=true";
 

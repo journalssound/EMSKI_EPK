@@ -14,7 +14,7 @@ import {
   SOCIALS,
   NAV_LINKS,
   YOUTUBE_EMBED_URL,
-  SOUNDCLOUD_EP_EMBED_URL,
+  SPOTIFY_EP_EMBED_URL,
   SOUNDCLOUD_SINGLES_EMBED_URL,
 } from "../data/content";
 
@@ -175,23 +175,24 @@ export default function EmskiEPK() {
 
         <div className="divider" />
 
-        {/* ── UNRELEASED MUSIC ──────────────────────── */}
+        {/* ── MUSIC — released EP, then unreleased singles ─── */}
         <Reveal className="section-pad">
-          <h2 className="section-heading section-heading--lg">UNRELEASED</h2>
+          <h2 className="section-heading section-heading--lg">MUSIC</h2>
           <div className="sc-grid">
             <div className="sc-grid__col">
               <h3 className="sc-grid__subheading">e/MOTION EP</h3>
               <div className="sc-embed">
                 <iframe
-                  src={SOUNDCLOUD_EP_EMBED_URL}
-                  title="EMSKI — E-Motion (Private Playlist)"
-                  allow="autoplay"
+                  src={SPOTIFY_EP_EMBED_URL}
+                  title="EMSKI — e/MOTION EP on Spotify"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  allowFullScreen
                   loading="lazy"
                 />
               </div>
             </div>
             <div className="sc-grid__col">
-              <h3 className="sc-grid__subheading">SINGLES</h3>
+              <h3 className="sc-grid__subheading">UNRELEASED</h3>
               <div className="sc-embed">
                 <iframe
                   src={SOUNDCLOUD_SINGLES_EMBED_URL}
