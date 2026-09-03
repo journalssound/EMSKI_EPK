@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useScrollY, useDelayedLoad, useInView } from "../../hooks/useAnimations";
 import Reveal from "../Reveal";
 import VideoParticles from "../VideoParticles";
-import EmotionField from "../EmotionField";
 import {
   TOUR_META,
   TOUR_STOPS,
@@ -10,7 +9,6 @@ import {
   ATTRIBUTION_TITLE,
   TOTALS,
   FINDING,
-  NEXT_TOUR,
 } from "./tourSummaryData";
 import { HERO_VIDEO_R2 } from "../../data/content";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
@@ -242,35 +240,6 @@ export default function TourSummary() {
                 </p>
               ))}
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ━━ WINTER RUN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section className="ts-next">
-        <EmotionField className="ts-next__field" />
-        <div className="ts-next__fade" />
-        <div className="ts-wrap ts-next__inner">
-          <Reveal>
-            <h2 className="ts-next__heading">{NEXT_TOUR.heading}</h2>
-            <p className="ts-next__body">{NEXT_TOUR.body}</p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="ts-leads">
-              {NEXT_TOUR.leads.map((lead) => (
-                <div key={lead.title} className="ts-lead">
-                  <span className="ts-lead__title">{lead.title}</span>
-                  <span className="ts-lead__body">{lead.body}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <a className="ts-next__cta" href={`mailto:${NEXT_TOUR.contactEmail}`}>
-              {NEXT_TOUR.contactEmail}
-            </a>
           </Reveal>
         </div>
       </section>

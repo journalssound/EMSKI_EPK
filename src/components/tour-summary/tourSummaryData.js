@@ -168,33 +168,3 @@ export const FINDING = {
     "30K → 34K followers over the run. Tickets sold direct — fan data from every stop is in the vault.",
   ],
 };
-
-/* Winter run — the ask. */
-export const NEXT_TOUR = {
-  heading: "Winter 2026 – Spring 2027",
-  body: "Booking now.",
-  leads: [
-    {
-      title: "Denver",
-      // PLACEHOLDER — name the specific venues / contact when provided
-      body: "Return dates requested. [Venues TBC]",
-    },
-    {
-      title: "Rio Grande Valley",
-      body: "Return routing in discussion with Upbeat Live.",
-    },
-    {
-      title: "Arizona",
-      body: "Booking lead via Ekonovah's team.",
-    },
-    {
-      title: "Richmond",
-      body: "Venue interest — Gallery5, Rhythm City Collective.",
-    },
-    {
-      title: "New markets",
-      body: "Inbound fan demand via Reddit — San Francisco, Los Angeles, Chicago, Portland.",
-    },
-  ],
-  contactEmail: "contact@emskimusic.com",
-};
