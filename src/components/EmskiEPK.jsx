@@ -88,7 +88,7 @@ export default function EmskiEPK() {
       <div className="content-wrap">
         {/* ── EMSKI LIVE ─────────────────────────────── */}
         <Reveal className="section-pad" style={{ paddingTop: 40 }}>
-          <div id="music">
+          <div id="live">
             <h2 className="section-heading section-heading--lg">THE_EFFECT: LIVE</h2>
             <div className="video-embed">
               <iframe
@@ -177,29 +177,31 @@ export default function EmskiEPK() {
 
         {/* ── MUSIC — released EP, then unreleased singles ─── */}
         <Reveal className="section-pad">
-          <h2 className="section-heading section-heading--lg">MUSIC</h2>
-          <div className="sc-grid">
-            <div className="sc-grid__col">
-              <h3 className="sc-grid__subheading">e/MOTION EP</h3>
-              <div className="sc-embed">
-                <iframe
-                  src={SPOTIFY_EP_EMBED_URL}
-                  title="EMSKI — e/MOTION EP on Spotify"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                />
+          <div id="music">
+            <h2 className="section-heading section-heading--lg">MUSIC</h2>
+            <div className="sc-grid">
+              <div className="sc-grid__col">
+                <h3 className="sc-grid__subheading">e/MOTION EP</h3>
+                <div className="sc-embed">
+                  <iframe
+                    src={SPOTIFY_EP_EMBED_URL}
+                    title="EMSKI — e/MOTION EP on Spotify"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="sc-grid__col">
-              <h3 className="sc-grid__subheading">UNRELEASED</h3>
-              <div className="sc-embed">
-                <iframe
-                  src={SOUNDCLOUD_SINGLES_EMBED_URL}
-                  title="EMSKI — Unreleased Singles (Private Playlist)"
-                  allow="autoplay"
-                  loading="lazy"
-                />
+              <div className="sc-grid__col">
+                <h3 className="sc-grid__subheading">UNRELEASED</h3>
+                <div className="sc-embed">
+                  <iframe
+                    src={SOUNDCLOUD_SINGLES_EMBED_URL}
+                    title="EMSKI — Unreleased Singles (Private Playlist)"
+                    allow="autoplay"
+                    loading="lazy"
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -243,6 +243,16 @@ button {
 }
 
 /* ── Nav ──────────────────────────────────────────────── */
+/* The nav is fixed and 60px tall, so a nav jump would otherwise park the
+   section heading underneath it. Offset the scroll targets to clear it. */
+#live,
+#music,
+#stats,
+#photos,
+#contact {
+  scroll-margin-top: 84px;
+}
+
 .nav {
   position: fixed;
   top: 0;
