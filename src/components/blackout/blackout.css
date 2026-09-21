@@ -33,10 +33,12 @@
   padding: 0 var(--bo-gutter);
 }
 
+/* Metadata voice. 11px is the floor — Courier at 10px on off-black was
+ * illegible. */
 .bo-mono {
   font-family: var(--bo-mono);
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
 }
 
 /* ── Hero ─────────────────────────────────────────────── */
@@ -66,8 +68,8 @@
  * 0.97% left of the canvas centre, so a 1.93% left margin puts the glyph —
  * not the canvas — on the midline. */
 .bo-hero__e {
-  --bo-e: min(66vw, 420px);
-  margin: calc(var(--bo-e) * -0.298) 0 calc(14px - var(--bo-e) * 0.3) calc(var(--bo-e) * 0.0193);
+  --bo-e: min(54vw, 320px);
+  margin: calc(var(--bo-e) * -0.298) 0 calc(40px - var(--bo-e) * 0.3) calc(var(--bo-e) * 0.0193);
   opacity: 0;
   transform: scale(0.97);
   transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -182,7 +184,7 @@
 }
 .bo-hero__kicker {
   margin: 0;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--bo-grey);
   opacity: 0;
   transition: opacity 0.8s ease 0.4s;
@@ -201,7 +203,8 @@
 /* Metadata / sub-details: small, mono, grey. */
 .bo-label {
   margin: 0 0 18px;
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 1.7;
   color: var(--bo-grey);
 }
 
@@ -214,7 +217,7 @@
   line-height: 1;
 }
 .bo-h__n {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--bo-grey);
 }
 .bo-h__t {
@@ -225,14 +228,17 @@
   color: var(--bo-white);
 }
 
-/* Credits — names in the parent sans, separators drop to grey. */
+/* Credits — names in mono under the sans headers, off-white so they read;
+ * only the separators drop to grey. */
 .bo-list {
   margin: 0;
-  font-weight: 700;
-  font-size: clamp(12px, 1.5vw, 15px);
-  letter-spacing: 0.06em;
+  font-family: var(--bo-mono);
+  font-weight: 400;
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.9;
+  color: var(--bo-white);
 }
 .bo-list__sep {
   color: var(--bo-grey);
@@ -279,7 +285,7 @@
 .bo-stat__label {
   display: block;
   margin-top: 10px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--bo-grey);
 }
 
@@ -339,7 +345,7 @@
   flex-wrap: wrap;
   gap: 8px 28px;
   margin-top: 26px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--bo-grey);
 }
 .bo-contact__socials a {
@@ -356,7 +362,7 @@
   gap: 16px;
   padding: 26px 0 32px;
   border-top: 1px solid var(--bo-charcoal);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--bo-grey);
 }
 
