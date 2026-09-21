@@ -9,6 +9,7 @@ import {
   BO_VIDEO,
   BO_PLAYERS,
   BO_PHOTOS,
+  BO_PHOTOS_URL,
   BO_CONTACT_EMAIL,
 } from "./blackoutContent";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
@@ -325,6 +326,10 @@ export default function EmskiBlackout() {
                 <img key={p.src} src={p.src} alt={p.alt} loading="lazy" decoding="async" />
               ))}
             </div>
+            {/* Brackets are the mark — they hold the link the way they hold the name. */}
+            <a className="bo-photos__all" href={BO_PHOTOS_URL} target="_blank" rel="noopener noreferrer">
+              [ all photos / download ]
+            </a>
           </div>
         </section>
       )}

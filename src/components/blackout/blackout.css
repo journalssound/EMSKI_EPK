@@ -318,15 +318,34 @@
   border-radius: 0;
 }
 
-/* ── Photos (renders once BO_PHOTOS has entries) ──────── */
+/* ── Photos — four small teasers in one row, then the Dropbox link.
+ * Stays a single row at every width; capped so they read as thumbnails
+ * on desktop rather than a gallery. */
 .bo-photos {
-  columns: 3;
-  column-gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  max-width: 560px;
 }
 .bo-photos img {
   display: block;
   width: 100%;
-  margin-bottom: 8px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+.bo-photos__all {
+  display: inline-block;
+  margin-top: 22px;
+  font-weight: 700;
+  font-size: clamp(12px, 1.5vw, 14px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--bo-charcoal);
+  padding-bottom: 4px;
+  transition: border-color 0.3s;
+}
+.bo-photos__all:hover {
+  border-color: var(--bo-grey);
 }
 
 /* ── Contact ──────────────────────────────────────────── */
@@ -381,9 +400,6 @@
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 720px) {
-  .bo-photos {
-    columns: 2;
-  }
   .bo-hero__mark {
     width: min(72vw, 400px);
   }
