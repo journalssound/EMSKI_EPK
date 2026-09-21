@@ -42,9 +42,9 @@ export const BO_PLAYERS = [
 /* Press photos — four on the page as a teaser, web-sized to a 2000px long
  * edge; the full set and hi-res originals live in the Dropbox folder. */
 export const BO_PHOTOS = [
-  { src: "/photos/blackout/blackout-01.jpg", alt: "EMSKI [BLACKOUT] press — hand over face, wet hair, studio" },
-  { src: "/photos/blackout/blackout-03.jpg", alt: "EMSKI [BLACKOUT] press — close portrait, wet skin" },
-  { src: "/photos/blackout/blackout-06.jpg", alt: "EMSKI [BLACKOUT] press — arm across, head turned" },
+  { src: "/photos/blackout/blackout-13.jpg", alt: "EMSKI [BLACKOUT] press — seated, hand on forehead, chain bracelet, studio" },
+  { src: "/photos/blackout/blackout-14.jpg", alt: "EMSKI [BLACKOUT] press — night skyline, hand reaching to camera" },
+  { src: "/photos/blackout/blackout-06.jpg", alt: "EMSKI [BLACKOUT] press — extreme close-up, eye and bracelet" },
   { src: "/photos/blackout/blackout-10.jpg", alt: "EMSKI [BLACKOUT] press — seated on stairwell steps" },
 ];
 export const BO_PHOTOS_URL =
