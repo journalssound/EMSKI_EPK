@@ -35,12 +35,14 @@ export const LABELS = [
   { name: "Sable Valley", cover: "/covers/SableValley.png" },
 ];
 
+// Performance dashboard totals as of 2026-09-20. DJ supports isn't on that
+// dashboard — carried over from the previous update.
 export const STATS = [
-  { label: "FOLLOWERS", val: 42.3, suf: "K" },
-  { label: "STREAMS", val: 3.15, suf: "M" },
-  { label: "PLAYLIST REACH", val: 7.7, suf: "M" },
-  { label: "PLAYLISTS", val: 332, suf: "" },
-  { label: "RADIO PLAYS", val: 1120, suf: "" },
+  { label: "FOLLOWERS", val: 53, suf: "K" },
+  { label: "STREAMS", val: 4.08, suf: "M" },
+  { label: "PLAYLIST REACH", val: 8.46, suf: "M" },
+  { label: "PLAYLISTS", val: 416, suf: "" },
+  { label: "RADIO PLAYS", val: 1367, suf: "" },
   { label: "DJ SUPPORTS", val: 96, suf: "" },
 ];
 
