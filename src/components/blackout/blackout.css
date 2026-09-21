@@ -98,12 +98,17 @@
   opacity: 1;
 }
 
+/* The typed tag — section-title sans, tracked wide, sized to sit inside
+ * the wordmark's width. */
 .bo-hero__tag {
   position: relative;
   margin: 22px 0 0;
-  font-size: clamp(24px, 4.5vw, 42px);
+  font-family: var(--bo-sans);
+  font-weight: 700;
+  font-size: clamp(17px, 3vw, 28px);
   line-height: 1;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
   min-height: 1em;
   white-space: pre;
 }

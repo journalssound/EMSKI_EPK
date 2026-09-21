@@ -9,7 +9,8 @@
 
 import { ARTISTS, SOUNDCLOUD_SINGLES_EMBED_URL } from "../../data/content";
 
-export const BO_TAG = "[BLACK OUT]";
+// The guide writes it "[BLACK OUT]"; the artist's call is no space.
+export const BO_TAG = "[BLACKOUT]";
 export const BO_THESIS = "presence is protest.";
 
 /* Same roster as the parent EPK, techno-credible names first — a promoter
@@ -21,7 +22,7 @@ export const BO_ARTISTS = [...LEAD, ...ARTISTS.filter((a) => !LEAD.includes(a))]
  * a section header; the venue details stay mono underneath. */
 export const BO_VIDEO = {
   id: "ay_6H4vmM5E",
-  title: "[BLACK OUT] set — The Concourse Project",
+  title: "[BLACKOUT] set — The Concourse Project",
   meta: ["AUSTIN, TX", "DIRECT SUPPORT FOR AMELIE LENS"],
 };
 

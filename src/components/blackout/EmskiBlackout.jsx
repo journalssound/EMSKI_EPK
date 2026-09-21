@@ -183,7 +183,7 @@ function Video() {
           {visible && (
             <iframe
               src={src}
-              title="EMSKI [BLACK OUT] set — The Concourse Project, direct support for Amelie Lens"
+              title="EMSKI [BLACKOUT] set — The Concourse Project, direct support for Amelie Lens"
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
             />
@@ -228,7 +228,7 @@ export default function EmskiBlackout() {
     // off-black; set it for the life of this page and hand it back after.
     const prev = { bg: document.body.style.background, title: document.title };
     document.body.style.background = "#0a0a0a";
-    document.title = "EMSKI [BLACK OUT] — Artist Press Kit";
+    document.title = "EMSKI [BLACKOUT] — Artist Press Kit";
     const t = setTimeout(() => setMarkOn(true), 250);
     return () => {
       clearTimeout(t);
@@ -252,7 +252,7 @@ export default function EmskiBlackout() {
             role="img"
             aria-label="EMSKI"
           />
-          <p className="bo-hero__tag bo-mono" aria-label={BO_TAG}>
+          <p className="bo-hero__tag" aria-label={BO_TAG}>
             <span aria-hidden="true">{typed}</span>
             <span className="bo-cursor" aria-hidden="true" />
           </p>
