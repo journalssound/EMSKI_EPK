@@ -7,11 +7,7 @@
  * Source: EMSKI_BLACKOUT_Foundation V2 (Aug 2026).
  * ───────────────────────────────────────────────────────── */
 
-import {
-  ARTISTS,
-  SPOTIFY_EP_EMBED_URL,
-  SOUNDCLOUD_SINGLES_EMBED_URL,
-} from "../../data/content";
+import { ARTISTS, SOUNDCLOUD_SINGLES_EMBED_URL } from "../../data/content";
 
 export const BO_TAG = "[BLACK OUT]";
 export const BO_THESIS = "presence is protest.";
@@ -29,10 +25,9 @@ export const BO_VIDEO = {
   meta: ["AUSTIN, TX", "DIRECT SUPPORT FOR AMELIE LENS"],
 };
 
-/* PLACEHOLDERS — the [BLACK OUT] singles aren't on SoundCloud yet, so the
- * parent EPK players stand in. Swap the URLs when the singles land. */
+/* PLACEHOLDER — the [BLACK OUT] singles aren't on SoundCloud yet, so the
+ * parent EPK's unreleased set stands in. Swap the URL when they land. */
 export const BO_PLAYERS = [
-  { label: "E/MOTION EP", src: SPOTIFY_EP_EMBED_URL, title: "EMSKI — e/MOTION EP on Spotify" },
   {
     label: "UNRELEASED",
     // Same private set as the parent EPK; only the play-button tint changes

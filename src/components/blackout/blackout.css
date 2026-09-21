@@ -145,9 +145,7 @@
   opacity: 1;
 }
 
-/* Thesis — off-white. Fades in, then glitches in and out on a slow loop:
- * hard cuts (steps), never a smear. The fade is on the <p>, the glitch on
- * the inner span, so the two don't fight over opacity. */
+/* Thesis — off-white, steady. */
 .bo-hero__thesis {
   margin: 0;
   font-size: clamp(14px, 2vw, 18px);
@@ -159,24 +157,6 @@
 }
 .bo-hero__thesis.is-on {
   opacity: 1;
-}
-.bo-hero__thesis.is-on > span {
-  display: inline-block;
-  animation: bo-glitch 6s steps(1, end) 1.2s infinite;
-}
-@keyframes bo-glitch {
-  0%, 100% { opacity: 1; transform: none; clip-path: none; }
-  9%    { opacity: 0.3;  transform: translateX(1px); }
-  9.5%  { opacity: 1;    transform: none; }
-  10.2% { opacity: 0.55; transform: translateX(-1px); }
-  10.7% { opacity: 1;    transform: none; }
-  43%   { opacity: 0.15; }
-  43.4% { opacity: 1;    transform: translateX(1px); }
-  44%   { transform: none; }
-  76%   { clip-path: inset(38% 0 36% 0); transform: translateX(-2px); }
-  76.6% { clip-path: none; transform: none; }
-  77.2% { opacity: 0.4; }
-  77.6% { opacity: 1; }
 }
 
 .bo-hero__foot {
@@ -232,8 +212,8 @@
   color: var(--bo-white);
 }
 
-/* Credits — names in mono under the sans headers, off-white so they read;
- * only the separators drop to grey. */
+/* Credits and the video's venue line — mono under the sans headers,
+ * off-white so they read; only the separators drop to grey. */
 .bo-list {
   margin: 0;
   font-family: var(--bo-mono);
@@ -250,6 +230,9 @@
 }
 .bo-list + .bo-h {
   margin-top: 40px;
+}
+.bo-list + .bo-video {
+  margin-top: 18px;
 }
 
 /* ── Video ────────────────────────────────────────────── */
@@ -293,10 +276,9 @@
   color: var(--bo-grey);
 }
 
-/* ── Players (placeholders until the singles land) ─────── */
+/* ── Player (placeholder until the singles land) ────────── */
 .bo-players {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
 .bo-player__label {
@@ -375,9 +357,6 @@
   .bo-stats {
     grid-template-columns: repeat(2, 1fr);
   }
-  .bo-players {
-    grid-template-columns: 1fr;
-  }
   .bo-photos {
     columns: 2;
   }
@@ -387,8 +366,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bo-cursor,
-  .bo-hero__thesis.is-on > span {
+  .bo-cursor {
     animation: none;
   }
 }

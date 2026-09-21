@@ -75,7 +75,8 @@ function Video() {
     <section className="bo-section" ref={ref}>
       <div className="bo-wrap">
         <Label n="01">{title}</Label>
-        <p className="bo-label bo-mono">{meta.join("  /  ")}</p>
+        {/* Same treatment as the credit lists so it reads at the same weight. */}
+        <List items={meta} />
         <div className="bo-video">
           {visible && (
             <iframe
@@ -145,13 +146,11 @@ export default function EmskiBlackout() {
             <span className="bo-cursor" aria-hidden="true" />
           </p>
           {/* The hero's one rust instance — the short centred rule from the
-              guide cover. Steady; the glitch lives on the thesis below. */}
+              guide cover. */}
           <div className="bo-hero__rule-row" aria-hidden="true">
             <span className={`bo-hero__rule ${done ? "is-on" : ""}`} />
           </div>
-          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>
-            <span>{BO_THESIS}</span>
-          </p>
+          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>{BO_THESIS}</p>
         </div>
         {/* Own .bo-wrap so it shares the content column's exact left edge. */}
         <div className="bo-hero__foot bo-wrap">
