@@ -24,6 +24,10 @@ const WaitForMeSculpt = lazy(() =>
 // regl/EmotionField bundle doesn't ship with the main EPK page.
 const TourSummary = lazy(() => import("./components/tour-summary/TourSummary.jsx"));
 
+// [BLACK OUT] press kit — the DJ product's one-sheet. Route matching is
+// case-insensitive, so /BLACKOUT lands here too.
+const EmskiBlackout = lazy(() => import("./components/blackout/EmskiBlackout.jsx"));
+
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
   const img = new Image();
@@ -94,6 +98,14 @@ createRoot(document.getElementById("root")).render(
           element={
             <Suspense fallback={null}>
               <TourSummary />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/blackout"
+          element={
+            <Suspense fallback={null}>
+              <EmskiBlackout />
             </Suspense>
           }
         />

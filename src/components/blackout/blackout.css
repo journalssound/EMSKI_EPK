@@ -1,0 +1,318 @@
+/* ─────────────────────────────────────────────────────────
+ * EMSKI [BLACK OUT] — press kit
+ *
+ * Palette is the sub-brand's five tokens and nothing else. Rust is the one
+ * accent: it appears exactly twice on the page, each on its own screen —
+ * the thesis line in the hero and the hairline that opens Contact.
+ * Sans = parent family (aktiv-grotesk-extended). Mono = Courier, the
+ * machine talking: every label, timestamp and section number.
+ * ───────────────────────────────────────────────────────── */
+
+.bo {
+  --bo-black: #0a0a0a;
+  --bo-charcoal: #1a1a1a;
+  --bo-grey: #6b6b6b;
+  --bo-white: #f2efea;
+  --bo-rust: #b84a2e;
+  --bo-sans: "aktiv-grotesk-extended", sans-serif;
+  --bo-mono: "Courier New", Courier, monospace;
+  --bo-gutter: clamp(20px, 5vw, 48px);
+
+  background: var(--bo-black);
+  color: var(--bo-white);
+  font-family: var(--bo-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bo-wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 var(--bo-gutter);
+}
+
+.bo-mono {
+  font-family: var(--bo-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.bo-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* As a flex item the wrap's auto margins would shrink it to content width;
+ * pin it so the hero shares the same column as every section below. */
+.bo-hero > .bo-wrap {
+  width: 100%;
+}
+
+/* Wordmark as a mask so it renders in off-white, not the PNG's pure white. */
+.bo-hero__mark {
+  width: min(56vw, 400px);
+  aspect-ratio: 2045 / 196;
+  background: var(--bo-white);
+  -webkit-mask: var(--bo-mark) no-repeat center / contain;
+  mask: var(--bo-mark) no-repeat center / contain;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.bo-hero__mark.is-on {
+  opacity: 1;
+}
+
+.bo-hero__tag {
+  margin: 22px 0 0;
+  font-size: clamp(18px, 3.4vw, 30px);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  min-height: 1em;
+  white-space: pre;
+}
+
+.bo-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-left: 0.08em;
+  vertical-align: -0.08em;
+  background: var(--bo-white);
+  animation: bo-blink 1s steps(2, start) infinite;
+}
+@keyframes bo-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Thesis — the hero's single rust instance. Fades in, then glitches in and
+ * out on a slow loop: hard cuts (steps), never a smear. */
+.bo-hero__thesis {
+  margin: 18px 0 0;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--bo-rust);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.bo-hero__thesis.is-on {
+  opacity: 1;
+}
+.bo-hero__thesis.is-on > span {
+  display: inline-block;
+  animation: bo-glitch 6s steps(1, end) 1.2s infinite;
+}
+@keyframes bo-glitch {
+  0%, 100% { opacity: 1; transform: none; clip-path: none; }
+  9%    { opacity: 0.3; transform: translateX(1px); }
+  9.5%  { opacity: 1;   transform: none; }
+  10.2% { opacity: 0.55; transform: translateX(-1px); }
+  10.7% { opacity: 1;   transform: none; }
+  43%   { opacity: 0.15; }
+  43.4% { opacity: 1;   transform: translateX(1px); }
+  44%   { transform: none; }
+  76%   { clip-path: inset(38% 0 36% 0); transform: translateX(-2px); }
+  76.6% { clip-path: none; transform: none; }
+  77.2% { opacity: 0.4; }
+  77.6% { opacity: 1; }
+}
+
+.bo-hero__foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+}
+.bo-hero__kicker {
+  margin: 0;
+  font-size: 10px;
+  color: var(--bo-grey);
+  opacity: 0;
+  transition: opacity 0.8s ease 0.4s;
+}
+.bo-hero__kicker.is-on {
+  opacity: 1;
+}
+
+/* ── Sections ─────────────────────────────────────────── */
+.bo-section {
+  position: relative;
+  padding: clamp(40px, 7vw, 68px) 0;
+  border-top: 1px solid var(--bo-charcoal);
+}
+
+.bo-label {
+  margin: 0 0 18px;
+  font-size: 10px;
+  color: var(--bo-grey);
+}
+.bo-label b {
+  font-weight: 400;
+  color: var(--bo-white);
+}
+
+/* Credits — names in the parent sans, separators drop to grey. */
+.bo-list {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(12px, 1.5vw, 15px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.9;
+}
+.bo-list__sep {
+  color: var(--bo-grey);
+  font-weight: 400;
+}
+.bo-list + .bo-label {
+  margin-top: 40px;
+}
+
+/* ── Video ────────────────────────────────────────────── */
+.bo-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--bo-charcoal);
+  border: 1px solid var(--bo-charcoal);
+}
+.bo-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ── Stats ────────────────────────────────────────────── */
+.bo-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--bo-charcoal);
+  border: 1px solid var(--bo-charcoal);
+}
+.bo-stat {
+  background: var(--bo-black);
+  padding: clamp(16px, 2.6vw, 26px) clamp(14px, 2.2vw, 22px);
+}
+.bo-stat__value {
+  display: block;
+  font-weight: 700;
+  font-size: clamp(20px, 3.2vw, 32px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.bo-stat__label {
+  display: block;
+  margin-top: 10px;
+  font-size: 10px;
+  color: var(--bo-grey);
+}
+
+/* ── Players (placeholders until the singles land) ─────── */
+.bo-players {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.bo-player__label {
+  margin: 0 0 10px;
+}
+.bo-player iframe {
+  display: block;
+  width: 100%;
+  height: 166px;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ── Photos (renders once BO_PHOTOS has entries) ──────── */
+.bo-photos {
+  columns: 3;
+  column-gap: 8px;
+}
+.bo-photos img {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* ── Contact ──────────────────────────────────────────── */
+/* The page's second rust instance: one hairline, cropping in from the left
+ * edge, never full-width. */
+.bo-rust-line {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: clamp(80px, 12vw, 160px);
+  height: 1px;
+  background: var(--bo-rust);
+}
+.bo-contact__email {
+  display: inline-block;
+  font-weight: 700;
+  font-size: clamp(15px, 2.4vw, 22px);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--bo-charcoal);
+  padding-bottom: 4px;
+  transition: border-color 0.3s;
+}
+.bo-contact__email:hover {
+  border-color: var(--bo-grey);
+}
+.bo-contact__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin-top: 26px;
+  font-size: 10px;
+  color: var(--bo-grey);
+}
+.bo-contact__socials a {
+  transition: color 0.3s;
+}
+.bo-contact__socials a:hover {
+  color: var(--bo-white);
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.bo-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 0 32px;
+  border-top: 1px solid var(--bo-charcoal);
+  font-size: 10px;
+  color: var(--bo-grey);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 720px) {
+  .bo-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bo-players {
+    grid-template-columns: 1fr;
+  }
+  .bo-photos {
+    columns: 2;
+  }
+  .bo-hero__mark {
+    width: min(72vw, 400px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bo-cursor,
+  .bo-hero__thesis.is-on > span {
+    animation: none;
+  }
+}
