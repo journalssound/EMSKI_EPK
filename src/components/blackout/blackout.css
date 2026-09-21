@@ -101,7 +101,7 @@
 .bo-hero__tag {
   position: relative;
   margin: 22px 0 0;
-  font-size: clamp(26px, 5vw, 48px);
+  font-size: clamp(24px, 4.5vw, 42px);
   line-height: 1;
   letter-spacing: 0.12em;
   min-height: 1em;
