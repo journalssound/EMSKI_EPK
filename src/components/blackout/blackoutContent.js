@@ -26,13 +26,14 @@ export const BO_VIDEO = {
   meta: ["AUSTIN, TX", "DIRECT SUPPORT FOR AMELIE LENS"],
 };
 
-/* PLACEHOLDER — the [BLACK OUT] singles aren't on SoundCloud yet, so the
- * parent EPK's unreleased set stands in. Swap the URL when they land. */
+/* The private "UNRELEASED SINGLES" set — the same set the parent EPK embeds
+ * (share link https://on.soundcloud.com/2spQyVP4wbt5ACFY50 resolves to it).
+ * The artist keeps the [BLACKOUT] singles in that set, so the player follows
+ * it as it changes. Only the play-button tint differs here: cyan is
+ * off-palette, off-white is the only light source. */
 export const BO_PLAYERS = [
   {
     label: "UNRELEASED",
-    // Same private set as the parent EPK; only the play-button tint changes
-    // (cyan is off-palette here — off-white is the only light source).
     src: SOUNDCLOUD_SINGLES_EMBED_URL.replace("color=%2300efef", "color=%23F2EFEA"),
     title: "EMSKI — Unreleased Singles (Private Playlist)",
   },
