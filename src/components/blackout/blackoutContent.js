@@ -38,8 +38,22 @@ export const BO_PLAYERS = [
   },
 ];
 
-/* Press photos — populated once the [BLACK OUT] shoot is selected. The
- * section renders only when this has entries. */
-export const BO_PHOTOS = [];
+/* Press photos — web-sized (2000px long edge) from the artist's picks.
+ * Originals live outside the repo (8–12MB each). 01–09 are the studio
+ * shoot; 10–12 are the stairwell / skyline set. */
+export const BO_PHOTOS = [
+  { src: "/photos/blackout/blackout-01.jpg", alt: "EMSKI [BLACKOUT] press — hand over face, wet hair, studio" },
+  { src: "/photos/blackout/blackout-02.jpg", alt: "EMSKI [BLACKOUT] press — seated, hand on forehead, chain bracelet" },
+  { src: "/photos/blackout/blackout-03.jpg", alt: "EMSKI [BLACKOUT] press — close portrait, wet skin" },
+  { src: "/photos/blackout/blackout-04.jpg", alt: "EMSKI [BLACKOUT] press — hands over head, arms forward" },
+  { src: "/photos/blackout/blackout-05.jpg", alt: "EMSKI [BLACKOUT] press — extreme close-up, eyes" },
+  { src: "/photos/blackout/blackout-06.jpg", alt: "EMSKI [BLACKOUT] press — arm across, head turned" },
+  { src: "/photos/blackout/blackout-07.jpg", alt: "EMSKI [BLACKOUT] press — both hands in hair, wide" },
+  { src: "/photos/blackout/blackout-08.jpg", alt: "EMSKI [BLACKOUT] press — head in hand, chain necklace" },
+  { src: "/photos/blackout/blackout-09.jpg", alt: "EMSKI [BLACKOUT] press — arm and bracelet, face half-hidden" },
+  { src: "/photos/blackout/blackout-10.jpg", alt: "EMSKI [BLACKOUT] press — seated on stairwell steps" },
+  { src: "/photos/blackout/blackout-11.jpg", alt: "EMSKI [BLACKOUT] press — stairwell from above, hand on rail" },
+  { src: "/photos/blackout/blackout-12.jpg", alt: "EMSKI [BLACKOUT] press — night skyline, leather top" },
+];
 
 export const BO_CONTACT_EMAIL = "contact@emskimusic.com";
