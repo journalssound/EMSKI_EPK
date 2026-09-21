@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView, usePrefersReducedMotion } from "../../hooks/useAnimations";
 import AnimNum from "../AnimNum";
 import VideoParticles from "../VideoParticles";
@@ -37,6 +37,56 @@ function useTypewriter(text, start) {
   // Reduced motion skips the animation entirely — derived, not set in the effect.
   const shown = prefersReduced && start ? text.length : count;
   return { typed: text.slice(0, shown), done: shown >= text.length };
+}
+
+/* Slice tear on the thesis: once `on`, every 3–7s the line splits into three
+ * horizontal bands that shear a few px apart for two ~65ms frames, then snap
+ * back. Monochrome, hard-edged — no colour fringing, no smear. Drives the
+ * DOM directly (class + transforms) so React never re-renders for it. */
+function useSliceTear(ref, on) {
+  const prefersReduced = usePrefersReducedMotion();
+  useEffect(() => {
+    const el = ref.current;
+    if (!on || prefersReduced || !el) return;
+    const bands = el.querySelectorAll(".bo-tear");
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    let alive = true;
+    let timer;
+    const reset = () => {
+      bands.forEach((b) => {
+        b.style.transform = "";
+      });
+      el.classList.remove("is-torn");
+    };
+    const fire = () => {
+      if (!alive) return;
+      el.classList.add("is-torn");
+      let frame = 0;
+      const step = () => {
+        if (!alive) return;
+        bands.forEach((b, i) => {
+          const reach = i === 2 ? 4 : 6;
+          b.style.transform = `translateX(${Math.round(rnd(-reach, reach))}px)`;
+        });
+        frame += 1;
+        if (frame < 2) {
+          timer = setTimeout(step, rnd(50, 80));
+        } else {
+          timer = setTimeout(() => {
+            reset();
+            timer = setTimeout(fire, rnd(3000, 7000));
+          }, rnd(50, 80));
+        }
+      };
+      step();
+    };
+    timer = setTimeout(fire, rnd(3000, 7000));
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+      reset();
+    };
+  }, [ref, on, prefersReduced]);
 }
 
 /* Section header: the title leads in the parent sans; the mono number beside
@@ -111,6 +161,8 @@ function Stats() {
 export default function EmskiBlackout() {
   const [markOn, setMarkOn] = useState(false);
   const { typed, done } = useTypewriter(BO_TAG, markOn);
+  const thesisRef = useRef(null);
+  useSliceTear(thesisRef, done);
 
   useEffect(() => {
     // The parent EPK's body background is a shade off this palette's
@@ -150,7 +202,15 @@ export default function EmskiBlackout() {
           <div className="bo-hero__rule-row" aria-hidden="true">
             <span className={`bo-hero__rule ${done ? "is-on" : ""}`} />
           </div>
-          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>{BO_THESIS}</p>
+          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`} ref={thesisRef}>
+            <span className="bo-hero__thesis-text">{BO_THESIS}</span>
+            {/* Tear bands — copies clipped to thirds, shown only mid-tear. */}
+            {[1, 2, 3].map((i) => (
+              <span key={i} className={`bo-tear bo-tear--${i}`} aria-hidden="true">
+                {BO_THESIS}
+              </span>
+            ))}
+          </p>
         </div>
         {/* Own .bo-wrap so it shares the content column's exact left edge. */}
         <div className="bo-hero__foot bo-wrap">

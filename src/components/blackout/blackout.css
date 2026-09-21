@@ -145,18 +145,39 @@
   opacity: 1;
 }
 
-/* Thesis — off-white, steady. */
+/* Thesis — off-white. Fades in; the slice tear (useSliceTear) then splits
+ * it into three clipped copies for a couple of frames at a time. The <p>
+ * is a shrink-wrapped flex item, so inset:0 on the bands matches the text
+ * exactly. */
 .bo-hero__thesis {
+  position: relative;
   margin: 0;
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 400;
   letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
   color: var(--bo-white);
   opacity: 0;
   transition: opacity 0.5s ease 0.15s;
 }
 .bo-hero__thesis.is-on {
   opacity: 1;
+}
+.bo-tear {
+  position: absolute;
+  inset: 0;
+  display: none;
+  color: var(--bo-white);
+}
+.bo-tear--1 { clip-path: inset(0 0 66% 0); }
+.bo-tear--2 { clip-path: inset(34% 0 33% 0); }
+.bo-tear--3 { clip-path: inset(67% 0 0 0); }
+.bo-hero__thesis.is-torn .bo-hero__thesis-text {
+  visibility: hidden;
+}
+.bo-hero__thesis.is-torn .bo-tear {
+  display: block;
 }
 
 .bo-hero__foot {
