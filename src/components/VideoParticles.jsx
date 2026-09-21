@@ -12,7 +12,10 @@ const MOUSE_RADIUS = 80;
 const PUSH_FORCE = 30;
 const BG_THRESHOLD = 35;
 
-export default function VideoParticles({ src, width = 900, height = 900 }) {
+/* `tint` ([r, g, b]) recolors every lit pixel to that color and moves the
+ * source's luminance into alpha — the clip reads as one light on black
+ * instead of its own hue. Used by the [BLACK OUT] kit for a white E. */
+export default function VideoParticles({ src, width = 900, height = 900, tint = null }) {
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
   const frameRef = useRef(null);
@@ -85,9 +88,18 @@ export default function VideoParticles({ src, width = 900, height = 900 }) {
         const mouseActive = mx > -1000 && my > -1000;
 
         for (let i = 0; i < data.length; i += 4) {
-          const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const brightness = (r + g + b) / 3;
           if (brightness < BG_THRESHOLD) {
             data[i + 3] = 0;
+          } else if (tint) {
+            const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+            data[i] = tint[0];
+            data[i + 1] = tint[1];
+            data[i + 2] = tint[2];
+            data[i + 3] = Math.min(255, Math.round(lum * 1.6));
           }
         }
 
@@ -159,6 +171,7 @@ export default function VideoParticles({ src, width = 900, height = 900 }) {
       cancelAnimationFrame(frameRef.current);
       video.pause();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- tint is read per frame; a new array literal each render must not restart the video
   }, [src, width, height]);
 
   const getCanvasCoords = useCallback((clientX, clientY) => {

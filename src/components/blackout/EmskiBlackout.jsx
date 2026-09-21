@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useInView, usePrefersReducedMotion } from "../../hooks/useAnimations";
 import AnimNum from "../AnimNum";
+import VideoParticles from "../VideoParticles";
 import { FESTIVALS, LABELS, STATS, SOCIALS } from "../../data/content";
 import {
   BO_TAG,
@@ -38,13 +39,14 @@ function useTypewriter(text, start) {
   return { typed: text.slice(0, shown), done: shown >= text.length };
 }
 
-/* Mono section label: "01 / SHARED THE STAGE WITH" — the number is the
- * machine's; the title reads in off-white. */
+/* Section header: the title leads in the parent sans; the mono number beside
+ * it is the machine's. Metadata and sub-details stay small and mono. */
 function Label({ n, children }) {
   return (
-    <p className="bo-label bo-mono">
-      {n} / <b>{children}</b>
-    </p>
+    <h2 className="bo-h">
+      <span className="bo-h__n bo-mono">{n}</span>
+      <span className="bo-h__t">{children}</span>
+    </h2>
   );
 }
 
@@ -127,6 +129,10 @@ export default function EmskiBlackout() {
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-hero">
         <div className="bo-wrap">
+          {/* Parent E, same clip as the homepage hero, recolored to off-white. */}
+          <div className={`bo-hero__e ${markOn ? "is-on" : ""}`} aria-hidden="true">
+            <VideoParticles src="/E_video_loop.mp4" width={520} height={520} tint={[242, 239, 234]} />
+          </div>
           <div
             className={`bo-hero__mark ${markOn ? "is-on" : ""}`}
             style={{ "--bo-mark": `url(${logo})` }}
@@ -137,9 +143,13 @@ export default function EmskiBlackout() {
             <span aria-hidden="true">{typed}</span>
             <span className="bo-cursor" aria-hidden="true" />
           </p>
-          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>
-            <span>{BO_THESIS}</span>
-          </p>
+          {/* The hero's one rust instance: a hairline in from the left edge of
+              the screen, glitching. The row keeps its slot in the stack; the
+              line itself is absolute so it can start at x=0. */}
+          <div className="bo-hero__rule-row" aria-hidden="true">
+            <span className={`bo-hero__rule ${done ? "is-on" : ""}`} />
+          </div>
+          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>{BO_THESIS}</p>
         </div>
         {/* Own .bo-wrap so it shares the content column's exact left edge. */}
         <div className="bo-hero__foot bo-wrap">

@@ -54,6 +54,27 @@
   width: 100%;
 }
 
+/* The E — VideoParticles canvas, tinted off-white by the component. The
+ * clip frames the glyph with dead space (measured: 6.15% left, 29.8% top,
+ * 30% bottom of the square), so the margins cancel that — the glyph's own
+ * edge lines up with the wordmark and sits 14px above it. */
+.bo-hero__e {
+  --bo-e: min(66vw, 420px);
+  margin: calc(var(--bo-e) * -0.298) 0 calc(14px - var(--bo-e) * 0.3) calc(var(--bo-e) * -0.0615);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.bo-hero__e.is-on {
+  opacity: 1;
+  transform: none;
+}
+.bo-hero__e canvas {
+  max-width: var(--bo-e) !important;
+  height: auto !important;
+  cursor: default !important;
+}
+
 /* Wordmark as a mask so it renders in off-white, not the PNG's pure white. */
 .bo-hero__mark {
   width: min(56vw, 400px);
@@ -92,37 +113,55 @@
   }
 }
 
-/* Thesis — the hero's single rust instance. Fades in, then glitches in and
- * out on a slow loop: hard cuts (steps), never a smear. */
+/* Rust hairline — the hero's single rust instance. Runs from the screen's
+ * left edge to 96px into the column, never full-width. The row holds the
+ * slot in the stack; the line is absolute with top:auto, so it keeps the
+ * row's vertical position but measures left from the hero's edge. Glitches
+ * on a slow loop in hard cuts (steps), never a smear. */
+.bo-hero__rule-row {
+  height: 1px;
+  margin: 24px 0 20px;
+}
+.bo-hero__rule {
+  position: absolute;
+  left: 0;
+  width: calc(50% - min(50%, 440px) + var(--bo-gutter) + 96px);
+  height: 1px;
+  background: var(--bo-rust);
+  transform-origin: left center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.bo-hero__rule.is-on {
+  opacity: 1;
+  animation: bo-rule-glitch 5s steps(1, end) 1s infinite;
+}
+@keyframes bo-rule-glitch {
+  0%, 100% { opacity: 1; transform: none; box-shadow: none; }
+  11%   { opacity: 0.55; transform: scaleX(0.86) translateY(1px); }
+  11.6% { opacity: 1;    transform: scaleX(1.04); }
+  12.3% { transform: none; }
+  47%   { opacity: 0.2; }
+  47.5% { opacity: 1;    transform: translateY(-1px); }
+  48.2% { transform: none; }
+  79%   { transform: scaleX(0.6); box-shadow: 40px 3px 0 0 var(--bo-rust); }
+  79.7% { transform: none;        box-shadow: none; }
+  80.3% { opacity: 0.4; }
+  80.8% { opacity: 1; }
+}
+
+/* Thesis — off-white, steady. */
 .bo-hero__thesis {
-  margin: 18px 0 0;
+  margin: 0;
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: var(--bo-rust);
+  color: var(--bo-white);
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease 0.15s;
 }
 .bo-hero__thesis.is-on {
   opacity: 1;
-}
-.bo-hero__thesis.is-on > span {
-  display: inline-block;
-  animation: bo-glitch 6s steps(1, end) 1.2s infinite;
-}
-@keyframes bo-glitch {
-  0%, 100% { opacity: 1; transform: none; clip-path: none; }
-  9%    { opacity: 0.3; transform: translateX(1px); }
-  9.5%  { opacity: 1;   transform: none; }
-  10.2% { opacity: 0.55; transform: translateX(-1px); }
-  10.7% { opacity: 1;   transform: none; }
-  43%   { opacity: 0.15; }
-  43.4% { opacity: 1;   transform: translateX(1px); }
-  44%   { transform: none; }
-  76%   { clip-path: inset(38% 0 36% 0); transform: translateX(-2px); }
-  76.6% { clip-path: none; transform: none; }
-  77.2% { opacity: 0.4; }
-  77.6% { opacity: 1; }
 }
 
 .bo-hero__foot {
@@ -149,13 +188,30 @@
   border-top: 1px solid var(--bo-charcoal);
 }
 
+/* Metadata / sub-details: small, mono, grey. */
 .bo-label {
   margin: 0 0 18px;
   font-size: 10px;
   color: var(--bo-grey);
 }
-.bo-label b {
-  font-weight: 400;
+
+/* Section headers: title in the parent sans, number in mono beside it. */
+.bo-h {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 20px;
+  line-height: 1;
+}
+.bo-h__n {
+  font-size: 10px;
+  color: var(--bo-grey);
+}
+.bo-h__t {
+  font-weight: 700;
+  font-size: clamp(15px, 2.2vw, 22px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--bo-white);
 }
 
@@ -172,7 +228,7 @@
   color: var(--bo-grey);
   font-weight: 400;
 }
-.bo-list + .bo-label {
+.bo-list + .bo-h {
   margin-top: 40px;
 }
 
@@ -312,7 +368,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bo-cursor,
-  .bo-hero__thesis.is-on > span {
+  .bo-hero__rule.is-on {
     animation: none;
   }
 }
