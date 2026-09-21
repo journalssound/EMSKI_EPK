@@ -127,8 +127,7 @@
 
 /* Rust rule — the hero's single rust instance. The guide's cover sets a
  * short centred rule between "[BLACK OUT]" and the thesis (a centred
- * paragraph's bottom border in #B84A2E); this mirrors it. Glitches on a
- * slow loop in hard cuts (steps), never a smear. */
+ * paragraph's bottom border in #B84A2E); this mirrors it. Steady. */
 .bo-hero__rule-row {
   display: flex;
   justify-content: center;
@@ -139,29 +138,16 @@
   width: clamp(96px, 12vw, 140px);
   height: 2px;
   background: var(--bo-rust);
-  transform-origin: center;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 .bo-hero__rule.is-on {
   opacity: 1;
-  animation: bo-rule-glitch 5s steps(1, end) 1s infinite;
-}
-@keyframes bo-rule-glitch {
-  0%, 100% { opacity: 1; transform: none; box-shadow: none; }
-  11%   { opacity: 0.55; transform: scaleX(0.7) translateY(1px); }
-  11.6% { opacity: 1;    transform: scaleX(1.12); }
-  12.3% { transform: none; }
-  47%   { opacity: 0.2; }
-  47.5% { opacity: 1;    transform: translate(-6px, -1px); }
-  48.2% { transform: none; }
-  79%   { transform: translateX(-24px) scaleX(0.45); box-shadow: 70px 0 0 0 var(--bo-rust); }
-  79.7% { transform: none; box-shadow: none; }
-  80.3% { opacity: 0.4; }
-  80.8% { opacity: 1; }
 }
 
-/* Thesis — off-white, steady. */
+/* Thesis — off-white. Fades in, then glitches in and out on a slow loop:
+ * hard cuts (steps), never a smear. The fade is on the <p>, the glitch on
+ * the inner span, so the two don't fight over opacity. */
 .bo-hero__thesis {
   margin: 0;
   font-size: clamp(14px, 2vw, 18px);
@@ -173,6 +159,24 @@
 }
 .bo-hero__thesis.is-on {
   opacity: 1;
+}
+.bo-hero__thesis.is-on > span {
+  display: inline-block;
+  animation: bo-glitch 6s steps(1, end) 1.2s infinite;
+}
+@keyframes bo-glitch {
+  0%, 100% { opacity: 1; transform: none; clip-path: none; }
+  9%    { opacity: 0.3;  transform: translateX(1px); }
+  9.5%  { opacity: 1;    transform: none; }
+  10.2% { opacity: 0.55; transform: translateX(-1px); }
+  10.7% { opacity: 1;    transform: none; }
+  43%   { opacity: 0.15; }
+  43.4% { opacity: 1;    transform: translateX(1px); }
+  44%   { transform: none; }
+  76%   { clip-path: inset(38% 0 36% 0); transform: translateX(-2px); }
+  76.6% { clip-path: none; transform: none; }
+  77.2% { opacity: 0.4; }
+  77.6% { opacity: 1; }
 }
 
 .bo-hero__foot {
@@ -384,7 +388,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bo-cursor,
-  .bo-hero__rule.is-on {
+  .bo-hero__thesis.is-on > span {
     animation: none;
   }
 }

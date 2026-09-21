@@ -21,11 +21,12 @@ export const BO_THESIS = "presence is protest.";
 const LEAD = ["Amelie Lens", "Brutalismus 3000", "deadmau5", "No Mana"];
 export const BO_ARTISTS = [...LEAD, ...ARTISTS.filter((a) => !LEAD.includes(a))];
 
-/* The Concourse Project set, direct support for Amelie Lens. Mono metadata
- * reads as a slate above the player. */
+/* The Concourse Project set, direct support for Amelie Lens. Title reads as
+ * a section header; the venue details stay mono underneath. */
 export const BO_VIDEO = {
   id: "ay_6H4vmM5E",
-  meta: ["[BLACK OUT] SET", "THE CONCOURSE PROJECT", "AUSTIN, TX", "DIRECT SUPPORT FOR AMELIE LENS"],
+  title: "[BLACK OUT] set — The Concourse Project",
+  meta: ["AUSTIN, TX", "DIRECT SUPPORT FOR AMELIE LENS"],
 };
 
 /* PLACEHOLDERS — the [BLACK OUT] singles aren't on SoundCloud yet, so the

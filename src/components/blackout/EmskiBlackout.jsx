@@ -65,7 +65,7 @@ function List({ items }) {
 
 function Video() {
   const [ref, visible] = useInView(0.2);
-  const { id, meta } = BO_VIDEO;
+  const { id, title, meta } = BO_VIDEO;
   // Muted autoplay + loop so the set is already moving when the booker gets
   // to it; controls stay on so they can unmute.
   const src =
@@ -74,6 +74,7 @@ function Video() {
   return (
     <section className="bo-section" ref={ref}>
       <div className="bo-wrap">
+        <Label n="01">{title}</Label>
         <p className="bo-label bo-mono">{meta.join("  /  ")}</p>
         <div className="bo-video">
           {visible && (
@@ -143,13 +144,14 @@ export default function EmskiBlackout() {
             <span aria-hidden="true">{typed}</span>
             <span className="bo-cursor" aria-hidden="true" />
           </p>
-          {/* The hero's one rust instance: a hairline in from the left edge of
-              the screen, glitching. The row keeps its slot in the stack; the
-              line itself is absolute so it can start at x=0. */}
+          {/* The hero's one rust instance — the short centred rule from the
+              guide cover. Steady; the glitch lives on the thesis below. */}
           <div className="bo-hero__rule-row" aria-hidden="true">
             <span className={`bo-hero__rule ${done ? "is-on" : ""}`} />
           </div>
-          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>{BO_THESIS}</p>
+          <p className={`bo-hero__thesis ${done ? "is-on" : ""}`}>
+            <span>{BO_THESIS}</span>
+          </p>
         </div>
         {/* Own .bo-wrap so it shares the content column's exact left edge. */}
         <div className="bo-hero__foot bo-wrap">
@@ -163,11 +165,11 @@ export default function EmskiBlackout() {
       {/* ━━ CREDITS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <Label n="01">Shared the stage with</Label>
+          <Label n="02">Shared the stage with</Label>
           <List items={BO_ARTISTS} />
-          <Label n="02">Festivals</Label>
+          <Label n="03">Festivals</Label>
           <List items={FESTIVALS.map((f) => f.name)} />
-          <Label n="03">Label releases</Label>
+          <Label n="04">Label releases</Label>
           <List items={LABELS.map((l) => l.name)} />
         </div>
       </section>
@@ -175,7 +177,7 @@ export default function EmskiBlackout() {
       {/* ━━ STATS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <Label n="04">Streaming &amp; socials</Label>
+          <Label n="05">Streaming &amp; socials</Label>
           <Stats />
         </div>
       </section>
@@ -183,7 +185,7 @@ export default function EmskiBlackout() {
       {/* ━━ SINGLES (placeholders) ━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <Label n="05">{BO_TAG} singles</Label>
+          <Label n="06">{BO_TAG} singles</Label>
           <div className="bo-players">
             {BO_PLAYERS.map((p) => (
               <div className="bo-player" key={p.label}>
@@ -199,7 +201,7 @@ export default function EmskiBlackout() {
       {BO_PHOTOS.length > 0 && (
         <section className="bo-section">
           <div className="bo-wrap">
-            <Label n="06">Press photos</Label>
+            <Label n="07">Press photos</Label>
             <div className="bo-photos">
               {BO_PHOTOS.map((p) => (
                 <img key={p.src} src={p.src} alt={p.alt} loading="lazy" decoding="async" />
@@ -213,7 +215,7 @@ export default function EmskiBlackout() {
       <section className="bo-section">
         <span className="bo-rust-line" aria-hidden="true" />
         <div className="bo-wrap">
-          <Label n={BO_PHOTOS.length > 0 ? "07" : "06"}>Contact</Label>
+          <Label n={BO_PHOTOS.length > 0 ? "08" : "07"}>Contact</Label>
           <a className="bo-contact__email" href={`mailto:${BO_CONTACT_EMAIL}`}>
             {BO_CONTACT_EMAIL}
           </a>
