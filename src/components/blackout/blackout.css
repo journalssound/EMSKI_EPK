@@ -48,19 +48,26 @@
   flex-direction: column;
   justify-content: center;
 }
-/* As a flex item the wrap's auto margins would shrink it to content width;
- * pin it so the hero shares the same column as every section below. */
+/* The hero is centred on the page's midline (the guide cover, and the
+ * homepage). As a flex item the wrap's auto margins would shrink it to
+ * content width, so pin it to the column and centre the stack inside. */
 .bo-hero > .bo-wrap {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 /* The E — VideoParticles canvas, tinted off-white by the component. The
- * clip frames the glyph with dead space (measured: 6.15% left, 29.8% top,
- * 30% bottom of the square), so the margins cancel that — the glyph's own
- * edge lines up with the wordmark and sits 14px above it. */
+ * clip frames the glyph with dead space (measured: 6.15% left, 8.08% right,
+ * 29.8% top, 30% bottom of the square). Vertical margins cancel the top and
+ * bottom so the glyph sits 14px above the wordmark; the glyph's centre is
+ * 0.97% left of the canvas centre, so a 1.93% left margin puts the glyph —
+ * not the canvas — on the midline. */
 .bo-hero__e {
   --bo-e: min(66vw, 420px);
-  margin: calc(var(--bo-e) * -0.298) 0 calc(14px - var(--bo-e) * 0.3) calc(var(--bo-e) * -0.0615);
+  margin: calc(var(--bo-e) * -0.298) 0 calc(14px - var(--bo-e) * 0.3) calc(var(--bo-e) * 0.0193);
   opacity: 0;
   transform: scale(0.97);
   transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -90,6 +97,7 @@
 }
 
 .bo-hero__tag {
+  position: relative;
   margin: 22px 0 0;
   font-size: clamp(18px, 3.4vw, 30px);
   line-height: 1;
@@ -98,7 +106,9 @@
   white-space: pre;
 }
 
+/* Out of flow so the typed text — not text + cursor — is what gets centred. */
 .bo-cursor {
+  position: absolute;
   display: inline-block;
   width: 0.55em;
   height: 0.95em;
@@ -113,22 +123,21 @@
   }
 }
 
-/* Rust hairline — the hero's single rust instance. Runs from the screen's
- * left edge to 96px into the column, never full-width. The row holds the
- * slot in the stack; the line is absolute with top:auto, so it keeps the
- * row's vertical position but measures left from the hero's edge. Glitches
- * on a slow loop in hard cuts (steps), never a smear. */
+/* Rust rule — the hero's single rust instance. The guide's cover sets a
+ * short centred rule between "[BLACK OUT]" and the thesis (a centred
+ * paragraph's bottom border in #B84A2E); this mirrors it. Glitches on a
+ * slow loop in hard cuts (steps), never a smear. */
 .bo-hero__rule-row {
-  height: 1px;
-  margin: 24px 0 20px;
+  display: flex;
+  justify-content: center;
+  height: 2px;
+  margin: 22px 0 18px;
 }
 .bo-hero__rule {
-  position: absolute;
-  left: 0;
-  width: calc(50% - min(50%, 440px) + var(--bo-gutter) + 96px);
-  height: 1px;
+  width: clamp(96px, 12vw, 140px);
+  height: 2px;
   background: var(--bo-rust);
-  transform-origin: left center;
+  transform-origin: center;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -138,14 +147,14 @@
 }
 @keyframes bo-rule-glitch {
   0%, 100% { opacity: 1; transform: none; box-shadow: none; }
-  11%   { opacity: 0.55; transform: scaleX(0.86) translateY(1px); }
-  11.6% { opacity: 1;    transform: scaleX(1.04); }
+  11%   { opacity: 0.55; transform: scaleX(0.7) translateY(1px); }
+  11.6% { opacity: 1;    transform: scaleX(1.12); }
   12.3% { transform: none; }
   47%   { opacity: 0.2; }
-  47.5% { opacity: 1;    transform: translateY(-1px); }
+  47.5% { opacity: 1;    transform: translate(-6px, -1px); }
   48.2% { transform: none; }
-  79%   { transform: scaleX(0.6); box-shadow: 40px 3px 0 0 var(--bo-rust); }
-  79.7% { transform: none;        box-shadow: none; }
+  79%   { transform: translateX(-24px) scaleX(0.45); box-shadow: 70px 0 0 0 var(--bo-rust); }
+  79.7% { transform: none; box-shadow: none; }
   80.3% { opacity: 0.4; }
   80.8% { opacity: 1; }
 }
@@ -169,6 +178,7 @@
   left: 0;
   right: 0;
   bottom: 28px;
+  text-align: center;
 }
 .bo-hero__kicker {
   margin: 0;
