@@ -271,30 +271,29 @@
   border: 0;
 }
 
-/* ── Stats ────────────────────────────────────────────── */
-.bo-stats {
+/* ── Stats — console readout ──────────────────────────── */
+/* Two aligned columns: LABEL: in grey, value in off-white. Hidden until the
+ * decode hook has scrambled it, so the real numbers never flash first. */
+.bo-console {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--bo-charcoal);
-  border: 1px solid var(--bo-charcoal);
+  grid-template-columns: max-content 1fr;
+  column-gap: clamp(18px, 3vw, 40px);
+  font-family: var(--bo-mono);
+  font-size: clamp(13px, 1.6vw, 16px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 2;
+  white-space: nowrap;
+  visibility: hidden;
 }
-.bo-stat {
-  background: var(--bo-black);
-  padding: clamp(16px, 2.6vw, 26px) clamp(14px, 2.2vw, 22px);
+.bo-console.is-live {
+  visibility: visible;
 }
-.bo-stat__value {
-  display: block;
-  font-weight: 700;
-  font-size: clamp(20px, 3.2vw, 32px);
-  line-height: 1;
-  letter-spacing: 0.02em;
-}
-.bo-stat__label {
-  display: block;
-  margin-top: 10px;
-  font-size: 12px;
+.bo-console__k {
   color: var(--bo-grey);
+}
+.bo-console__v {
+  color: var(--bo-white);
 }
 
 /* ── Player (placeholder until the singles land) ────────── */
@@ -375,9 +374,6 @@
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 720px) {
-  .bo-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .bo-photos {
     columns: 2;
   }

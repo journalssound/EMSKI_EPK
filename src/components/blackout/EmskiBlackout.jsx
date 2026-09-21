@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useInView, usePrefersReducedMotion } from "../../hooks/useAnimations";
-import AnimNum from "../AnimNum";
 import VideoParticles from "../VideoParticles";
 import { FESTIVALS, LABELS, STATS, SOCIALS } from "../../data/content";
 import {
@@ -89,6 +88,59 @@ function useSliceTear(ref, on) {
   }, [ref, on, prefersReduced]);
 }
 
+/* Decode: every [data-decode] cell inside `ref` starts as machine glyphs and
+ * resolves left-to-right, rows staggered, once `on`. Spaces and colons stay
+ * put so the columns never jitter. Final text is what's in the DOM already,
+ * so reduced-motion (and no-JS) just shows it. */
+function useDecode(ref, on) {
+  const prefersReduced = usePrefersReducedMotion();
+  useEffect(() => {
+    const el = ref.current;
+    if (!on || !el) return;
+    const cells = Array.from(el.querySelectorAll("[data-decode]"));
+    const finals = cells.map((c) => c.textContent);
+    if (prefersReduced) {
+      el.classList.add("is-live");
+      return;
+    }
+    const G = "[]/_01";
+    const rg = () => G[(Math.random() * G.length) | 0];
+    const scramble = (s, upto) =>
+      s
+        .split("")
+        .map((ch, i) => (i < upto || ch === " " || ch === ":" ? ch : rg()))
+        .join("");
+    cells.forEach((c, i) => {
+      c.textContent = scramble(finals[i], 0);
+    });
+    el.classList.add("is-live");
+    let alive = true;
+    const timers = [];
+    cells.forEach((c, i) => {
+      const row = Math.floor(i / 2);
+      let k = 0;
+      const step = () => {
+        if (!alive) return;
+        k += 1;
+        if (k >= finals[i].length) {
+          c.textContent = finals[i];
+          return;
+        }
+        c.textContent = scramble(finals[i], k);
+        timers.push(setTimeout(step, 22));
+      };
+      timers.push(setTimeout(step, row * 90 + (i % 2) * 60));
+    });
+    return () => {
+      alive = false;
+      timers.forEach(clearTimeout);
+      cells.forEach((c, i) => {
+        c.textContent = finals[i];
+      });
+    };
+  }, [ref, on, prefersReduced]);
+}
+
 /* Section header: the title leads in the parent sans; the mono number beside
  * it is the machine's. Metadata and sub-details stay small and mono. */
 function Label({ n, children }) {
@@ -142,17 +194,24 @@ function Video() {
   );
 }
 
+/* Stats as a console readout — LABEL: value, two aligned columns, decoding
+ * in when scrolled to. 42.3K not 42.30K: integers get thousands separators,
+ * decimals print as written in the data. */
 function Stats() {
   const [ref, visible] = useInView(0.3);
+  useDecode(ref, visible);
+  const fmt = (s) => (Number.isInteger(s.val) ? s.val.toLocaleString() : String(s.val)) + s.suf;
   return (
-    <div className="bo-stats" ref={ref}>
+    <div className="bo-console" ref={ref}>
       {STATS.map((s) => (
-        <div className="bo-stat" key={s.label}>
-          <span className="bo-stat__value">
-            <AnimNum value={s.val} suffix={s.suf} visible={visible} />
+        <Fragment key={s.label}>
+          <span className="bo-console__k" data-decode>
+            {s.label}:
           </span>
-          <span className="bo-stat__label bo-mono">{s.label}</span>
-        </div>
+          <span className="bo-console__v" data-decode>
+            {fmt(s)}
+          </span>
+        </Fragment>
       ))}
     </div>
   );
