@@ -289,9 +289,9 @@
 .bo-console.is-live {
   visibility: visible;
 }
-.bo-console__k {
-  color: var(--bo-grey);
-}
+/* Keys and values both off-white — grey mono was ruled out for anything a
+ * reader has to actually read. */
+.bo-console__k,
 .bo-console__v {
   color: var(--bo-white);
 }
@@ -303,6 +303,7 @@
 }
 .bo-player__label {
   margin: 0 0 10px;
+  color: var(--bo-white);
 }
 .bo-player iframe {
   display: block;
@@ -352,13 +353,13 @@
   gap: 8px 28px;
   margin-top: 26px;
   font-size: 12px;
-  color: var(--bo-grey);
+  color: var(--bo-white);
 }
 .bo-contact__socials a {
-  transition: color 0.3s;
+  transition: opacity 0.3s;
 }
 .bo-contact__socials a:hover {
-  color: var(--bo-white);
+  opacity: 0.6;
 }
 
 /* ── Footer ───────────────────────────────────────────── */
