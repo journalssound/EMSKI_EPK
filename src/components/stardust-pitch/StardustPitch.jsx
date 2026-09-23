@@ -79,14 +79,21 @@ function model() {
   lastYear.emskiNet = lastYear.emski - costs;
   lastYear.stardustTotal = lastYear.stardustTickets + lastYear.bar;
 
+  /* This year the changeover is 3AM, and last year's sales closed at 3AM —
+   * so every ticket last year (afters included) sits in the 80/20 bucket,
+   * and the after-3AM bucket has nothing to project from. */
+  const allCountItemised = beforeCountItemised + afterCount;
   const scenarios = PROPOSAL.scenarios.map((s) => {
-    const bGross = beforeGross + s.priceDelta * beforeCountItemised;
-    const aGross = afterGross + s.priceDelta * afterCount;
+    const toGross = ly.net + s.priceDelta * allCountItemised;
+    const afterChangeoverGross = 0;
     const r = {
       label: s.label,
-      emski: bGross * PROPOSAL.emskiShareTo2am + aGross * PROPOSAL.emskiShareAfter2am,
+      emski:
+        toGross * PROPOSAL.emskiShareToChangeover +
+        afterChangeoverGross * PROPOSAL.emskiShareAfterChangeover,
       stardustTickets:
-        bGross * (1 - PROPOSAL.emskiShareTo2am) + aGross * (1 - PROPOSAL.emskiShareAfter2am),
+        toGross * (1 - PROPOSAL.emskiShareToChangeover) +
+        afterChangeoverGross * (1 - PROPOSAL.emskiShareAfterChangeover),
       bar: ly.bar,
     };
     r.stardustTotal = r.stardustTickets + r.bar;
@@ -204,8 +211,11 @@ export default function StardustPitch() {
             {PROPOSAL.format} · {PITCH_META.venue} · CAP {PROPOSAL.capacity}
           </p>
           <div className="sp-split">
-            <Split label="TICKETS TO 2AM" emski={PROPOSAL.emskiShareTo2am} />
-            <Split label="TICKETS AFTER 2AM" emski={PROPOSAL.emskiShareAfter2am} />
+            <Split label={`TICKETS TO ${PROPOSAL.changeover}`} emski={PROPOSAL.emskiShareToChangeover} />
+            <Split
+              label={`TICKETS AFTER ${PROPOSAL.changeover}`}
+              emski={PROPOSAL.emskiShareAfterChangeover}
+            />
             <Split label="BAR" emski={0} />
           </div>
         </div>
@@ -263,6 +273,7 @@ export default function StardustPitch() {
           <p className="sp-line bo-mono">
             EMSKI: {usd(m.lastYear.emski)} tickets − {usd(m.lastYear.costs)} costs = {usd(m.lastYear.emskiNet)} net
             last year → {usd(repeat.emski)} under the new split, before costs. Sellout assumed.
+            After-{PROPOSAL.changeover} tickets not projected — last year's sales closed at 3AM.
           </p>
         </div>
       </section>
@@ -279,11 +290,13 @@ export default function StardustPitch() {
               </span>
             ))}
           </p>
-          <p style={{ marginTop: 26 }}>
-            <a className="bo-contact__email" href={`mailto:${PITCH_META.contactEmail}`}>
-              {PITCH_META.contactEmail}
-            </a>
-          </p>
+          {PITCH_META.contacts.map((email, i) => (
+            <p key={email} style={{ marginTop: i === 0 ? 26 : 12 }}>
+              <a className="bo-contact__email" href={`mailto:${email}`}>
+                {email}
+              </a>
+            </p>
+          ))}
         </div>
       </section>
 

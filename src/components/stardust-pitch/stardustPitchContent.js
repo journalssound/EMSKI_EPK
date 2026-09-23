@@ -11,7 +11,7 @@ export const PITCH_META = {
   city: "Austin, TX",
   preparedFor: "Stardust Garage",
   prepared: "Sep 2026",
-  contactEmail: "contact@emskimusic.com",
+  contacts: ["matt@emskimusic.com", "contact@emskimusic.com"],
 };
 
 export const LAST_YEAR = {
@@ -55,12 +55,14 @@ export const SINCE = [
 /* The ask. */
 export const PROPOSAL = {
   dateLabel: "SAT NOV 21 2026",
-  format: "EMSKI LIVE SET → [BLACKOUT] DJ SET · FIRST [BLACKOUT] SHOW · EXTENDED SET PAST 2AM",
+  format: "EMSKI LIVE SET → [BLACKOUT] DJ SET · FIRST [BLACKOUT] SHOW · EMSKI PLAYS TO 3AM",
   capacity: 600,
-  /* 80/20 to 2AM; 50/50 after — EMSKI plays through the afters. Bar stays
-   * 100% Stardust. */
-  emskiShareTo2am: 0.8,
-  emskiShareAfter2am: 0.5,
+  /* The changeover moves to 3AM because EMSKI plays until then: 80/20 on
+   * every ticket to 3AM, 50/50 after. Bar stays 100% Stardust. Last year's
+   * sales closed at 3AM, so there's no after-3AM data to project from. */
+  changeover: "3AM",
+  emskiShareToChangeover: 0.8,
+  emskiShareAfterChangeover: 0.5,
   /* Scenarios: a straight repeat of last year's tiers, and every tier $5 up. */
   scenarios: [
     { label: "SAME TIERS", priceDelta: 0 },
@@ -68,4 +70,4 @@ export const PROPOSAL = {
   ],
 };
 
-export const NEXT = ["HOLD SAT NOV 21", "CONFIRM 80/20 TO 2AM · 50/50 AFTER", "ANNOUNCE + ON-SALE LATE OCT"];
+export const NEXT = ["HOLD SAT NOV 21", "CONFIRM 80/20 TO 3AM · 50/50 AFTER", "ANNOUNCE + ON-SALE LATE OCT"];

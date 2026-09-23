@@ -78,9 +78,6 @@
   font-size: 16px;
   letter-spacing: 0.02em;
 }
-.sp-ladder__cell.is-after {
-  border-top: 2px solid var(--bo-rust);
-}
 
 /* ── Deal split diagram ───────────────────────────────── */
 .sp-split {
