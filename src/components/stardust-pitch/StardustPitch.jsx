@@ -260,9 +260,6 @@ export default function StardustPitch() {
               </tbody>
             </table>
           </div>
-          <p className="sp-headline">
-            Same show, same bar. <b>+{k(repeat.delta)} to Stardust.</b>
-          </p>
           <p className="sp-line bo-mono">
             EMSKI: {usd(m.lastYear.emski)} tickets − {usd(m.lastYear.costs)} costs = {usd(m.lastYear.emskiNet)} net
             last year → {usd(repeat.emski)} under the new split, before costs. Sellout assumed.
