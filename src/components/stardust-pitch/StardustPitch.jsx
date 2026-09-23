@@ -183,8 +183,14 @@ export default function StardustPitch() {
       <section className="bo-section">
         <div className="bo-wrap">
           <H n="02">Since then</H>
-          <Tiles items={SINCE.tiles} />
-          <p className="sp-line bo-mono">{SINCE.line}</p>
+          <p className="bo-list">
+            {SINCE.map((line, i) => (
+              <span key={line}>
+                {line}
+                {i < SINCE.length - 1 && <br />}
+              </span>
+            ))}
+          </p>
         </div>
       </section>
 

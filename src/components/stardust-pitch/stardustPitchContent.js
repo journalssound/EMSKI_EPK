@@ -42,16 +42,13 @@ export const LAST_YEAR = {
   emskiShareTo2am: 1.0,
 };
 
-/* What the show set off. */
-export const SINCE = {
-  tiles: [
-    { n: "2", l: "MORE SELLOUTS", s: "DENVER (AEG) · MCALLEN" },
-    { n: "65%", l: "TICKETS ORGANIC", s: "TIKTOK-LED · PAID ADS 7%" },
-    { n: "140K", l: "VIEWS, ONE TIKTOK", s: "SOLD OUT MCALLEN" },
-    { n: "53K", l: "FOLLOWERS", s: "+25% SINCE FEB" },
-  ],
-  line: "THE_EFFECT TOUR · 5 CITIES · APR–JUN 2026 · DIRECT SUPPORT FOR AMELIE LENS, THE CONCOURSE PROJECT",
-};
+/* What the show set off — four lines, no stat sheet. */
+export const SINCE = [
+  "THE_EFFECT TOUR · 5 CITIES · APR–JUN 2026",
+  "2 MORE SELLOUTS · DENVER (AEG) · MCALLEN",
+  "TIKTOK STRATEGY DIALED IN — ONE POST SOLD OUT MCALLEN",
+  "+35% FOLLOWERS",
+];
 
 /* The ask. */
 export const PROPOSAL = {
