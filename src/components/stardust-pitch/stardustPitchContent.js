@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────
  * Stardust Garage — Nov 21 2026 proposal
  *
- * Private, one reader (Adam). Big numbers, one comparison, no prose.
+ * Private, one reader at the venue. Big numbers, one comparison, no prose.
  * Last year's ticketing is from the Posh dashboard for "The_Effect: Live
  * A/V Set", Nov 22 2025. Bar figure and deal terms from the artist.
  * ───────────────────────────────────────────────────────── */
@@ -68,4 +68,4 @@ export const PROPOSAL = {
   ],
 };
 
-export const NEXT = ["HOLD SAT NOV 21", "CONFIRM 80/20 TO 2AM", "ANNOUNCE + ON-SALE LATE OCT"];
+export const NEXT = ["HOLD SAT NOV 21", "CONFIRM 80/20 TO 2AM · 50/50 AFTER", "ANNOUNCE + ON-SALE LATE OCT"];

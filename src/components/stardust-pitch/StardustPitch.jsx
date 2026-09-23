@@ -265,7 +265,7 @@ export default function StardustPitch() {
           </p>
           <p className="sp-line bo-mono">
             EMSKI: {usd(m.lastYear.emski)} tickets − {usd(m.lastYear.costs)} costs = {usd(m.lastYear.emskiNet)} net
-            last year → {usd(repeat.emski)} at 80/20, before costs. Sellout assumed.
+            last year → {usd(repeat.emski)} under the new split, before costs. Sellout assumed.
           </p>
         </div>
       </section>
