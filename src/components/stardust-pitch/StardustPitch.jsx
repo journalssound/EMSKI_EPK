@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { PITCH_META, LAST_YEAR, SINCE, PROPOSAL, NEXT } from "./stardustPitchContent";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
 import "../blackout/blackout.css";
@@ -6,9 +6,8 @@ import "./stardust-pitch.css";
 
 const TAG = "[BLACKOUT]";
 
-const usd = (n) =>
-  n == null ? "—" : "$" + Math.round(n).toLocaleString("en-US");
-const num = (n) => (n == null ? "—" : Math.round(n).toLocaleString("en-US"));
+const usd = (n) => "$" + Math.round(n).toLocaleString("en-US");
+const k = (n) => (n >= 1000 ? "$" + (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : usd(n));
 
 /* Same header as the kit: sans title, mono number. */
 function H({ n, children }) {
@@ -20,62 +19,77 @@ function H({ n, children }) {
   );
 }
 
-/* Key: value readout, static (no decode) — this page is read once, fast. */
-function Console({ rows }) {
+function Tiles({ items }) {
   return (
-    <div className="bo-console is-live sp-console">
-      {rows.map(([k, v]) => (
-        <Fragment key={k}>
-          <span className="bo-console__k">{k}:</span>
-          <span className="bo-console__v">{v}</span>
-        </Fragment>
+    <div className="sp-tiles">
+      {items.map((t) => (
+        <div className="sp-tile" key={t.l}>
+          <span className="sp-tile__n">{t.n}</span>
+          <span className="sp-tile__l bo-mono">{t.l}</span>
+          {t.s ? <span className="sp-tile__s bo-mono">{t.s}</span> : null}
+        </div>
       ))}
     </div>
   );
 }
 
-/* Projections. Everything keys off last year's gross and its pre/post-2AM
- * split; without those the table renders dashes rather than guesses. */
-function projections() {
+/* Split bar: EMSKI's share in off-white, Stardust's in rust. */
+function Split({ label, emski }) {
+  const stardust = 1 - emski;
+  return (
+    <>
+      <span className="sp-split__label bo-mono">{label}</span>
+      <div className="sp-split__bar">
+        {emski > 0 && (
+          <span className="sp-split__seg sp-split__seg--emski" style={{ flex: emski }}>
+            EMSKI {Math.round(emski * 100)}
+          </span>
+        )}
+        {stardust > 0 && (
+          <span className="sp-split__seg sp-split__seg--stardust" style={{ flex: stardust }}>
+            STARDUST {Math.round(stardust * 100)}
+          </span>
+        )}
+      </div>
+    </>
+  );
+}
+
+/* The model. Last year: EMSKI kept 100% before 2AM, Stardust kept the
+ * after-2AM tickets and bar. This year: 80/20 before 2AM, same after. */
+function model() {
   const ly = LAST_YEAR;
-  const ready = ly.gross != null && ly.sold != null && ly.pre2am.gross != null;
-  const avg = ly.avgPrice ?? (ready ? ly.gross / ly.sold : null);
-  const preShare = ready ? ly.pre2am.gross / ly.gross : null;
+  const afters = ly.tiers.filter((t) => t.after2am);
+  const before = ly.tiers.filter((t) => !t.after2am);
+  const afterGross = afters.reduce((s, t) => s + t.price * t.sold, 0);
+  const afterCount = afters.reduce((s, t) => s + t.sold, 0);
+  const beforeGross = ly.net - afterGross; // dashboard net minus the afters
+  const beforeCount = ly.sold - afterCount;
+  const beforeCountItemised = before.reduce((s, t) => s + t.sold, 0);
 
-  const baseline = ready
-    ? {
-        label: "LAST YEAR",
-        tickets: ly.sold,
-        avg,
-        gross: ly.gross,
-        emski: ly.pre2am.gross,
-        stardustTickets: ly.post2am.gross ?? ly.gross - ly.pre2am.gross,
-        bar: ly.bar,
-      }
-    : { label: "LAST YEAR", tickets: ly.sold, avg, gross: ly.gross, emski: null, stardustTickets: null, bar: ly.bar };
-  baseline.stardustTotal =
-    baseline.stardustTickets == null ? null : baseline.stardustTickets + baseline.bar;
+  const lastYear = {
+    label: "LAST YEAR",
+    emski: beforeGross * ly.emskiShareTo2am,
+    stardustTickets: beforeGross * (1 - ly.emskiShareTo2am) + afterGross,
+    bar: ly.bar,
+  };
+  lastYear.stardustTotal = lastYear.stardustTickets + lastYear.bar;
 
-  const rows = PROPOSAL.scenarios.map((s) => {
-    if (!ready) return { label: s.label, tickets: s.tickets };
-    const price = avg + s.priceDelta;
-    const gross = s.tickets * price;
-    const preGross = gross * preShare;
-    const postGross = gross - preGross;
-    const bar = ly.bar * (s.tickets / ly.sold);
-    const stardustTickets = preGross * (1 - PROPOSAL.emskiShare) + postGross;
-    return {
+  const scenarios = PROPOSAL.scenarios.map((s) => {
+    const bGross = beforeGross + s.priceDelta * beforeCountItemised;
+    const aGross = afterGross + s.priceDelta * afterCount;
+    const r = {
       label: s.label,
-      tickets: s.tickets,
-      avg: price,
-      gross,
-      emski: preGross * PROPOSAL.emskiShare,
-      stardustTickets,
-      bar,
-      stardustTotal: stardustTickets + bar,
+      emski: bGross * PROPOSAL.emskiShareTo2am,
+      stardustTickets: bGross * (1 - PROPOSAL.emskiShareTo2am) + aGross,
+      bar: ly.bar,
     };
+    r.stardustTotal = r.stardustTickets + r.bar;
+    r.delta = r.stardustTotal - lastYear.stardustTotal;
+    return r;
   });
-  return { ready, baseline, rows };
+
+  return { afterGross, afterCount, beforeGross, beforeCount, lastYear, scenarios };
 }
 
 export default function StardustPitch() {
@@ -94,8 +108,9 @@ export default function StardustPitch() {
     };
   }, []);
 
-  const { ready, baseline, rows } = projections();
   const ly = LAST_YEAR;
+  const m = model();
+  const repeat = m.scenarios[0];
 
   return (
     <div className="bo">
@@ -129,19 +144,24 @@ export default function StardustPitch() {
       <section className="bo-section">
         <div className="bo-wrap">
           <H n="01">Last year — {ly.dateLabel}</H>
-          <Console
-            rows={[
-              ["VENUE", PITCH_META.venue],
-              ["CAPACITY", num(ly.capacity)],
-              ["TICKETS", `${num(ly.sold)} — SOLD OUT`],
-              ["GROSS", usd(ly.gross)],
-              ["AVG TICKET", ly.avgPrice != null || ready ? usd(ly.avgPrice ?? ly.gross / ly.sold) : "—"],
-              ["TO 2AM", `${num(ly.pre2am.tickets)} TICKETS · ${usd(ly.pre2am.gross)}`],
-              ["AFTER 2AM", `${num(ly.post2am.tickets)} TICKETS · ${usd(ly.post2am.gross)}`],
-              ["BAR (STARDUST)", `~${usd(ly.bar)}`],
+          <Tiles
+            items={[
+              { n: ly.sold.toLocaleString(), l: "TICKETS", s: `SOLD OUT · CAP ${ly.capacity}` },
+              { n: k(ly.net), l: "NET TICKET REVENUE", s: `${usd(m.beforeGross)} TO 2AM · EMSKI` },
+              { n: k(m.afterGross), l: "AFTER-2AM TICKETS", s: `${m.afterCount} × $50 · STARDUST` },
+              { n: `~${k(ly.bar)}`, l: "BAR", s: "STARDUST" },
             ]}
           />
-          <Console rows={ly.deal} />
+          <div className="sp-ladder">
+            {ly.tiers.map((t) => (
+              <div className={`sp-ladder__cell bo-mono${t.after2am ? " is-after" : ""}`} key={t.name}>
+                <b>${t.price}</b>
+                {t.name}
+                <br />
+                {t.sold} sold
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -149,86 +169,86 @@ export default function StardustPitch() {
       <section className="bo-section">
         <div className="bo-wrap">
           <H n="02">Since then</H>
-          <p className="bo-list">
-            {SINCE.map((line, i) => (
-              <span key={line}>
-                {line}
-                {i < SINCE.length - 1 && <br />}
-              </span>
-            ))}
-          </p>
+          <Tiles items={SINCE.tiles} />
+          <p className="sp-line bo-mono">{SINCE.line}</p>
         </div>
       </section>
 
-      {/* ━━ 03 THE SHOW ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* ━━ 03 THE DEAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
           <H n="03">The show — {PROPOSAL.dateLabel}</H>
-          <Console
-            rows={[
-              ["FORMAT", PROPOSAL.format],
-              ["VENUE", `${PITCH_META.venue} · CAP ${num(PROPOSAL.capacity)}`],
-              ...PROPOSAL.deal,
-            ]}
-          />
+          <p className="sp-line bo-mono" style={{ marginTop: 0, marginBottom: 24 }}>
+            {PROPOSAL.format} · {PITCH_META.venue} · CAP {PROPOSAL.capacity}
+          </p>
+          <div className="sp-split">
+            <Split label="TICKETS TO 2AM" emski={PROPOSAL.emskiShareTo2am} />
+            <Split label="TICKETS AFTER 2AM" emski={0} />
+            <Split label="BAR" emski={0} />
+          </div>
         </div>
       </section>
 
-      {/* ━━ 04 PROJECTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* ━━ 04 STARDUST'S NUMBERS ━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="04">Projections</H>
+          <H n="04">What Stardust makes</H>
           <div className="sp-table-wrap">
-            <table className="sp-table">
+            <table className="sp-compare">
               <thead>
                 <tr>
-                  <th>Scenario</th>
-                  <th>Tickets</th>
-                  <th>Avg</th>
-                  <th>Gross</th>
-                  <th>EMSKI</th>
-                  <th>Stardust tickets</th>
-                  <th>Bar</th>
-                  <th>Stardust total</th>
+                  <th />
+                  <th>Last year</th>
+                  {m.scenarios.map((s) => (
+                    <th key={s.label}>{s.label}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                <tr className="is-baseline">
-                  <td>{baseline.label}</td>
-                  <td>{num(baseline.tickets)}</td>
-                  <td>{usd(baseline.avg)}</td>
-                  <td>{usd(baseline.gross)}</td>
-                  <td>{usd(baseline.emski)}</td>
-                  <td>{usd(baseline.stardustTickets)}</td>
-                  <td>~{usd(baseline.bar)}</td>
-                  <td>{usd(baseline.stardustTotal)}</td>
+                <tr>
+                  <td>Tickets</td>
+                  <td>{usd(m.lastYear.stardustTickets)}</td>
+                  {m.scenarios.map((s) => (
+                    <td key={s.label}>{usd(s.stardustTickets)}</td>
+                  ))}
                 </tr>
-                {rows.map((r) => (
-                  <tr key={r.label}>
-                    <td>{r.label}</td>
-                    <td>{num(r.tickets)}</td>
-                    <td>{usd(r.avg)}</td>
-                    <td>{usd(r.gross)}</td>
-                    <td>{usd(r.emski)}</td>
-                    <td>{usd(r.stardustTickets)}</td>
-                    <td>~{usd(r.bar)}</td>
-                    <td className="is-key">{usd(r.stardustTotal)}</td>
-                  </tr>
-                ))}
+                <tr>
+                  <td>Bar</td>
+                  <td>~{usd(m.lastYear.bar)}</td>
+                  {m.scenarios.map((s) => (
+                    <td key={s.label}>~{usd(s.bar)}</td>
+                  ))}
+                </tr>
+                <tr className="is-total">
+                  <td>Total</td>
+                  <td>~{usd(m.lastYear.stardustTotal)}</td>
+                  {m.scenarios.map((s) => (
+                    <td key={s.label}>~{usd(s.stardustTotal)}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td>vs last year</td>
+                  <td>—</td>
+                  {m.scenarios.map((s) => (
+                    <td key={s.label} className="is-delta">
+                      +{usd(s.delta)}
+                    </td>
+                  ))}
+                </tr>
               </tbody>
             </table>
           </div>
-          <p className="sp-note bo-mono">
-            {ready
-              ? "Sellout assumed. 2AM split at last year's ratio. Bar scaled to attendance."
-              : "Awaiting last year's ticketing figures."}
+          <p className="sp-headline">
+            Same show, same bar. <b>+{k(repeat.delta)} to Stardust.</b>
+          </p>
+          <p className="sp-line bo-mono">
+            EMSKI: {usd(m.lastYear.emski)} last year → {usd(repeat.emski)} at 80/20. Sellout assumed.
           </p>
         </div>
       </section>
 
       {/* ━━ 05 NEXT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
-        <span className="bo-rust-line" aria-hidden="true" />
         <div className="bo-wrap">
           <H n="05">Next</H>
           <p className="bo-list">

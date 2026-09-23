@@ -1,65 +1,201 @@
 /* Stardust Garage proposal — sits on the [BLACKOUT] kit's stylesheet
- * (tokens, headers, console, lists). Only what the pitch adds lives here:
- * a shorter hero and the projection table. */
+ * (tokens, headers, lists). Adds: a shorter hero, big-number tiles, the
+ * deal split diagram, and the last-year / this-year comparison. */
 
 .sp-hero {
   min-height: 62vh;
   min-height: 62svh;
 }
-
 .sp-hero__line {
   margin: 26px 0 0;
   font-size: 12px;
   color: var(--bo-white);
 }
 
-/* Projection table — mono, numbers right-aligned, scrolls sideways on a
- * phone rather than wrapping. */
-.sp-table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+/* ── Big-number tiles ─────────────────────────────────── */
+.sp-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--bo-charcoal);
+  border: 1px solid var(--bo-charcoal);
 }
-.sp-table {
+.sp-tile {
+  background: var(--bo-black);
+  padding: clamp(18px, 2.6vw, 28px) clamp(14px, 2vw, 22px);
+}
+.sp-tile__n {
+  display: block;
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 46px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.sp-tile__l {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--bo-white);
+}
+.sp-tile__s {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--bo-white);
+  opacity: 0.7;
+}
+
+/* One mono line under a tile row. */
+.sp-line {
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--bo-white);
+}
+
+/* ── Tier ladder (last year's pricing, one strip) ───────── */
+.sp-ladder {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-top: 22px;
+  background: var(--bo-charcoal);
+  border: 1px solid var(--bo-charcoal);
+}
+.sp-ladder__cell {
+  background: var(--bo-black);
+  padding: 12px 10px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--bo-white);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sp-ladder__cell b {
+  display: block;
+  font-family: var(--bo-sans);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+.sp-ladder__cell.is-after {
+  border-top: 2px solid var(--bo-rust);
+}
+
+/* ── Deal split diagram ───────────────────────────────── */
+.sp-split {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: clamp(18px, 3vw, 40px);
+  row-gap: 14px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--bo-white);
+}
+.sp-split__bar {
+  display: flex;
+  height: 34px;
+  border: 1px solid var(--bo-charcoal);
+}
+.sp-split__seg {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-family: var(--bo-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sp-split__seg--emski {
+  background: var(--bo-white);
+  color: var(--bo-black);
+}
+.sp-split__seg--stardust {
+  background: var(--bo-rust);
+  color: var(--bo-white);
+}
+
+/* ── Comparison: last year vs this year, Stardust's side ─── */
+.sp-compare {
   border-collapse: collapse;
   width: 100%;
-  min-width: 640px;
   font-family: var(--bo-mono);
-  font-size: clamp(12px, 1.4vw, 14px);
+  font-size: clamp(12px, 1.5vw, 15px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--bo-white);
 }
-.sp-table th,
-.sp-table td {
-  padding: 12px 14px;
+.sp-compare th,
+.sp-compare td {
+  padding: 14px 16px;
   border-bottom: 1px solid var(--bo-charcoal);
   text-align: right;
   white-space: nowrap;
 }
-.sp-table th:first-child,
-.sp-table td:first-child {
+.sp-compare th:first-child,
+.sp-compare td:first-child {
   text-align: left;
   padding-left: 0;
 }
-.sp-table th {
+.sp-compare th {
   font-weight: 400;
-  color: var(--bo-grey);
   font-size: 11px;
+  color: var(--bo-white);
 }
-.sp-table tr.is-baseline td {
-  color: var(--bo-grey);
+.sp-compare tr.is-total td {
+  font-family: var(--bo-sans);
+  font-weight: 700;
+  font-size: clamp(18px, 2.6vw, 26px);
+  letter-spacing: 0.02em;
+  border-bottom: 0;
+  padding-top: 18px;
 }
-/* The one rust use on this page: Stardust's total under the new deal. */
-.sp-table td.is-key {
+.sp-compare td.is-delta {
   color: var(--bo-rust);
 }
 
-.sp-note {
-  margin: 18px 0 0;
-  font-size: 11px;
-  color: var(--bo-grey);
+.sp-headline {
+  margin: 28px 0 0;
+  font-weight: 700;
+  font-size: clamp(20px, 3vw, 30px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.sp-headline b {
+  color: var(--bo-rust);
 }
 
-.sp-console + .sp-console {
-  margin-top: 28px;
+.sp-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 720px) {
+  .sp-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sp-ladder {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .sp-split {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+  .sp-split__label {
+    margin-top: 10px;
+  }
+  /* Phone: last year vs same tiers only — the +$5 column would force a
+   * sideways scroll, and the point lands without it. */
+  .sp-compare th,
+  .sp-compare td {
+    padding: 12px 8px;
+  }
+  .sp-compare th:nth-child(4),
+  .sp-compare td:nth-child(4) {
+    display: none;
+  }
 }
