@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { PITCH_META, LAST_YEAR, SINCE, PROPOSAL, NEXT } from "./stardustPitchContent";
+import { HERO_VIDEO_R2 } from "../../data/content";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
 import "../blackout/blackout.css";
 import "./stardust-pitch.css";
@@ -128,6 +129,9 @@ export default function StardustPitch() {
     <div className="bo">
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-hero sp-hero">
+        {/* Last year's show, behind everything, in black and white. */}
+        <video className="sp-hero__bg" src={HERO_VIDEO_R2} autoPlay muted loop playsInline aria-hidden="true" />
+        <div className="sp-hero__veil" aria-hidden="true" />
         <div className="bo-wrap">
           <div
             className="bo-hero__mark is-on"
