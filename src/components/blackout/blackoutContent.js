@@ -22,6 +22,7 @@ export const BO_ARTISTS = [...LEAD, ...ARTISTS.filter((a) => !LEAD.includes(a))]
  * a section header; the venue details stay mono underneath. */
 export const BO_VIDEO = {
   id: "ay_6H4vmM5E",
+  start: 4024, // 1:07:04 — where the muted autoplay drops in
   title: "[BLACKOUT] set — The Concourse Project",
   meta: ["AUSTIN, TX", "DIRECT SUPPORT FOR AMELIE LENS"],
 };

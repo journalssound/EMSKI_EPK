@@ -1,7 +1,9 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useInView, usePrefersReducedMotion } from "../../hooks/useAnimations";
 import VideoParticles from "../VideoParticles";
-import { FESTIVALS, LABELS, STATS, SOCIALS } from "../../data/content";
+import SocialIcon from "../SocialIcon";
+import { FESTIVALS, LABELS, STATS } from "../../data/content";
+import { SOCIAL_ICONS } from "../website-draft/siteContent";
 import {
   BO_TAG,
   BO_THESIS,
@@ -168,12 +170,13 @@ function List({ items }) {
 
 function Video() {
   const [ref, visible] = useInView(0.2);
-  const { id, title, meta } = BO_VIDEO;
+  const { id, title, meta, start } = BO_VIDEO;
   // Muted autoplay + loop so the set is already moving when the booker gets
-  // to it; controls stay on so they can unmute.
+  // to it; controls stay on so they can unmute. `start` picks the moment it
+  // opens on (the loop restarts from 0 after the first pass).
   const src =
     `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}` +
-    `&rel=0&modestbranding=1&playsinline=1`;
+    `&start=${start}&rel=0&modestbranding=1&playsinline=1`;
   return (
     <section className="bo-section" ref={ref}>
       <div className="bo-wrap">
@@ -240,6 +243,22 @@ export default function EmskiBlackout() {
 
   return (
     <div className="bo">
+      {/* ━━ FLOATING SOCIALS — stays at the top as you scroll ━━━━━━━━━━━━━ */}
+      <nav className="bo-topbar" aria-label="EMSKI on social">
+        {SOCIAL_ICONS.map((s) => (
+          <a
+            key={s.label}
+            href={s.url}
+            target={s.icon === "mail" ? undefined : "_blank"}
+            rel="noopener noreferrer"
+            aria-label={s.label}
+            title={s.label}
+          >
+            <SocialIcon icon={s.icon} />
+          </a>
+        ))}
+      </nav>
+
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-hero">
         <div className="bo-wrap">
@@ -342,10 +361,12 @@ export default function EmskiBlackout() {
           <a className="bo-contact__email" href={`mailto:${BO_CONTACT_EMAIL}`}>
             {BO_CONTACT_EMAIL}
           </a>
+          {/* Icon + name, one per platform; mail is already the email above. */}
           <div className="bo-contact__socials bo-mono">
-            {SOCIALS.map((s) => (
-              <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer">
-                {s.name}
+            {SOCIAL_ICONS.filter((s) => s.icon !== "mail").map((s) => (
+              <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer">
+                <SocialIcon icon={s.icon} />
+                {s.label}
               </a>
             ))}
           </div>
