@@ -1,0 +1,65 @@
+/* Stardust Garage proposal — sits on the [BLACKOUT] kit's stylesheet
+ * (tokens, headers, console, lists). Only what the pitch adds lives here:
+ * a shorter hero and the projection table. */
+
+.sp-hero {
+  min-height: 62vh;
+  min-height: 62svh;
+}
+
+.sp-hero__line {
+  margin: 26px 0 0;
+  font-size: 12px;
+  color: var(--bo-white);
+}
+
+/* Projection table — mono, numbers right-aligned, scrolls sideways on a
+ * phone rather than wrapping. */
+.sp-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sp-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 640px;
+  font-family: var(--bo-mono);
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bo-white);
+}
+.sp-table th,
+.sp-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--bo-charcoal);
+  text-align: right;
+  white-space: nowrap;
+}
+.sp-table th:first-child,
+.sp-table td:first-child {
+  text-align: left;
+  padding-left: 0;
+}
+.sp-table th {
+  font-weight: 400;
+  color: var(--bo-grey);
+  font-size: 11px;
+}
+.sp-table tr.is-baseline td {
+  color: var(--bo-grey);
+}
+/* The one rust use on this page: Stardust's total under the new deal. */
+.sp-table td.is-key {
+  color: var(--bo-rust);
+}
+
+.sp-note {
+  margin: 18px 0 0;
+  font-size: 11px;
+  color: var(--bo-grey);
+}
+
+.sp-console + .sp-console {
+  margin-top: 28px;
+}
