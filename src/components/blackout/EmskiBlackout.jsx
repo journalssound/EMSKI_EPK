@@ -243,18 +243,11 @@ export default function EmskiBlackout() {
 
   return (
     <div className="bo">
-      {/* ━━ FLOATING SOCIALS — stays at the top as you scroll ━━━━━━━━━━━━━ */}
-      <nav className="bo-topbar" aria-label="EMSKI on social">
-        {SOCIAL_ICONS.map((s) => (
-          <a
-            key={s.label}
-            href={s.url}
-            target={s.icon === "mail" ? undefined : "_blank"}
-            rel="noopener noreferrer"
-            aria-label={s.label}
-            title={s.label}
-          >
-            <SocialIcon icon={s.icon} />
+      {/* ━━ FLOATING SOCIALS — three names, stay at the top as you scroll ━━ */}
+      <nav className="bo-topbar bo-mono" aria-label="EMSKI on social">
+        {SOCIAL_ICONS.filter((s) => ["instagram", "tiktok", "spotify"].includes(s.icon)).map((s) => (
+          <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer">
+            {s.label}
           </a>
         ))}
       </nav>

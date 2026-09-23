@@ -415,20 +415,14 @@
 }
 .bo-topbar a {
   pointer-events: auto;
-  display: inline-flex;
-  width: 22px;
-  height: 22px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
   color: var(--bo-white);
-  opacity: 0.85;
-  transition: opacity 0.3s, transform 0.3s;
+  opacity: 0.9;
+  transition: opacity 0.3s;
 }
 .bo-topbar a:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-}
-.bo-topbar svg {
-  width: 100%;
-  height: 100%;
+  opacity: 0.6;
 }
 
 /* ── Footer ───────────────────────────────────────────── */
