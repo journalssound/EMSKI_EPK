@@ -35,7 +35,8 @@ export const LAST_YEAR = {
   /* What EMSKI paid to put the show on — her ticket share was gross, not net. */
   costs: [
     { label: "PRODUCTION", amount: 3000 },
-    { label: "DJS + EVENT STAFF", amount: 2000 },
+    { label: "DJS + EVENT STAFF", amount: 3000 },
+    { label: "MARKETING", amount: 1000 },
   ],
   /* Last year's terms: EMSKI kept every ticket sold before 2AM; Stardust
    * kept the after-2AM tickets and all bar. */
