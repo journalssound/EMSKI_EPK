@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useInView, usePrefersReducedMotion } from "../../hooks/useAnimations";
 import VideoParticles from "../VideoParticles";
-import SocialIcon from "../SocialIcon";
 import { FESTIVALS, LABELS, STATS } from "../../data/content";
 import { SOCIAL_ICONS } from "../website-draft/siteContent";
 import {
@@ -354,11 +353,10 @@ export default function EmskiBlackout() {
           <a className="bo-contact__email" href={`mailto:${BO_CONTACT_EMAIL}`}>
             {BO_CONTACT_EMAIL}
           </a>
-          {/* Icon + name, one per platform; mail is already the email above. */}
+          {/* Platform names only; mail is already the email above. */}
           <div className="bo-contact__socials bo-mono">
             {SOCIAL_ICONS.filter((s) => s.icon !== "mail").map((s) => (
               <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer">
-                <SocialIcon icon={s.icon} />
                 {s.label}
               </a>
             ))}

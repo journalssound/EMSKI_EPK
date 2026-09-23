@@ -374,7 +374,7 @@
 .bo-contact__email:hover {
   border-color: var(--bo-grey);
 }
-/* Icon + platform name, big enough to tap. */
+/* Platform names, big enough to tap. */
 .bo-contact__socials {
   display: flex;
   flex-wrap: wrap;
@@ -386,14 +386,8 @@
 .bo-contact__socials a {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   min-height: 28px;
   transition: opacity 0.3s;
-}
-.bo-contact__socials svg {
-  width: 20px;
-  height: 20px;
-  flex: none;
 }
 .bo-contact__socials a:hover {
   opacity: 0.6;
