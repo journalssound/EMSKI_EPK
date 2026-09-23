@@ -28,11 +28,11 @@ export const FESTIVALS = [
 
 export const LABELS = [
   { name: "mau5trap", cover: "/covers/Mau5trap.png", covers: ["/covers/Mau5trap.png", "/covers/mautrap2.png"] },
-  { name: "Monstercat", cover: "/covers/Monstercat.png" },
-  { name: "Bitbird", cover: "/covers/Bitbird.png" },
   { name: "Hexagon", cover: "/covers/Hexagon.png" },
+  { name: "Monstercat", cover: "/covers/Monstercat.png" },
   { name: "Sable Valley", cover: "/covers/SableValley.png" },
   { name: "Ophelia Records", cover: "/covers/Ophelia.png" },
+  { name: "Bitbird", cover: "/covers/Bitbird.png" },
 ];
 
 // Performance dashboard totals as of 2026-09-20. DJ supports isn't on that
