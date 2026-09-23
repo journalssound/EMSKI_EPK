@@ -70,9 +70,10 @@ function model() {
   const costs = ly.costs.reduce((s, c) => s + c.amount, 0);
   const lastYear = {
     label: "LAST YEAR",
-    emski: beforeGross * ly.emskiShareTo2am,
+    emski: beforeGross * ly.emskiShareTo2am + afterGross * ly.emskiShareAfter2am,
     costs,
-    stardustTickets: beforeGross * (1 - ly.emskiShareTo2am) + afterGross,
+    stardustTickets:
+      beforeGross * (1 - ly.emskiShareTo2am) + afterGross * (1 - ly.emskiShareAfter2am),
     bar: ly.bar,
   };
   lastYear.emskiNet = lastYear.emski - costs;
@@ -83,8 +84,9 @@ function model() {
     const aGross = afterGross + s.priceDelta * afterCount;
     const r = {
       label: s.label,
-      emski: bGross * PROPOSAL.emskiShareTo2am,
-      stardustTickets: bGross * (1 - PROPOSAL.emskiShareTo2am) + aGross,
+      emski: bGross * PROPOSAL.emskiShareTo2am + aGross * PROPOSAL.emskiShareAfter2am,
+      stardustTickets:
+        bGross * (1 - PROPOSAL.emskiShareTo2am) + aGross * (1 - PROPOSAL.emskiShareAfter2am),
       bar: ly.bar,
     };
     r.stardustTotal = r.stardustTickets + r.bar;
@@ -203,7 +205,7 @@ export default function StardustPitch() {
           </p>
           <div className="sp-split">
             <Split label="TICKETS TO 2AM" emski={PROPOSAL.emskiShareTo2am} />
-            <Split label="TICKETS AFTER 2AM" emski={0} />
+            <Split label="TICKETS AFTER 2AM" emski={PROPOSAL.emskiShareAfter2am} />
             <Split label="BAR" emski={0} />
           </div>
         </div>

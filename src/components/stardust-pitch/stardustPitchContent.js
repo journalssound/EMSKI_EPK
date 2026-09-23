@@ -9,7 +9,7 @@
 export const PITCH_META = {
   venue: "Stardust Garage",
   city: "Austin, TX",
-  preparedFor: "Adam · Stardust Garage",
+  preparedFor: "Stardust Garage",
   prepared: "Sep 2026",
   contactEmail: "contact@emskimusic.com",
 };
@@ -41,6 +41,7 @@ export const LAST_YEAR = {
   /* Last year's terms: EMSKI kept every ticket sold before 2AM; Stardust
    * kept the after-2AM tickets and all bar. */
   emskiShareTo2am: 1.0,
+  emskiShareAfter2am: 0,
 };
 
 /* What the show set off — four lines, no stat sheet. */
@@ -54,9 +55,12 @@ export const SINCE = [
 /* The ask. */
 export const PROPOSAL = {
   dateLabel: "SAT NOV 21 2026",
-  format: "EMSKI LIVE SET → [BLACKOUT] DJ SET · FIRST [BLACKOUT] SHOW",
+  format: "EMSKI LIVE SET → [BLACKOUT] DJ SET · FIRST [BLACKOUT] SHOW · EXTENDED SET PAST 2AM",
   capacity: 600,
+  /* 80/20 to 2AM; 50/50 after — EMSKI plays through the afters. Bar stays
+   * 100% Stardust. */
   emskiShareTo2am: 0.8,
+  emskiShareAfter2am: 0.5,
   /* Scenarios: a straight repeat of last year's tiers, and every tier $5 up. */
   scenarios: [
     { label: "SAME TIERS", priceDelta: 0 },
