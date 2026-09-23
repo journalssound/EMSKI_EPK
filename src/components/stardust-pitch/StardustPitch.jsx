@@ -67,12 +67,15 @@ function model() {
   const beforeCount = ly.sold - afterCount;
   const beforeCountItemised = before.reduce((s, t) => s + t.sold, 0);
 
+  const costs = ly.costs.reduce((s, c) => s + c.amount, 0);
   const lastYear = {
     label: "LAST YEAR",
     emski: beforeGross * ly.emskiShareTo2am,
+    costs,
     stardustTickets: beforeGross * (1 - ly.emskiShareTo2am) + afterGross,
     bar: ly.bar,
   };
+  lastYear.emskiNet = lastYear.emski - costs;
   lastYear.stardustTotal = lastYear.stardustTickets + lastYear.bar;
 
   const scenarios = PROPOSAL.scenarios.map((s) => {
@@ -147,11 +150,22 @@ export default function StardustPitch() {
           <Tiles
             items={[
               { n: ly.sold.toLocaleString(), l: "TICKETS", s: `SOLD OUT · CAP ${ly.capacity}` },
-              { n: k(ly.net), l: "NET TICKET REVENUE", s: `${usd(m.beforeGross)} TO 2AM · EMSKI` },
-              { n: k(m.afterGross), l: "AFTER-2AM TICKETS", s: `${m.afterCount} × $50 · STARDUST` },
-              { n: `~${k(ly.bar)}`, l: "BAR", s: "STARDUST" },
+              { n: k(ly.net), l: "NET TICKET REVENUE", s: `${usd(m.beforeGross)} TO 2AM · ${usd(m.afterGross)} AFTER` },
+              {
+                n: k(m.lastYear.emskiNet),
+                l: "EMSKI NET",
+                s: `${usd(m.lastYear.emski)} TICKETS − ${usd(m.lastYear.costs)} COSTS`,
+              },
+              {
+                n: `~${k(m.lastYear.stardustTotal)}`,
+                l: "STARDUST",
+                s: `${usd(m.afterGross)} AFTER-2AM + ~${k(ly.bar)} BAR`,
+              },
             ]}
           />
+          <p className="sp-line bo-mono">
+            EMSKI COSTS: {ly.costs.map((c) => `${c.label} ${usd(c.amount)}`).join(" · ")} — PAID FROM HER SHARE
+          </p>
           <div className="sp-ladder">
             {ly.tiers.map((t) => (
               <div className={`sp-ladder__cell bo-mono${t.after2am ? " is-after" : ""}`} key={t.name}>
@@ -242,7 +256,8 @@ export default function StardustPitch() {
             Same show, same bar. <b>+{k(repeat.delta)} to Stardust.</b>
           </p>
           <p className="sp-line bo-mono">
-            EMSKI: {usd(m.lastYear.emski)} last year → {usd(repeat.emski)} at 80/20. Sellout assumed.
+            EMSKI: {usd(m.lastYear.emski)} tickets − {usd(m.lastYear.costs)} costs = {usd(m.lastYear.emskiNet)} net
+            last year → {usd(repeat.emski)} at 80/20, before costs. Sellout assumed.
           </p>
         </div>
       </section>
