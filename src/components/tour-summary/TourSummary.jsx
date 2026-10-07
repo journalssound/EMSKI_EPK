@@ -214,7 +214,7 @@ export default function TourSummary() {
 
       {/* ━━ CITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {TOUR_STOPS.map((stop) => (
-        <CitySection key={stop.city} stop={stop} />
+        <CitySection key={stop.idx} stop={stop} />
       ))}
 
       {/* ━━ TOTALS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}

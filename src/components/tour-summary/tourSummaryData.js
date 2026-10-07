@@ -51,7 +51,7 @@ export const TOUR_STOPS = [
     operator: "AEG Presents",
     dateLabel: "FRI APR 17",
     stat: "SOLD OUT",
-    statLabel: "250 / 250",
+    statLabel: "300 / 300",
     soldOut: true,
     points: [
       "First show of the 2026 run",
@@ -70,7 +70,7 @@ export const TOUR_STOPS = [
     venue: "Deep Ellum Art Co.",
     operator: null,
     dateLabel: "FRI MAY 29",
-    stat: "224",
+    stat: "273",
     statLabel: "Tickets · 550 cap",
     soldOut: false,
     points: [
@@ -111,6 +111,7 @@ export const TOUR_STOPS = [
     statLabel: "Tickets · 360 cap",
     soldOut: false,
     points: [
+      "Thursday show — weeknight date",
       "Debuted a live fan camera in the set — crowd projected onto the LED wall in real time",
     ],
     video: "/tour/austin-montage.mp4",
@@ -125,7 +126,7 @@ export const TOUR_STOPS = [
     venue: "La Bandida Vivo Bar",
     operator: "Upbeat Live",
     dateLabel: "SAT JUN 20",
-    stat: "350 / 350",
+    stat: "400 / 400",
     statLabel: "Sold out",
     soldOut: true,
     points: ["140K-view TikTok drove the sellout"],
@@ -153,7 +154,7 @@ export const ATTRIBUTION = [
 
 /* Aggregate strip after the cities. Numbers only. */
 export const TOTALS = [
-  { label: "Fans reached", value: "2,470+" },
+  { label: "Fans reached", value: "2,620+" },
   { label: "Sellouts", value: "3" },
   { label: "Instagram", value: "7K → 10.5K" },
   { label: "TikTok", value: "30K → 34K" },
