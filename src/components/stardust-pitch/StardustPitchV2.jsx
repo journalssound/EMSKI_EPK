@@ -43,7 +43,7 @@ function Group({ cols, head, children }) {
 /* Last year as it happened, then each deal on a 600 sellout of the same
  * tiers. Tickets to 2AM: guarantee off the top, the rest splits. Tickets
  * after 2AM (last year: 35 × $50): 50/50 in both deals. */
-function model(bar) {
+function model(barLastYear, barProjected) {
   const ly = LAST_YEAR;
   const afterGross = ly.tiers.filter((t) => t.after2am).reduce((s, t) => s + t.price * t.sold, 0);
   const toGross = ly.net - afterGross;
@@ -51,7 +51,7 @@ function model(bar) {
 
   /* Each column keeps its pieces separate so the table can add them up in
    * the open: guarantee + split to 2AM + split after 2AM − costs. */
-  const build = (base, guarantee, shareTo, shareAfter) => {
+  const build = (base, guarantee, shareTo, shareAfter, bar) => {
     const pool = toGross - guarantee;
     const r = {
       ...base,
@@ -73,9 +73,9 @@ function model(bar) {
     return r;
   };
 
-  const lastYear = build({}, 0, ly.emskiShareTo2am, ly.emskiShareAfter2am);
+  const lastYear = build({}, 0, ly.emskiShareTo2am, ly.emskiShareAfter2am, barLastYear);
   const deals = DEALS.map((d) => {
-    const r = build(d, d.guarantee, d.emskiShare, SHOW_V2.emskiShareAfter);
+    const r = build(d, d.guarantee, d.emskiShare, SHOW_V2.emskiShareAfter, barProjected);
     r.delta = r.stardustTotal - lastYear.stardustTotal;
     return r;
   });
@@ -83,9 +83,13 @@ function model(bar) {
   return { costs, afterGross, toGross, lastYear, deals };
 }
 
-/* `bar` is Stardust's bar take, held at the same figure for last year and
- * the projections. v3 is this page with the bar estimated lower. */
-export default function StardustPitchV2({ bar = LAST_YEAR.bar, version = PITCH_V2_META.version }) {
+/* `barLastYear` is what Stardust's bar did last year; `bar` is the estimate
+ * for this show (defaults to the same). v3 is this page with `bar` lower. */
+export default function StardustPitchV2({
+  barLastYear = LAST_YEAR.bar,
+  bar = barLastYear,
+  version = PITCH_V2_META.version,
+}) {
   useEffect(() => {
     const prev = { bg: document.body.style.background, title: document.title };
     document.body.style.background = "#0a0a0a";
@@ -102,7 +106,8 @@ export default function StardustPitchV2({ bar = LAST_YEAR.bar, version = PITCH_V
   }, [version]);
 
   const ly = LAST_YEAR;
-  const m = model(bar);
+  const m = model(barLastYear, bar);
+  const signed = (n) => (n < 0 ? "−" : "+") + usd(Math.abs(n));
   const cols = [{ key: "LY", name: "LAST YEAR", ...m.lastYear }, ...m.deals];
   const head = (c) => (c.key === "LY" ? "Last year" : `Deal ${c.key} · ${c.name}`);
 
@@ -152,7 +157,7 @@ export default function StardustPitchV2({ bar = LAST_YEAR.bar, version = PITCH_V
               {
                 n: `~${k(m.lastYear.stardustTotal)}`,
                 l: "STARDUST WALKAWAY",
-                s: `${usd(m.afterGross)} AFTER-2AM + ~${k(bar)} BAR`,
+                s: `${usd(m.afterGross)} AFTER-2AM + ~${k(barLastYear)} BAR`,
               },
             ]}
           />
@@ -264,14 +269,18 @@ export default function StardustPitchV2({ bar = LAST_YEAR.bar, version = PITCH_V
                 <Row
                   cols={cols}
                   label="vs last year"
-                  get={(c) => (c.delta ? `+${usd(c.delta)}` : "—")}
+                  get={(c) => (c.delta ? signed(c.delta) : "—")}
                   cellCls={(c) => (c.delta ? "is-delta" : "")}
                 />
               </tbody>
             </table>
           </div>
           <p className="sp-line bo-mono">
-            600 sellout on last year's tiers. Bar estimated at ~{k(bar)}, same as last year. In Deal B the $5,000 comes
+            600 sellout on last year's tiers.{" "}
+            {bar === barLastYear
+              ? `Bar estimated at ~${k(bar)}, same as last year.`
+              : `Bar: ~${k(barLastYear)} last year, estimated ~${k(bar)} this show.`}{" "}
+            In Deal B the $5,000 comes
             out of the gross before the 60/40 — so it shrinks both sides' pool, and Stardust's share is 40% of
             what's left. After-{SHOW_V2.changeover} = last year's afters tickets, split 50/50.
           </p>
