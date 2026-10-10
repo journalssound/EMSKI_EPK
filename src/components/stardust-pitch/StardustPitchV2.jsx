@@ -25,10 +25,17 @@ function Row({ cols, label, get, cls = "", cellCls }) {
     </tr>
   );
 }
-function Group({ span, children }) {
+/* Group header: the block's name, then the column labels again so no
+ * block is read without knowing which deal is which. */
+function Group({ cols, head, children }) {
   return (
     <tr className="is-group">
-      <td colSpan={span}>{children}</td>
+      <td>{children}</td>
+      {cols.map((c) => (
+        <td key={c.key} className="is-colhead">
+          {head(c)}
+        </td>
+      ))}
     </tr>
   );
 }
@@ -95,7 +102,7 @@ export default function StardustPitchV2() {
   const ly = LAST_YEAR;
   const m = model();
   const cols = [{ key: "LY", name: "LAST YEAR", ...m.lastYear }, ...m.deals];
-  const head = (c) => (c.key === "LY" ? "Last year" : `${c.key} · ${c.name}`);
+  const head = (c) => (c.key === "LY" ? "Last year" : `Deal ${c.key} · ${c.name}`);
 
   return (
     <div className="bo">
@@ -225,16 +232,8 @@ export default function StardustPitchV2() {
           <H n="04">The math</H>
           <div className="sp-table-wrap">
             <table className="sp-compare is-three">
-              <thead>
-                <tr>
-                  <th />
-                  {cols.map((c) => (
-                    <th key={c.key}>{head(c)}</th>
-                  ))}
-                </tr>
-              </thead>
               <tbody>
-                <Group span={cols.length + 1}>Tickets to {SHOW_V2.changeover}</Group>
+                <Group cols={cols} head={head}>Tickets to {SHOW_V2.changeover}</Group>
                 <Row cols={cols} label="Gross" get={(c) => usd(c.toGross)} />
                 <Row cols={cols} label="Guarantee to EMSKI, off the top" get={(c) => (c.guarantee ? `−${usd(c.guarantee)}` : "—")} />
                 <Row cols={cols} label="Left to split" get={(c) => usd(c.toGross - c.guarantee)} />
@@ -242,20 +241,20 @@ export default function StardustPitchV2() {
                 <Row cols={cols} label="EMSKI share" get={(c) => usd(c.emskiTo)} />
                 <Row cols={cols} label="Stardust share" get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")} />
 
-                <Group span={cols.length + 1}>Tickets after {SHOW_V2.changeover}</Group>
+                <Group cols={cols} head={head}>Tickets after {SHOW_V2.changeover}</Group>
                 <Row cols={cols} label="Gross" get={(c) => usd(c.afterGross)} />
                 <Row cols={cols} label="Split" get={(c) => c.afterLabel} />
                 <Row cols={cols} label="EMSKI share" get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")} />
                 <Row cols={cols} label="Stardust share" get={(c) => usd(c.stardustAfter)} />
 
-                <Group span={cols.length + 1}>EMSKI</Group>
+                <Group cols={cols} head={head}>EMSKI</Group>
                 <Row cols={cols} label="Guarantee" get={(c) => (c.guarantee ? usd(c.guarantee) : "—")} />
                 <Row cols={cols} label={`Share to ${SHOW_V2.changeover}`} get={(c) => usd(c.emskiTo)} />
                 <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")} />
                 <Row cols={cols} label="Costs" get={() => `−${usd(m.costs)}`} />
                 <Row cols={cols} label="EMSKI walkaway" get={(c) => usd(c.emskiNet)} cls="is-total" />
 
-                <Group span={cols.length + 1}>Stardust</Group>
+                <Group cols={cols} head={head}>Stardust</Group>
                 <Row cols={cols} label={`Share to ${SHOW_V2.changeover}`} get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")} />
                 <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => usd(c.stardustAfter)} />
                 <Row cols={cols} label="Bar" get={(c) => `~${usd(c.bar)}`} />

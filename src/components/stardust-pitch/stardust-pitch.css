@@ -278,16 +278,24 @@
 .sp-compare.is-three tr.is-gap td {
   padding-top: 26px;
 }
-/* Group headers: one mono line across the table, a breath above it. */
+/* Group headers: the block's name on the left, the column labels repeated
+ * on the right, a breath above and a bright rule under. */
 .sp-compare.is-three tr.is-group td {
-  padding: 30px 0 6px;
+  padding: 30px 16px 8px;
+  vertical-align: bottom;
+  color: var(--bo-white);
+  border-bottom: 1px solid var(--bo-white);
+}
+.sp-compare.is-three tr.is-group td:first-child {
+  padding-left: 0;
   font-family: var(--bo-sans);
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.16em;
-  text-align: left;
-  color: var(--bo-white);
-  border-bottom: 1px solid var(--bo-white);
+}
+.sp-compare.is-three tr.is-group td.is-colhead {
+  font-size: 11px;
+  letter-spacing: 0.06em;
 }
 .sp-compare.is-three tr.is-group:first-child td {
   padding-top: 8px;
@@ -343,8 +351,17 @@
   .sp-compare.is-three td:first-child {
     width: 24%;
   }
-  .sp-compare.is-three th {
+  .sp-compare.is-three th,
+  .sp-compare.is-three tr.is-group td.is-colhead {
     font-size: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    white-space: normal;
+  }
+  .sp-compare.is-three tr.is-group td:first-child {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    overflow-wrap: normal;
   }
   .sp-compare.is-three td:not(:first-child) {
     white-space: nowrap;
