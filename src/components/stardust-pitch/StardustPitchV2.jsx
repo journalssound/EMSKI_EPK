@@ -89,6 +89,7 @@ export default function StardustPitchV2({
   barLastYear = LAST_YEAR.bar,
   bar = barLastYear,
   version = PITCH_V2_META.version,
+  showDelta = true,
 }) {
   useEffect(() => {
     const prev = { bg: document.body.style.background, title: document.title };
@@ -266,12 +267,14 @@ export default function StardustPitchV2({
                 <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => usd(c.stardustAfter)} />
                 <Row cols={cols} label="Bar" get={(c) => `~${usd(c.bar)}`} />
                 <Row cols={cols} label="Stardust walkaway" get={(c) => `~${usd(c.stardustTotal)}`} cls="is-total" />
-                <Row
-                  cols={cols}
-                  label="vs last year"
-                  get={(c) => (c.delta ? signed(c.delta) : "—")}
-                  cellCls={(c) => (c.delta ? "is-delta" : "")}
-                />
+                {showDelta && (
+                  <Row
+                    cols={cols}
+                    label="vs last year"
+                    get={(c) => (c.delta ? signed(c.delta) : "—")}
+                    cellCls={(c) => (c.delta ? "is-delta" : "")}
+                  />
+                )}
               </tbody>
             </table>
           </div>

@@ -1,7 +1,8 @@
 import StardustPitchV2 from "./StardustPitchV2";
 
 /* v3 = v2 with this show's bar estimated at $8K. Last year's bar stays at
- * what it did ($16K). Ticket math is unchanged. */
+ * what it did ($16K). Ticket math is unchanged; the vs-last-year row is
+ * left off since the bar change alone drives it. */
 export default function StardustPitchV3() {
-  return <StardustPitchV2 barLastYear={16000} bar={8000} version="v3" />;
+  return <StardustPitchV2 barLastYear={16000} bar={8000} version="v3" showDelta={false} />;
 }
