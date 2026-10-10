@@ -12,6 +12,27 @@ const TAG = "[BLACKOUT]";
 
 const pct = (emski) => `${Math.round(emski * 100)} / ${Math.round((1 - emski) * 100)}`;
 
+/* One table row: a label, then one cell per column. */
+function Row({ cols, label, get, cls = "", cellCls }) {
+  return (
+    <tr className={cls}>
+      <td>{label}</td>
+      {cols.map((c) => (
+        <td key={c.key} className={cellCls ? cellCls(c) : ""}>
+          {get(c)}
+        </td>
+      ))}
+    </tr>
+  );
+}
+function Group({ span, children }) {
+  return (
+    <tr className="is-group">
+      <td colSpan={span}>{children}</td>
+    </tr>
+  );
+}
+
 /* Last year as it happened, then each deal on a 600 sellout of the same
  * tiers. Tickets to 2AM: guarantee off the top, the rest splits. Tickets
  * after 2AM (last year: 35 × $50): 50/50 in both deals. */
@@ -21,34 +42,33 @@ function model() {
   const toGross = ly.net - afterGross;
   const costs = ly.costs.reduce((s, c) => s + c.amount, 0);
 
-  const lastYear = {
-    toGross,
-    afterGross,
-    guarantee: 0,
-    splitLabel: pct(ly.emskiShareTo2am),
-    afterLabel: pct(ly.emskiShareAfter2am),
-    emski: toGross * ly.emskiShareTo2am + afterGross * ly.emskiShareAfter2am,
-    stardustTickets: toGross * (1 - ly.emskiShareTo2am) + afterGross * (1 - ly.emskiShareAfter2am),
-    bar: ly.bar,
-  };
-  lastYear.emskiNet = lastYear.emski - costs;
-  lastYear.stardustTotal = lastYear.stardustTickets + lastYear.bar;
-
-  const after = SHOW_V2.emskiShareAfter;
-  const deals = DEALS.map((d) => {
-    const pool = toGross - d.guarantee;
+  /* Each column keeps its pieces separate so the table can add them up in
+   * the open: guarantee + split to 2AM + split after 2AM − costs. */
+  const build = (base, guarantee, shareTo, shareAfter) => {
+    const pool = toGross - guarantee;
     const r = {
-      ...d,
+      ...base,
       toGross,
       afterGross,
-      splitLabel: pct(d.emskiShare),
-      afterLabel: pct(after),
-      emski: d.guarantee + pool * d.emskiShare + afterGross * after,
-      stardustTickets: pool * (1 - d.emskiShare) + afterGross * (1 - after),
+      guarantee,
+      splitLabel: pct(shareTo),
+      afterLabel: pct(shareAfter),
+      emskiTo: pool * shareTo,
+      emskiAfter: afterGross * shareAfter,
+      stardustTo: pool * (1 - shareTo),
+      stardustAfter: afterGross * (1 - shareAfter),
       bar: ly.bar,
     };
+    r.emski = guarantee + r.emskiTo + r.emskiAfter;
     r.emskiNet = r.emski - costs;
+    r.stardustTickets = r.stardustTo + r.stardustAfter;
     r.stardustTotal = r.stardustTickets + r.bar;
+    return r;
+  };
+
+  const lastYear = build({}, 0, ly.emskiShareTo2am, ly.emskiShareAfter2am);
+  const deals = DEALS.map((d) => {
+    const r = build(d, d.guarantee, d.emskiShare, SHOW_V2.emskiShareAfter);
     r.delta = r.stardustTotal - lastYear.stardustTotal;
     return r;
   });
@@ -187,7 +207,7 @@ export default function StardustPitchV2() {
               ...m.deals.map((d) => ({
                 n: k(d.emskiNet),
                 l: `EMSKI · DEAL ${d.key}`,
-                s: `${usd(d.emski)} TICKETS − ${usd(m.costs)} COSTS`,
+                s: `${d.guarantee ? `${usd(d.guarantee)} + ${usd(d.emski - d.guarantee)}` : usd(d.emski)} TICKETS − ${usd(m.costs)} COSTS`,
               })),
               ...m.deals.map((d) => ({
                 n: `~${k(d.stardustTotal)}`,
@@ -214,87 +234,45 @@ export default function StardustPitchV2() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Tickets to {SHOW_V2.changeover}</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{usd(c.toGross)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>Tickets after {SHOW_V2.changeover}</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{usd(c.afterGross)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>EMSKI guarantee</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{c.guarantee ? usd(c.guarantee) : "—"}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>Split to {SHOW_V2.changeover}</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{c.splitLabel}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>Split after {SHOW_V2.changeover}</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{c.afterLabel}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>EMSKI tickets</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{usd(c.emski)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>EMSKI costs</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>−{usd(m.costs)}</td>
-                  ))}
-                </tr>
-                <tr className="is-total">
-                  <td>EMSKI walkaway</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{usd(c.emskiNet)}</td>
-                  ))}
-                </tr>
-                <tr className="is-gap">
-                  <td>Stardust tickets</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>{usd(c.stardustTickets)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>Bar</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>~{usd(c.bar)}</td>
-                  ))}
-                </tr>
-                <tr className="is-total">
-                  <td>Stardust walkaway</td>
-                  {cols.map((c) => (
-                    <td key={c.key}>~{usd(c.stardustTotal)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>vs last year</td>
-                  {cols.map((c) => (
-                    <td key={c.key} className={c.delta ? "is-delta" : ""}>
-                      {c.delta ? `+${usd(c.delta)}` : "—"}
-                    </td>
-                  ))}
-                </tr>
+                <Group span={cols.length + 1}>Tickets to {SHOW_V2.changeover}</Group>
+                <Row cols={cols} label="Gross" get={(c) => usd(c.toGross)} />
+                <Row cols={cols} label="Guarantee to EMSKI, off the top" get={(c) => (c.guarantee ? `−${usd(c.guarantee)}` : "—")} />
+                <Row cols={cols} label="Left to split" get={(c) => usd(c.toGross - c.guarantee)} />
+                <Row cols={cols} label="Split" get={(c) => c.splitLabel} />
+                <Row cols={cols} label="EMSKI share" get={(c) => usd(c.emskiTo)} />
+                <Row cols={cols} label="Stardust share" get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")} />
+
+                <Group span={cols.length + 1}>Tickets after {SHOW_V2.changeover}</Group>
+                <Row cols={cols} label="Gross" get={(c) => usd(c.afterGross)} />
+                <Row cols={cols} label="Split" get={(c) => c.afterLabel} />
+                <Row cols={cols} label="EMSKI share" get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")} />
+                <Row cols={cols} label="Stardust share" get={(c) => usd(c.stardustAfter)} />
+
+                <Group span={cols.length + 1}>EMSKI</Group>
+                <Row cols={cols} label="Guarantee" get={(c) => (c.guarantee ? usd(c.guarantee) : "—")} />
+                <Row cols={cols} label={`Share to ${SHOW_V2.changeover}`} get={(c) => usd(c.emskiTo)} />
+                <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")} />
+                <Row cols={cols} label="Costs" get={() => `−${usd(m.costs)}`} />
+                <Row cols={cols} label="EMSKI walkaway" get={(c) => usd(c.emskiNet)} cls="is-total" />
+
+                <Group span={cols.length + 1}>Stardust</Group>
+                <Row cols={cols} label={`Share to ${SHOW_V2.changeover}`} get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")} />
+                <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => usd(c.stardustAfter)} />
+                <Row cols={cols} label="Bar" get={(c) => `~${usd(c.bar)}`} />
+                <Row cols={cols} label="Stardust walkaway" get={(c) => `~${usd(c.stardustTotal)}`} cls="is-total" />
+                <Row
+                  cols={cols}
+                  label="vs last year"
+                  get={(c) => (c.delta ? `+${usd(c.delta)}` : "—")}
+                  cellCls={(c) => (c.delta ? "is-delta" : "")}
+                />
               </tbody>
             </table>
           </div>
           <p className="sp-line bo-mono">
-            600 sellout on last year's tiers. Bar held at last year's ~{k(ly.bar)}. Guarantee comes off the
-            to-{SHOW_V2.changeover} tickets before the split. After-{SHOW_V2.changeover} = last year's afters
-            tickets, split 50/50.
+            600 sellout on last year's tiers. Bar held at last year's ~{k(ly.bar)}. In Deal B the $5,000 comes
+            out of the gross before the 60/40 — so it shrinks both sides' pool, and Stardust's share is 40% of
+            what's left. After-{SHOW_V2.changeover} = last year's afters tickets, split 50/50.
           </p>
         </div>
       </section>

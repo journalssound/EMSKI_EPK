@@ -278,6 +278,20 @@
 .sp-compare.is-three tr.is-gap td {
   padding-top: 26px;
 }
+/* Group headers: one mono line across the table, a breath above it. */
+.sp-compare.is-three tr.is-group td {
+  padding: 30px 0 6px;
+  font-family: var(--bo-sans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-align: left;
+  color: var(--bo-white);
+  border-bottom: 1px solid var(--bo-white);
+}
+.sp-compare.is-three tr.is-group:first-child td {
+  padding-top: 8px;
+}
 
 .sp-table-wrap {
   overflow-x: auto;
