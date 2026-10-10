@@ -159,6 +159,67 @@
   color: var(--bo-white);
 }
 
+/* ── v2: two deals side by side ───────────────────────── */
+.sp-deals {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--bo-charcoal);
+  border: 1px solid var(--bo-charcoal);
+}
+.sp-deal {
+  background: var(--bo-black);
+  padding: clamp(18px, 2.6vw, 28px) clamp(14px, 2vw, 22px);
+  min-width: 0;
+}
+.sp-deal__key {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--bo-white);
+}
+.sp-deal__name {
+  display: block;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: clamp(24px, 3.4vw, 38px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.sp-deal__sub {
+  display: block;
+  margin-top: 8px;
+  color: var(--bo-white);
+}
+.sp-deal__terms {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.9;
+  color: var(--bo-white);
+}
+.sp-deal .sp-split {
+  grid-template-columns: 1fr;
+  row-gap: 8px;
+  margin-top: 20px;
+}
+/* Half-width bars: let the narrow segment's label wrap instead of clipping. */
+.sp-deal .sp-split__bar {
+  height: 40px;
+}
+.sp-deal .sp-split__seg {
+  justify-content: center;
+  padding: 0 8px;
+  font-size: 10px;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+}
+.bo .sp-deal__sub,
+.bo .sp-deal__terms {
+  font-size: 12px;
+}
+
 /* ── Comparison: last year vs this year, Stardust's side ─── */
 .sp-compare {
   border-collapse: collapse;
@@ -197,6 +258,26 @@
 .sp-compare td.is-delta {
   color: var(--bo-rust);
 }
+/* v2: four columns must fit without a sideways scroll — fixed layout, the
+ * label column may wrap, the two total labels run a size smaller. */
+.sp-compare.is-three {
+  table-layout: fixed;
+}
+.sp-compare.is-three th:first-child,
+.sp-compare.is-three td:first-child {
+  width: 28%;
+  white-space: normal;
+}
+.sp-compare.is-three tr.is-total td {
+  border-bottom: 1px solid var(--bo-charcoal);
+  padding-bottom: 18px;
+}
+.sp-compare.is-three tr.is-total td:first-child {
+  font-size: clamp(14px, 1.8vw, 19px);
+}
+.sp-compare.is-three tr.is-gap td {
+  padding-top: 26px;
+}
 
 .sp-table-wrap {
   overflow-x: auto;
@@ -227,5 +308,42 @@
   .sp-compare th:nth-child(4),
   .sp-compare td:nth-child(4) {
     display: none;
+  }
+  /* v2 needs all three columns — shrink instead of hiding. */
+  .sp-compare.is-three th:nth-child(4),
+  .sp-compare.is-three td:nth-child(4) {
+    display: table-cell;
+  }
+  .sp-compare.is-three {
+    table-layout: fixed;
+  }
+  .sp-compare.is-three th,
+  .sp-compare.is-three td {
+    padding: 10px 4px;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .sp-compare.is-three th:first-child,
+  .sp-compare.is-three td:first-child {
+    width: 24%;
+  }
+  .sp-compare.is-three th {
+    font-size: 10px;
+  }
+  .sp-compare.is-three td:not(:first-child) {
+    white-space: nowrap;
+  }
+  .sp-compare.is-three tr.is-total td {
+    font-size: 14px;
+  }
+  .sp-compare.is-three tr.is-total td:first-child {
+    font-family: var(--bo-mono);
+    font-weight: 400;
+    font-size: 11px;
+  }
+  .sp-deals {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,60 +1,13 @@
 import { useEffect } from "react";
 import { PITCH_META, LAST_YEAR, SINCE, PROPOSAL, NEXT } from "./stardustPitchContent";
+import { H, Tiles, Split } from "./pitchParts";
+import { usd, k } from "./pitchFormat";
 import { HERO_VIDEO_R2 } from "../../data/content";
 import logo from "../../assets/EMSKI-logo-white-rgb.png";
 import "../blackout/blackout.css";
 import "./stardust-pitch.css";
 
 const TAG = "[BLACKOUT]";
-
-const usd = (n) => "$" + Math.round(n).toLocaleString("en-US");
-const k = (n) => (n >= 1000 ? "$" + (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : usd(n));
-
-/* Same header as the kit: sans title, mono number. */
-function H({ n, children }) {
-  return (
-    <h2 className="bo-h">
-      <span className="bo-h__n bo-mono">{n}</span>
-      <span className="bo-h__t">{children}</span>
-    </h2>
-  );
-}
-
-function Tiles({ items }) {
-  return (
-    <div className="sp-tiles">
-      {items.map((t) => (
-        <div className="sp-tile" key={t.l}>
-          <span className="sp-tile__n">{t.n}</span>
-          <span className="sp-tile__l bo-mono">{t.l}</span>
-          {t.s ? <span className="sp-tile__s bo-mono">{t.s}</span> : null}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* Split bar: EMSKI's share in off-white, Stardust's in rust. */
-function Split({ label, emski }) {
-  const stardust = 1 - emski;
-  return (
-    <>
-      <span className="sp-split__label bo-mono">{label}</span>
-      <div className="sp-split__bar">
-        {emski > 0 && (
-          <span className="sp-split__seg sp-split__seg--emski" style={{ flex: emski }}>
-            EMSKI {Math.round(emski * 100)}
-          </span>
-        )}
-        {stardust > 0 && (
-          <span className="sp-split__seg sp-split__seg--stardust" style={{ flex: stardust }}>
-            STARDUST {Math.round(stardust * 100)}
-          </span>
-        )}
-      </div>
-    </>
-  );
-}
 
 /* The model. Last year: EMSKI kept 100% before 2AM, Stardust kept the
  * after-2AM tickets and bar. This year: 80/20 before 2AM, same after. */
