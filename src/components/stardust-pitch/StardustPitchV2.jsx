@@ -43,7 +43,7 @@ function Group({ cols, head, children }) {
 /* Last year as it happened, then each deal on a 600 sellout of the same
  * tiers. Tickets to 2AM: guarantee off the top, the rest splits. Tickets
  * after 2AM (last year: 35 × $50): 50/50 in both deals. */
-function model() {
+function model(bar) {
   const ly = LAST_YEAR;
   const afterGross = ly.tiers.filter((t) => t.after2am).reduce((s, t) => s + t.price * t.sold, 0);
   const toGross = ly.net - afterGross;
@@ -64,7 +64,7 @@ function model() {
       emskiAfter: afterGross * shareAfter,
       stardustTo: pool * (1 - shareTo),
       stardustAfter: afterGross * (1 - shareAfter),
-      bar: ly.bar,
+      bar,
     };
     r.emski = guarantee + r.emskiTo + r.emskiAfter;
     r.emskiNet = r.emski - costs;
@@ -83,11 +83,13 @@ function model() {
   return { costs, afterGross, toGross, lastYear, deals };
 }
 
-export default function StardustPitchV2() {
+/* `bar` is Stardust's bar take, held at the same figure for last year and
+ * the projections. v3 is this page with the bar estimated lower. */
+export default function StardustPitchV2({ bar = LAST_YEAR.bar, version = PITCH_V2_META.version }) {
   useEffect(() => {
     const prev = { bg: document.body.style.background, title: document.title };
     document.body.style.background = "#0a0a0a";
-    document.title = `EMSKI ${TAG} — Stardust Garage, Nov 20 2026 · ${PITCH_V2_META.version}`;
+    document.title = `EMSKI ${TAG} — Stardust Garage, Nov 20 2026 · ${version}`;
     const robots = document.createElement("meta");
     robots.name = "robots";
     robots.content = "noindex, nofollow";
@@ -97,10 +99,10 @@ export default function StardustPitchV2() {
       document.title = prev.title;
       robots.remove();
     };
-  }, []);
+  }, [version]);
 
   const ly = LAST_YEAR;
-  const m = model();
+  const m = model(bar);
   const cols = [{ key: "LY", name: "LAST YEAR", ...m.lastYear }, ...m.deals];
   const head = (c) => (c.key === "LY" ? "Last year" : `Deal ${c.key} · ${c.name}`);
 
@@ -129,7 +131,7 @@ export default function StardustPitchV2() {
         </div>
         <div className="bo-hero__foot bo-wrap">
           <p className="bo-hero__kicker bo-mono is-on">
-            Proposal {PITCH_V2_META.version} · {PITCH_META.preparedFor} · {PITCH_V2_META.prepared}
+            Proposal {version} · {PITCH_META.preparedFor} · {PITCH_V2_META.prepared}
           </p>
         </div>
       </section>
@@ -150,7 +152,7 @@ export default function StardustPitchV2() {
               {
                 n: `~${k(m.lastYear.stardustTotal)}`,
                 l: "STARDUST WALKAWAY",
-                s: `${usd(m.afterGross)} AFTER-2AM + ~${k(ly.bar)} BAR`,
+                s: `${usd(m.afterGross)} AFTER-2AM + ~${k(bar)} BAR`,
               },
             ]}
           />
@@ -269,7 +271,7 @@ export default function StardustPitchV2() {
             </table>
           </div>
           <p className="sp-line bo-mono">
-            600 sellout on last year's tiers. Bar held at last year's ~{k(ly.bar)}. In Deal B the $5,000 comes
+            600 sellout on last year's tiers. Bar estimated at ~{k(bar)}, same as last year. In Deal B the $5,000 comes
             out of the gross before the 60/40 — so it shrinks both sides' pool, and Stardust's share is 40% of
             what's left. After-{SHOW_V2.changeover} = last year's afters tickets, split 50/50.
           </p>

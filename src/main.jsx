@@ -31,6 +31,7 @@ const EmskiBlackout = lazy(() => import("./components/blackout/EmskiBlackout.jsx
 // Private Stardust Garage proposal (unlisted, noindex), in the [BLACKOUT] style.
 const StardustPitch = lazy(() => import("./components/stardust-pitch/StardustPitch.jsx"));
 const StardustPitchV2 = lazy(() => import("./components/stardust-pitch/StardustPitchV2.jsx"));
+const StardustPitchV3 = lazy(() => import("./components/stardust-pitch/StardustPitchV3.jsx"));
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
@@ -126,6 +127,14 @@ createRoot(document.getElementById("root")).render(
           element={
             <Suspense fallback={null}>
               <StardustPitchV2 />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/stardust_pitch_v3"
+          element={
+            <Suspense fallback={null}>
+              <StardustPitchV3 />
             </Suspense>
           }
         />
