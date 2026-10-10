@@ -12,9 +12,17 @@ export const PITCH_V2_META = {
   version: "v2",
 };
 
-/* Two deals. `guarantee` is paid to EMSKI off the top of ticket gross; the
- * rest of the tickets to 3AM split at `emskiShare`. After 3AM stays 50/50
- * in both, bar stays 100% Stardust in both. */
+/* v2 show: Friday, changeover back to 2AM. Tickets after 2AM split 50/50 in
+ * both deals — and last year's 35 afters tickets give that bucket a number. */
+export const SHOW_V2 = {
+  dateLabel: "FRI NOV 20 2026",
+  dateShort: "FRI NOV 20",
+  changeover: "2AM",
+  emskiShareAfter: 0.5,
+};
+
+/* Two deals. `guarantee` is paid to EMSKI off the top of the to-2AM gross;
+ * the rest of those tickets split at `emskiShare`. Bar stays 100% Stardust. */
 export const DEALS = [
   {
     key: "A",
@@ -22,7 +30,7 @@ export const DEALS = [
     sub: "NO GUARANTEE",
     guarantee: 0,
     emskiShare: 0.8,
-    terms: ["TICKETS TO 3AM — 80/20", "AFTER 3AM — 50/50", "BAR — 100% STARDUST"],
+    terms: ["TICKETS TO 2AM — 80/20", "AFTER 2AM — 50/50", "BAR — 100% STARDUST"],
   },
   {
     key: "B",
@@ -30,8 +38,8 @@ export const DEALS = [
     sub: "$5,000 GUARANTEE TO EMSKI · OFF THE TOP",
     guarantee: 5000,
     emskiShare: 0.6,
-    terms: ["REMAINING TICKETS TO 3AM — 60/40", "AFTER 3AM — 50/50", "BAR — 100% STARDUST"],
+    terms: ["REMAINING TICKETS TO 2AM — 60/40", "AFTER 2AM — 50/50", "BAR — 100% STARDUST"],
   },
 ];
 
-export const NEXT_V2 = ["HOLD SAT NOV 21", "PICK A OR B", "ANNOUNCE + ON-SALE LATE OCT"];
+export const NEXT_V2 = ["HOLD FRI NOV 20", "PICK A OR B", "ANNOUNCE + ON-SALE LATE OCT"];

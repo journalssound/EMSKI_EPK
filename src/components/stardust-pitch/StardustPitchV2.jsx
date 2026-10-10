@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { PITCH_META, LAST_YEAR, PROPOSAL } from "./stardustPitchContent";
-import { PITCH_V2_META, DEALS, NEXT_V2 } from "./stardustPitchV2Content";
+import { PITCH_V2_META, SHOW_V2, DEALS, NEXT_V2 } from "./stardustPitchV2Content";
 import { H, Tiles, Split } from "./pitchParts";
 import { usd, k } from "./pitchFormat";
 import { HERO_VIDEO_R2 } from "../../data/content";
@@ -10,33 +10,41 @@ import "./stardust-pitch.css";
 
 const TAG = "[BLACKOUT]";
 
+const pct = (emski) => `${Math.round(emski * 100)} / ${Math.round((1 - emski) * 100)}`;
+
 /* Last year as it happened, then each deal on a 600 sellout of the same
- * tiers. Guarantee comes off ticket gross first; the rest splits. */
+ * tiers. Tickets to 2AM: guarantee off the top, the rest splits. Tickets
+ * after 2AM (last year: 35 × $50): 50/50 in both deals. */
 function model() {
   const ly = LAST_YEAR;
-  const gross = ly.net;
   const afterGross = ly.tiers.filter((t) => t.after2am).reduce((s, t) => s + t.price * t.sold, 0);
+  const toGross = ly.net - afterGross;
   const costs = ly.costs.reduce((s, c) => s + c.amount, 0);
 
   const lastYear = {
-    gross,
+    toGross,
+    afterGross,
     guarantee: 0,
-    splitLabel: "100 / 0",
-    emski: gross - afterGross,
-    stardustTickets: afterGross,
+    splitLabel: pct(ly.emskiShareTo2am),
+    afterLabel: pct(ly.emskiShareAfter2am),
+    emski: toGross * ly.emskiShareTo2am + afterGross * ly.emskiShareAfter2am,
+    stardustTickets: toGross * (1 - ly.emskiShareTo2am) + afterGross * (1 - ly.emskiShareAfter2am),
     bar: ly.bar,
   };
   lastYear.emskiNet = lastYear.emski - costs;
   lastYear.stardustTotal = lastYear.stardustTickets + lastYear.bar;
 
+  const after = SHOW_V2.emskiShareAfter;
   const deals = DEALS.map((d) => {
-    const pool = gross - d.guarantee;
+    const pool = toGross - d.guarantee;
     const r = {
       ...d,
-      gross,
-      splitLabel: `${Math.round(d.emskiShare * 100)} / ${Math.round((1 - d.emskiShare) * 100)}`,
-      emski: d.guarantee + pool * d.emskiShare,
-      stardustTickets: pool * (1 - d.emskiShare),
+      toGross,
+      afterGross,
+      splitLabel: pct(d.emskiShare),
+      afterLabel: pct(after),
+      emski: d.guarantee + pool * d.emskiShare + afterGross * after,
+      stardustTickets: pool * (1 - d.emskiShare) + afterGross * (1 - after),
       bar: ly.bar,
     };
     r.emskiNet = r.emski - costs;
@@ -45,14 +53,14 @@ function model() {
     return r;
   });
 
-  return { costs, afterGross, lastYear, deals };
+  return { costs, afterGross, toGross, lastYear, deals };
 }
 
 export default function StardustPitchV2() {
   useEffect(() => {
     const prev = { bg: document.body.style.background, title: document.title };
     document.body.style.background = "#0a0a0a";
-    document.title = `EMSKI ${TAG} — Stardust Garage, Nov 21 2026 · ${PITCH_V2_META.version}`;
+    document.title = `EMSKI ${TAG} — Stardust Garage, Nov 20 2026 · ${PITCH_V2_META.version}`;
     const robots = document.createElement("meta");
     robots.name = "robots";
     robots.content = "noindex, nofollow";
@@ -89,7 +97,7 @@ export default function StardustPitchV2() {
             <span className="bo-hero__rule is-on" />
           </div>
           <p className="sp-hero__line bo-mono">
-            {PITCH_META.venue} · {PITCH_META.city} · {PROPOSAL.dateLabel}
+            {PITCH_META.venue} · {PITCH_META.city} · {SHOW_V2.dateLabel}
           </p>
         </div>
         <div className="bo-hero__foot bo-wrap">
@@ -106,7 +114,7 @@ export default function StardustPitchV2() {
           <Tiles
             items={[
               { n: ly.sold.toLocaleString(), l: "TICKETS", s: `SOLD OUT · CAP ${ly.capacity}` },
-              { n: k(ly.net), l: "TICKET GROSS", s: `${usd(m.lastYear.emski)} TO 2AM · ${usd(m.afterGross)} AFTER` },
+              { n: k(ly.net), l: "TICKET GROSS", s: `${usd(m.toGross)} TO 2AM · ${usd(m.afterGross)} AFTER` },
               {
                 n: k(m.lastYear.emskiNet),
                 l: "EMSKI WALKAWAY",
@@ -138,7 +146,7 @@ export default function StardustPitchV2() {
       {/* ━━ 02 TWO DEALS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="02">The show — {PROPOSAL.dateLabel}</H>
+          <H n="02">The show — {SHOW_V2.dateLabel}</H>
           <p className="sp-line bo-mono" style={{ marginTop: 0, marginBottom: 24 }}>
             {PROPOSAL.format} · {PITCH_META.venue} · CAP {PROPOSAL.capacity}
           </p>
@@ -155,9 +163,14 @@ export default function StardustPitchV2() {
                 </ul>
                 <div className="sp-split">
                   <Split
-                    label={d.guarantee ? `AFTER THE ${k(d.guarantee)} · TICKETS TO 3AM` : "TICKETS TO 3AM"}
+                    label={
+                      d.guarantee
+                        ? `AFTER THE ${k(d.guarantee)} · TICKETS TO ${SHOW_V2.changeover}`
+                        : `TICKETS TO ${SHOW_V2.changeover}`
+                    }
                     emski={d.emskiShare}
                   />
+                  <Split label={`AFTER ${SHOW_V2.changeover}`} emski={SHOW_V2.emskiShareAfter} />
                 </div>
               </div>
             ))}
@@ -202,9 +215,15 @@ export default function StardustPitchV2() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Ticket gross</td>
+                  <td>Tickets to {SHOW_V2.changeover}</td>
                   {cols.map((c) => (
-                    <td key={c.key}>{usd(c.gross)}</td>
+                    <td key={c.key}>{usd(c.toGross)}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td>Tickets after {SHOW_V2.changeover}</td>
+                  {cols.map((c) => (
+                    <td key={c.key}>{usd(c.afterGross)}</td>
                   ))}
                 </tr>
                 <tr>
@@ -214,9 +233,15 @@ export default function StardustPitchV2() {
                   ))}
                 </tr>
                 <tr>
-                  <td>Split to 3AM</td>
+                  <td>Split to {SHOW_V2.changeover}</td>
                   {cols.map((c) => (
                     <td key={c.key}>{c.splitLabel}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td>Split after {SHOW_V2.changeover}</td>
+                  {cols.map((c) => (
+                    <td key={c.key}>{c.afterLabel}</td>
                   ))}
                 </tr>
                 <tr>
@@ -267,8 +292,9 @@ export default function StardustPitchV2() {
             </table>
           </div>
           <p className="sp-line bo-mono">
-            600 sellout on last year's tiers. Bar held at last year's ~{k(ly.bar)}. Guarantee comes off ticket gross
-            before the split. After-3AM tickets not projected — last year's sales closed at 3AM.
+            600 sellout on last year's tiers. Bar held at last year's ~{k(ly.bar)}. Guarantee comes off the
+            to-{SHOW_V2.changeover} tickets before the split. After-{SHOW_V2.changeover} = last year's afters
+            tickets, split 50/50.
           </p>
         </div>
       </section>
