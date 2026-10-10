@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { PITCH_META, LAST_YEAR, PROPOSAL } from "./stardustPitchContent";
-import { PITCH_V2_META, SHOW_V2, DEALS, NEXT_V2 } from "./stardustPitchV2Content";
+import {
+  PITCH_V2_META,
+  SHOW_V2,
+  DEALS,
+  NEXT_V2,
+} from "./stardustPitchV2Content";
 import { H, Tiles, Split } from "./pitchParts";
 import { usd, k } from "./pitchFormat";
 import { HERO_VIDEO_R2 } from "../../data/content";
@@ -10,7 +15,8 @@ import "./stardust-pitch.css";
 
 const TAG = "[BLACKOUT]";
 
-const pct = (emski) => `${Math.round(emski * 100)} / ${Math.round((1 - emski) * 100)}`;
+const pct = (emski) =>
+  `${Math.round(emski * 100)} / ${Math.round((1 - emski) * 100)}`;
 
 /* One table row: a label, then one cell per column. */
 function Row({ cols, label, get, cls = "", cellCls }) {
@@ -45,7 +51,9 @@ function Group({ cols, head, children }) {
  * after 2AM (last year: 35 × $50): 50/50 in both deals. */
 function model(barLastYear, barProjected) {
   const ly = LAST_YEAR;
-  const afterGross = ly.tiers.filter((t) => t.after2am).reduce((s, t) => s + t.price * t.sold, 0);
+  const afterGross = ly.tiers
+    .filter((t) => t.after2am)
+    .reduce((s, t) => s + t.price * t.sold, 0);
   const toGross = ly.net - afterGross;
   const costs = ly.costs.reduce((s, c) => s + c.amount, 0);
 
@@ -73,9 +81,21 @@ function model(barLastYear, barProjected) {
     return r;
   };
 
-  const lastYear = build({}, 0, ly.emskiShareTo2am, ly.emskiShareAfter2am, barLastYear);
+  const lastYear = build(
+    {},
+    0,
+    ly.emskiShareTo2am,
+    ly.emskiShareAfter2am,
+    barLastYear,
+  );
   const deals = DEALS.map((d) => {
-    const r = build(d, d.guarantee, d.emskiShare, SHOW_V2.emskiShareAfter, barProjected);
+    const r = build(
+      d,
+      d.guarantee,
+      d.emskiShare,
+      SHOW_V2.emskiShareAfter,
+      barProjected,
+    );
     r.delta = r.stardustTotal - lastYear.stardustTotal;
     return r;
   });
@@ -90,6 +110,7 @@ export default function StardustPitchV2({
   bar = barLastYear,
   version = PITCH_V2_META.version,
   showDelta = true,
+  showLastYear = true,
 }) {
   useEffect(() => {
     const prev = { bg: document.body.style.background, title: document.title };
@@ -109,14 +130,27 @@ export default function StardustPitchV2({
   const ly = LAST_YEAR;
   const m = model(barLastYear, bar);
   const signed = (n) => (n < 0 ? "−" : "+") + usd(Math.abs(n));
-  const cols = [{ key: "LY", name: "LAST YEAR", ...m.lastYear }, ...m.deals];
-  const head = (c) => (c.key === "LY" ? "Last year" : `Deal ${c.key} · ${c.name}`);
+  const cols = showLastYear
+    ? [{ key: "LY", name: "LAST YEAR", ...m.lastYear }, ...m.deals]
+    : m.deals;
+  const head = (c) =>
+    c.key === "LY" ? "Last year" : `Deal ${c.key} · ${c.name}`;
+  /* Section numbers shift up one when the last-year block is left off. */
+  const num = (i) => String(showLastYear ? i : i - 1).padStart(2, "0");
 
   return (
     <div className="bo">
       {/* ━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-hero sp-hero">
-        <video className="sp-hero__bg" src={HERO_VIDEO_R2} autoPlay muted loop playsInline aria-hidden="true" />
+        <video
+          className="sp-hero__bg"
+          src={HERO_VIDEO_R2}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        />
         <div className="sp-hero__veil" aria-hidden="true" />
         <div className="bo-wrap">
           <div
@@ -137,52 +171,71 @@ export default function StardustPitchV2({
         </div>
         <div className="bo-hero__foot bo-wrap">
           <p className="bo-hero__kicker bo-mono is-on">
-            Proposal {version} · {PITCH_META.preparedFor} · {PITCH_V2_META.prepared}
+            Proposal {version} · {PITCH_META.preparedFor} ·{" "}
+            {PITCH_V2_META.prepared}
           </p>
         </div>
       </section>
 
       {/* ━━ 01 LAST YEAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section className="bo-section">
-        <div className="bo-wrap">
-          <H n="01">Last year — {ly.dateLabel}</H>
-          <Tiles
-            items={[
-              { n: ly.sold.toLocaleString(), l: "TICKETS", s: `SOLD OUT · CAP ${ly.capacity}` },
-              { n: k(ly.net), l: "TICKET GROSS", s: `${usd(m.toGross)} TO 2AM · ${usd(m.afterGross)} AFTER` },
-              {
-                n: k(m.lastYear.emskiNet),
-                l: "EMSKI WALKAWAY",
-                s: `${usd(m.lastYear.emski)} TICKETS − ${usd(m.costs)} COSTS`,
-              },
-              {
-                n: `~${k(m.lastYear.stardustTotal)}`,
-                l: "STARDUST WALKAWAY",
-                s: `${usd(m.afterGross)} AFTER-2AM + ~${k(barLastYear)} BAR`,
-              },
-            ]}
-          />
-          <p className="sp-line bo-mono">
-            EMSKI COSTS: {ly.costs.map((c) => `${c.label} ${usd(c.amount)}`).join(" · ")} — PAID FROM HER SHARE
-          </p>
-          <div className="sp-ladder">
-            {ly.tiers.map((t) => (
-              <div className={`sp-ladder__cell bo-mono${t.after2am ? " is-after" : ""}`} key={t.name}>
-                <b>${t.price}</b>
-                {t.name}
-                <br />
-                {t.sold} sold
-              </div>
-            ))}
+      {showLastYear && (
+        <section className="bo-section">
+          <div className="bo-wrap">
+            <H n="01">Last year — {ly.dateLabel}</H>
+            <Tiles
+              items={[
+                {
+                  n: ly.sold.toLocaleString(),
+                  l: "TICKETS",
+                  s: `SOLD OUT · CAP ${ly.capacity}`,
+                },
+                {
+                  n: k(ly.net),
+                  l: "TICKET GROSS",
+                  s: `${usd(m.toGross)} TO 2AM · ${usd(m.afterGross)} AFTER`,
+                },
+                {
+                  n: k(m.lastYear.emskiNet),
+                  l: "EMSKI WALKAWAY",
+                  s: `${usd(m.lastYear.emski)} TICKETS − ${usd(m.costs)} COSTS`,
+                },
+                {
+                  n: `~${k(m.lastYear.stardustTotal)}`,
+                  l: "STARDUST WALKAWAY",
+                  s: `${usd(m.afterGross)} AFTER-2AM + ~${k(barLastYear)} BAR`,
+                },
+              ]}
+            />
+            <p className="sp-line bo-mono">
+              EMSKI COSTS:{" "}
+              {ly.costs.map((c) => `${c.label} ${usd(c.amount)}`).join(" · ")} —
+              PAID FROM HER SHARE
+            </p>
+            <div className="sp-ladder">
+              {ly.tiers.map((t) => (
+                <div
+                  className={`sp-ladder__cell bo-mono${t.after2am ? " is-after" : ""}`}
+                  key={t.name}
+                >
+                  <b>${t.price}</b>
+                  {t.name}
+                  <br />
+                  {t.sold} sold
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ━━ 02 TWO DEALS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="02">The show — {SHOW_V2.dateLabel}</H>
-          <p className="sp-line bo-mono" style={{ marginTop: 0, marginBottom: 24 }}>
+          <H n={num(2)}>The show — {SHOW_V2.dateLabel}</H>
+          <p
+            className="sp-line bo-mono"
+            style={{ marginTop: 0, marginBottom: 24 }}
+          >
             {PROPOSAL.format} · {PITCH_META.venue} · CAP {PROPOSAL.capacity}
           </p>
           <div className="sp-deals">
@@ -205,7 +258,10 @@ export default function StardustPitchV2({
                     }
                     emski={d.emskiShare}
                   />
-                  <Split label={`AFTER ${SHOW_V2.changeover}`} emski={SHOW_V2.emskiShareAfter} />
+                  <Split
+                    label={`AFTER ${SHOW_V2.changeover}`}
+                    emski={SHOW_V2.emskiShareAfter}
+                  />
                 </div>
               </div>
             ))}
@@ -216,7 +272,7 @@ export default function StardustPitchV2({
       {/* ━━ 03 WALKAWAYS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="03">Walkaways — 600 sellout</H>
+          <H n={num(3)}>Walkaways — 600 sellout</H>
           <Tiles
             items={[
               ...m.deals.map((d) => ({
@@ -237,36 +293,98 @@ export default function StardustPitchV2({
       {/* ━━ 04 THE MATH ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="04">The math</H>
+          <H n={num(4)}>The math</H>
           <div className="sp-table-wrap">
             <table className="sp-compare is-three">
               <tbody>
-                <Group cols={cols} head={head}>Tickets to {SHOW_V2.changeover}</Group>
+                <Group cols={cols} head={head}>
+                  Tickets to {SHOW_V2.changeover}
+                </Group>
                 <Row cols={cols} label="Gross" get={(c) => usd(c.toGross)} />
-                <Row cols={cols} label="Guarantee to EMSKI, off the top" get={(c) => (c.guarantee ? `−${usd(c.guarantee)}` : "—")} />
-                <Row cols={cols} label="Left to split" get={(c) => usd(c.toGross - c.guarantee)} />
+                <Row
+                  cols={cols}
+                  label="Guarantee to EMSKI, off the top"
+                  get={(c) => (c.guarantee ? `−${usd(c.guarantee)}` : "—")}
+                />
+                <Row
+                  cols={cols}
+                  label="Left to split"
+                  get={(c) => usd(c.toGross - c.guarantee)}
+                />
                 <Row cols={cols} label="Split" get={(c) => c.splitLabel} />
-                <Row cols={cols} label="EMSKI share" get={(c) => usd(c.emskiTo)} />
-                <Row cols={cols} label="Stardust share" get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")} />
+                <Row
+                  cols={cols}
+                  label="EMSKI share"
+                  get={(c) => usd(c.emskiTo)}
+                />
+                <Row
+                  cols={cols}
+                  label="Stardust share"
+                  get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")}
+                />
 
-                <Group cols={cols} head={head}>Tickets after {SHOW_V2.changeover}</Group>
+                <Group cols={cols} head={head}>
+                  Tickets after {SHOW_V2.changeover}
+                </Group>
                 <Row cols={cols} label="Gross" get={(c) => usd(c.afterGross)} />
                 <Row cols={cols} label="Split" get={(c) => c.afterLabel} />
-                <Row cols={cols} label="EMSKI share" get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")} />
-                <Row cols={cols} label="Stardust share" get={(c) => usd(c.stardustAfter)} />
+                <Row
+                  cols={cols}
+                  label="EMSKI share"
+                  get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")}
+                />
+                <Row
+                  cols={cols}
+                  label="Stardust share"
+                  get={(c) => usd(c.stardustAfter)}
+                />
 
-                <Group cols={cols} head={head}>EMSKI</Group>
-                <Row cols={cols} label="Guarantee" get={(c) => (c.guarantee ? usd(c.guarantee) : "—")} />
-                <Row cols={cols} label={`Share to ${SHOW_V2.changeover}`} get={(c) => usd(c.emskiTo)} />
-                <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")} />
+                <Group cols={cols} head={head}>
+                  EMSKI
+                </Group>
+                <Row
+                  cols={cols}
+                  label="Guarantee"
+                  get={(c) => (c.guarantee ? usd(c.guarantee) : "—")}
+                />
+                <Row
+                  cols={cols}
+                  label={`Share to ${SHOW_V2.changeover}`}
+                  get={(c) => usd(c.emskiTo)}
+                />
+                <Row
+                  cols={cols}
+                  label={`Share after ${SHOW_V2.changeover}`}
+                  get={(c) => (c.emskiAfter ? usd(c.emskiAfter) : "—")}
+                />
                 <Row cols={cols} label="Costs" get={() => `−${usd(m.costs)}`} />
-                <Row cols={cols} label="EMSKI walkaway" get={(c) => usd(c.emskiNet)} cls="is-total" />
+                <Row
+                  cols={cols}
+                  label="EMSKI walkaway"
+                  get={(c) => usd(c.emskiNet)}
+                  cls="is-total"
+                />
 
-                <Group cols={cols} head={head}>Stardust</Group>
-                <Row cols={cols} label={`Share to ${SHOW_V2.changeover}`} get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")} />
-                <Row cols={cols} label={`Share after ${SHOW_V2.changeover}`} get={(c) => usd(c.stardustAfter)} />
+                <Group cols={cols} head={head}>
+                  Stardust
+                </Group>
+                <Row
+                  cols={cols}
+                  label={`Share to ${SHOW_V2.changeover}`}
+                  get={(c) => (c.stardustTo ? usd(c.stardustTo) : "—")}
+                />
+                <Row
+                  cols={cols}
+                  label={`Share after ${SHOW_V2.changeover}`}
+                  get={(c) => usd(c.stardustAfter)}
+                />
                 <Row cols={cols} label="Bar" get={(c) => `~${usd(c.bar)}`} />
-                <Row cols={cols} label="Stardust walkaway" get={(c) => `~${usd(c.stardustTotal)}`} cls="is-total" />
+                <Row
+                  cols={cols}
+                  label="Stardust walkaway"
+                  get={(c) => `~${usd(c.stardustTotal)}`}
+                  cls="is-total"
+                />
                 {showDelta && (
                   <Row
                     cols={cols}
@@ -279,13 +397,16 @@ export default function StardustPitchV2({
             </table>
           </div>
           <p className="sp-line bo-mono">
-            600 sellout on last year's tiers.{" "}
-            {bar === barLastYear
-              ? `Bar estimated at ~${k(bar)}, same as last year.`
-              : `Bar: ~${k(barLastYear)} last year, estimated ~${k(bar)} this show.`}{" "}
-            In Deal B the $5,000 comes
-            out of the gross before the 60/40 — so it shrinks both sides' pool, and Stardust's share is 40% of
-            what's left. After-{SHOW_V2.changeover} = last year's afters tickets, split 50/50.
+            600 sellout at last year's ticket prices.{" "}
+            {!showLastYear
+              ? `Bar estimated at ~${k(bar)}.`
+              : bar === barLastYear
+                ? `Bar estimated at ~${k(bar)}, same as last year.`
+                : `Bar: ~${k(barLastYear)} last year, estimated ~${k(bar)} this show.`}{" "}
+            In Deal B the $5,000 comes out of the gross before the 60/40 — so it
+            shrinks both sides' pool, and Stardust's share is 40% of what's
+            left. After-{SHOW_V2.changeover} = last year's afters tickets, split
+            50/50.
           </p>
         </div>
       </section>
@@ -293,12 +414,14 @@ export default function StardustPitchV2({
       {/* ━━ 05 NEXT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="05">Next</H>
+          <H n={num(5)}>Next</H>
           <p className="bo-list">
             {NEXT_V2.map((line, i) => (
               <span key={line}>
                 {line}
-                {i < NEXT_V2.length - 1 && <span className="bo-list__sep"> / </span>}
+                {i < NEXT_V2.length - 1 && (
+                  <span className="bo-list__sep"> / </span>
+                )}
               </span>
             ))}
           </p>
