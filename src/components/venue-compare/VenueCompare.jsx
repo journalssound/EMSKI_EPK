@@ -22,24 +22,26 @@ import "./venue-compare.css";
 /* EMSKI's side of each venue. Stardust: last year's before-2AM night at
  * 70%. Baths: 100% of a smaller room at last year's average ticket price. */
 function model() {
-  const costs = BASE.costs.reduce((s, c) => s + c.amount, 0);
+  const sum = (xs) => xs.reduce((s, c) => s + c.amount, 0);
   const avg = BASE.grossTo2am / BASE.ticketsTo2am;
+  const sdCosts = BASE.costs + sum(STARDUST.extraCosts);
+  const bathsCosts = BASE.costs + sum(BATHS.extraCosts);
 
   const stardust = {
     key: "SD",
-    head: "Stardust",
+    head: STARDUST.short,
     tickets: BASE.ticketsTo2am,
     gross: BASE.grossTo2am,
     share: STARDUST.emskiShare,
-    costs: costs + STARDUST.extraCosts,
+    costs: sdCosts,
   };
   const baths = BATHS.scenarios.map((n) => ({
     key: `B${n}`,
-    head: `Baths · ${n}`,
+    head: `${BATHS.short} · ${n}`,
     tickets: n,
     gross: n * avg,
     share: BATHS.emskiShare,
-    costs: costs + BATHS.extraCosts,
+    costs: bathsCosts,
   }));
   const cols = [stardust, ...baths].map((c) => {
     c.emski = c.gross * c.share;
@@ -48,9 +50,9 @@ function model() {
   });
 
   /* Tickets the Baths needs for EMSKI to walk with what Stardust pays. */
-  const breakEven = Math.ceil((cols[0].walk + costs + BATHS.extraCosts) / avg);
+  const breakEven = Math.ceil((cols[0].walk + bathsCosts) / avg);
   const perK = Math.round(1000 / avg);
-  return { cols, avg, costs, breakEven, perK };
+  return { cols, avg, breakEven, perK };
 }
 
 function List({ items, mark }) {
@@ -181,19 +183,18 @@ export default function VenueCompare() {
           </div>
 
           <p className="vc-call">
-            The Baths needs <b>{m.breakEven} tickets</b> just to match Stardust.
-            Every $1K of lighting rental adds ~{m.perK} more.
+            The Baths needs <b>{m.breakEven} tickets</b> on a 350 room just to
+            match Stardust. Every extra $1K of lighting adds ~{m.perK} more.
           </p>
           <p className="sp-line bo-mono">
             Same ticket prices at both. Stardust = last year's{" "}
             {BASE.ticketsTo2am} tickets before 2AM at 70%; tickets 2:00–2:30 not
-            counted. Baths = 100% at last year's average ${m.avg.toFixed(2)} a ticket.
-            Costs = last year's {usd(m.costs)} (
-            {BASE.costs
-              .map((c) => `${c.label.toLowerCase()} ${usd(c.amount)}`)
-              .join(", ")}
-            ); Baths adds ~{usd(BATHS.extraCosts)} ticket staff. Not included:
-            Baths lighting rental, bar shortfall, $200/hr past 2AM.
+            counted. Baths = 100% at last year's average ${m.avg.toFixed(2)} a
+            ticket. Costs = ~{usd(BASE.costs)} base at both; Baths adds{" "}
+            {BATHS.extraCosts
+              .map((c) => `~${usd(c.amount)} ${c.label}`)
+              .join(" and ")}
+            . Not included: bar shortfall, $200/hr past 2AM.
           </p>
         </div>
       </section>
