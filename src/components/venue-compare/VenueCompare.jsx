@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import {
   META,
-  BASE,
+  TICKET,
   STARDUST,
   BATHS,
+  COSTS,
+  MAYBE_COSTS,
+  MATCHED,
   BOTTOM_LINE,
   SPECS,
   PROS_CONS,
@@ -19,40 +22,38 @@ import "../blackout/blackout.css";
 import "../stardust-pitch/stardust-pitch.css";
 import "./venue-compare.css";
 
-/* EMSKI's side of each venue. Stardust: last year's before-2AM night at
- * 70%. Baths: 100% of a smaller room at last year's average ticket price. */
+/* Same tickets in both rooms: same gross, different share, different costs.
+ * Walkaway = gross × share − every cost line. */
 function model() {
-  const sum = (xs) => xs.reduce((s, c) => s + c.amount, 0);
-  const avg = BASE.grossTo2am / BASE.ticketsTo2am;
-  const sdCosts = BASE.costs + sum(STARDUST.extraCosts);
-  const bathsCosts = BASE.costs + sum(BATHS.extraCosts);
+  const avg = TICKET.avg;
+  const sdCosts = COSTS.reduce((s, c) => s + c.sd, 0);
+  const btCosts = COSTS.reduce((s, c) => s + c.bt, 0);
+  const sdPer = avg * STARDUST.emskiShare;
+  const btPer = avg * BATHS.emskiShare;
 
-  const stardust = {
-    key: "SD",
-    head: STARDUST.short,
-    tickets: BASE.ticketsTo2am,
-    gross: BASE.grossTo2am,
-    share: STARDUST.emskiShare,
-    costs: sdCosts,
-  };
-  const baths = BATHS.scenarios.map((n) => ({
-    key: `B${n}`,
-    head: `${BATHS.short} · ${n}`,
-    tickets: n,
-    gross: n * avg,
-    share: BATHS.emskiShare,
-    costs: bathsCosts,
-  }));
-  const cols = [stardust, ...baths].map((c) => {
-    c.emski = c.gross * c.share;
-    c.walk = c.emski - c.costs;
-    return c;
+  const rows = MATCHED.map(({ n, note }) => {
+    const gross = n * avg;
+    const sd = gross * STARDUST.emskiShare - sdCosts;
+    const bt = gross * BATHS.emskiShare - btCosts;
+    return { n, note, gross, sd, bt, diff: bt - sd };
   });
 
-  /* Tickets the Baths needs for EMSKI to walk with what Stardust pays. */
-  const breakEven = Math.ceil((cols[0].walk + bathsCosts) / avg);
-  const perK = Math.round(1000 / avg);
-  return { cols, avg, breakEven, perK };
+  /* Ticket count where the Baths' bigger share covers its extra costs. */
+  const tieSameTickets = Math.ceil((btCosts - sdCosts) / (btPer - sdPer));
+  /* Tickets the Baths needs to match Stardust selling N. */
+  const bathsToMatch = (n) =>
+    Math.ceil((n * sdPer - sdCosts + btCosts) / btPer);
+
+  return {
+    avg,
+    sdCosts,
+    btCosts,
+    sdPer,
+    btPer,
+    rows,
+    tieSameTickets,
+    bathsToMatch,
+  };
 }
 
 function List({ items, mark }) {
@@ -112,97 +113,161 @@ export default function VenueCompare() {
         </div>
       </section>
 
-      {/* ━━ 02 THE MONEY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* ━━ 02 COSTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="02">EMSKI walkaway</H>
-          <div className="sp-tiles vc-tiles">
-            {m.cols.map((c) => (
-              <div
-                className={`sp-tile${c.key === "SD" ? " is-lead" : ""}`}
-                key={c.key}
-              >
-                <span className="sp-tile__n">{usd(c.walk)}</span>
-                <span className="sp-tile__l bo-mono">{c.head}</span>
-                <span className="sp-tile__s bo-mono">
-                  {c.tickets} tickets · {Math.round(c.share * 100)}%
-                </span>
-              </div>
-            ))}
-          </div>
-
+          <H n="02">Costs, line by line</H>
           <div className="sp-table-wrap">
-            <table className="sp-compare vc-money">
+            <table className="sp-compare vc-costs">
               <thead>
                 <tr>
                   <th />
-                  {m.cols.map((c) => (
-                    <th key={c.key}>{c.head}</th>
-                  ))}
+                  <th>{STARDUST.short}</th>
+                  <th>{BATHS.short}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Tickets before 2AM</td>
-                  {m.cols.map((c) => (
-                    <td key={c.key}>{c.tickets}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>Ticket gross</td>
-                  {m.cols.map((c) => (
-                    <td key={c.key}>{usd(c.gross)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>EMSKI share</td>
-                  {m.cols.map((c) => (
-                    <td key={c.key}>{Math.round(c.share * 100)}%</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>EMSKI tickets</td>
-                  {m.cols.map((c) => (
-                    <td key={c.key}>{usd(c.emski)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td>Costs</td>
-                  {m.cols.map((c) => (
-                    <td key={c.key}>−{usd(c.costs)}</td>
-                  ))}
-                </tr>
+                {COSTS.map((c) => (
+                  <tr key={c.label}>
+                    <td>{c.label}</td>
+                    <td>
+                      {usd(c.sd)}
+                      <span className="vc-note bo-mono">{c.sdNote}</span>
+                    </td>
+                    <td className={c.bt > c.sd ? "is-more" : ""}>
+                      {usd(c.bt)}
+                      <span className="vc-note bo-mono">{c.btNote}</span>
+                    </td>
+                  </tr>
+                ))}
                 <tr className="is-total">
-                  <td>Walkaway</td>
-                  {m.cols.map((c) => (
-                    <td key={c.key}>{usd(c.walk)}</td>
-                  ))}
+                  <td>Total costs</td>
+                  <td>{usd(m.sdCosts)}</td>
+                  <td>{usd(m.btCosts)}</td>
+                </tr>
+                <tr>
+                  <td>Venue's cut of tickets</td>
+                  <td>{Math.round((1 - STARDUST.emskiShare) * 100)}%</td>
+                  <td>{Math.round((1 - BATHS.emskiShare) * 100)}%</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
+          <h3
+            className="vc-pc__h vc-pc__h--con bo-mono"
+            style={{ marginTop: 34 }}
+          >
+            Only if something goes wrong
+          </h3>
+          <div className="sp-table-wrap">
+            <table className="sp-compare vc-costs vc-costs--maybe">
+              <tbody>
+                {MAYBE_COSTS.map((c) => (
+                  <tr key={c.label}>
+                    <td>{c.label}</td>
+                    <td>{c.sd}</td>
+                    <td>{c.bt}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━ 03 SAME TICKETS ━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="bo-section">
+        <div className="bo-wrap">
+          <H n="03">Same tickets, both rooms</H>
+          <div className="sp-tiles vc-tiles">
+            <div className="sp-tile">
+              <span className="sp-tile__n">${m.sdPer.toFixed(2)}</span>
+              <span className="sp-tile__l bo-mono">
+                Per ticket · {STARDUST.short}
+              </span>
+              <span className="sp-tile__s bo-mono">
+                70% of ${m.avg.toFixed(2)}
+              </span>
+            </div>
+            <div className="sp-tile">
+              <span className="sp-tile__n">${m.btPer.toFixed(2)}</span>
+              <span className="sp-tile__l bo-mono">
+                Per ticket · {BATHS.short}
+              </span>
+              <span className="sp-tile__s bo-mono">
+                100% of ${m.avg.toFixed(2)}
+              </span>
+            </div>
+            <div className="sp-tile">
+              <span className="sp-tile__n">{usd(m.btCosts - m.sdCosts)}</span>
+              <span className="sp-tile__l bo-mono">
+                Extra costs · {BATHS.short}
+              </span>
+              <span className="sp-tile__s bo-mono">lights + door staff</span>
+            </div>
+            <div className="sp-tile is-lead">
+              <span className="sp-tile__n">{m.tieSameTickets}</span>
+              <span className="sp-tile__l bo-mono">Tickets to break even</span>
+              <span className="sp-tile__s bo-mono">
+                past this, Baths pays more
+              </span>
+            </div>
+          </div>
+
+          <div className="sp-table-wrap">
+            <table className="sp-compare vc-matched">
+              <thead>
+                <tr>
+                  <th>Tickets</th>
+                  <th>Gross</th>
+                  <th>{STARDUST.short}</th>
+                  <th>{BATHS.short}</th>
+                  <th>Baths vs Stardust</th>
+                </tr>
+              </thead>
+              <tbody>
+                {m.rows.map((r) => (
+                  <tr key={r.n}>
+                    <td>
+                      {r.n}
+                      {r.note && (
+                        <span className="vc-note bo-mono">{r.note}</span>
+                      )}
+                    </td>
+                    <td>{usd(r.gross)}</td>
+                    <td>{usd(r.sd)}</td>
+                    <td>{usd(r.bt)}</td>
+                    <td className="is-delta">
+                      {r.diff >= 0 ? "+" : "−"}
+                      {usd(Math.abs(r.diff))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
           <p className="vc-call">
-            The Baths needs <b>{m.breakEven} tickets</b> on a 350 room just to
-            match Stardust. Every extra $1K of lighting adds ~{m.perK} more.
+            The real question is how many each room sells. If Stardust sells{" "}
+            {STARDUST.cap}, the Baths ties at{" "}
+            <b>{m.bathsToMatch(STARDUST.cap)}</b>. If Stardust repeats last
+            year's {TICKET.lastYearTo2am}, the Baths needs{" "}
+            <b>{m.bathsToMatch(TICKET.lastYearTo2am)}</b> on a {BATHS.cap} room.
           </p>
           <p className="sp-line bo-mono">
-            Same ticket prices at both. Stardust = last year's{" "}
-            {BASE.ticketsTo2am} tickets before 2AM at 70%; tickets 2:00–2:30 not
-            counted. Baths = 100% at last year's average ${m.avg.toFixed(2)} a
-            ticket. Costs = ~{usd(BASE.costs)} base at both; Baths adds{" "}
-            {BATHS.extraCosts
-              .map((c) => `~${usd(c.amount)} ${c.label}`)
-              .join(" and ")}
-            . Not included: bar shortfall, $200/hr past 2AM.
+            Walkaway = EMSKI's share of tickets − total costs. Same tiers and
+            prices at both, last year's average ${m.avg.toFixed(2)} a ticket,
+            all sold before 2AM. After-2AM door left out at both: Stardust keeps
+            it after 2:30, the Baths charges $200/hr.
           </p>
         </div>
       </section>
 
-      {/* ━━ 03 SIDE BY SIDE ━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* ━━ 04 SIDE BY SIDE ━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="03">Side by side</H>
+          <H n="04">Side by side</H>
           <div className="vc-specs">
             <div className="vc-specs__row vc-specs__row--head bo-mono">
               <span />
@@ -226,8 +291,8 @@ export default function VenueCompare() {
 
       {/* ━━ 04 / 05 PROS & CONS ━━━━━━━━━━━━━━━━━━━━━━━ */}
       {[
-        ["04", STARDUST.name, PROS_CONS.stardust],
-        ["05", BATHS.name, PROS_CONS.baths],
+        ["05", STARDUST.name, PROS_CONS.stardust],
+        ["06", BATHS.name, PROS_CONS.baths],
       ].map(([n, name, pc]) => (
         <section className="bo-section" key={n}>
           <div className="bo-wrap">
@@ -249,7 +314,7 @@ export default function VenueCompare() {
       {/* ━━ 06 BEFORE DECIDING ━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="06">Before deciding</H>
+          <H n="07">Before deciding</H>
           <h3 className="vc-pc__h bo-mono">Ask The Baths</h3>
           <ol className="vc-ask">
             {ASK_BATHS.map((t) => (
@@ -270,7 +335,7 @@ export default function VenueCompare() {
       {/* ━━ 07 SAME WEEK ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="07">Same week in Austin</H>
+          <H n="08">Same week in Austin</H>
           <div className="vc-week">
             {SAME_WEEK.map(([d, t]) => (
               <div className="vc-week__row" key={d}>
@@ -289,7 +354,7 @@ export default function VenueCompare() {
       {/* ━━ SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="bo-section">
         <div className="bo-wrap">
-          <H n="08">Sources</H>
+          <H n="09">Sources</H>
           <ul className="vc-sources bo-mono">
             {SOURCES.map(([label, url]) => (
               <li key={label}>

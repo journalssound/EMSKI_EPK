@@ -12,38 +12,103 @@ export const META = {
   prepared: "Oct 16 2026",
 };
 
-/* Last year's Stardust night, before 2AM — the ticket base for both rooms.
- * Costs are this year's lowered figure, the same base at either venue. */
-export const BASE = {
-  ticketsTo2am: 566,
-  grossTo2am: 14911,
-  costs: 4000,
+/* Same tiers and prices at both rooms. Average ticket = last year's
+ * Stardust night before 2AM ($14,911 / 566). */
+export const TICKET = {
+  avg: 14911 / 566,
+  lastYearTo2am: 566,
 };
 
 export const STARDUST = {
   name: "Stardust Garage",
   short: "Stardust",
   emskiShare: 0.7,
-  extraCosts: [],
+  cap: 400,
 };
 
 export const BATHS = {
   name: "The Baths",
   short: "Baths",
   emskiShare: 1,
-  /* What the Baths adds on top of the base. Lighting: Austin's 8-mover +
-   * haze packages start ~$900/day before delivery, setup and an operator. */
-  extraCosts: [
-    { label: "lighting rig", amount: 1500 },
-    { label: "ticket staff", amount: 250 },
-  ],
-  scenarios: [350, 400, 450],
+  cap: 350,
 };
 
+/* Every cost line, both rooms. Numbers are dollars; `sd`/`bt` notes say
+ * where each comes from. Show costs = the artist's ~$4K at either venue. */
+export const COSTS = [
+  {
+    label: "Show costs — DJs, marketing, production",
+    sd: 4000,
+    bt: 4000,
+    sdNote: "your ~$4K",
+    btNote: "same",
+  },
+  {
+    label: "Lighting rig",
+    sd: 0,
+    bt: 1500,
+    sdNote: "house rig",
+    btNote: "rental, est.",
+  },
+  {
+    label: "Door / ticket staff",
+    sd: 0,
+    bt: 250,
+    sdNote: "in-house",
+    btNote: "2 × 5 hrs × $25",
+  },
+  { label: "Sound", sd: 0, bt: 0, sdNote: "house", btNote: "house" },
+  {
+    label: "Security",
+    sd: 0,
+    bt: 0,
+    sdNote: "in-house",
+    btNote: "2 guards, venue",
+  },
+  { label: "Venue rental", sd: 0, bt: 0, sdNote: "none", btNote: "waived" },
+  {
+    label: "DJs after 2:30",
+    sd: 0,
+    bt: 0,
+    sdNote: "Stardust pays",
+    btNote: "night ends 2AM",
+  },
+];
+
+/* Costs that only show up if something goes a certain way. */
+export const MAYBE_COSTS = [
+  {
+    label: "Bar under $5,000",
+    sd: "Nothing — no minimum",
+    bt: "Up to $5,000, due that night",
+  },
+  { label: "Playing to 3AM", sd: "In the deal", bt: "$200" },
+  {
+    label: "Extra security for an oversold room",
+    sd: "In-house",
+    bt: "~$400 (2 × 5 hrs, est.)",
+  },
+  {
+    label: "Cancelling late",
+    sd: "Not in our terms",
+    bt: "$2,500 inside 2 weeks · $5,000 inside 1",
+  },
+];
+
+/* Ticket counts compared at both rooms. Notes mark the real-world anchors. */
+export const MATCHED = [
+  { n: 350, note: "Baths cap" },
+  { n: 400, note: "Stardust cap" },
+  { n: 450 },
+  { n: 500 },
+  { n: 566, note: "Stardust last year" },
+  { n: 600 },
+];
+
 export const BOTTOM_LINE = [
-  "Stardust: ~$6.4K walkaway. The Baths at a 350 sellout: ~$3.5K.",
-  "The Baths needs 463 tickets — 113 over its 350 cap — just to match. That means counting on people leaving a 10PM–2AM night.",
-  "Stardust is the better show and the safer night: lights included, L-Acoustics, rehearsal, no bar minimum. The Baths is the better look.",
+  "Ticket for ticket, the Baths pays more: ~$1.0K more at 350 sold, ~$1.4K at 400. The 100% door beats 70% past 222 tickets, even after the Baths' extra $1,750 in costs.",
+  "Stardust wins on volume. It's a 400 room that sold 601 last year. Repeat that, and the Baths needs 463 on a 350 room to match. If Stardust only sells 400, a full Baths roughly ties.",
+  "Stardust is the safer, better-produced night: lights and sound included, rehearsal, no bar minimum. The Baths pays more per head, with more ways to lose it.",
 ];
 
 /* Side by side. Each row: label, Stardust, Baths. */
@@ -55,8 +120,8 @@ export const SPECS = [
   ],
   [
     "Costs",
-    "~$4,000.",
-    "~$4,000 + lighting rig (~$1.5K) + ticket staff. Plus any bar shortfall.",
+    "~$4,000 all in.",
+    "~$5,750: the same $4,000 + ~$1,500 lights + ~$250 door staff. Plus any bar shortfall.",
   ],
   [
     "Bar",
@@ -119,7 +184,7 @@ export const PROS_CONS = {
       "One year since THE_EFFECT debuted here. First [BLACKOUT] night in the same room.",
     ],
     cons: [
-      "EMSKI keeps 70%. Stardust takes ~$4.5K of a sellout's tickets.",
+      "EMSKI keeps 70% — ~$7.90 less per ticket than at the Baths.",
       "Every ticket after 2:30 is Stardust's. The late crowd pays them, not her.",
       "EMSKI still pays DJs until 2:30.",
       "A return, not a reveal — less new-story value.",
@@ -129,7 +194,7 @@ export const PROS_CONS = {
   },
   baths: {
     pros: [
-      "100% of the door is hers.",
+      "100% of the door — ~$7.90 more per ticket than Stardust. $1K+ more at any count past 350.",
       "Venue rental waived.",
       "The look is pure [BLACKOUT] — red-lit, underground, concrete columns.",
       "Void Stasys XV2 subs: serious low end for techno.",
@@ -139,7 +204,7 @@ export const PROS_CONS = {
       "A new room — a new chapter.",
     ],
     cons: [
-      "Smaller room. At 350 she walks with ~$3.5K vs ~$6.4K at Stardust.",
+      "Smaller room — 350 vs 400, and no track record selling past it.",
       "No lighting package. Renting a rig (~$1.5K) and loading it in is on her.",
       "Overselling 350 in a 4-hour night is a bet. The door is run by the venue's two guards.",
       "AFD night inspections count heads against occupant load downtown — fines, or the room gets cleared.",

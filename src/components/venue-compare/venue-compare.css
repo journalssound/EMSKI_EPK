@@ -75,13 +75,50 @@
 .vc-tiles .sp-tile.is-lead {
   box-shadow: inset 0 -2px 0 var(--bo-rust);
 }
-.vc-money {
+/* Cost lines and the matched-ticket table: fixed layout so nothing
+ * scrolls sideways; labels wrap, figures don't. */
+.vc-costs,
+.vc-matched {
   table-layout: fixed;
 }
-.vc-money th:first-child,
-.vc-money td:first-child {
-  width: 28%;
+.vc-costs th:first-child,
+.vc-costs td:first-child {
+  width: 46%;
   white-space: normal;
+}
+.vc-costs td,
+.vc-matched td {
+  vertical-align: top;
+}
+.vc-costs td.is-more {
+  color: var(--bo-white);
+  box-shadow: inset 0 -2px 0 var(--bo-rust);
+}
+.vc-costs--maybe td {
+  white-space: normal;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+.vc-costs--maybe td:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.vc-matched th:first-child,
+.vc-matched td:first-child {
+  width: 22%;
+  white-space: normal;
+}
+.vc-matched th:last-child {
+  white-space: normal;
+}
+/* Small source note under a figure. */
+.vc-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  white-space: normal;
+  text-transform: uppercase;
 }
 .vc-call {
   margin: 24px 0 0;
@@ -217,14 +254,43 @@
   .vc-tiles {
     grid-template-columns: 1fr 1fr;
   }
-  /* The 4th and 5th money columns stay on phones too. */
-  .vc-money th:nth-child(5),
-  .vc-money td:nth-child(5) {
+  /* The pitch sheet hides a 4th column on phones; these tables need all. */
+  .vc-matched th:nth-child(4),
+  .vc-matched td:nth-child(4) {
     display: table-cell;
   }
-  .vc-money th:first-child,
-  .vc-money td:first-child {
-    width: 21%;
+  .vc-costs th,
+  .vc-costs td,
+  .vc-matched th,
+  .vc-matched td {
+    padding: 10px 4px;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+  .vc-matched th {
+    font-size: 10px;
+    letter-spacing: 0;
+    white-space: normal;
+  }
+  .vc-matched th:first-child,
+  .vc-matched td:first-child {
+    width: 20%;
+  }
+  .vc-costs th:first-child,
+  .vc-costs td:first-child {
+    width: 40%;
+  }
+  .vc-costs tr.is-total td {
+    font-size: 15px;
+  }
+  .vc-costs tr.is-total td:first-child {
+    font-family: var(--bo-mono);
+    font-weight: 400;
+    font-size: 11px;
+  }
+  .vc-note {
+    font-size: 9px;
+    letter-spacing: 0.04em;
   }
   .vc-pc {
     grid-template-columns: 1fr;
@@ -244,30 +310,6 @@
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-  }
-  /* The pitch sheet hides a 4th column on phones; this table needs it. */
-  .vc-money th:nth-child(4),
-  .vc-money td:nth-child(4) {
-    display: table-cell;
-  }
-  .vc-money th,
-  .vc-money td {
-    padding: 10px 3px;
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    white-space: normal;
-  }
-  .vc-money th {
-    font-size: 10px;
-    letter-spacing: 0;
-  }
-  .vc-money tr.is-total td {
-    font-size: 14px;
-  }
-  .vc-money tr.is-total td:first-child {
-    font-family: var(--bo-mono);
-    font-weight: 400;
-    font-size: 11px;
   }
   .vc-week__row {
     grid-template-columns: 1fr;
