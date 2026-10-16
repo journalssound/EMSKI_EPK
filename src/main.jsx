@@ -32,6 +32,8 @@ const EmskiBlackout = lazy(() => import("./components/blackout/EmskiBlackout.jsx
 const StardustPitch = lazy(() => import("./components/stardust-pitch/StardustPitch.jsx"));
 const StardustPitchV2 = lazy(() => import("./components/stardust-pitch/StardustPitchV2.jsx"));
 const StardustPitchV3 = lazy(() => import("./components/stardust-pitch/StardustPitchV3.jsx"));
+// Private Nov 20 venue call for the artist (unlisted, noindex).
+const VenueCompare = lazy(() => import("./components/venue-compare/VenueCompare.jsx"));
 
 /* ── Dynamic favicon: crop the "E" from the EMSKI logo ── */
 (function setFavicon() {
@@ -135,6 +137,14 @@ createRoot(document.getElementById("root")).render(
           element={
             <Suspense fallback={null}>
               <StardustPitchV3 />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/nov20_venues"
+          element={
+            <Suspense fallback={null}>
+              <VenueCompare />
             </Suspense>
           }
         />

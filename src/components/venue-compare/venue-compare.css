@@ -1,0 +1,254 @@
+/* Nov 20 venue call — sits on the [BLACKOUT] and Stardust pitch sheets.
+ * Everything readable is off-white; rust marks cons and the lead number. */
+
+/* ── Header ───────────────────────────────────────────── */
+.vc-head {
+  padding-top: clamp(64px, 12vh, 120px);
+  padding-bottom: clamp(32px, 6vh, 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.vc-head__mark {
+  width: min(56vw, 300px);
+}
+.vc-head__title {
+  margin: 28px 0 0;
+  font-family: var(--bo-sans);
+  font-weight: 700;
+  font-size: clamp(20px, 3.4vw, 32px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.25;
+}
+.vc-head__rule {
+  display: block;
+  width: clamp(96px, 12vw, 140px);
+  height: 2px;
+  margin-top: 22px;
+  background: var(--bo-rust);
+}
+.vc-head__line {
+  margin: 20px 0 0;
+  font-size: 13px;
+  color: var(--bo-white);
+}
+
+/* ── Bottom line ──────────────────────────────────────── */
+.vc-bottom {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.5;
+  font-weight: 700;
+}
+.vc-bottom li + li {
+  margin-top: 14px;
+}
+.vc-bottom li {
+  padding-left: 22px;
+  position: relative;
+}
+.vc-bottom li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 10px;
+  height: 2px;
+  background: var(--bo-rust);
+}
+
+/* ── Money ────────────────────────────────────────────── */
+.vc-tiles {
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 26px;
+}
+.vc-tiles .sp-tile.is-lead .sp-tile__n {
+  color: var(--bo-white);
+}
+.vc-tiles .sp-tile.is-lead {
+  box-shadow: inset 0 -2px 0 var(--bo-rust);
+}
+.vc-money {
+  table-layout: fixed;
+}
+.vc-money th:first-child,
+.vc-money td:first-child {
+  width: 34%;
+  white-space: normal;
+}
+.vc-call {
+  margin: 24px 0 0;
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.5;
+}
+.vc-call b {
+  color: var(--bo-white);
+  border-bottom: 2px solid var(--bo-rust);
+}
+
+/* ── Side by side ─────────────────────────────────────── */
+.vc-specs {
+  border-top: 1px solid var(--bo-white);
+}
+.vc-specs__row {
+  display: grid;
+  grid-template-columns: 110px 1fr 1fr;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--bo-charcoal);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.vc-specs__row--head {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--bo-white);
+}
+.vc-specs__label {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+
+/* ── Pros / cons ──────────────────────────────────────── */
+.vc-pc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 48px);
+}
+.vc-pc__h {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bo-white);
+  border-bottom: 1px solid var(--bo-white);
+}
+.vc-pc__h--con {
+  border-bottom-color: var(--bo-rust);
+}
+.vc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.vc-list li {
+  position: relative;
+  padding: 9px 0 9px 22px;
+  border-bottom: 1px solid var(--bo-charcoal);
+}
+.vc-list li::before {
+  position: absolute;
+  left: 0;
+  top: 9px;
+  font-family: var(--bo-mono);
+  font-weight: 700;
+}
+.vc-list--pro li::before {
+  content: "+";
+  color: var(--bo-white);
+}
+.vc-list--con li::before {
+  content: "−";
+  color: var(--bo-rust);
+}
+
+/* ── Questions ────────────────────────────────────────── */
+.vc-ask {
+  margin: 0;
+  padding: 0 0 0 22px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.vc-ask li {
+  padding: 7px 0 7px 4px;
+}
+.vc-ask li::marker {
+  font-family: var(--bo-mono);
+  color: var(--bo-white);
+}
+
+/* ── Same week ────────────────────────────────────────── */
+.vc-week__row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bo-charcoal);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.vc-week__d {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  padding-top: 2px;
+}
+
+/* ── Sources ──────────────────────────────────────────── */
+.vc-sources {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  line-height: 2;
+}
+.vc-sources a {
+  color: var(--bo-white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--bo-rust);
+}
+
+/* ── Phone ────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .vc-tiles {
+    grid-template-columns: 1fr;
+  }
+  .vc-pc {
+    grid-template-columns: 1fr;
+  }
+  /* Specs stack: label, then each venue with its name above. */
+  .vc-specs__row--head {
+    display: none;
+  }
+  .vc-specs__row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .vc-specs__cell::before {
+    content: attr(data-venue);
+    display: block;
+    font-family: var(--bo-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  /* The pitch sheet hides a 4th column on phones; this table needs it. */
+  .vc-money th:nth-child(4),
+  .vc-money td:nth-child(4) {
+    display: table-cell;
+  }
+  .vc-money th,
+  .vc-money td {
+    padding: 10px 4px;
+    font-size: 11px;
+    white-space: normal;
+  }
+  .vc-money tr.is-total td {
+    font-size: 15px;
+  }
+  .vc-week__row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
