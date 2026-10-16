@@ -6,7 +6,6 @@ import {
   SCENARIOS,
   BOTTOM_LINE,
   PROS_CONS,
-  ASK,
   SOURCES,
 } from "./venueCompareContent";
 import { H } from "../stardust-pitch/pitchParts";
@@ -173,21 +172,6 @@ export default function VenueCompare() {
           </div>
         </section>
       ))}
-
-      {/* ━━ 05 ASK FIRST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section className="bo-section">
-        <div className="bo-wrap">
-          <H n="05">Ask before deciding</H>
-          <div className="vc-week">
-            {ASK.map(([who, q]) => (
-              <div className="vc-week__row" key={q}>
-                <span className="vc-week__d bo-mono">{who}</span>
-                <span>{q}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <footer className="bo-wrap">
         <ul className="vc-sources bo-mono">

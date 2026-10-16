@@ -150,22 +150,6 @@
   color: var(--bo-rust);
 }
 
-/* ── Questions: who to ask, then the question ─────────── */
-.vc-week__row {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 20px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--bo-charcoal);
-  font-size: 14px;
-  line-height: 1.5;
-}
-.vc-week__d {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  padding-top: 2px;
-}
-
 /* ── Sources ──────────────────────────────────────────── */
 .vc-sources {
   margin: 48px 0 0;
@@ -216,9 +200,5 @@
     font-family: var(--bo-mono);
     font-weight: 400;
     font-size: 11px;
-  }
-  .vc-week__row {
-    grid-template-columns: 1fr;
-    gap: 4px;
   }
 }

@@ -40,14 +40,14 @@ export const SCENARIOS = [
 export const BOTTOM_LINE = [
   "The money is close. At capacity both rooms pay about $3.4K. With turnover, Stardust pays ~$6.4K and the Baths ~$6.1K.",
   "Stardust's number already happened last year. The Baths' needs 100 people past capacity in a 10PM–2AM night.",
-  "So decide on risk and the show. Stardust includes lights, sound and rehearsal, with no bar minimum. The Baths looks better but adds a lighting rental, a $5K bar minimum and a midnight takeover clause.",
+  "So decide what kind of night it is. Stardust is a show: lights, L-Acoustics, rehearsal, no bar minimum. The Baths is more [BLACKOUT]: an underground techno room. It also adds a lighting rental, a $5K bar minimum and a midnight takeover clause.",
 ];
 
 export const PROS_CONS = {
   stardust: {
     pros: [
       "Sold 601 here last year on a 400 room.",
-      "Lights, L-Acoustics and staff included. Nothing to rent.",
+      "A real show: lights, L-Acoustics and staff included. Nothing to rent.",
       "Load in early and rehearse the live set.",
       "No bar minimum.",
       "Runs to 3AM — catches the Kaskade crowd leaving Concourse around 1AM.",
@@ -64,7 +64,7 @@ export const PROS_CONS = {
     pros: [
       "100% of the door: $26.34 a ticket.",
       "Venue rental waived.",
-      "Looks like [BLACKOUT] — red-lit, underground, concrete.",
+      "More [BLACKOUT]: an underground techno room, not a show.",
       "Downtown walk-ins.",
       "Void subs. Big low end.",
     ],
@@ -79,20 +79,6 @@ export const PROS_CONS = {
     ],
   },
 };
-
-export const ASK = [
-  [
-    "Baths",
-    "What's the occupant load on the permit, and how far past it can we sell?",
-  ],
-  ["Baths", "Do VIP and bottle sales count toward the $5,000 minimum?"],
-  ["Baths", "Strike the midnight clause."],
-  ["Baths", "Load-in time and power for our lights."],
-  [
-    "Stardust",
-    "Get 70/30 to 2:30, the DJ split and the ticket count in writing.",
-  ],
-];
 
 export const SOURCES = [
   [
