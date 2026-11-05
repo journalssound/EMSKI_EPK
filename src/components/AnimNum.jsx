@@ -34,10 +34,12 @@ export default function AnimNum({ value, suffix, visible }) {
     requestAnimationFrame(tick);
   }, [visible, value, prefersReduced]);
 
+  // Keep the value's own precision: 53.7 → "53.7", 4.38 → "4.38".
+  const decimals = (String(value).split(".")[1] || "").length;
   const display =
     value >= 1 && Number.isInteger(value)
       ? Math.round(current).toLocaleString()
-      : current.toFixed(2);
+      : current.toFixed(decimals || 2);
 
   return (
     <>

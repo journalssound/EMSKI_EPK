@@ -35,14 +35,14 @@ export const LABELS = [
   { name: "Bitbird", cover: "/covers/Bitbird.png" },
 ];
 
-// Performance dashboard totals as of 2026-09-20. DJ supports isn't on that
+// Performance dashboard totals as of 2026-11-05. DJ supports isn't on that
 // dashboard — carried over from the previous update.
 export const STATS = [
-  { label: "FOLLOWERS", val: 53, suf: "K" },
-  { label: "STREAMS", val: 4.08, suf: "M" },
-  { label: "PLAYLIST REACH", val: 8.46, suf: "M" },
-  { label: "PLAYLISTS", val: 416, suf: "" },
-  { label: "RADIO PLAYS", val: 1367, suf: "" },
+  { label: "FOLLOWERS", val: 53.7, suf: "K" },
+  { label: "STREAMS", val: 4.38, suf: "M" },
+  { label: "PLAYLIST REACH", val: 8.52, suf: "M" },
+  { label: "PLAYLISTS", val: 437, suf: "" },
+  { label: "RADIO PLAYS", val: 1411, suf: "" },
   { label: "DJ SUPPORTS", val: 96, suf: "" },
 ];
 
